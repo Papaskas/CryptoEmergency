@@ -4,26 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.cryptoemergency.cryptoemergency.ui.theme.CryptoemergencyTheme
+import com.cryptoemergency.cryptoemergency.navigation.Navigation
+import com.cryptoemergency.cryptoemergency.providers.localNavController.NavController
+import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
+import com.cryptoemergency.cryptoemergency.providers.localSnackBar.SnackBar
+import com.cryptoemergency.cryptoemergency.providers.theme.MainTheme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.bottomBar.BottomBar
+import com.cryptoemergency.cryptoemergency.ui.common.topBar.TopBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CryptoemergencyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            MainTheme {
+                NavController {
+                    SnackBar {
+                        MainScreen()
+                    }
                 }
             }
         }
@@ -31,17 +39,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun MainScreen() {
+    val snackbar = LocalSnackbar.current
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CryptoemergencyTheme {
-        Greeting("Android")
+    Scaffold(
+        contentColor = Theme.colors.primary,
+        containerColor = Theme.colors.background,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbar,
+                modifier = Modifier.imePadding(),
+            )
+        },
+        bottomBar = { BottomBar() },
+        topBar = { TopBar() },
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            Navigation()
+        }
     }
 }
