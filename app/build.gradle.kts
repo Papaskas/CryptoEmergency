@@ -1,15 +1,16 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ktlint)
 
-    kotlin("plugin.serialization") version "2.0.0"
-
-    id("io.gitlab.arturbosch.detekt") version "1.23.3"
-
-    id("com.google.dagger.hilt.android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -92,7 +93,6 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        compose = true
         buildConfig = true
     }
     composeOptions {
@@ -106,6 +106,8 @@ android {
 }
 
 dependencies {
+
+    detektPlugins(libs.detekt.formatting)
 
     implementation(libs.androidx.datastore.preferences) // datastore preferences
     implementation(libs.androidx.datastore) // datastore-proto preferences
@@ -155,7 +157,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 }
 
-
 kapt {
     correctErrorTypes = true
 }
@@ -166,12 +167,30 @@ detekt {
     buildUponDefaultConfig = true
 }
 
+ktlint {
+    version.set("1.3.1")
+    ignoreFailures.set(true)
+    debug.set(true)
+    verbose.set(true)
+    android.set(true)
+    outputColorName.set("RED")
+    outputToConsole.set(true)
+    enableExperimentalRules.set(true)
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.HTML)
+        reporter(ReporterType.SARIF)
+        reporter(ReporterType.PLAIN)
+    }
+}
+
 tasks.withType<Detekt>().configureEach {
     reports {
-        xml.required.set(true)
-        html.required.set(true)
-        txt.required.set(true)
-        sarif.required.set(true)
+        xml.required.set(false)
+        html.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
         md.required.set(true)
     }
 }

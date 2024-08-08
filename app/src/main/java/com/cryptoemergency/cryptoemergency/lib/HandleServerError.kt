@@ -14,6 +14,7 @@ fun handleServerError(statusCode: HttpStatusCode): String {
         -1000 -> "Нет подключения к интернету"
         -900 -> "Возможная ошибка интернет соединения"
         HttpStatusCode.Forbidden.value -> "Отказано в доступе"
+        HttpStatusCode.MethodNotAllowed.value -> "Не разрешенный метод"
         HttpStatusCode.TooManyRequests.value -> "Превышен лимит запросов"
         HttpStatusCode.RequestTimeout.value -> "Превышено время запроса"
         HttpStatusCode.InternalServerError.value -> "Непредвиденная ошибка сервера"
