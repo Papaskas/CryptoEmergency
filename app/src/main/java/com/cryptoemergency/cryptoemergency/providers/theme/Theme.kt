@@ -50,7 +50,7 @@ fun MainTheme(
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
-        LocalTypography provides typography,
+        //LocalTypography provides typography,
         LocalShape provides shapes,
         content = content,
     )

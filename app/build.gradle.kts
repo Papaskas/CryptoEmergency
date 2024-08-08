@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 
     kotlin("plugin.serialization") version "2.0.0"
+
     id("io.gitlab.arturbosch.detekt") version "1.23.3"
 
     id("com.google.dagger.hilt.android")
@@ -13,12 +14,13 @@ plugins {
 
 android {
     namespace = "com.cryptoemergency.cryptoemergency"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.cryptoemergency.cryptoemergency"
         minSdk = 21
-        targetSdk = 34
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -50,8 +52,16 @@ android {
                 "PROTOCOL",
                 "\"${project.properties["prod.server.protocol"]}\""
             )
-            buildConfigField("String", "HOST", "\"${project.properties["prod.server.host"]}\"")
-            buildConfigField("int", "PORT", project.properties["prod.server.port"].toString())
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["prod.server.host"]}\""
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["prod.server.port"].toString()
+            )
         }
 
         debug {
@@ -62,8 +72,16 @@ android {
                 "PROTOCOL",
                 "\"${project.properties["dev.server.protocol"]}\""
             )
-            buildConfigField("String", "HOST", "\"${project.properties["dev.server.host"]}\"")
-            buildConfigField("int", "PORT", project.properties["dev.server.port"].toString())
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["dev.server.host"]}\""
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["dev.server.port"].toString()
+            )
         }
     }
     compileOptions {
@@ -82,7 +100,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/INDEX.LIST"
         }
     }
 }

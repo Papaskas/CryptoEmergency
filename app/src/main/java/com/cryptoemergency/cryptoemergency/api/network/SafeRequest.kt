@@ -82,13 +82,13 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
         ApiResponse.Success(
             status = response.status,
             headers = response.headers,
-            data = json.decodeFromString<SuccessResponse>(responseBody),
+            body = json.decodeFromString<SuccessResponse>(responseBody),
         )
     } else {
         ApiResponse.Error(
             status = response.status,
             headers = response.headers,
-            data = json.decodeFromString<ErrorResponse>(responseBody),
+            body = json.decodeFromString<ErrorResponse>(responseBody),
         )
     }
 } catch (e: SerializationException) {
