@@ -30,15 +30,16 @@ fun validatePassword(
     val hasDigit = Regex("\\d")
     val hasSpecialChar = Regex("[!@#\$%^&+=]")
 
-    val message = when {
-        password.length < minLength -> "Пароль должен содержать не менее 8 символов"
-        !password.contains(hasUppercase) -> "Пароль должен содержать хотя бы одну заглавную букву"
-        !password.contains(hasLowercase) -> "Пароль должен содержать хотя бы одну строчную букву"
-        !password.contains(hasDigit) -> "Пароль должен содержать хотя бы одну цифру"
-        !password.contains(hasSpecialChar) -> "Пароль должен содержать хотя бы один спец символ"
-        password != confirmPassword -> "Пароли не совпадают"
-        else -> null
-    }
+    val message =
+        when {
+            password.length < minLength -> "Пароль должен содержать не менее 8 символов"
+            !password.contains(hasUppercase) -> "Пароль должен содержать хотя бы одну заглавную букву"
+            !password.contains(hasLowercase) -> "Пароль должен содержать хотя бы одну строчную букву"
+            !password.contains(hasDigit) -> "Пароль должен содержать хотя бы одну цифру"
+            !password.contains(hasSpecialChar) -> "Пароль должен содержать хотя бы один спец символ"
+            password != confirmPassword -> "Пароли не совпадают"
+            else -> null
+        }
 
     isError.value = message != null
     errorMessage.value = message
@@ -49,7 +50,6 @@ fun validatePassword(
         successMessage.value = null
     }
 }
-
 
 // используется для числовых полей(денежных)
 fun isValidNumber(value: String): Boolean {

@@ -4,5 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class CurrentTheme {
-    DARK, LIGHT, NULL
+    DARK,
+    LIGHT,
+    NULL,
 }

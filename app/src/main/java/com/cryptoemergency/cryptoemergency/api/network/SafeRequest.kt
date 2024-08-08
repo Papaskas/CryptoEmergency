@@ -58,23 +58,24 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
     body: Any? = null,
     token: String? = null,
 ) = try {
-    val response = request {
-        this.method = method
-        url {
-            this.protocol = protocol
-            this.host = host
-            this.port = port
-            path(path)
-            parameters.appendAll(params)
+    val response =
+        request {
+            this.method = method
+            url {
+                this.protocol = protocol
+                this.host = host
+                this.port = port
+                path(path)
+                parameters.appendAll(params)
+            }
+            contentType(ContentType.Application.Json)
+            if (token != null) {
+                header("Authorization", token)
+            } else {
+                header("Authorization", Store(Keys.TOKEN, context).get())
+            }
+            if (body != null) setBody(body)
         }
-        contentType(ContentType.Application.Json)
-        if (token != null) {
-            header("Authorization", token)
-        } else {
-            header("Authorization", Store(Keys.TOKEN, context).get())
-        }
-        if (body != null) setBody(body)
-    }
 
     val responseBody = response.body<String>()
 
@@ -99,11 +100,13 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
     ApiResponse.Error(
         status = HttpStatusCode(500, e.message),
     )
-} catch (e: UnknownHostException) { // Нет интернета
+} catch (e: UnknownHostException) {
+    // Нет интернета
     ApiResponse.Error(
         status = HttpStatusCode(-1000, e.message ?: "No internet connection"),
     )
-} catch (e: IOException) { // Ошибки соединений
+} catch (e: IOException) {
+    // Ошибки соединений
     ApiResponse.Error(
         status = HttpStatusCode(-900, e.message ?: "IO Exception"),
     )

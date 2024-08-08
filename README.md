@@ -1,3 +1,10 @@
+# Lint
+
+В проекте установлен detekt (app/config/detekt/detekt.yml)
+Для его инициализации в android studio нужно скачать
+плагин [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
+Его активация описана в описании плагина
+
 # Theme and colors
 
 * По умолчанию стоит темная тема

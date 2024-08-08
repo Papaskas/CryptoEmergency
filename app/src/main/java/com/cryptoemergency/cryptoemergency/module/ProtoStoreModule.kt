@@ -15,16 +15,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ProtoStoreModule {
+    @Provides
+    @Singleton
+    fun provideUserProtoStore(
+        @ApplicationContext context: Context,
+    ): ProtoStore<User> = ProtoStore(ProtoKeys.USER, context)
 
     @Provides
     @Singleton
-    fun provideUserProtoStore(@ApplicationContext context: Context): ProtoStore<User> {
-        return ProtoStore(ProtoKeys.USER, context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideThemeProtoStore(@ApplicationContext context: Context): ProtoStore<CurrentTheme> {
-        return ProtoStore(ProtoKeys.THEME, context)
-    }
+    fun provideThemeProtoStore(
+        @ApplicationContext context: Context,
+    ): ProtoStore<CurrentTheme> = ProtoStore(ProtoKeys.THEME, context)
 }

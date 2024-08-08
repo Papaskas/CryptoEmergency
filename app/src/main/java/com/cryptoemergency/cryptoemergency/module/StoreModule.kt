@@ -14,22 +14,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object StoreModule {
-
     @TokenStore
     @Provides
     @Singleton
-    fun provideStoreToken(@ApplicationContext context: Context): Store<String> {
-        return Store(Keys.TOKEN, context)
-    }
+    fun provideStoreToken(
+        @ApplicationContext context: Context,
+    ): Store<String> = Store(Keys.TOKEN, context)
 
     @PinCodeStore
     @Provides
     @Singleton
-    fun providePinCode(@ApplicationContext context: Context): Store<String> {
-        return Store(Keys.PinCode, context)
-    }
+    fun providePinCode(
+        @ApplicationContext context: Context,
+    ): Store<String> = Store(Keys.PinCode, context)
 }
-
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

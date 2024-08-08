@@ -37,20 +37,22 @@ fun MainTheme(
     }
 
     LaunchedEffect(currentTheme) {
-        colors.value = when (currentTheme) {
-            CurrentTheme.DARK -> darkPalette
-            CurrentTheme.LIGHT -> lightPalette
-            CurrentTheme.NULL -> darkPalette
-        }
+        colors.value =
+            when (currentTheme) {
+                CurrentTheme.DARK -> darkPalette
+                CurrentTheme.LIGHT -> lightPalette
+                CurrentTheme.NULL -> darkPalette
+            }
     }
 
-    val shapes = Shape(
-        padding = 24.dp
-    )
+    val shapes =
+        Shape(
+            padding = 24.dp,
+        )
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
-        //LocalTypography provides typography,
+        // LocalTypography provides typography,
         LocalShape provides shapes,
         content = content,
     )

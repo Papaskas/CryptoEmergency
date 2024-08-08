@@ -31,16 +31,12 @@ sealed class ProtoKeys<T>(
     data object USER : ProtoKeys<User>(
         key = stringPreferencesKey("user"),
         defaultValue = User(),
-        serializer = GenericSerializer(serializer<User>(), User())
+        serializer = GenericSerializer(serializer<User>(), User()),
     )
 
     data object THEME : ProtoKeys<CurrentTheme>(
         key = stringPreferencesKey("theme"),
         defaultValue = CurrentTheme.NULL,
-        serializer = GenericSerializer(serializer<CurrentTheme>(), CurrentTheme.NULL)
+        serializer = GenericSerializer(serializer<CurrentTheme>(), CurrentTheme.NULL),
     )
 }
-
-
-
-

@@ -24,10 +24,11 @@ fun vibrate(
     vibrator?.let {
         if (it.hasVibrator()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val effect = VibrationEffect.createOneShot(
-                    milliseconds,
-                    VibrationEffect.DEFAULT_AMPLITUDE
-                )
+                val effect =
+                    VibrationEffect.createOneShot(
+                        milliseconds,
+                        VibrationEffect.DEFAULT_AMPLITUDE,
+                    )
                 it.vibrate(effect)
             } else {
                 // Используем устаревший метод вибрации для API ниже 26

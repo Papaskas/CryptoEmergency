@@ -12,7 +12,6 @@ data class Colors(
     val success: Color,
     val expectation: Color,
     val error: Color,
-
     val background: Color,
     val surface: Color,
     val surfaceVariant: Color,
@@ -22,7 +21,6 @@ data class Colors(
     val secondary: Color,
     val backgroundVariant: Color,
     val divider: Color,
-
     val bottomNav: Color,
 )
 
@@ -60,14 +58,17 @@ object Theme {
         get() = LocalShape.current
 }
 
-val LocalColors = staticCompositionLocalOf<Colors> {
-    error("No colors provided")
-}
+val LocalColors =
+    staticCompositionLocalOf<Colors> {
+        error("No colors provided")
+    }
 
-val LocalTypography = staticCompositionLocalOf<Typography> {
-    error("No typography provided")
-}
+val LocalTypography =
+    staticCompositionLocalOf<Typography> {
+        error("No typography provided")
+    }
 
-val LocalShape = staticCompositionLocalOf<Shape> {
-    error("No typography provided")
-}
+val LocalShape =
+    staticCompositionLocalOf<Shape> {
+        error("No typography provided")
+    }

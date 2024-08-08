@@ -11,28 +11,30 @@ import java.io.OutputStream
 
 class GenericSerializer<T>(
     private val serializer: KSerializer<T>,
-    override val defaultValue: T
+    override val defaultValue: T,
 ) : Serializer<T> {
-
-    override suspend fun readFrom(input: InputStream): T {
-        return try {
+    override suspend fun readFrom(input: InputStream): T =
+        try {
             Json.decodeFromString(
                 deserializer = serializer,
-                string = input.readBytes().decodeToString()
+                string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
             e.printStackTrace()
             defaultValue
         }
-    }
 
-    override suspend fun writeTo(t: T, output: OutputStream) {
+    override suspend fun writeTo(
+        t: T,
+        output: OutputStream,
+    ) {
         withContext(Dispatchers.IO) {
             output.write(
-                Json.encodeToString(
-                    serializer = serializer,
-                    value = t
-                ).encodeToByteArray()
+                Json
+                    .encodeToString(
+                        serializer = serializer,
+                        value = t,
+                    ).encodeToByteArray(),
             )
         }
     }

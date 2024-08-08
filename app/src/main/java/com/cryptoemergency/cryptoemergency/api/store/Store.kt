@@ -29,13 +29,13 @@ class Store<T>(
      * @return значение, связанное с данным ключом. Если ключ не найден, возвращается значение
      * по умолчанию из объекта Keys.
      */
-    suspend fun get(): T {
-        return withContext(Dispatchers.IO) {
-            dataStore.data.map { preferences ->
-                preferences[key.key] ?: key.defaultValue
-            }.first()
+    suspend fun get(): T =
+        withContext(Dispatchers.IO) {
+            dataStore.data
+                .map { preferences ->
+                    preferences[key.key] ?: key.defaultValue
+                }.first()
         }
-    }
 
     /**
      * Сохраняет заданное значение в хранилище данных, используя предоставленный ключ

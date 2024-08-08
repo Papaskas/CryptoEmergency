@@ -1,5 +1,4 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.android.application)
@@ -7,7 +6,6 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.ktlint)
 
     kotlin("android")
     kotlin("kapt")
@@ -44,24 +42,24 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
-            //signingConfig = signingConfigs.getByName("release")
+            // signingConfig = signingConfigs.getByName("release")
 
             buildConfigField(
                 "String",
                 "PROTOCOL",
-                "\"${project.properties["prod.server.protocol"]}\""
+                "\"${project.properties["prod.server.protocol"]}\"",
             )
             buildConfigField(
                 "String",
                 "HOST",
-                "\"${project.properties["prod.server.host"]}\""
+                "\"${project.properties["prod.server.host"]}\"",
             )
             buildConfigField(
                 "int",
                 "PORT",
-                project.properties["prod.server.port"].toString()
+                project.properties["prod.server.port"].toString(),
             )
         }
 
@@ -71,17 +69,17 @@ android {
             buildConfigField(
                 "String",
                 "PROTOCOL",
-                "\"${project.properties["dev.server.protocol"]}\""
+                "\"${project.properties["dev.server.protocol"]}\"",
             )
             buildConfigField(
                 "String",
                 "HOST",
-                "\"${project.properties["dev.server.host"]}\""
+                "\"${project.properties["dev.server.host"]}\"",
             )
             buildConfigField(
                 "int",
                 "PORT",
-                project.properties["dev.server.port"].toString()
+                project.properties["dev.server.port"].toString(),
             )
         }
     }
@@ -167,30 +165,12 @@ detekt {
     buildUponDefaultConfig = true
 }
 
-ktlint {
-    version.set("1.3.1")
-    ignoreFailures.set(true)
-    debug.set(true)
-    verbose.set(true)
-    android.set(true)
-    outputColorName.set("RED")
-    outputToConsole.set(true)
-    enableExperimentalRules.set(true)
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.CHECKSTYLE)
-        reporter(ReporterType.HTML)
-        reporter(ReporterType.SARIF)
-        reporter(ReporterType.PLAIN)
-    }
-}
-
 tasks.withType<Detekt>().configureEach {
     reports {
-        xml.required.set(false)
-        html.required.set(false)
-        txt.required.set(false)
-        sarif.required.set(false)
+        xml.required.set(true)
+        html.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(true)
         md.required.set(true)
     }
 }

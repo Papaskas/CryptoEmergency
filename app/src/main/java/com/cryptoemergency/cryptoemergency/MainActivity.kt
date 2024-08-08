@@ -56,7 +56,7 @@ fun MainScreen() {
         topBar = { TopBar() },
     ) { innerPadding ->
         Box(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             Navigation()
         }

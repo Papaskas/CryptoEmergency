@@ -9,8 +9,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ThemeViewModel @Inject constructor(
-    private val themeProtoStore: ProtoStore<CurrentTheme>
+class ThemeViewModel
+@Inject
+constructor(
+    private val themeProtoStore: ProtoStore<CurrentTheme>,
 ) : ViewModel() {
     fun getTheme() {
         viewModelScope.launch {

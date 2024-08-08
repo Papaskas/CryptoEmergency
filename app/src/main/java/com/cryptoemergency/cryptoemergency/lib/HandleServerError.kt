@@ -6,7 +6,7 @@ import io.ktor.http.HttpStatusCode
 fun handleServerError(statusCode: HttpStatusCode): String {
     Log.e(
         "handleServerError",
-        "Error code: ${statusCode.value},\n description: ${statusCode.description}"
+        "Error code: ${statusCode.value},\n description: ${statusCode.description}",
     )
 
     return when (statusCode.value) {

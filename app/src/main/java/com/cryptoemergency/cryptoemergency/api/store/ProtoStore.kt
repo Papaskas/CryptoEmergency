@@ -20,7 +20,7 @@ class ProtoStore<T>(
 ) {
     private val Context.dataStore: DataStore<T> by dataStore(
         fileName = key.toString(),
-        serializer = key.serializer
+        serializer = key.serializer,
     )
 
     private val dataStore: DataStore<T> = context.dataStore
@@ -30,9 +30,7 @@ class ProtoStore<T>(
      *
      * @return Возвращает сохраненные данные типа T.
      */
-    suspend fun get(): T {
-        return dataStore.data.first()
-    }
+    suspend fun get(): T = dataStore.data.first()
 
     /**
      * Сохраняет заданные данные, связанные с заданным ключом.

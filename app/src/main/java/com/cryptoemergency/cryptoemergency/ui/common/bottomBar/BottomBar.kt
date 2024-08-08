@@ -21,51 +21,51 @@ fun BottomBar() {
             icon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "Home"
+                    contentDescription = "Home",
                 )
             },
             selected = selectedIndex == 0,
-            onClick = { selectedIndex = 0 }
+            onClick = { selectedIndex = 0 },
         )
         NavigationBarItem(
             icon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "Search"
+                    contentDescription = "Search",
                 )
             },
             selected = selectedIndex == 1,
-            onClick = { selectedIndex = 1 }
+            onClick = { selectedIndex = 1 },
         )
         NavigationBarItem(
             icon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "Create"
+                    contentDescription = "Create",
                 )
             },
             selected = selectedIndex == 2,
-            onClick = { selectedIndex = 2 }
+            onClick = { selectedIndex = 2 },
         )
         NavigationBarItem(
             icon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "Notifications"
+                    contentDescription = "Notifications",
                 )
             },
             selected = selectedIndex == 3,
-            onClick = { selectedIndex = 3 }
+            onClick = { selectedIndex = 3 },
         )
         NavigationBarItem(
             icon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "Profile"
+                    contentDescription = "Profile",
                 )
             },
             selected = selectedIndex == 4,
-            onClick = { selectedIndex = 4 }
+            onClick = { selectedIndex = 4 },
         )
     }
 }

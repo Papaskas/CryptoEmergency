@@ -17,7 +17,8 @@ val client by lazy {
         install(ContentNegotiation) {
             json(json)
         }
-        install(HttpTimeout) { // Сколько запрос ждет
+        install(HttpTimeout) {
+            // Сколько запрос ждет
             connectTimeoutMillis = 10_000L // 10 сек
             requestTimeoutMillis = 10_000L // 10 сек
             socketTimeoutMillis = 10_000L // 10 сек
