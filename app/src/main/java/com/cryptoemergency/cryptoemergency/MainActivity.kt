@@ -44,7 +44,7 @@ fun MainScreen() {
     val snackbar = LocalSnackbar.current
 
     Scaffold(
-        contentColor = Theme.colors.primary,
+        contentColor = Theme.colors.accent,
         containerColor = Theme.colors.background,
         snackbarHost = {
             SnackbarHost(

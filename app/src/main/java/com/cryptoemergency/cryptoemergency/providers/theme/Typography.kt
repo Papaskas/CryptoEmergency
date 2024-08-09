@@ -1,80 +1,75 @@
 package com.cryptoemergency.cryptoemergency.providers.theme
 
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.cryptoemergency.cryptoemergency.R
 
-val sfProDisplayFontFamily =
-    FontFamily()
+val sfUiTextFontFamily = FontFamily(
+    Font(R.font.sfuitext__regular, FontWeight.Normal),
+    Font(R.font.sfuitext__semibold, FontWeight.SemiBold),
+    Font(R.font.sfuitext__bold, FontWeight.Bold),
+)
 
-val typography =
-    Typography(
-        titleBold =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            lineHeight = 30.sp,
-        ),
-        title =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 22.sp,
-            lineHeight = 30.sp,
-        ),
-        subTitleBold =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-        ),
-        subTitle =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-        ),
-        text =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            lineHeight = 22.sp,
-        ),
-        textBold =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
-            lineHeight = 22.sp,
-        ),
-        textSecondary =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            lineHeight = 19.sp,
-        ),
-        label =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 13.sp,
-            lineHeight = 18.sp,
-        ),
-        subLabel =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 10.sp,
-            lineHeight = 14.sp,
-        ),
-        fontText =
-        TextStyle(
-            // fontFamily = sfProDisplayFontFamily
-        ),
-    )
+val manropeFontFamily = FontFamily(
+    Font(R.font.manrope__bold, FontWeight.Bold),
+)
+
+val typography = Typography(
+    h1 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+        letterSpacing = 28.sp * (-2 / 100f),
+    ),
+    h2 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        letterSpacing = 18.sp * (-2 / 100f),
+        lineHeight = 26.sp,
+    ),
+    h3 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 15.sp,
+        letterSpacing = 15.sp * (-2 / 100f),
+        lineHeight = 18.sp,
+    ),
+    h4 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 13.sp,
+        letterSpacing = 13.sp * (-2 / 100f),
+        lineHeight = 16.sp,
+    ),
+    body1 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        letterSpacing = 15.sp * (-2 / 100f),
+        lineHeight = 22.sp,
+    ),
+    caption1 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        letterSpacing = 13.sp * (-2 / 100f),
+        lineHeight = 16.sp,
+    ),
+    caption2 = TextStyle(
+        fontFamily = sfUiTextFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        letterSpacing = 12.sp * (-2 / 100f),
+        lineHeight = 16.sp,
+    ),
+    subscribersCount = TextStyle(
+        fontFamily = manropeFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 17.sp,
+        lineHeight = 24.sp,
+    ),
+)

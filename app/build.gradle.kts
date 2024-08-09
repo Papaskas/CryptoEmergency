@@ -46,33 +46,45 @@ android {
             )
             // signingConfig = signingConfigs.getByName("release")
 
-            ndk {
-                debugSymbolLevel = "FULL"
-            }
+            ndk { debugSymbolLevel = "FULL" }
 
             buildConfigField(
                 "String",
                 "PROTOCOL",
                 "\"${project.properties["prod.server.protocol"]}\""
             )
-            buildConfigField("String", "HOST", "\"${project.properties["prod.server.host"]}\"")
-            buildConfigField("int", "PORT", project.properties["prod.server.port"].toString())
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["prod.server.host"]}\""
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["prod.server.port"].toString()
+            )
         }
 
         debug {
             isMinifyEnabled = false
 
-            ndk {
-                debugSymbolLevel = "SYMBOL_TABLE"
-            }
+            ndk { debugSymbolLevel = "SYMBOL_TABLE" }
 
             buildConfigField(
                 "String",
                 "PROTOCOL",
-                "\"${project.properties["dev.server.protocol"]}\""
+                "\"${project.properties["dev.server.protocol"]}\"",
             )
-            buildConfigField("String", "HOST", "\"${project.properties["dev.server.host"]}\"")
-            buildConfigField("int", "PORT", project.properties["dev.server.port"].toString())
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["dev.server.host"]}\"",
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["dev.server.port"].toString(),
+            )
         }
     }
     compileOptions {

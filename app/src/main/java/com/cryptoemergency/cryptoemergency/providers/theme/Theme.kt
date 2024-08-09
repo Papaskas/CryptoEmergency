@@ -31,7 +31,6 @@ fun MainTheme(
 
         // Установить тему согласно теме из системы если в хранилище пусто
         if (currentTheme == CurrentTheme.NULL) {
-            // TODO: исправить в зависимости от системной темы
             currentTheme = if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
         }
     }
@@ -52,7 +51,7 @@ fun MainTheme(
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
-        // LocalTypography provides typography,
+        LocalTypography provides typography,
         LocalShape provides shapes,
         content = content,
     )
