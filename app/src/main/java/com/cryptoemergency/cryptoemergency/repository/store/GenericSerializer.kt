@@ -20,7 +20,7 @@ class GenericSerializer<T>(
                 string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
-            e.printStackTrace()
+
             defaultValue
         }
 

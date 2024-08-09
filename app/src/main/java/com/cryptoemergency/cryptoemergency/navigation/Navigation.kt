@@ -16,6 +16,7 @@ fun Navigation() {
         }
 
         composable<Routes.Auth.Profile> {
+
         }
     }
 }
