@@ -29,14 +29,14 @@ android {
         }
     }
 
-    /*signingConfigs {
-        create("release") {
-            keyAlias = ""
-            storeFile = file("")
-            storePassword = ""
-            keyPassword = ""
-        }
-    }*/
+//    signingConfigs {
+//        create("release") {
+//            keyAlias = ""
+//            storeFile = file("")
+//            storePassword = ""
+//            keyPassword = ""
+//        }
+//    }
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -46,41 +46,33 @@ android {
             )
             // signingConfig = signingConfigs.getByName("release")
 
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
+
             buildConfigField(
                 "String",
                 "PROTOCOL",
-                "\"${project.properties["prod.server.protocol"]}\"",
+                "\"${project.properties["prod.server.protocol"]}\""
             )
-            buildConfigField(
-                "String",
-                "HOST",
-                "\"${project.properties["prod.server.host"]}\"",
-            )
-            buildConfigField(
-                "int",
-                "PORT",
-                project.properties["prod.server.port"].toString(),
-            )
+            buildConfigField("String", "HOST", "\"${project.properties["prod.server.host"]}\"")
+            buildConfigField("int", "PORT", project.properties["prod.server.port"].toString())
         }
 
         debug {
             isMinifyEnabled = false
 
+            ndk {
+                debugSymbolLevel = "SYMBOL_TABLE"
+            }
+
             buildConfigField(
                 "String",
                 "PROTOCOL",
-                "\"${project.properties["dev.server.protocol"]}\"",
+                "\"${project.properties["dev.server.protocol"]}\""
             )
-            buildConfigField(
-                "String",
-                "HOST",
-                "\"${project.properties["dev.server.host"]}\"",
-            )
-            buildConfigField(
-                "int",
-                "PORT",
-                project.properties["dev.server.port"].toString(),
-            )
+            buildConfigField("String", "HOST", "\"${project.properties["dev.server.host"]}\"")
+            buildConfigField("int", "PORT", project.properties["dev.server.port"].toString())
         }
     }
     compileOptions {
@@ -105,15 +97,12 @@ android {
 
 dependencies {
 
-    detektPlugins(libs.detekt.formatting)
-
     implementation(libs.androidx.datastore.preferences) // datastore preferences
     implementation(libs.androidx.datastore) // datastore-proto preferences
 
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.core.ktx) // hilt common
-    kapt(libs.hilt.compiler) // Компилятор аннотация hilt
 
     implementation(libs.ktor.client.core) // Ktor Client core dependency
     implementation(libs.ktor.client.okhttp) // Ktor Client engine dependency
@@ -132,8 +121,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
-    implementation(libs.androidx.webkit) // для использования WebView
-    implementation(libs.coil.compose) // для асинхронной загрузки изображений из браузера
+    implementation(libs.coil.compose) // для асинхронной загрузки изображений
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -145,6 +133,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.appcompat)
+
+    detektPlugins(libs.detekt.formatting)
+    kapt(libs.hilt.compiler) // Компилятор аннотация hilt
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

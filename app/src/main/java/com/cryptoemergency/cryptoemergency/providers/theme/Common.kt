@@ -9,19 +9,17 @@ import androidx.compose.ui.unit.Dp
 
 data class Colors(
     val accent: Color,
-    val success: Color,
-    val expectation: Color,
-    val error: Color,
+    val accentGradient: Color,
+
+    // text
+    // text
+
     val background: Color,
-    val surface: Color,
-    val surfaceVariant: Color,
-    val tint: Color,
-    val tintVariant: Color,
-    val primary: Color,
-    val secondary: Color,
     val backgroundVariant: Color,
-    val divider: Color,
-    val bottomNav: Color,
+    val surface: Color,
+
+    val success: Color,
+    val error: Color,
 )
 
 data class Typography(
