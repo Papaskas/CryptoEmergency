@@ -15,7 +15,7 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 var currentTheme by mutableStateOf(CurrentTheme.NULL)
 
 @Composable
-fun MainTheme(
+fun MainThemeProvider(
     viewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
@@ -31,7 +31,7 @@ fun MainTheme(
 
         // Установить тему согласно теме из системы если в хранилище пусто
         if (currentTheme == CurrentTheme.NULL) {
-            currentTheme = if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
+            currentTheme = if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.DARK
         }
     }
 
@@ -39,15 +39,12 @@ fun MainTheme(
         colors.value =
             when (currentTheme) {
                 CurrentTheme.DARK -> darkPalette
-                CurrentTheme.LIGHT -> lightPalette
+                CurrentTheme.LIGHT -> darkPalette
                 CurrentTheme.NULL -> darkPalette
             }
     }
 
-    val shapes =
-        Shape(
-            padding = 24.dp,
-        )
+    val shapes = Shape(padding = 15.dp)
 
     CompositionLocalProvider(
         LocalColors provides colors.value,

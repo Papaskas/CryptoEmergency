@@ -21,6 +21,7 @@ data class Colors(
     val text3: Color,
     val text4: Color,
     val text5: Color,
+    val text6: Color,
 
     val bottomNav: Color,
 

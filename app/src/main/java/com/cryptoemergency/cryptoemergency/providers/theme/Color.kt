@@ -10,6 +10,7 @@ val darkPalette = Colors(
     text3 = DarkColors.TextG100,
     text4 = DarkColors.TextG20,
     text5 = DarkColors.TextG20,
+    text6 = DarkColors.TextW100,
 
     bottomNav = DarkColors.BgB90,
 
@@ -34,6 +35,7 @@ val lightPalette = Colors(
     text3 = LightColors.TextG,
     text4 = LightColors.TextG,
     text5 = LightColors.TextB90,
+    text6 = LightColors.TextB100,
 
     bottomNav = LightColors.BgW100,
 

@@ -10,7 +10,7 @@ val LocalSnackbar =
     staticCompositionLocalOf<SnackbarHostState> { error("No localSnackBar provided") }
 
 @Composable
-fun SnackBar(content: @Composable () -> Unit) {
+fun SnackBarProvider(content: @Composable () -> Unit) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     CompositionLocalProvider(LocalSnackbar provides snackbarHostState) {

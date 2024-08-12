@@ -2,23 +2,58 @@ package com.cryptoemergency.cryptoemergency.navigation
 
 import kotlinx.serialization.Serializable
 
-object Routes {
+sealed class Routes {
     object Home {
         @Serializable
-        object Home
+        data object Home : Routes()
 
         @Serializable
-        object News
+        data object News : Routes()
 
         @Serializable
-        object Chat
+        data object Chat : Routes()
 
         @Serializable
-        object Menu
+        data object Menu : Routes()
+    }
+
+    object Page {
+        @Serializable
+        data object NewsFeed : Routes()
+
+        @Serializable
+        data object News : Routes()
+
+        @Serializable
+        data object Exchangers : Routes()
+
+        @Serializable
+        data object Exchanges : Routes()
+
+        @Serializable
+        data object Users : Routes()
+
+        @Serializable
+        data object ICORating : Routes()
+
+        @Serializable
+        data object Startups : Routes()
+
+        @Serializable
+        data object Web3 : Routes()
+
+        @Serializable
+        data object Career : Routes()
+
+        @Serializable
+        data object Academy : Routes()
+
+        @Serializable
+        data object Wallet : Routes()
     }
 
     object Auth {
         @Serializable
-        object Profile
+        data object Profile : Routes()
     }
 }
