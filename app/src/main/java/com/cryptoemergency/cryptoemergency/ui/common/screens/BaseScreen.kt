@@ -1,5 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common.screens
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,21 +19,20 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * @param redirect Обьект с переменной route, изменение которой производит редирект,
  * и popBackStack блокирующий возращение
  *
- * @param alignment Горизонтальное позиционирование контента
+ * @param contentAlignment Интерфейс для вычисления положения прямоугольника определенного
+ * размера внутри доступного пространства. Выравнивание часто используется для определения
+ * выравнивания макета внутри родительского макета.
  * */
 @Composable
 fun BaseScreen(
     modifier: Modifier = Modifier,
     redirect: Redirect? = null,
-    alignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable ColumnScope.() -> Unit,
+    contentAlignment: Alignment = Alignment.TopStart,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    Column(
-        modifier
-            .fillMaxSize()
-            .padding(bottom = Theme.shaped.padding)
-            .padding(horizontal = Theme.shaped.padding),
-        horizontalAlignment = alignment,
+    Box(
+        modifier = modifier,
+        contentAlignment = contentAlignment,
     ) {
         content()
     }

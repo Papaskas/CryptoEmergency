@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.screens
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.rememberScrollState
@@ -19,16 +20,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * @param redirect Обьект с переменной route, изменение которой производит редирект,
  * и popBackStack блокирующий возращение
  *
- * @param alignment Горизонтальное позиционирование контента
+ * @param contentAlignment Интерфейс для вычисления положения прямоугольника определенного
+ * размера внутри доступного пространства. Выравнивание часто используется для определения
+ * выравнивания макета внутри родительского макета.
  *
  * */
 @Composable
 fun ScrollableScreen(
     modifier: Modifier = Modifier,
     message: MutableState<String?>,
-    alignment: Alignment.Horizontal = Alignment.Start,
+    contentAlignment: Alignment = Alignment.TopStart,
     redirect: Redirect? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -38,41 +41,7 @@ fun ScrollableScreen(
             .imePadding(), // Чтобы прокручивать то что под клавиатурой
         message = message,
         redirect = redirect,
-        alignment = alignment,
-    ) {
-        content()
-    }
-}
-
-/**
- *
- * Шаблон прокручиваемой страницы с начальными отступами и базовой логикой
- *
- * @param message Переменная при изменении которой выводится snackbarMessage.
- *
- * @param redirect Обьект с переменной route, изменение которой производит редирект,
- * и popBackStack блокирующий возращение
- *
- * @param alignment Горизонтальное позиционирование контента
- *
- * */
-@Composable
-fun ScrollableScreen(
-    modifier: Modifier = Modifier,
-    message: MutableStateFlow<String?>,
-    alignment: Alignment.Horizontal = Alignment.Start,
-    redirect: Redirect? = null,
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    val scrollState = rememberScrollState()
-
-    Screen(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .imePadding(), // Чтобы прокручивать то что под клавиатурой
-        message = message,
-        redirect = redirect,
-        alignment = alignment,
+        contentAlignment = contentAlignment,
     ) {
         content()
     }
@@ -85,15 +54,17 @@ fun ScrollableScreen(
  * @param redirect Обьект с переменной route, изменение которой производит редирект,
  * и popBackStack блокирующий возращение
  *
- * @param alignment Горизонтальное позиционирование контента
+ * @param contentAlignment Интерфейс для вычисления положения прямоугольника определенного
+ * размера внутри доступного пространства. Выравнивание часто используется для определения
+ * выравнивания макета внутри родительского макета.
  *
  * */
 @Composable
 fun ScrollableScreen(
     modifier: Modifier = Modifier,
-    alignment: Alignment.Horizontal = Alignment.Start,
+    contentAlignment: Alignment = Alignment.TopStart,
     redirect: Redirect? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -102,7 +73,7 @@ fun ScrollableScreen(
             .verticalScroll(scrollState)
             .imePadding(), // Чтобы прокручивать то что под клавиатурой
         redirect = redirect,
-        alignment = alignment,
+        contentAlignment = contentAlignment,
     ) {
         content()
     }

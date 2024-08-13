@@ -14,6 +14,8 @@ val darkPalette = Colors(
 
     bottomNav = DarkColors.BgB90,
 
+    stroke = DarkColors.StrokeB,
+
     background = DarkColors.BgB100,
     surface = DarkColors.BgB80,
     surfaceVariant = DarkColors.BgG100,
@@ -38,6 +40,8 @@ val lightPalette = Colors(
     text6 = LightColors.TextB100,
 
     bottomNav = LightColors.BgW100,
+
+    stroke = LightColors.StrokeB20,
 
     background = LightColors.BgW100,
     surface = LightColors.BgG,

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
@@ -71,6 +71,6 @@ fun MainTopBar() {
             }
         )
 
-        HorizontalDivider(thickness = 1.dp, color = Theme.colors.accent)
+        HorizontalDivider()
     }
 }

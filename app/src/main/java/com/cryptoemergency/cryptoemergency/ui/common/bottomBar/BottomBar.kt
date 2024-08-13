@@ -2,6 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.common.bottomBar
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -16,26 +17,31 @@ import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localNavController.getCurrentRoute
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
 
 @Composable
 fun BottomBar() {
-    NavigationBar(
-        containerColor = Theme.colors.bottomNav,
-    ) {
-        val currentRoute = getCurrentRoute()
+    Column {
+        HorizontalDivider()
 
-        BottomItems.entries.forEach { item ->
-            val isSelected = currentRoute == item.route::class.qualifiedName
+        NavigationBar(
+            containerColor = Theme.colors.bottomNav,
+        ) {
+            val currentRoute = getCurrentRoute()
 
-            if(item.label == null) {
-                NavButton(isSelected)
-            } else {
-                NavItem(
-                    route = item.route,
-                    icon = item.icon,
-                    selected = isSelected,
-                    label = item.label,
-                )
+            BottomItems.entries.forEach { item ->
+                val isSelected = currentRoute == item.route::class.qualifiedName
+
+                if(item.label == null) {
+                    NavButton(isSelected)
+                } else {
+                    NavItem(
+                        route = item.route,
+                        icon = item.icon,
+                        selected = isSelected,
+                        label = item.label,
+                    )
+                }
             }
         }
     }
@@ -63,8 +69,6 @@ private fun RowScope.NavItem(
                 popUpTo(navController.graph.startDestinationId) {
                     saveState = true
                 }
-                launchSingleTop = true
-                restoreState = true
             }
         },
         label = {
