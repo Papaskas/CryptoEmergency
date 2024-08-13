@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.providers.theme
 
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -52,6 +53,7 @@ data class Typography(
 
 data class Shape(
     val padding: Dp,
+    @DrawableRes val hexagonOnMainMenu: Int,
 )
 
 object Theme {
@@ -65,7 +67,7 @@ object Theme {
         @ReadOnlyComposable
         get() = LocalTypography.current
 
-    val shaped: Shape
+    val shapes: Shape
         @Composable
         @ReadOnlyComposable
         get() = LocalShape.current

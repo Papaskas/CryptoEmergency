@@ -65,7 +65,7 @@ fun Tabs(
     Column {
         Surface(
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.padding(horizontal = Theme.shaped.padding),
+            modifier = Modifier.padding(horizontal = Theme.shapes.padding),
             color = Theme.colors.surface,
         ) {
             TabRow(

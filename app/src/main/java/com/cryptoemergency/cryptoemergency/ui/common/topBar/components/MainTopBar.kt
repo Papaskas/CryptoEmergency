@@ -30,7 +30,7 @@ fun MainTopBar() {
     Column {
         TopAppBar(
             title = {},
-            modifier = Modifier.padding(start = Theme.shaped.padding, end = 10.dp),
+            modifier = Modifier.padding(start = Theme.shapes.padding, end = 10.dp),
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent,
             ),

@@ -68,7 +68,7 @@ private enum class MenuItems(
 @Composable
 private fun Menu() {
     LazyVerticalGrid(
-        modifier = Modifier.padding(Theme.shaped.padding),
+        modifier = Modifier.padding(Theme.shapes.padding),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         columns = GridCells.Fixed(2),
@@ -120,17 +120,24 @@ private fun MenuItem(
             }
             Spacer(modifier = Modifier.weight(1f))
             Column(
-                modifier = Modifier
-                    .align(Alignment.Top)
-                    .size(50.dp, 60.dp)
+                modifier = Modifier.align(Alignment.Top)
             ) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.End)
-                )
+                Box {
+                    Icon(
+                        painter = painterResource(id = icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.Center)
+                    )
+
+                    Icon(
+                        painter = painterResource(Theme.shapes.hexagonOnMainMenu),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+
             }
         }
     }

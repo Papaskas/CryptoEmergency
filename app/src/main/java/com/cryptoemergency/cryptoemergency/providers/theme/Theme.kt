@@ -21,6 +21,7 @@ fun MainThemeProvider(
 ) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val colors = remember { mutableStateOf(darkPalette) }
+    val shapes = remember { mutableStateOf(darkShapes) }
 
     LaunchedEffect(Unit) {
         // Достать из хранилища
@@ -42,14 +43,18 @@ fun MainThemeProvider(
                 CurrentTheme.LIGHT -> darkPalette
                 CurrentTheme.NULL -> darkPalette
             }
+        shapes.value =
+            when (currentTheme) {
+                CurrentTheme.DARK -> darkShapes
+                CurrentTheme.LIGHT -> darkShapes
+                CurrentTheme.NULL -> darkShapes
+            }
     }
-
-    val shapes = Shape(padding = 15.dp)
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
         LocalTypography provides typography,
-        LocalShape provides shapes,
+        LocalShape provides shapes.value,
         content = content,
     )
 }
