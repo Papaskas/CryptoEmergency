@@ -133,3 +133,35 @@ viewModelScope.launch(Dispatchers.IO) {
 
 Для использования настоящих файлов svg нужно преобразовывать svg код в compose код на
 этом [сайте](https://www.composables.com/svgtocompose)
+
+# SOLID
+
+В проекте есть слушатели lib.Listener, необходимые для общения между UI и ViewModel.
+
+Пример использования:
+
+```kotlin
+@HiltViewModel
+class MyViewModel : ViewModel() {
+    val message = mutableStateOf<String?>(null)
+    val redirect = mutableStateOf<Redirect?>(null)
+  
+    fun test() {
+        message.value = "show message"
+        redirect.value = Redirect(Routes.Home.Home)
+    }
+}
+
+@Composable
+fun Page(viewModel: ViewModel: MyViewModel = hiltViewModel) {
+    // Как только поменяется любая переменная, проиграется логика 
+    Listener(viewModel.message, viewModel.redirect)
+  
+    Column {
+        // Что-угодно
+        Button(onClick = { viewModel.test() }) {
+            
+        }
+    }
+}
+```
