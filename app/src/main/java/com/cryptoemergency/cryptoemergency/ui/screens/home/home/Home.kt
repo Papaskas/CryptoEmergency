@@ -41,14 +41,10 @@ fun HomeScreen() {
 }
 
 @Composable
-private fun RunningLine() {
-
-}
+private fun RunningLine() {}
 
 @Composable
-private fun Slider() {
-
-}
+private fun Slider() {}
 
 private enum class MenuItems(
     val title: String,
