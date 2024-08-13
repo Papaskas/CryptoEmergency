@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
-import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
@@ -19,8 +18,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,11 +34,7 @@ fun MainTopBar() {
             ),
             navigationIcon = {
                 Icon(
-                    painter = if(currentTheme == CurrentTheme.DARK) {
-                        painterResource(R.drawable.logo__light)
-                    } else {
-                        painterResource(R.drawable.logo__dark)
-                    },
+                    painter = painterResource(Theme.shapes.logo),
                     contentDescription = "Лого",
                     tint = Color.Unspecified,
                     modifier = Modifier.clickable {

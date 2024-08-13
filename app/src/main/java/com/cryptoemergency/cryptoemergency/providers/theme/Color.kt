@@ -39,7 +39,7 @@ val lightPalette = Colors(
     text5 = LightColors.TextB90,
     text6 = LightColors.TextB100,
 
-    bottomNav = LightColors.BgW100,
+    bottomNav = LightColors.BgW90,
 
     stroke = LightColors.StrokeB20,
 

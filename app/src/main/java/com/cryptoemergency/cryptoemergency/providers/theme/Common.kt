@@ -54,6 +54,7 @@ data class Typography(
 data class Shape(
     val padding: Dp,
     @DrawableRes val hexagonOnMainMenu: Int,
+    @DrawableRes val logo: Int,
 )
 
 object Theme {

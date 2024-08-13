@@ -32,7 +32,7 @@ fun BottomBar() {
             BottomItems.entries.forEach { item ->
                 val isSelected = currentRoute == item.route::class.qualifiedName
 
-                if(item.label == null) {
+                if(item.label == null || item.icon == null) {
                     NavButton(isSelected)
                 } else {
                     NavItem(
@@ -104,7 +104,7 @@ private fun RowScope.NavButton(
                 Icon(
                     painter = painterResource(R.drawable.added_btn_plus), // Неизменная часть
                     contentDescription = null,
-                    tint = Color.Unspecified
+                    tint = Theme.colors.bottomNav
                 )
             }
         },
@@ -126,12 +126,12 @@ private fun RowScope.NavButton(
 
 private enum class BottomItems(
     val label: String?,
-    @DrawableRes val icon: Int,
+    @DrawableRes val icon: Int?,
     val route: Routes,
 ) {
-    Home("Главная", R.drawable.home, Routes.Home.Home),
-    News("Лента", R.drawable.newsfeed__filled, Routes.Home.News),
-    Add(null, R.drawable.added_btn, Routes.Auth.Profile),
+    Home("Главная", R.drawable.home__filled, Routes.Home.Home),
+    News("Лента", R.drawable.news_feed__filled, Routes.Home.News),
+    Add(null, null, Routes.Auth.Profile),
     Chat("Чат", R.drawable.chat__filled, Routes.Home.Chat),
     Menu("Еще", R.drawable.more__filled, Routes.Home.Menu),
 }

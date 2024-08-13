@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cryptoemergency.cryptoemergency"
-        minSdk = 21
+        minSdk = 25
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 1
@@ -145,6 +145,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.compose.material)
 
     detektPlugins(libs.detekt.formatting)
     kapt(libs.hilt.compiler) // Компилятор аннотация hilt
