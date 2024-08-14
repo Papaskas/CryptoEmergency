@@ -2,11 +2,12 @@ package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -52,14 +54,15 @@ fun Tabs(
     }
 
     Column {
-        TabRow(
+        ScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             contentColor = Theme.colors.accent,
+            edgePadding = 0.dp,
+            modifier = Modifier.fillMaxWidth()
         ) {
             tabTitles.forEachIndexed { index, title ->
                 Tab(
-                    modifier = Modifier.wrapContentWidth(),
                     unselectedContentColor = Theme.colors.text2,
                     selectedContentColor = Theme.colors.accent,
                     selected = selectedTabIndex == index,
@@ -77,6 +80,7 @@ fun Tabs(
                 )
             }
         }
+        HorizontalDivider(Modifier.offset(y = (-1).dp))
 
         HorizontalPager(
             state = pagerState,

@@ -31,4 +31,12 @@ class ThemeViewModel @Inject constructor(
             themeProtoStore.put(currentTheme)
         }
     }
+
+    fun changeTheme(theme: CurrentTheme) {
+        currentTheme = theme
+
+        viewModelScope.launch {
+            themeProtoStore.put(currentTheme)
+        }
+    }
 }
