@@ -9,6 +9,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.AboutUser
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.Content
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.Stories
 
 @Composable
 fun ProfileScreen(
@@ -20,5 +22,11 @@ fun ProfileScreen(
         }
 
         HorizontalDivider()
+
+        Box(modifier = Modifier.padding(Theme.shapes.padding)) {
+            Stories(viewModel)
+        }
+
+        Content(viewModel)
     }
 }

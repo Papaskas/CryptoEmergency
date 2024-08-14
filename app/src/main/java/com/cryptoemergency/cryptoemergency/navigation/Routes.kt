@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.navigation
 import kotlinx.serialization.Serializable
 
 sealed class Routes {
-    object Home {
+    interface Home {
         @Serializable
         data object Home : Routes()
 
@@ -17,7 +17,7 @@ sealed class Routes {
         data object Menu : Routes()
     }
 
-    object Page {
+    interface Page {
         @Serializable
         data object NewsFeed : Routes()
 
@@ -52,7 +52,7 @@ sealed class Routes {
         data object Wallet : Routes()
     }
 
-    object Auth {
+    interface Auth {
         @Serializable
         data object Profile : Routes()
     }
