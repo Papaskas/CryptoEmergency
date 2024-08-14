@@ -8,9 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.viewModels.ThemeViewModel
+import kotlinx.coroutines.runBlocking
 
 var currentTheme by mutableStateOf(CurrentTheme.NULL)
 
@@ -21,18 +22,18 @@ fun MainThemeProvider(
 ) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val colors = remember { mutableStateOf(darkPalette) }
-    val shapes = remember { mutableStateOf(darkShapes) }
+    val icons = remember { mutableStateOf(darkIcons) }
 
     LaunchedEffect(Unit) {
         // Достать из хранилища
         // Срабатывает только если значение вручную установили
         if (currentTheme == CurrentTheme.NULL) {
-            viewModel.getTheme()
+            viewModel.fetchTheme()
         }
 
         // Установить тему согласно теме из системы если в хранилище пусто
         if (currentTheme == CurrentTheme.NULL) {
-            currentTheme = if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.DARK
+            currentTheme = if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
         }
     }
 
@@ -40,21 +41,22 @@ fun MainThemeProvider(
         colors.value =
             when (currentTheme) {
                 CurrentTheme.DARK -> darkPalette
-                CurrentTheme.LIGHT -> darkPalette
+                CurrentTheme.LIGHT -> lightPalette
                 CurrentTheme.NULL -> darkPalette
             }
-        shapes.value =
+        icons.value =
             when (currentTheme) {
-                CurrentTheme.DARK -> darkShapes
-                CurrentTheme.LIGHT -> darkShapes
-                CurrentTheme.NULL -> darkShapes
+                CurrentTheme.DARK -> darkIcons
+                CurrentTheme.LIGHT -> lightIcons
+                CurrentTheme.NULL -> darkIcons
             }
     }
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
         LocalTypography provides typography,
-        LocalShape provides shapes.value,
+        LocalShape provides shapes,
+        LocalIcons provides icons.value,
         content = content,
     )
 }

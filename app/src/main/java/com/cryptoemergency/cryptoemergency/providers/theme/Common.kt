@@ -53,8 +53,12 @@ data class Typography(
 
 data class Shape(
     val padding: Dp,
+)
+
+data class Icons(
     @DrawableRes val hexagonOnMainMenu: Int,
     @DrawableRes val logo: Int,
+    @DrawableRes val theme: Int,
 )
 
 object Theme {
@@ -72,6 +76,11 @@ object Theme {
         @Composable
         @ReadOnlyComposable
         get() = LocalShape.current
+
+    val icons: Icons
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalIcons.current
 }
 
 val LocalColors =
@@ -86,5 +95,10 @@ val LocalTypography =
 
 val LocalShape =
     staticCompositionLocalOf<Shape> {
-        error("No typography provided")
+        error("No shapes provided")
+    }
+
+val LocalIcons =
+    staticCompositionLocalOf<Icons> {
+        error("No icons provided")
     }

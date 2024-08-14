@@ -34,7 +34,7 @@ fun MainTopBar() {
             ),
             navigationIcon = {
                 Icon(
-                    painter = painterResource(Theme.shapes.logo),
+                    painter = painterResource(Theme.icons.logo),
                     contentDescription = "Лого",
                     tint = Color.Unspecified,
                     modifier = Modifier.clickable {
@@ -43,13 +43,11 @@ fun MainTopBar() {
                 )
             },
             actions = {
-                IconButton(onClick = {
-                    navController.navigate(Routes.Auth.Profile)
-                }) {
+                IconButton(onClick = { /**/ }) {
                     Icon(
                         painterResource(R.drawable.notification),
                         contentDescription = "Уведомления",
-                        tint = Color.Unspecified,
+                        tint = Theme.colors.text6,
                     )
                 }
                 IconButton(onClick = {

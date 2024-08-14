@@ -2,6 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Tab
@@ -55,10 +56,10 @@ fun Tabs(
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             contentColor = Theme.colors.accent,
-
         ) {
             tabTitles.forEachIndexed { index, title ->
                 Tab(
+                    modifier = Modifier.wrapContentWidth(),
                     unselectedContentColor = Theme.colors.text2,
                     selectedContentColor = Theme.colors.accent,
                     selected = selectedTabIndex == index,

@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
@@ -168,7 +169,7 @@ private fun MenuItem(
             .clip(RoundedCornerShape(10.dp))
             .clickable(
                 interactionSource = interactionSource,
-                indication = rememberRipple(bounded = true, color = Color.White),
+                indication = rememberRipple(),
             ) {
                 navController.navigate(route)
             }
@@ -199,19 +200,21 @@ private fun MenuItem(
                 Box {
                     Icon(
                         painter = painterResource(id = icon),
+                        tint = Color.Unspecified,
                         contentDescription = null,
                         modifier = Modifier
+                            .zIndex(2f)
                             .size(24.dp)
                             .align(Alignment.Center)
                     )
 
                     Icon(
-                        painter = painterResource(Theme.shapes.hexagonOnMainMenu),
+                        painter = painterResource(Theme.icons.hexagonOnMainMenu),
                         contentDescription = null,
-                        tint = Color.Unspecified
+                        tint = Color.Unspecified,
+                        modifier = Modifier.zIndex(1f)
                     )
                 }
-
             }
         }
     }
