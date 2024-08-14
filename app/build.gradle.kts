@@ -68,7 +68,7 @@ android {
         debug {
             isMinifyEnabled = false
 
-            ndk { debugSymbolLevel = "SYMBOL_TABLE" }
+            ndk { debugSymbolLevel = "FULL" }
 
             buildConfigField(
                 "String",

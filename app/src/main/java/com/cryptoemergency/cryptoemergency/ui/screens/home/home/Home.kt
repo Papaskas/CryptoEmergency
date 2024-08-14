@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,6 +38,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -45,6 +48,8 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 
 @Composable
 fun HomeScreen(
@@ -52,12 +57,12 @@ fun HomeScreen(
 ) {
     val items = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
 
-    LazyColumn { // TODO: нельзя вложенные
-        item {
-            ExchangeRate(viewModel)
-            Swiper(items)
-            Menu()
-        }
+    ScrollableScreen {
+        ExchangeRate(viewModel)
+        Spacer(Modifier.height(15.dp))
+        Swiper(items)
+        Spacer(Modifier.height(30.dp))
+        Menu()
     }
 }
 
@@ -117,6 +122,23 @@ fun Swiper(items: List<String>) {
     }
 }
 
+@Composable
+private fun Menu() {
+    LazyVerticalGrid(
+        // Так как не знаю конкретную высоту и нельзя указывать fillMaxHeight(ошибка бесконечнх высот),
+        // задал maxHeight под предлогом: занимай сколько надо, но не выдавай ошибку
+        modifier = Modifier.heightIn(max = 1500.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        columns = GridCells.Fixed(2),
+    ) {
+        items(MenuItems.entries.size) { index ->
+            val item = MenuItems.entries[index]
+            MenuItem(item.title, item.route, item.icon)
+        }
+    }
+}
+
 private enum class MenuItems(
     val title: String,
     val route: Routes,
@@ -134,21 +156,6 @@ private enum class MenuItems(
     Career("Карьеры", Routes.Page.Career, R.drawable.career),
     Academy("Академия", Routes.Page.Academy, R.drawable.academy),
     Wallet("CEM кошелек", Routes.Page.Wallet, R.drawable.wallet),
-}
-
-@Composable
-private fun Menu() {
-    LazyVerticalGrid(
-        modifier = Modifier.padding(Theme.shapes.padding),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        columns = GridCells.Fixed(2),
-    ) {
-        items(MenuItems.entries.size) { index ->
-            val item = MenuItems.entries[index]
-            MenuItem(item.title, item.route, item.icon)
-        }
-    }
 }
 
 @Composable
