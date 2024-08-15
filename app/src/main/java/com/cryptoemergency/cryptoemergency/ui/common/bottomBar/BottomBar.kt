@@ -17,12 +17,12 @@ import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localNavController.getCurrentRoute
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @Composable
 fun BottomBar() {
     Column {
-        HorizontalDivider()
+        CommonHorizontalDivider()
 
         NavigationBar(
             containerColor = Theme.colors.bottomNav,

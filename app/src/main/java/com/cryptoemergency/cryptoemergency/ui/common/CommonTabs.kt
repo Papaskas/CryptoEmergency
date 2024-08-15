@@ -1,11 +1,12 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -20,12 +21,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
- *
  * @param tabTitles Заголовки верхней панели
  *
  *  Пример: tabTitles = arrayOf("Title1", "Title2")
@@ -35,10 +36,11 @@ import kotlinx.coroutines.launch
  * Пример: val content = arrayOf({ Screen1() }, { Screen2() })
  *
  * @param defaultTab Выбранный заголовок по умолчанию
- *
  * */
 @Composable
-fun Tabs(
+fun CommonTabs(
+    modifierTabRow: Modifier = Modifier,
+    modifierTab: Modifier = Modifier,
     tabTitles: Array<String>,
     content: Array<@Composable () -> Unit>,
     defaultTab: Int = 0,
@@ -54,39 +56,48 @@ fun Tabs(
     }
 
     Column {
-        ScrollableTabRow(
-            selectedTabIndex = selectedTabIndex,
-            containerColor = Color.Transparent,
-            contentColor = Theme.colors.accent,
-            edgePadding = 0.dp,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            tabTitles.forEachIndexed { index, title ->
-                Tab(
-                    unselectedContentColor = Theme.colors.text2,
-                    selectedContentColor = Theme.colors.accent,
-                    selected = selectedTabIndex == index,
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
+        Column (
+            Modifier.padding(horizontal = Theme.shapes.padding)
+        ){
+            ScrollableTabRow(
+                selectedTabIndex = selectedTabIndex,
+                containerColor = Color.Transparent,
+                contentColor = Theme.colors.accent,
+                edgePadding = 0.dp,
+                divider = {},
+                modifier = modifierTabRow.fillMaxWidth(),
+            ) {
+                tabTitles.forEachIndexed { index, title ->
+                    Tab(
+                        modifier = modifierTab,
+                        unselectedContentColor = Theme.colors.text2,
+                        selectedContentColor = Theme.colors.accent,
+                        selected = selectedTabIndex == index,
+                        onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        text = {
+                            Text(
+                                text = title,
+                                style = Theme.typography.caption1,
+                            )
                         }
-                    },
-                    text = {
-                        Text(
-                            text = title,
-                            style = Theme.typography.caption1,
-                        )
-                    }
-                )
+                    )
+                }
             }
+            CommonHorizontalDivider(
+                modifier = Modifier
+                    .offset(y = (-2).dp)
+                    .zIndex(-1f),
+                thickness = 2.dp
+            )
         }
-        HorizontalDivider(Modifier.offset(y = (-1).dp))
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+            modifier = Modifier.fillMaxSize()
         ) { index ->
             content[index]()
         }

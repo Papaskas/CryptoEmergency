@@ -18,7 +18,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +63,6 @@ fun MainTopBar() {
             }
         )
 
-        HorizontalDivider()
+        CommonHorizontalDivider()
     }
 }

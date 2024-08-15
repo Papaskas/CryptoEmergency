@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.HorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.viewModels.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,6 +79,6 @@ fun ProfileTopBar(
             }
         )
 
-        HorizontalDivider()
+        CommonHorizontalDivider()
     }
 }
