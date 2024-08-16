@@ -2,6 +2,11 @@ package com.cryptoemergency.cryptoemergency.navigation
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Закрытый класс, представляющий различные маршруты в приложении. Этот класс гарантирует,
+ * что в нем определены все возможные маршруты, обеспечивая безопасность типов и проверку полноты.
+ * Внутри определяются интрефейсы для блокировки редиректа на них
+ * */
 sealed class Routes {
     interface Home {
         @Serializable
@@ -55,5 +60,8 @@ sealed class Routes {
     interface Auth {
         @Serializable
         data object Profile : Routes()
+
+        @Serializable
+        data object ChangeProfileData : Routes()
     }
 }

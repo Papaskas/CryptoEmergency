@@ -38,7 +38,7 @@ data class Colors(
     val surface: Color,
     val surfaceVariant: Color,
 
-    val surfaceQR: Color,
+    val surfaceAlt: Color,
     val backgroundDropDownMenu: Color,
     val backgroundUserFeed: Color,
 

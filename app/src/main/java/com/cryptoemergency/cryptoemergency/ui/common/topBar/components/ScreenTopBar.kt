@@ -13,18 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
-import com.cryptoemergency.cryptoemergency.viewModels.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileTopBar(
-    themeViewModel: ThemeViewModel = hiltViewModel()
+fun ScreenTopBar(
+    title: String,
 ) {
     val navController = LocalNavController.current
 
@@ -32,7 +29,7 @@ fun ProfileTopBar(
         TopAppBar(
             title = {
                 Text(
-                    text = "Мой профиль",
+                    text = title,
                     style = Theme.typography.h3,
                     color = Theme.colors.text1,
                 )
@@ -47,36 +44,11 @@ fun ProfileTopBar(
                 }) {
                     Icon(
                         painter = painterResource(R.drawable.arrow_left),
-                        contentDescription = "Назад",
-                        tint = Theme.colors.text6,
+                        contentDescription = "Лого",
+                        tint = Theme.colors.text1,
                     )
                 }
             },
-            actions = {
-                IconButton(onClick = { themeViewModel.toggleTheme() }) {
-                    Icon(
-                        painterResource(Theme.icons.theme),
-                        contentDescription = "Сменить тему приложения",
-                        tint = Theme.colors.text6,
-                    )
-                }
-                IconButton(onClick = {
-                    navController.navigate(Routes.Auth.ChangeProfileData)
-                }) {
-                    Icon(
-                        painter = painterResource(R.drawable.edit),
-                        contentDescription = "Изменить данные профиля",
-                        tint = Theme.colors.text6,
-                    )
-                }
-                IconButton(onClick = { /**/ }) {
-                    Icon(
-                        painterResource(R.drawable.more__outline),
-                        contentDescription = "Еще",
-                        tint = Theme.colors.text6,
-                    )
-                }
-            }
         )
 
         CommonHorizontalDivider()

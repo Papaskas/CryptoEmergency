@@ -19,7 +19,7 @@ val darkPalette = Colors(
     background = DarkColors.BgB100,
     surface = DarkColors.BgB80,
     surfaceVariant = DarkColors.BgG100,
-    surfaceQR = DarkColors.BgB80,
+    surfaceAlt = DarkColors.BgB80,
 
     backgroundDropDownMenu = DarkColors.BgB90,
 
@@ -46,7 +46,7 @@ val lightPalette = Colors(
     background = LightColors.BgW100,
     surface = LightColors.BgG,
     surfaceVariant = LightColors.BgG,
-    surfaceQR = LightColors.BgW90,
+    surfaceAlt = LightColors.BgW90,
 
     backgroundDropDownMenu = LightColors.BgW100,
 
