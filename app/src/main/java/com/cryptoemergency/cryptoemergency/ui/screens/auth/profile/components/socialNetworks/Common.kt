@@ -9,55 +9,60 @@ data class SocialNetworkIconType(
     val contentDescription: String,
 )
 
+/**
+*
+* @param contentDescription обязятельно должен быть заглавными, т.к. по нему потом ищется enum class
+*
+* */
 val socialNetworksIcons = listOf(
     SocialNetworkIconType(
         R.drawable.telegram,
         R.drawable.telegram__active,
-        "telegram",
+        "TELEGRAM",
     ),
     SocialNetworkIconType(
         R.drawable.vk,
         R.drawable.vk__active,
-        "vk",
+        "VK",
     ),
     SocialNetworkIconType(
         R.drawable.instagram,
         R.drawable.instagram__active,
-        "instagram",
+        "INSTAGRAM",
     ),
     SocialNetworkIconType(
         R.drawable.twitter,
         R.drawable.twitter__active,
-        "twitter",
+        "TWITTER",
     ),
     SocialNetworkIconType(
         R.drawable.facebook,
         R.drawable.facebook__active,
-        "facebook",
+        "FACEBOOK",
     ),
     SocialNetworkIconType(
         R.drawable.discord,
         R.drawable.discord__active,
-        "discord",
+        "DISCORD",
     ),
     SocialNetworkIconType(
         R.drawable.twitch,
         R.drawable.twitch__active,
-        "twitch",
+        "TWITCH",
     ),
     SocialNetworkIconType(
         R.drawable.tiktok,
         R.drawable.tiktok__active,
-        "tiktok",
+        "TIKTOK",
     ),
     SocialNetworkIconType(
         R.drawable.linkedin,
         R.drawable.linkedin__active,
-        "linkedin",
+        "LINKEDIN",
     ),
     SocialNetworkIconType(
         R.drawable.github,
         R.drawable.github__active,
-        "github",
+        "GITHUB",
     ),
 )

@@ -8,7 +8,31 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+
+/**
+ * Настраиваемая функция, которая отслеживает изменения в предоставленных параметрах и выполняет
+ * соответствующие действия
+ *
+ * @param message - Изменяемое состояние типа String?, представляющее отображаемое сообщение.
+ * При изменении значения этого состояния будет отображаться сообщение.
+ * После отображения сообщение будет удалено.
+ * Если этот параметр не указан, его значение по умолчанию равно null.
+ *
+ * @param redirect экземпляр класса Redirect, который представляет действие навигации.
+ * При изменении значения этого параметра навигация будет перенаправлена по указанному маршруту.
+ * Если свойство `popBackStack` экземпляра Redirect имеет значение true, стек навигации будет возвращен обратно.
+ * Если этот параметр не указан, его значение по умолчанию равно null.
+ * */
+@Composable
+fun Listener(
+    message: MutableStateFlow<String?> = MutableStateFlow(null),
+    redirect: Redirect? = null,
+) {
+    ListenerMessageFlow(message)
+    ListenerRedirect(redirect)
+}
 
 /**
  * Настраиваемая функция, которая отслеживает изменения в предоставленных параметрах и выполняет
@@ -49,6 +73,29 @@ private fun ListenerMessage(
                 )
 
                 message.value = null
+            }
+        }
+    }
+}
+
+@Composable
+private fun ListenerMessageFlow(
+    message: MutableStateFlow<String?>,
+) {
+    val scope = rememberCoroutineScope()
+    val snackbar = LocalSnackbar.current
+
+    LaunchedEffect(message) {
+        scope.launch {
+            message.collect { value ->
+                value?.let { msg ->
+                    snackbar.showSnackbar(
+                        message = msg,
+                        withDismissAction = true,
+                    )
+
+                    message.value = null
+                }
             }
         }
     }

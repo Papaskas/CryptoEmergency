@@ -156,9 +156,9 @@ fun BaseInput(
                 unfocusedTextColor = Theme.colors.text1,
                 errorTextColor = Theme.colors.error,
 
-                focusedContainerColor = Theme.colors.surfaceAlt,
-                unfocusedContainerColor = Theme.colors.surface,
-                errorContainerColor = Theme.colors.surface,
+//                focusedContainerColor = Theme.colors.surface2,
+//                unfocusedContainerColor = Theme.colors.surface,
+//                errorContainerColor = Theme.colors.surface,
 
                 cursorColor = Theme.colors.accent,
                 errorCursorColor = Theme.colors.error,

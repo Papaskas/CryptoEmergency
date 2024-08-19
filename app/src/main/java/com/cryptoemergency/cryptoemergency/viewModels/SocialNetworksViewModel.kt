@@ -1,25 +1,24 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks
+package com.cryptoemergency.cryptoemergency.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.store.ProtoStore
-import com.cryptoemergency.cryptoemergency.api.store.Store
-import com.cryptoemergency.cryptoemergency.module.TokenStore
 import com.cryptoemergency.cryptoemergency.repository.store.data.Network
-import com.cryptoemergency.cryptoemergency.repository.store.data.NetworkData
+import com.cryptoemergency.cryptoemergency.repository.store.data.SocialNetwork
 import com.cryptoemergency.cryptoemergency.repository.store.data.SocialNetworks
-import com.cryptoemergency.cryptoemergency.repository.store.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SocialNetworksViewModel @Inject constructor(
     private val socialNetworkStore: ProtoStore<SocialNetworks>,
-    private val userStore: ProtoStore<User>,
-    @TokenStore private val tokenStore: Store<String>,
 ) : ViewModel() {
+    val message = MutableStateFlow<String?>(null)
+
     val socialNetworks = MutableStateFlow(SocialNetworks())
 
     init {
@@ -37,23 +36,37 @@ class SocialNetworksViewModel @Inject constructor(
 
     }
 
-    fun updateSocialNetworks(
+    suspend fun getSocialNetwork(
         network: Network,
-        data: List<NetworkData>,
+    ): SocialNetwork? {
+        val data = socialNetworkStore.get()
+        return data.networks.find { it.network == network }
+    }
+
+    fun updateSocialNetwork(
+        network: SocialNetwork,
     ) {
         viewModelScope.launch {
-            val res = socialNetworkStore.get()
-            val updatedNetworks = res.networks.map {
-                if(it.network == network) {
-                    it.copy(data = data)
+            Log.d("NET", "$network")
+            val data = socialNetworkStore.get()
+            val updatedNetworks = data.networks.map {
+                if(it.network == network.network) {
+                    Log.d("Updating: ", "${it.network}")
+                    Log.d("Updating", "${it.data}")
+                    it.copy(data = network.data)
                 } else {
+                    Log.d("Updating: ", "${it}")
                     it
                 }
             }
 
-            socialNetworkStore.dataStore.updateData {
+            Log.d("updatedNetworks", "$updatedNetworks")
+            val res = socialNetworkStore.dataStore.updateData {
                 it.copy(networks = updatedNetworks)
             }
+            Log.d("res", "$res")
+
+            message.value = "Социальная сеть успешно изменена!"
         }
     }
 }
