@@ -11,13 +11,14 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.SocialNetworks
 
 @Composable
 fun Content(viewModel: ProfileViewModel) {
     Box(
         Modifier
             .background(
-                color = Theme.colors.surface,
+                color = Theme.colors.surface1,
                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
             )
             .fillMaxSize()

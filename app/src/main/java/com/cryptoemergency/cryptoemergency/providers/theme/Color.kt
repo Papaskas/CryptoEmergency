@@ -12,18 +12,14 @@ val darkPalette = Colors(
     text5 = DarkColors.TextG20,
     text6 = DarkColors.TextW100,
 
-    bottomNav = DarkColors.BgB90,
-
     stroke = DarkColors.StrokeB,
 
-    background = DarkColors.BgB100,
-    surface = DarkColors.BgB80,
-    surfaceVariant = DarkColors.BgG100,
-    surfaceQR = DarkColors.BgB80,
-
-    backgroundDropDownMenu = DarkColors.BgB90,
-
-    backgroundUserFeed = DarkColors.BgG100,
+    backgroundMain = DarkColors.BgB100,
+    background2 = DarkColors.BgB90,
+    background3 = DarkColors.BgG100,
+    surface1 = DarkColors.BgB80,
+    surface2 = DarkColors.BgG100,
+    surface3 = DarkColors.BgB80,
 
     success = DarkColors.success,
     error = DarkColors.error,
@@ -39,18 +35,14 @@ val lightPalette = Colors(
     text5 = LightColors.TextB90,
     text6 = LightColors.TextB100,
 
-    bottomNav = LightColors.BgW90,
-
     stroke = LightColors.StrokeB20,
 
-    background = LightColors.BgW100,
-    surface = LightColors.BgG,
-    surfaceVariant = LightColors.BgG,
-    surfaceQR = LightColors.BgW90,
-
-    backgroundDropDownMenu = LightColors.BgW100,
-
-    backgroundUserFeed = LightColors.BgW90,
+    backgroundMain = LightColors.BgW100,
+    background2 = LightColors.BgW90,
+    background3 = LightColors.BgW90,
+    surface1 = LightColors.BgG,
+    surface2 = LightColors.BgG,
+    surface3 = LightColors.BgW90,
 
     success = LightColors.success,
     error = LightColors.error,

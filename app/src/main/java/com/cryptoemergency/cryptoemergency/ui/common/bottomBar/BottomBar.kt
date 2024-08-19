@@ -25,7 +25,7 @@ fun BottomBar() {
         CommonHorizontalDivider()
 
         NavigationBar(
-            containerColor = Theme.colors.bottomNav,
+            containerColor = Theme.colors.background2,
         ) {
             val currentRoute = getCurrentRoute()
 
@@ -104,7 +104,7 @@ private fun RowScope.NavButton(
                 Icon(
                     painter = painterResource(R.drawable.added_btn_plus), // Неизменная часть
                     contentDescription = null,
-                    tint = Theme.colors.bottomNav
+                    tint = Theme.colors.background2
                 )
             }
         },

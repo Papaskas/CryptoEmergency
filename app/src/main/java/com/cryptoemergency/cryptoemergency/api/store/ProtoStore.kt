@@ -23,7 +23,12 @@ class ProtoStore<T>(
         serializer = key.serializer,
     )
 
-    private val dataStore: DataStore<T> = context.dataStore
+    /*
+    *
+    * Прямой доступ к базе
+    *
+    * */
+    val dataStore: DataStore<T> = context.dataStore
 
     /**
      * Извлекает сохраненные данные, связанные с данным ключом

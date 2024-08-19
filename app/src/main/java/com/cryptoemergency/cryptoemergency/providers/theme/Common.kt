@@ -32,15 +32,12 @@ data class Colors(
 
     val stroke: Color,
 
-    val bottomNav: Color,
-
-    val background: Color,
-    val surface: Color,
-    val surfaceVariant: Color,
-
-    val surfaceQR: Color,
-    val backgroundDropDownMenu: Color,
-    val backgroundUserFeed: Color,
+    val backgroundMain: Color,
+    val background2: Color,
+    val background3: Color,
+    val surface1: Color,
+    val surface2: Color,
+    val surface3: Color,
 
     val success: Color,
     val error: Color,

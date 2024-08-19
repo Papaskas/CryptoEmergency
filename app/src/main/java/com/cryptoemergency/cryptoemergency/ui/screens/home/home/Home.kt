@@ -178,7 +178,7 @@ private fun MenuItem(
             modifier = Modifier
                 .height(85.dp)
                 .background(
-                    color = Theme.colors.surface,
+                    color = Theme.colors.surface1,
                     shape = RoundedCornerShape(10.dp),
                 )
                 .padding(horizontal = 10.dp, vertical = 6.dp)

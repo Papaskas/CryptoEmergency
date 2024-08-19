@@ -33,9 +33,9 @@ class ProfileViewModel @Inject constructor(
         countSubscribers = 1000,
         countSubscribes = 500,
         socialNetworks = listOf(
-            SocialNetwork(R.drawable.academy__filled, "Facebook", "","https://www.facebook.com/user"),
-            SocialNetwork(R.drawable.academy__filled, "Instagram", "", "https://www.instagram.com/user"),
-            SocialNetwork(R.drawable.academy__filled, "Twitter", "", "https://www.twitter.com/user"),
+            SocialNetwork(R.drawable.facebook, "Facebook", "","https://www.facebook.com/user"),
+            SocialNetwork(R.drawable.instagram, "Instagram", "", "https://www.instagram.com/user"),
+            SocialNetwork(R.drawable.twitter, "Twitter", "", "https://www.twitter.com/user"),
         ),
     )
 }

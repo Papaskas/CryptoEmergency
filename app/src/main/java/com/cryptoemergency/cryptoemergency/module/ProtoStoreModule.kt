@@ -4,6 +4,7 @@ import android.content.Context
 import com.cryptoemergency.cryptoemergency.api.store.ProtoStore
 import com.cryptoemergency.cryptoemergency.repository.store.ProtoKeys
 import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.repository.store.data.SocialNetworks
 import com.cryptoemergency.cryptoemergency.repository.store.data.User
 import dagger.Module
 import dagger.Provides
@@ -26,4 +27,10 @@ object ProtoStoreModule {
     fun provideThemeProtoStore(
         @ApplicationContext context: Context,
     ): ProtoStore<CurrentTheme> = ProtoStore(ProtoKeys.THEME, context)
+
+    @Provides
+    @Singleton
+    fun provideThemeSocialNetworksStore(
+        @ApplicationContext context: Context,
+    ): ProtoStore<SocialNetworks> = ProtoStore(ProtoKeys.SOCIAL_NETWORKS, context)
 }

@@ -4,16 +4,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonColors
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.modifiers.linearGradientBackground
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
@@ -21,7 +20,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * @param modifier модификатор, который будет применен к кнопке.
  * @param text Текст, который будет отображаться на кнопке.
  * @param onClick обратный вызов, который должен быть вызван при нажатии кнопки.
- * @param layout Поведение кнопки в родители. По умолчанию используется значение [LayoutWidth.MatchParent].
+ * @param layoutWidth Поведение кнопки в родители. По умолчанию используется значение [LayoutWidth.MatchParent].
  * @param isEnabled Параметр определяющий включена кнопка или нет. По умолчанию используется значение true.
  */
 @Composable
@@ -29,32 +28,32 @@ fun CommonButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
-    layout: LayoutWidth = LayoutWidth.MatchParent,
+    layoutWidth: LayoutWidth = LayoutWidth.MatchParent,
     isEnabled: Boolean = true,
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Transparent // Для видимости градиента
+            containerColor = Color.Transparent // Для видимости градиента
         ),
-        modifier = modifier.buttonStyle(layout),
+        modifier = modifier.buttonStyle(layoutWidth),
         enabled = isEnabled,
     ) {
         Text(
             text = text,
             textAlign = TextAlign.Center,
-            style = getTextStyle(layout),
+            style = getTextStyle(layoutWidth),
         )
     }
 }
 
 @Composable
-private fun Modifier.buttonStyle(layout: LayoutWidth): Modifier = this.then(
-    when (layout) {
+private fun Modifier.buttonStyle(layoutWidth: LayoutWidth): Modifier = this.then(
+    when (layoutWidth) {
         LayoutWidth.MatchParent -> {
             Modifier
                 .fillMaxWidth()
-                .sizeIn(minHeight = 50.dp)
+                .sizeIn(maxHeight = 50.dp)
                 .linearGradientBackground(
                     colors = listOf(
                         Color(0xFFF103CF),
@@ -67,7 +66,7 @@ private fun Modifier.buttonStyle(layout: LayoutWidth): Modifier = this.then(
         LayoutWidth.WrapContent -> {
             Modifier
                 .wrapContentWidth()
-                .sizeIn(minHeight = 36.dp)
+                .sizeIn(maxHeight = 36.dp)
                 .linearGradientBackground(
                     colors = listOf(
                         Color(0xFFF103CF),
@@ -82,9 +81,9 @@ private fun Modifier.buttonStyle(layout: LayoutWidth): Modifier = this.then(
 
 @Composable
 private fun getTextStyle(
-    layout: LayoutWidth,
+    layoutWidth: LayoutWidth,
 ): TextStyle {
-    return when (layout) {
+    return when (layoutWidth) {
         LayoutWidth.MatchParent -> {
             Theme.typography.body1
         }
