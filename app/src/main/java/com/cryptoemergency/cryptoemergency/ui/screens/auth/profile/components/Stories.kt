@@ -57,7 +57,7 @@ private fun Story(
                 .height(60.dp)
                 .width(55.dp)
                 .background(
-                    color = Theme.colors.surface,
+                    color = Theme.colors.surface1,
                     shape = HexagonShape()
                 )
         )

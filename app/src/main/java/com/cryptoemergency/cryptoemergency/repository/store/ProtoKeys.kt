@@ -4,6 +4,7 @@ import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.repository.store.data.SocialNetworks
 import com.cryptoemergency.cryptoemergency.repository.store.data.User
 import kotlinx.serialization.serializer
 
@@ -38,5 +39,11 @@ sealed class ProtoKeys<T>(
         key = stringPreferencesKey("theme"),
         defaultValue = CurrentTheme.NULL,
         serializer = GenericSerializer(serializer<CurrentTheme>(), CurrentTheme.NULL),
+    )
+
+    data object SOCIAL_NETWORKS : ProtoKeys<SocialNetworks>(
+        key = stringPreferencesKey("socialNetworks"),
+        defaultValue = SocialNetworks(),
+        serializer = GenericSerializer(serializer<SocialNetworks>(), SocialNetworks()),
     )
 }
