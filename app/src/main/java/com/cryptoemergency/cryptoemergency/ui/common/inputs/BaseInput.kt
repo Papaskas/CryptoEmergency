@@ -9,8 +9,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -68,6 +70,7 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
  * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
+ * @param colors Палитра цветов для Input
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,19 +80,20 @@ fun BaseInput(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    prefix: String? = null,
-    suffix: String? = null,
-    supportingText: String? = null,
     isError: Boolean = false,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
+    supportingText: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: TextFieldColors = TextFieldDefaults.colors(),
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState()
     val borderModifier = if (isFocused.value) {
@@ -113,7 +117,7 @@ fun BaseInput(
         enabled = enabled,
         textStyle = Theme.typography.body1,
         singleLine = singleLine,
-        modifier = borderModifier.fillMaxWidth()
+        modifier = borderModifier.fillMaxWidth(),
     ) {
         TextFieldDefaults.DecorationBox(
             value = value.value.text,
@@ -123,25 +127,13 @@ fun BaseInput(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             isError = isError,
-            prefix = {
-                prefix?.let {
-                    Text(text = prefix)
-                }
-            },
-            suffix = {
-                suffix?.let {
-                    Text(text = suffix)
-                }
-            },
-//            supportingText = { TODO: Вызывает, пока оставить до Validate логики
-//                supportingText?.let {
-//                    Text(text = supportingText)
-//                }
-//            },
+            prefix = prefix,
+            suffix = suffix,
+            supportingText = supportingText,
             label = {
                 Text(
                     text = label,
-                    style = if (isFocused.value) {
+                    style = if (value.value.text.isNotEmpty()) {
                         Theme.typography.caption2
                     } else {
                         Theme.typography.body1
@@ -151,14 +143,14 @@ fun BaseInput(
             visualTransformation = VisualTransformation.None,
             interactionSource = interactionSource,
             shape = RoundedCornerShape(10.dp),
-            colors = TextFieldDefaults.colors(
+            colors = colors.copy(
                 focusedTextColor = Theme.colors.text1,
                 unfocusedTextColor = Theme.colors.text1,
                 errorTextColor = Theme.colors.error,
 
-//                focusedContainerColor = Theme.colors.surface2,
-//                unfocusedContainerColor = Theme.colors.surface,
-//                errorContainerColor = Theme.colors.surface,
+                focusedContainerColor = Theme.colors.surface1,
+                unfocusedContainerColor = Theme.colors.surface1,
+                errorContainerColor = Theme.colors.surface1,
 
                 cursorColor = Theme.colors.accent,
                 errorCursorColor = Theme.colors.error,

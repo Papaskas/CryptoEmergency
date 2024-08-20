@@ -110,7 +110,7 @@ private fun RowScope.NavButton(
         },
         selected = isSelected,
         onClick = {
-            navController.navigate(Routes.Auth.Profile) {
+            navController.navigate(Routes.Home.AddedStory) {
                 popUpTo(navController.graph.startDestinationId) {
                     saveState = true
                 }
@@ -131,7 +131,7 @@ private enum class BottomItems(
 ) {
     Home("Главная", R.drawable.home__filled, Routes.Home.Home),
     News("Лента", R.drawable.news_feed__filled, Routes.Home.News),
-    Add(null, null, Routes.Auth.Profile),
+    Add(null, null, Routes.Home.AddedStory),
     Chat("Чат", R.drawable.chat__filled, Routes.Home.Chat),
     Menu("Еще", R.drawable.more__filled, Routes.Home.Menu),
 }

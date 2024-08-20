@@ -16,6 +16,9 @@ sealed class Routes {
         data object News : Routes()
 
         @Serializable
+        data object AddedStory : Routes()
+
+        @Serializable
         data object Chat : Routes()
 
         @Serializable

@@ -3,7 +3,8 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.dagger.hilt)
-    alias(libs.plugins.detekt)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
 
@@ -109,12 +110,17 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler) // Компилятор аннотаций Room
+    implementation(libs.androidx.room.ktx) // Room - Дополнительно для Coroutines, Flows
+
     implementation(libs.androidx.datastore.preferences) // datastore preferences
     implementation(libs.androidx.datastore) // datastore-proto preferences
 
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    implementation(libs.core.ktx) // hilt common
+    implementation(libs.hilt.android) // hilt common
+    kapt(libs.hilt.compiler) // Компилятор аннотация hilt. 2024 - Hilt не поддерживает ksp
 
     implementation(libs.ktor.client.core) // Ktor Client core dependency
     implementation(libs.ktor.client.okhttp) // Ktor Client engine dependency
@@ -125,6 +131,8 @@ dependencies {
 
     implementation(libs.slf4j.api) // логирование
     implementation(libs.logback.classic) // логирование
+
+    implementation(libs.core.ktx)
 
     implementation(libs.androidx.navigation.compose)
 
@@ -148,7 +156,6 @@ dependencies {
     implementation(libs.androidx.compose.material)
 
     detektPlugins(libs.detekt.formatting)
-    kapt(libs.hilt.compiler) // Компилятор аннотация hilt
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -159,8 +166,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/repository/database/schemas")
+}
+
 kapt {
     correctErrorTypes = true
+    useBuildCache = true
 }
 
 detekt {

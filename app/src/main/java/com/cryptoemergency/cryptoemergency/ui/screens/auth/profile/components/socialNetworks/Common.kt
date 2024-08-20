@@ -2,67 +2,63 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.s
 
 import androidx.annotation.DrawableRes
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.repository.database.NetworkName
 
 data class SocialNetworkIconType(
     @DrawableRes val icon: Int,
     @DrawableRes val activeIcon: Int,
-    val contentDescription: String,
+    val contentDescription: NetworkName,
 )
 
-/**
-*
-* @param contentDescription обязятельно должен быть заглавными, т.к. по нему потом ищется enum class
-*
-* */
 val socialNetworksIcons = listOf(
     SocialNetworkIconType(
         R.drawable.telegram,
         R.drawable.telegram__active,
-        "TELEGRAM",
+        NetworkName.TELEGRAM,
     ),
     SocialNetworkIconType(
         R.drawable.vk,
         R.drawable.vk__active,
-        "VK",
+        NetworkName.VK,
     ),
     SocialNetworkIconType(
         R.drawable.instagram,
         R.drawable.instagram__active,
-        "INSTAGRAM",
+        NetworkName.INSTAGRAM,
     ),
     SocialNetworkIconType(
         R.drawable.twitter,
         R.drawable.twitter__active,
-        "TWITTER",
+        NetworkName.TWITTER,
     ),
     SocialNetworkIconType(
         R.drawable.facebook,
         R.drawable.facebook__active,
-        "FACEBOOK",
+        NetworkName.FACEBOOK,
     ),
     SocialNetworkIconType(
         R.drawable.discord,
         R.drawable.discord__active,
-        "DISCORD",
+        NetworkName.DISCORD,
     ),
     SocialNetworkIconType(
         R.drawable.twitch,
         R.drawable.twitch__active,
-        "TWITCH",
+        NetworkName.TWITCH,
     ),
     SocialNetworkIconType(
         R.drawable.tiktok,
         R.drawable.tiktok__active,
-        "TIKTOK",
+        NetworkName.TIKTOK,
     ),
     SocialNetworkIconType(
         R.drawable.linkedin,
         R.drawable.linkedin__active,
-        "LINKEDIN",
+        NetworkName.LINKEDIN,
     ),
     SocialNetworkIconType(
         R.drawable.github,
         R.drawable.github__active,
-        "GITHUB",
+        NetworkName.GITHUB,
     ),
 )
