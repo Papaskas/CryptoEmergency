@@ -1,10 +1,11 @@
 package com.cryptoemergency.cryptoemergency.lib
 
+import android.util.Log
 import com.cryptoemergency.cryptoemergency.BuildConfig
 import io.ktor.http.HttpStatusCode
 
 fun handleServerError(statusCode: HttpStatusCode): String {
-    Logging.e(
+    Log.e(
         "handleServerError",
         "Error code: ${statusCode.value},\n description: ${statusCode.description}",
     )

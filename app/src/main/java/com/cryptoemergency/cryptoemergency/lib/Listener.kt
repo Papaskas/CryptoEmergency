@@ -1,8 +1,10 @@
 package com.cryptoemergency.cryptoemergency.lib
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import com.cryptoemergency.cryptoemergency.navigation.Routes
@@ -84,8 +86,10 @@ private fun ListenerMessageFlow(
 ) {
     val scope = rememberCoroutineScope()
     val snackbar = LocalSnackbar.current
+    val messageState = message.collectAsState()
 
-    LaunchedEffect(message) {
+    LaunchedEffect(messageState.value != null) {
+        Log.d("message", "${message.value}")
         scope.launch {
             message.collect { value ->
                 value?.let { msg ->

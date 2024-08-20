@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.repository.database
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Index
@@ -7,6 +8,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import kotlin.jvm.Throws
 
 @Entity(
     tableName = "socialNetworks",
@@ -27,15 +29,19 @@ interface SocialNetworksDao {
     @Query("SELECT * FROM socialNetworks")
     suspend fun getAll(): List<SocialNetworksEntity>?
 
+    @Throws(SQLiteConstraintException::class)
     @Query("SELECT * FROM socialNetworks WHERE networkName IN (:networkName)")
     suspend fun getNetworksByName(networkName: NetworkName): List<SocialNetworksEntity>?
 
+    @Throws(SQLiteConstraintException::class)
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertNetwork(networkData: SocialNetworksEntity)
 
+    @Throws(SQLiteConstraintException::class)
     @Query("UPDATE socialNetworks SET url = :url, description = :description WHERE uid = :uid")
     suspend fun updateNetworkByUid(uid: Int, url: String, description: String)
 
+    @Throws(SQLiteConstraintException::class)
     @Query("DELETE FROM socialNetworks WHERE uid = :uid")
     suspend fun deleteNetworkByUid(uid: Int)
 }

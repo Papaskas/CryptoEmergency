@@ -1,5 +1,7 @@
 package com.cryptoemergency.cryptoemergency.viewModels
 
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.database.AppDatabase
@@ -18,6 +20,7 @@ class SocialNetworksViewModel @Inject constructor(
     private val database: AppDatabase,
 ) : ViewModel() {
     val message = MutableStateFlow<String?>(null)
+
     private val _socialNetworks = MutableStateFlow<List<SocialNetworksEntity>?>(null)
     val socialNetworks = _socialNetworks.asStateFlow()
 
@@ -48,13 +51,18 @@ class SocialNetworksViewModel @Inject constructor(
         description: String,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.socialNetworkDao().insertNetwork(
-                SocialNetworksEntity(
-                    networkName = networkName,
-                    url = url,
-                    description = description,
+            try {
+                database.socialNetworkDao().insertNetwork(
+                    SocialNetworksEntity(
+                        networkName = networkName,
+                        url = url,
+                        description = description,
+                    )
                 )
-            )
+            } catch (e: SQLiteConstraintException) {
+                Log.d("ASD", "it's work")
+                message.value = "Запись с такой ссылкой уже существует"
+            }
         }
     }
 }
