@@ -1,65 +1,158 @@
+# Полезные ссылки
+
+* [dagger hilt](https://dagger.dev/hilt/)
+* [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
+* [Безопасная маршрутизация](https://developer.android.com/guide/navigation/design/type-safety)
+* [Локальное хранилише](https://developer.android.com/topic/libraries/architecture/datastore)
+* [SvgToCompose](https://www.composables.com/svgtocompose)
+
 # Lint
 
-В проекте установлен detekt (app/config/detekt/detekt.yml)
-Для его инициализации в android studio нужно скачать
-плагин [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
-Его активация описана в описании плагина
+* В проекте установлен detekt (app/config/detekt/detekt.yml)
+* Для его инициализации в android studio нужно скачать плагин [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
+* Его активация описана в описании плагина
 
-# Logging
+# Логирование
 
-В проекте сделана обертка над стандартным логированием обьектом lib.Logging
-Всегда использовать ее
+* В release сборке логирования - нет.
+* Log.{} - убирается в конфиге proguard-rules.pro
+* Логирование сетевых запросов убирается проверкой BuildConfig.DEBUG в файле api/network/HttpClient
 
-# Theme and colors
+# Тема, цвета, значения, иконки к темам, типография
 
+* Все файлы находятся в папке providers/theme/Theme
 * По умолчанию стоит темная тема
-* Настройка темы находится в providers/theme/Theme
 * Использование цветовой схемы:
-    * Text(color = Theme.colors.primary)
+  * Text(color = Theme.colors.primary)
 
 # Routing
 
+* Используется типобезопасные маршруты, смотри официальную [документацию](https://developer.android.com/guide/navigation/design/type-safety)
 * Основной и единственный файл роутинга - navigation/Navigation
 * Для контроля роутинга необходимо пользоваться методом LocalNavController.current из
   providers/LocalNavController
 * Для перехода по страницам нужно использовать не строки, а импортировать обьект Routes из
-  NavigationGraph
+  navigation/Routes
 
-# TopBar
+# TopBar || BottomBar
 
-* Для каждого маршрута указан свой TopBar в файле ui/components/topBar/TopBar.kt
-* Если не указан стоит TopBar по умолчанию с пустым заголовком и стрелкой "вернуться назад"
-
-# BottomBar (NavigationBar)
-
-Если для определенного маршрута необходимо убрать/заменить BottomBar, то следует добавить этот
-маршрут в логику для ui/components/bottomBar/BottomBar.kt:
+* Для каждого маршрута указан свой Top(Bottom)Bar в файле ui/common/top(bottom)Bar/Top(Botton)Bar.kt
+* Для маршрутов стоит по умолчанию компонент
 
 ```kotlin
 @Composable
-fun BottomBar() {
+fun TopBar() {
     val currentRoute = getCurrentRoute()
-
+  
     when (currentRoute) {
-        Routes.Pages.SplashScreen.route -> EmptyBottomBar()
-        Routes.Pages.OnBoardingScreen.route -> EmptyBottomBar()
-        Routes.Pages.PinCode.route -> EmptyBottomBar()
-
-        else -> BottomNavigationBar()
+        Routes.Auth.Profile::class.qualifiedName -> ProfileTopBar()
+  
+        else -> MainTopBar()
     }
 }
 ```
 
-# SharedPreferences || DataStore - ProtoDataStore || LocalStorage
+# LocalStorage
 
-## Для локального хранения используются две библиотеки: DataStore (ключ: значение) и ProtoDataStore (data class, enum class)
+## Для локального хранения используются две [библиотеки](https://developer.android.com/topic/libraries/architecture/datastore) - DataStore (ключ: значение) и ProtoDataStore (data class, enum class)
 
-* Файл находится в api/store/Store.kt || ProtoStore.kt
-* Назначение этих файлов описано в их JavaDoc
-* Для использования хранилищей нужно заранее инициализовать ключ в файле repository/store/Keys.kt ||
-  ProtoKeys.kt
-* Библиотеки являются асинхронными выполняемыми в потоке IO
-* Использования хранилища строго в HiltViewModel, иначе не будет работать
+* Эти библиотеки интегрированы в проект с помощью hilt >> module/(Proto)Store.kt
+* Они работают в IO потоке
+
+## Как они работают в целом
+
+* В проекте есть конструторы доступа к хранилищю (api/store/*.kt) - их трогать никогда не надо
+* На вход они ожидают контекст и ключ доступа (обычный дата класс с заранее определенными параметрами)
+* Смотря на этот ключ код будет определять куда смотреть и что отдавать
+
+## Что такое ключ
+
+* Ключ - представление в виде ключей, используемых для хранения и извлечения данных в хранилище.
+* Каждый ключ связан с определенным типом данных, значением по умолчанию и сериализатором (Сериализатор только для ProtoStore).
+
+* Ключи находятся в repository/store/(Proto)Keys.kt
+* В этой папке есть файл GenericSerializer - нужен только для сериализации Proto данных (data class, enum class)
+* Также есть папка data - интерфейсы хранимых данных в ProtoStore
+* Ключ в случае обычного Store(ключ: значение) - дополнительная документация о нем описана в JavaDoc в store/Keys.kt
+*
+```kotlin
+sealed class Keys<T>( // Коллекция обычных ключей
+    val key: Preferences.Key<T>,
+    val defaultValue: T,
+) {
+    data object TOKEN : Keys<String>(
+        key = stringPreferencesKey("TOKEN"), // Имя ключа хранимого в файле
+        defaultValue = "", // Значение по умолчанию
+    ) 
+}
+```
+
+* Ключ в случае ProtoStore(data class, enum class) - дополнительная документация о нем описана в JavaDoc в store/ProtoKeys.kt
+
+```kotlin
+sealed class ProtoKeys<T>(
+  val key: Preferences.Key<String>,
+  val defaultValue: T,
+  val serializer: Serializer<T>,
+) {
+  data object USER : ProtoKeys<User>(
+    key = stringPreferencesKey("user"),
+    defaultValue = User(),
+    serializer = GenericSerializer(serializer<User>(), User()), // Сериализатор прописывается один раз
+  )
+
+  data object THEME : ProtoKeys<CurrentTheme>(
+    key = stringPreferencesKey("theme"),
+    defaultValue = CurrentTheme.NULL,
+    serializer = GenericSerializer(serializer<CurrentTheme>(), CurrentTheme.NULL),
+  )
+}
+
+@kotlinx.serialization.Serializable
+enum class CurrentTheme {
+  DARK,
+  LIGHT,
+  NULL,
+}
+
+@kotlinx.serialization.Serializable
+data class User(
+  val id: String = "",
+  val username: String = "",
+  val surname: String = "",
+  val email: String = "",
+)
+```
+
+## Использование
+
+1. Во ViewModel получить нужный конструктор (Store, ProtoStore)
+2. Использовать методы хранилища
+```kotlin
+@HiltViewModel
+class ThemeViewModel @Inject constructor(
+    private val themeProtoStore: ProtoStore<CurrentTheme>, // 1 Получил экземляр хранилища, context и ключ ему передал hilt, о работе hilt смотри оф. доку
+    @TokenStore private val tokenStore: Store<String>, // 1 Назначение аннотации описано в оф. документации hilt
+) : ViewModel() {
+    
+    fun fetchTheme() {
+        viewModelScope.launch {
+            val currentTheme: CurrentTheme = themeProtoStore.get() // 2 Использование встроенных методов 
+        }
+    }
+}
+```
+
+## Создание
+
+* Для создания новых данных хранилища нужно сделать следующее
+1. Создать ключ в (Proto)Keys.kt
+2. Добавить новый ключ в module/(Proto)StoreModule.kt, согласно документации hilt
+3. Все
+
+# Бд
+
+* В качестве базы данных предустановлен Room интегрированный в Hilt
 
 # Network request
 
@@ -67,101 +160,53 @@ fun BottomBar() {
   создать другие запросы
 * Интерфейс полей ответа находится в api/network/ApiResponse
 * Создание запроса:
-    * В папке repository/requests создать файл с функцией такого типа:
+  * В папке repository/requests создать файл с функцией такого типа:
 
 ```kotlin
 @kotlinx.serialization.Serializable
 data class SuccessResponse( // Возвращаемый тип в случае успеха
-    val message: String
+  val message: String
 )
 
 @kotlinx.serialization.Serializable
 data class ErrorResponse( // Возвращаемый тип в случае ошибки
-    val message: String
+  val message: String
 )
 
 @kotlinx.serialization.Serializable
 data class Request(
-    val _id: String
+  val _id: String
 )
 
 suspend fun getCurrentNews(context: Context, _id: String) =
-    client.safeRequest<SuccessResponse, ErrorResponse>(
-        path = "api/keine/news/sort",
-        method = HttpMethod.Post,
-        body = Request(_id), // Необязательный аргумент
-        context = context,
-    )
+  client.safeRequest<SuccessResponse, ErrorResponse>(
+    path = "api/keine/news/sort",
+    method = HttpMethod.Post,
+    body = Request(_id), // Необязательный аргумент
+    context = context,
+  )
 
 //--- Обращение к этой фукнции ---//
 viewModelScope.launch(Dispatchers.IO) {
-    val res = getCurrentNews(
-        context = context,
-        _id = "id"
-    )
+  val res = getCurrentNews(
+    context = context,
+    _id = "id"
+  )
 
-    if (res is ApiResponse.Success) {
-        val success: SuccessResponse = res.data
-    } else if (res is ApiResponse.Error) {
-        when (res.errorCode) {
-            400, 401 -> {
-                val error: ErrorResponse = res.errorData
-            }
-            500 -> {
-                val error: ErrorResponse = res.errorData
-            }
-            else -> {
-                val error: ErrorResponse = res.errorData
-            }
-        }
+  if (res is ApiResponse.Success) {
+    val success: SuccessResponse = res.data
+  } else if (res is ApiResponse.Error) {
+    when (res.errorCode) {
+      400, 401 -> {
+        val error: ErrorResponse = res.errorData
+      }
+      500 -> {
+        val error: ErrorResponse = res.errorData
+      }
+      else -> {
+        val error: ErrorResponse = res.errorData
+      }
     }
-}
-```
-
-# Коды ошибок
-
-* 200 - успех
-* 201 - успешно создано
-* 400 - не понято, синтаксическая ошибка
-* 403 Forbidden - нету токена
-* 408 Request Timeout - истекло время
-* 419 Authentication Timeout - если токен устарел или оказался некорректным
-* 422 - понято, но данные неверные
-* 500 - ошибка сервера
-
-# SVG
-
-Для использования настоящих файлов svg нужно преобразовывать svg код в compose код на
-этом [сайте](https://www.composables.com/svgtocompose)
-
-# SOLID
-
-В проекте есть слушатели lib.Listener, необходимые для общения между UI и ViewModel.
-
-Пример использования:
-
-```kotlin
-@HiltViewModel
-class MyViewModel : ViewModel() {
-    val message = mutableStateOf<String?>(null)
-    val redirect = mutableStateOf<Redirect?>(null)
-  
-    fun test() {
-        message.value = "show message"
-        redirect.value = Redirect(Routes.Home.Home)
-    }
-}
-
-@Composable
-fun Page(viewModel: ViewModel: MyViewModel = hiltViewModel) {
-    // Как только поменяется любая переменная, проиграется логика 
-    Listener(viewModel.message, viewModel.redirect)
-  
-    Column {
-        // Что-угодно
-        Button(onClick = { viewModel.test() }) {
-            
-        }
-    }
+  }
 }
 ```
