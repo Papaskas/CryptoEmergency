@@ -3,8 +3,6 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
@@ -12,14 +10,10 @@ import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Colors
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,10 +21,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
 
 ) : ViewModel() {
-    val ethereum = "ethereum"
-    val cemCoin = "cemCoin"
-    val stonks = "stonks"
-    val notStonks = "notStonks"
+    private val ethereum = "ethereum"
+    private val cemCoin = "cemCoin"
+    private val stonks = "stonks"
+    private val notStonks = "notStonks"
 
     fun getString(
         colors: Colors

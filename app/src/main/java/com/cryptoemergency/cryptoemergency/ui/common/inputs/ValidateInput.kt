@@ -119,5 +119,6 @@ fun ValidateInput(
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         singleLine = singleLine,
+        // colors
     )
 }

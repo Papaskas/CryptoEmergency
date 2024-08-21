@@ -9,8 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -19,6 +19,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -104,92 +105,97 @@ fun BaseInput(
         modifier
     }
 
+    val cursorBrush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1)
+
     BasicTextField(
         value = value.value,
         readOnly = readOnly,
-        visualTransformation = visualTransformation,
+        cursorBrush = cursorBrush,
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
         maxLines = maxLines,
         minLines = minLines,
         onValueChange = { value.value = it },
         interactionSource = interactionSource,
-        enabled = enabled,
-        textStyle = Theme.typography.body1,
+        textStyle = Theme.typography.body1.copy(
+            color = Theme.colors.text1
+        ),
         singleLine = singleLine,
         modifier = borderModifier.fillMaxWidth(),
-    ) {
-        TextFieldDefaults.DecorationBox(
-            value = value.value.text,
-            innerTextField = it,
-            singleLine = singleLine,
-            enabled = enabled,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            isError = isError,
-            prefix = prefix,
-            suffix = suffix,
-            supportingText = supportingText,
-            label = {
-                Text(
-                    text = label,
-                    style = if (value.value.text.isNotEmpty()) {
-                        Theme.typography.caption2
-                    } else {
-                        Theme.typography.body1
-                    }
+        decorationBox = {
+            TextFieldDefaults.DecorationBox(
+                value = value.value.text,
+                innerTextField = it,
+                singleLine = singleLine,
+                enabled = enabled,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                isError = isError,
+                prefix = prefix,
+                suffix = suffix,
+                supportingText = supportingText,
+                label = {
+                    Text(
+                        text = label,
+                        style = if (value.value.text.isNotEmpty() || isFocused.value) {
+                            Theme.typography.caption2
+                        } else {
+                            Theme.typography.body1
+                        }
+                    )
+                },
+                visualTransformation = visualTransformation,
+                interactionSource = interactionSource,
+                shape = RoundedCornerShape(10.dp),
+                colors = colors.copy(
+                    focusedTextColor = Theme.colors.text1,
+                    unfocusedTextColor = Theme.colors.text1,
+                    errorTextColor = Theme.colors.error,
+//                    textSelectionColors = Theme.colors.text1,
+
+                    focusedContainerColor = Theme.colors.surface1,
+                    unfocusedContainerColor = Theme.colors.surface1,
+                    errorContainerColor = Theme.colors.surface1,
+
+                    cursorColor = Theme.colors.accent,
+                    errorCursorColor = Theme.colors.error,
+
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent,
+
+                    //            focusedLeadingIconColor = focusedLeadingIconColor,
+                    //            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
+                    //            disabledLeadingIconColor = disabledLeadingIconColor,
+                    //            errorLeadingIconColor = errorLeadingIconColor,
+                    //
+                    //            focusedTrailingIconColor = focusedTrailingIconColor,
+                    //            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
+                    //            disabledTrailingIconColor = disabledTrailingIconColor,
+                    //            errorTrailingIconColor = errorTrailingIconColor,
+                    //
+                    focusedLabelColor = Theme.colors.text2,
+                    unfocusedLabelColor = Theme.colors.text2,
+                    disabledLabelColor = Theme.colors.text2,
+                    errorLabelColor = Theme.colors.text2,
+                    //
+                    //            focusedSupportingTextColor = focusedSupportingTextColor,
+                    //            unfocusedSupportingTextColor = unfocusedSupportingTextColor,
+                    //            disabledSupportingTextColor = disabledSupportingTextColor,
+                    //            errorSupportingTextColor = errorSupportingTextColor,
+                    //
+                    //            focusedPrefixColor = focusedPrefixColor,
+                    //            unfocusedPrefixColor = unfocusedPrefixColor,
+                    //            disabledPrefixColor = disabledPrefixColor,
+                    //            errorPrefixColor = errorPrefixColor,
+                    //
+                    //            focusedSuffixColor = focusedSuffixColor,
+                    //            unfocusedSuffixColor = unfocusedSuffixColor,
+                    //            disabledSuffixColor = disabledSuffixColor,
+                    //            errorSuffixColor = errorSuffixColor,
                 )
-            },
-            visualTransformation = VisualTransformation.None,
-            interactionSource = interactionSource,
-            shape = RoundedCornerShape(10.dp),
-            colors = colors.copy(
-                focusedTextColor = Theme.colors.text1,
-                unfocusedTextColor = Theme.colors.text1,
-                errorTextColor = Theme.colors.error,
-
-                focusedContainerColor = Theme.colors.surface1,
-                unfocusedContainerColor = Theme.colors.surface1,
-                errorContainerColor = Theme.colors.surface1,
-
-                cursorColor = Theme.colors.accent,
-                errorCursorColor = Theme.colors.error,
-
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent,
-
-                //            focusedLeadingIconColor = focusedLeadingIconColor,
-                //            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
-                //            disabledLeadingIconColor = disabledLeadingIconColor,
-                //            errorLeadingIconColor = errorLeadingIconColor,
-                //
-                //            focusedTrailingIconColor = focusedTrailingIconColor,
-                //            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
-                //            disabledTrailingIconColor = disabledTrailingIconColor,
-                //            errorTrailingIconColor = errorTrailingIconColor,
-                //
-                focusedLabelColor = Theme.colors.text2,
-                unfocusedLabelColor = Theme.colors.text2,
-                disabledLabelColor = Theme.colors.text2,
-                errorLabelColor = Theme.colors.text2,
-                //
-                //            focusedSupportingTextColor = focusedSupportingTextColor,
-                //            unfocusedSupportingTextColor = unfocusedSupportingTextColor,
-                //            disabledSupportingTextColor = disabledSupportingTextColor,
-                //            errorSupportingTextColor = errorSupportingTextColor,
-                //
-                //            focusedPrefixColor = focusedPrefixColor,
-                //            unfocusedPrefixColor = unfocusedPrefixColor,
-                //            disabledPrefixColor = disabledPrefixColor,
-                //            errorPrefixColor = errorPrefixColor,
-                //
-                //            focusedSuffixColor = focusedSuffixColor,
-                //            unfocusedSuffixColor = unfocusedSuffixColor,
-                //            disabledSuffixColor = disabledSuffixColor,
-                //            errorSuffixColor = errorSuffixColor,
             )
-        )
-    }
+        }
+    )
 }

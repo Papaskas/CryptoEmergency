@@ -1,68 +1,85 @@
 package com.cryptoemergency.cryptoemergency.viewModels
 
-import android.database.sqlite.SQLiteConstraintException
-import android.util.Log
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.database.AppDatabase
-import com.cryptoemergency.cryptoemergency.repository.database.NetworkName
-import com.cryptoemergency.cryptoemergency.repository.database.SocialNetworksEntity
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.NetworkName
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.SocialNetworkType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SocialNetworksViewModel @Inject constructor(
-    private val database: AppDatabase,
+//    private val database: AppDatabase,
 ) : ViewModel() {
     val message = MutableStateFlow<String?>(null)
 
-    private val _socialNetworks = MutableStateFlow<List<SocialNetworksEntity>?>(null)
-    val socialNetworks = _socialNetworks.asStateFlow()
-
-    private val _currentSocialNetwork = MutableStateFlow<List<SocialNetworksEntity>?>(null)
-    val currentSocialNetwork = _currentSocialNetwork.asStateFlow()
+    var socialNetworks = MutableStateFlow<List<SocialNetworkType>>(emptyList())
 
     init {
-        viewModelScope.launch {
-            getAll()
-        }
-    }
-
-    private suspend fun getAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _socialNetworks.value = database.socialNetworkDao().getAll()
-        }
-    }
-
-    fun fetchSocialNetwork(name: NetworkName) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _currentSocialNetwork.value = database.socialNetworkDao().getNetworksByName(name)
-        }
-    }
-
-    fun insertSocialNetwork(
-        networkName: NetworkName,
-        url: String,
-        description: String,
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                database.socialNetworkDao().insertNetwork(
-                    SocialNetworksEntity(
-                        networkName = networkName,
-                        url = url,
-                        description = description,
-                    )
-                )
-            } catch (e: SQLiteConstraintException) {
-                Log.d("ASD", "it's work")
-                message.value = "Запись с такой ссылкой уже существует"
-            }
-        }
+        socialNetworks.value = listOf(
+            SocialNetworkType(
+                networkName = NetworkName.VK,
+                urlPrefix = mutableStateOf(TextFieldValue("https://vk.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.GITHUB,
+                urlPrefix = mutableStateOf(TextFieldValue("https://github.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.TIKTOK,
+                urlPrefix = mutableStateOf(TextFieldValue("https://tiktok.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.TWITCH,
+                urlPrefix = mutableStateOf(TextFieldValue("https://twitch/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.TELEGRAM,
+                urlPrefix = mutableStateOf(TextFieldValue("https://t.me/@")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.DISCORD,
+                urlPrefix = mutableStateOf(TextFieldValue("https://discord.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.FACEBOOK,
+                urlPrefix = mutableStateOf(TextFieldValue("https://facebook.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.INSTAGRAM,
+                urlPrefix = mutableStateOf(TextFieldValue("https://instagram.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.LINKEDIN,
+                urlPrefix = mutableStateOf(TextFieldValue("https://linkedin.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+            SocialNetworkType(
+                networkName = NetworkName.TWITTER,
+                urlPrefix = mutableStateOf(TextFieldValue("https://twitter.com/")),
+                url = mutableStateOf(TextFieldValue("")),
+                description = mutableStateOf(TextFieldValue("")),
+            ),
+        )
     }
 }

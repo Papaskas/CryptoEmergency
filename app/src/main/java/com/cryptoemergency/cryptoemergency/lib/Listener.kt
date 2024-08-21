@@ -66,7 +66,7 @@ private fun ListenerMessage(
     val scope = rememberCoroutineScope()
     val snackbar = LocalSnackbar.current
 
-    LaunchedEffect(message.value) {
+    LaunchedEffect(message.value != null) {
         scope.launch {
             message.value?.let { msg ->
                 snackbar.showSnackbar(
@@ -89,7 +89,6 @@ private fun ListenerMessageFlow(
     val messageState = message.collectAsState()
 
     LaunchedEffect(messageState.value != null) {
-        Log.d("message", "${message.value}")
         scope.launch {
             message.collect { value ->
                 value?.let { msg ->

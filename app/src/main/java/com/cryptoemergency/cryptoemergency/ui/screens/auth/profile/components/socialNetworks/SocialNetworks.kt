@@ -1,11 +1,15 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,6 +20,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -26,10 +31,13 @@ import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
+import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.TitleSection
 import com.cryptoemergency.cryptoemergency.viewModels.SocialNetworksViewModel
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 @Composable
 fun SocialNetworks(
@@ -54,8 +62,12 @@ fun SocialNetworks(
     BottomSheet(showBottomSheet = showBottomSheet, title = "Добавить социальную сеть") {
         val selectedOption = remember { mutableStateOf(socialNetworksIcons[0]) }
 
-        SocialNetworksSelector(viewModel, selectedOption)
-        AddSocialNetwork(viewModel, selectedOption)
+        ScrollableScreen(
+            padding = PaddingValues(0.dp)
+        ) {
+            SocialNetworksSelector(viewModel, selectedOption)
+            AddSocialNetwork(viewModel, selectedOption)
+        }
     }
 }
 
@@ -93,91 +105,86 @@ private fun SocialNetSelectableItem(
         if(selected) {
             Icon(
                 painter = painterResource(socialNetwork.activeIcon),
-                contentDescription = socialNetwork.contentDescription.name,
+                contentDescription = socialNetwork.networkName.name,
                 tint = Color.Unspecified,
             )
         } else {
             Icon(
                 painter = painterResource(socialNetwork.icon),
-                contentDescription = socialNetwork.contentDescription.name,
+                contentDescription = socialNetwork.networkName.name,
                 tint = Theme.colors.text4,
             )
         }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AddSocialNetwork(
     viewModel: SocialNetworksViewModel,
     selectedOption: MutableState<SocialNetworkIconType>
 ) {
-    val currentSocialNetwork = viewModel.currentSocialNetwork.collectAsState()
-//    val url = remember { mutableStateOf(currentSocialNetwork.value?.get(0)?.let { TextFieldValue(it.url) }) }
-//    val description = remember { mutableStateOf(currentSocialNetwork.value?.get(0)?.let {
-//        TextFieldValue(
-//            it.description)
-//    }) }
-//    val socialNetwork = viewModel.socialNetworks.collectAsState()
+    val socialNetworks = viewModel.socialNetworks.collectAsState()
+    val filteredNetworks =
+        socialNetworks.value.filter { it.networkName == selectedOption.value.networkName }.toMutableList()
 
+//    LazyColumn {
+//        item {
+            Spacer(Modifier.height(15.dp))
 
-//    LaunchedEffect(selectedOption.value) {
-//        val network = Network.valueOf(selectedOption.value.contentDescription)
-//        val res = viewModel.getSocialNetwork(network)
-//
-//        if (res!= null) {
-//            url.value = TextFieldValue(text = res.data[0].url)
-//            description.value = TextFieldValue(text = res.data[0].description)
-//        } else {
-//            url.value = TextFieldValue(text = "")
-//            description.value = TextFieldValue(text = "")
+            FlowColumn {
+                filteredNetworks.forEach { network ->
+                    Input(
+                        prefix = {
+                            Text(
+                                text = network.urlPrefix.value.text,
+                            )
+                        },
+                        value = network.url,
+                        label = "Ссылка",
+                    )
+
+                    Spacer(Modifier.height(15.dp))
+
+                    Input(
+                        value = network.description,
+                        label = "Описание",
+                        singleLine = false,
+                    )
+
+                    Spacer(Modifier.height(15.dp))
+                }
+            }
 //        }
-//    }
-
-    LaunchedEffect(selectedOption) {
-        viewModel.fetchSocialNetwork(selectedOption.value.contentDescription)
-        Log.d("res", "${currentSocialNetwork.value}")
-    }
-
-    if(currentSocialNetwork.value != null) {
-        currentSocialNetwork.value!!.forEach {
-            val url = remember { mutableStateOf(TextFieldValue(it.url)) }
-            val description = remember { mutableStateOf(TextFieldValue(it.description)) }
-
-            Input(
-                value = url,
-                label = "Ссылка",
+//        item {
+            Text(
+                text = "Добавить еще",
+                style = Theme.typography.body1,
+                color = Theme.colors.accent,
+                modifier = Modifier.clickable {
+                    viewModel.socialNetworks.value += SocialNetworkType(
+                        networkName = selectedOption.value.networkName,
+                        urlPrefix = mutableStateOf(TextFieldValue(filteredNetworks[0].urlPrefix.value.text)),
+                        url = mutableStateOf(TextFieldValue("")),
+                        description = mutableStateOf(TextFieldValue("")),
+                    )
+                }
             )
 
-            Spacer(Modifier.height(15.dp))
-
-            Input(
-                value = description,
-                label = "Описание",
-                singleLine = false,
-            )
-
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(30.dp))
 
             CommonButton(
                 onClick = {
-                    viewModel.insertSocialNetwork(
-                        selectedOption.value.contentDescription,
-                        url.value.text,
-                        description.value.text,
-                    )
+//                viewModel.insertSocialNetwork(
+//                    selectedOption.value.contentDescription,
+//                    url.value.text,
+//                    description.value.text,
+//                )
                 },
                 text = "Добавить социальную сеть",
             )
-        }
-    }
+//        }
 
-    Column {
-        Spacer(Modifier.height(15.dp))
 
-        Text(
-            text = "Добавить еще",
-            style = Theme.typography.body1,
-            color = Theme.colors.accent,
-        )
-    }
+//    }
 }

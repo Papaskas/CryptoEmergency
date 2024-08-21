@@ -8,6 +8,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.NetworkName
 import kotlin.jvm.Throws
 
 @Entity(
@@ -46,6 +47,4 @@ interface SocialNetworksDao {
     suspend fun deleteNetworkByUid(uid: Int)
 }
 
-enum class NetworkName {
-    TELEGRAM, VK, INSTAGRAM, TWITTER, FACEBOOK, DISCORD, TWITCH, TIKTOK, LINKEDIN, GITHUB,
-}
+

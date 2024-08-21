@@ -1,13 +1,25 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks
 
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.repository.database.NetworkName
+
+enum class NetworkName {
+    TELEGRAM, VK, INSTAGRAM, TWITTER, FACEBOOK, DISCORD, TWITCH, TIKTOK, LINKEDIN, GITHUB,
+}
+
+data class SocialNetworkType(
+    val networkName: NetworkName,
+    val urlPrefix: MutableState<TextFieldValue>,
+    val url:  MutableState<TextFieldValue>,
+    val description:  MutableState<TextFieldValue>,
+)
 
 data class SocialNetworkIconType(
     @DrawableRes val icon: Int,
     @DrawableRes val activeIcon: Int,
-    val contentDescription: NetworkName,
+    val networkName: NetworkName,
 )
 
 val socialNetworksIcons = listOf(

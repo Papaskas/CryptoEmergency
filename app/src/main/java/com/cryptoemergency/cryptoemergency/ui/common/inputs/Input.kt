@@ -4,6 +4,8 @@ import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
@@ -78,6 +80,7 @@ fun Input(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: TextFieldColors = TextFieldDefaults.colors(),
 ) {
     BaseInput(
         value = value,
@@ -97,5 +100,6 @@ fun Input(
         interactionSource = interactionSource,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
+        colors = colors,
     )
 }
