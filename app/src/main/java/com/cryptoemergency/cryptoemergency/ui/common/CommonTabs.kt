@@ -57,7 +57,7 @@ fun CommonTabs(
 
     Column {
         Column (
-            Modifier.padding(horizontal = Theme.shapes.padding)
+            Modifier.padding(horizontal = Theme.values.padding)
         ){
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,

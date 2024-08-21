@@ -7,6 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 
@@ -54,7 +55,11 @@ data class Typography(
     val subscribersCount: TextStyle,
 )
 
-data class Shape(
+data class CommonShape(
+    val hexagonShape: Shape,
+)
+
+data class Values(
     val padding: Dp,
 )
 
@@ -75,7 +80,7 @@ object Theme {
         @ReadOnlyComposable
         get() = LocalTypography.current
 
-    val shapes: Shape
+    val shapes: CommonShape
         @Composable
         @ReadOnlyComposable
         get() = LocalShape.current
@@ -84,6 +89,11 @@ object Theme {
         @Composable
         @ReadOnlyComposable
         get() = LocalIcons.current
+
+    val values: Values
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalValues.current
 }
 
 val LocalColors =
@@ -97,7 +107,7 @@ val LocalTypography =
     }
 
 val LocalShape =
-    staticCompositionLocalOf<Shape> {
+    staticCompositionLocalOf<CommonShape> {
         error("No shapes provided")
     }
 
@@ -105,3 +115,9 @@ val LocalIcons =
     staticCompositionLocalOf<Icons> {
         error("No icons provided")
     }
+
+val LocalValues =
+    staticCompositionLocalOf<Values> {
+        error("No icons provided")
+    }
+

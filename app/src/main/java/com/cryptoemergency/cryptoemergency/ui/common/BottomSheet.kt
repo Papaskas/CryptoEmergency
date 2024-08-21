@@ -49,7 +49,7 @@ fun BottomSheet(
         ) {
             Column {
                 Row(
-                    Modifier.padding(Theme.shapes.padding),
+                    Modifier.padding(Theme.values.padding),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -77,7 +77,7 @@ fun BottomSheet(
                 CommonHorizontalDivider()
 
                 Column(
-                    Modifier.padding(Theme.shapes.padding)
+                    Modifier.padding(Theme.values.padding)
                 ) {
                     content()
                 }

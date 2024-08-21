@@ -17,13 +17,13 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     Column {
-        Box(modifier = Modifier.padding(Theme.shapes.padding)) {
+        Box(modifier = Modifier.padding(Theme.values.padding)) {
             AboutUser(viewModel)
         }
 
         CommonHorizontalDivider()
 
-        Box(modifier = Modifier.padding(Theme.shapes.padding)) {
+        Box(modifier = Modifier.padding(Theme.values.padding)) {
             Stories(viewModel)
         }
 

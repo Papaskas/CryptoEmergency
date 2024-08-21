@@ -54,12 +54,18 @@ fun HomeScreen(
 ) {
     val items = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
 
-    ScrollableScreen {
+    ScrollableScreen(
+        padding = PaddingValues(0.dp),
+    ) {
         ExchangeRate(viewModel)
         Spacer(Modifier.height(15.dp))
         Swiper(items)
         Spacer(Modifier.height(30.dp))
-        Menu()
+        Box(
+            Modifier.padding(horizontal = Theme.values.padding)
+        ) {
+            Menu()
+        }
     }
 }
 

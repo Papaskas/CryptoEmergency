@@ -22,7 +22,7 @@ fun Content(viewModel: ProfileViewModel) {
                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
             )
             .fillMaxSize()
-            .padding(vertical = Theme.shapes.padding),
+            .padding(vertical = Theme.values.padding),
     ) {
         Tabs()
     }

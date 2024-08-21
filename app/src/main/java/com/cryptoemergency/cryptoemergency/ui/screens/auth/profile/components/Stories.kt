@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.HexagonShape
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 
 @Composable
@@ -58,7 +57,7 @@ private fun Story(
                 .width(55.dp)
                 .background(
                     color = Theme.colors.surface1,
-                    shape = HexagonShape()
+                    shape = Theme.shapes.hexagonShape,
                 )
         )
         Spacer(Modifier.height(5.dp))

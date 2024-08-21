@@ -56,6 +56,7 @@ fun MainThemeProvider(
         LocalColors provides colors.value,
         LocalTypography provides typography,
         LocalShape provides shapes,
+        LocalValues provides values,
         LocalIcons provides icons.value,
         content = content,
     )
