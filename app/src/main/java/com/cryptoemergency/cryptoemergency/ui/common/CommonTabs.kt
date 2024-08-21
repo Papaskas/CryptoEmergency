@@ -1,11 +1,9 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -95,9 +93,9 @@ fun CommonTabs(
             )
         }
 
-        HorizontalPager(
+        HorizontalSwiper(
+            size = tabTitles.size,
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
         ) { index ->
             content[index]()
         }

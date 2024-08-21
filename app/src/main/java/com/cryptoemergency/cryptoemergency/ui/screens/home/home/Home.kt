@@ -1,10 +1,11 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.home
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,54 +13,46 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.HorizontalSwiper
 import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val items = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
-
     ScrollableScreen(
         padding = PaddingValues(0.dp),
     ) {
         ExchangeRate(viewModel)
         Spacer(Modifier.height(15.dp))
-        Swiper(items)
+        Swiper()
         Spacer(Modifier.height(30.dp))
         Box(
             Modifier.padding(horizontal = Theme.values.padding)
@@ -76,51 +69,49 @@ private fun ExchangeRate(viewModel: HomeViewModel) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = viewModel.exchangeRate,
+            text = viewModel.getString(Theme.colors),
+            inlineContent = viewModel.inlineContent,
             style = Theme.typography.caption1,
             color = Theme.colors.text4,
             modifier = Modifier
-                .basicMarquee()
+                .basicMarquee(
+                    iterations = Int.MAX_VALUE,
+                    repeatDelayMillis = 0,
+                    spacing = MarqueeSpacing(0.dp),
+                    velocity = 20.dp,
+                )
         )
     }
 }
 
 @Composable
-fun Swiper(items: List<String>) {
-    var currentIndex by remember { mutableIntStateOf(0) }
-    val itemCount = items.size
+private fun Swiper() {
+    val items = listOf(
+        R.drawable.banner2,
+        R.drawable.banner1,
+        R.drawable.banner3,
+    )
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures { change, dragAmount ->
-                    change.consume()
-                    if (dragAmount > 0 && currentIndex > 0) {
-                        currentIndex--
-                    } else if (dragAmount < 0 && currentIndex < itemCount - 1) {
-                        currentIndex++
-                    }
-                }
-            }
-    ) {
-        LazyRow(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+    val state = rememberPagerState(
+        Int.MAX_VALUE / 2,
+        0f,
+    ) { Int.MAX_VALUE }
+
+    HorizontalSwiper(
+        state = state,
+        size = items.size,
+        beyondViewportPageCount = 1,
+    ) { page ->
+        Box(
+            modifier = Modifier.swiperAnimation(state, page),
         ) {
-            items(items.size) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(300.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .padding(16.dp)
-                ) {
-                    Text(text = items[index], color = MaterialTheme.colorScheme.onPrimary)
-                }
-            }
+            Image(
+                painter = painterResource(items[page % items.size]),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(142.dp)
+            )
         }
     }
 }
