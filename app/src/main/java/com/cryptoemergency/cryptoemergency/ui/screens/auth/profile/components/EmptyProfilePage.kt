@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,15 +23,17 @@ fun EmptyProfilePage(
     message: String,
     buttonText: String,
 ) {
-
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 30.dp),
         contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.weight(1f))
+
             Text(
                 text = title,
                 style = Theme.typography.h3,
@@ -50,6 +53,7 @@ fun EmptyProfilePage(
                 onClick = onClick,
                 layoutWidth = LayoutWidth.WrapContent,
             )
+
             Spacer(Modifier.weight(1f))
         }
     }

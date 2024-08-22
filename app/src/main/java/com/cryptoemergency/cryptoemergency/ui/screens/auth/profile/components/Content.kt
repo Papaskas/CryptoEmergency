@@ -31,10 +31,14 @@ fun Content(viewModel: ProfileViewModel) {
 @Composable
 private fun Tabs() {
     val titles = arrayOf("Моя лента", "Социальные сети")
-    val content = arrayOf<@Composable () -> Unit>({ NewsFeed() }, { SocialNetworks() })
+    val content = arrayOf<@Composable () -> Unit>(
+        { NewsFeed() },
+        { SocialNetworks() }
+    )
 
     CommonTabs(
         tabTitles = titles,
-        content = content,
-    )
+    ) { page ->
+        content[page]()
+    }
 }

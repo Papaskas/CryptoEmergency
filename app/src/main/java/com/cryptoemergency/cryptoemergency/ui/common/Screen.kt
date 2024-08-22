@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
@@ -15,6 +16,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 fun Screen(
     modifier: Modifier = Modifier,
     padding: PaddingValues = PaddingValues(horizontal = Theme.values.padding),
+    bottomSpacing: Dp = 35.dp,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
@@ -22,6 +24,6 @@ fun Screen(
             .padding(padding),
     ) {
         content()
-        Spacer(Modifier.height(35.dp))
+        Spacer(Modifier.height(bottomSpacing))
     }
 }

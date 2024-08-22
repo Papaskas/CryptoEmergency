@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -24,24 +25,27 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 /**
- * @param tabTitles Заголовки верхней панели
+ * Компонент вкладок с горизонтальным перелистыванием страниц.
  *
- *  Пример: tabTitles = arrayOf("Title1", "Title2")
+ * @param modifierTabRow Модификатор для строки вкладок.
+ * @param modifierTab Модификатор для каждой вкладки.
+ * @param tabTitles Массив заголовков вкладок.
+ * @param defaultTab Индекс вкладки по умолчанию.
+ * @param content Композиционная функция для отображения контента на каждой странице.
  *
- * @param content Внутренний контент
- *
- * Пример: val content = arrayOf({ Screen1() }, { Screen2() })
- *
- * @param defaultTab Выбранный заголовок по умолчанию
- * */
+ * @sample SampleTabs
+ * @sample SampleTabsWithList
+ * @sample SampleTabsWithComposableFunc
+ */
 @Composable
 fun CommonTabs(
     modifierTabRow: Modifier = Modifier,
     modifierTab: Modifier = Modifier,
     tabTitles: Array<String>,
-    content: Array<@Composable () -> Unit>,
     defaultTab: Int = 0,
+    content: @Composable PagerScope.(Int) -> Unit,
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(defaultTab) }
     val pagerState = rememberPagerState { tabTitles.size }
@@ -97,7 +101,42 @@ fun CommonTabs(
             size = tabTitles.size,
             state = pagerState,
         ) { index ->
-            content[index]()
+            content(index)
         }
     }
 }
+
+@Composable
+private fun SampleTabs() {
+    CommonTabs(
+        tabTitles = arrayOf("Tab 1", "Tab 2", "Tab 3"),
+    ) { index ->
+        Text(text = "Page $index")
+    }
+}
+
+@Composable
+private fun SampleTabsWithList() {
+    val items = listOf("asdasd", "ASdasd")
+
+    CommonTabs(
+        tabTitles = arrayOf("Tab 1", "Tab 2", "Tab 3"),
+    ) { index ->
+        Text(text = items[index])
+    }
+}
+
+@Composable
+private fun SampleTabsWithComposableFunc() {
+    val items = listOf<@Composable () -> Unit>(
+        { Text("AAAAA") },
+        { Text("BBBB") },
+    )
+
+    CommonTabs(
+        tabTitles = arrayOf("Tab 1", "Tab 2", "Tab 3"),
+    ) { index ->
+        items[index]
+    }
+}
+
