@@ -72,8 +72,7 @@ private fun EditAvatar(modifier: Modifier) {
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .offset(x = 7.dp, y = 10.dp)
-            ,
+                .offset(x = 7.dp, y = 10.dp),
         )
     }
 }

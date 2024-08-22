@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common.topBar.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,7 +39,10 @@ fun MainTopBar() {
                     painter = painterResource(Theme.icons.logo),
                     contentDescription = "Лого",
                     tint = Color.Unspecified,
-                    modifier = Modifier.clickable {
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {
                         navController.navigate(Routes.Home.Home)
                     }
                 )

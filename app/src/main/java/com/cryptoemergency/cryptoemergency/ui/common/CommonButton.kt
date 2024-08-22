@@ -1,7 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -53,7 +53,7 @@ private fun Modifier.buttonStyle(layoutWidth: LayoutWidth): Modifier = this.then
         LayoutWidth.MatchParent -> {
             Modifier
                 .fillMaxWidth()
-                .sizeIn(maxHeight = 50.dp)
+                .height(50.dp)
                 .linearGradientBackground(
                     colors = listOf(
                         Color(0xFFF103CF),
@@ -66,7 +66,7 @@ private fun Modifier.buttonStyle(layoutWidth: LayoutWidth): Modifier = this.then
         LayoutWidth.WrapContent -> {
             Modifier
                 .wrapContentWidth()
-                .sizeIn(maxHeight = 36.dp)
+                .height(50.dp)
                 .linearGradientBackground(
                     colors = listOf(
                         Color(0xFFF103CF),
