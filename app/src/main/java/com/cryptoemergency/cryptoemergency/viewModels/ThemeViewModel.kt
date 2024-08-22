@@ -6,18 +6,18 @@ import com.cryptoemergency.cryptoemergency.api.store.ProtoStore
 import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
 import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    private val themeProtoStore: ProtoStore<CurrentTheme>
+    private val themeProtoStore: ProtoStore<CurrentTheme>,
 ) : ViewModel() {
 
-    fun fetchTheme() {
-        viewModelScope.launch {
-            currentTheme = themeProtoStore.get()
-        }
+    suspend fun getThemeFromStorage(): CurrentTheme {
+        return themeProtoStore.get()
     }
 
     fun toggleTheme() {
@@ -27,7 +27,7 @@ class ThemeViewModel @Inject constructor(
             CurrentTheme.NULL -> CurrentTheme.LIGHT
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             themeProtoStore.put(currentTheme)
         }
     }
@@ -35,7 +35,7 @@ class ThemeViewModel @Inject constructor(
     fun changeTheme(theme: CurrentTheme) {
         currentTheme = theme
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             themeProtoStore.put(currentTheme)
         }
     }
