@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.sections
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
