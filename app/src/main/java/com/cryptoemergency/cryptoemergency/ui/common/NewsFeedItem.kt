@@ -4,12 +4,15 @@ import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -35,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
+import com.cryptoemergency.cryptoemergency.model.NewsItemType
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -46,20 +50,25 @@ fun NewsFeedItem(
     val state = rememberPagerState { props.media.size }
 
     Column {
-        TitleNews(
-            props.avatar,
-            props.authorName,
-            props.createDate
-        )
+        if (props.type == NewsItemType.FULL) {
+            TitleNews(
+                props.avatar,
+                props.authorName,
+                props.createDate
+            )
+        }
         Content(
+            props.type,
             props.media,
             state,
         )
-        Bottom(
-            props.media,
-            props.description,
-            state,
-        )
+        if (props.type == NewsItemType.FULL) {
+            Bottom(
+                props.media,
+                props.description,
+                state,
+            )
+        }
     }
 }
 
@@ -121,16 +130,43 @@ private fun TitleNews(
 
 @Composable
 private fun Content(
+    type: NewsItemType,
     media: List<Uri>,
     state: PagerState,
 ) {
     Box {
-        HorizontalPager(state = state) { page ->
+        if(media.size > 1) {
+            HorizontalPager(state = state) { page ->
+                AsyncImage(
+                    model = media[page],
+                    contentDescription = null,
+                    modifier = Modifier
+                        .then(
+                            if(type == NewsItemType.SHORT)
+                                Modifier.height(124.dp)
+                            else
+                                Modifier.height(375.dp)
+                        )
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+            }
+        } else {
             AsyncImage(
-                model = media[page],
+                model = media[0],
                 contentDescription = null,
+                modifier = Modifier
+                    .then(
+                        if(type == NewsItemType.SHORT)
+                            Modifier.height(124.dp)
+                        else
+                            Modifier.height(375.dp)
+                    )
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop,
             )
         }
+
 
         if (media.size > 1) {
             Row(

@@ -1,6 +1,8 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 
 import android.net.Uri
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.model.NewsItemType
@@ -107,4 +109,7 @@ class NewsFeedViewModel @Inject constructor(
                     "pulvinar consectetur. Pellentesque habitant morbi tristique senectus et netus et malesu"
         ),
     )
+    val showNewsFeedType = mutableStateOf(NewsItemType.FULL)
+
+    val columCount = mutableIntStateOf(1)
 }

@@ -6,10 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -23,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
+import com.cryptoemergency.cryptoemergency.model.NewsItemType
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.common.NewsFeedItem
@@ -42,14 +49,43 @@ fun NewsFeedScreen(
     ) {
         CommonTabs(
             tabTitles = arrayOf("Общая лента", "Лента подписок", "Общие Cems", "Cems"),
-        ) { index ->
-            Content(index, viewModel)
+        ) { _ ->
+            Content(viewModel)
         }
     }
 }
 
 @Composable
-private fun Title() {
+private fun Content(
+    viewModel: NewsFeedViewModel,
+) {
+    LazyVerticalStaggeredGrid(
+        modifier = Modifier.fillMaxSize(),
+        columns = StaggeredGridCells.Fixed(viewModel.columCount.value),
+        verticalItemSpacing = if(viewModel.showNewsFeedType.value == NewsItemType.FULL) Theme.values.padding else 0.dp
+    ) {
+        item(span = StaggeredGridItemSpan.FullLine){
+            Title(viewModel)
+        }
+        items(viewModel.items.size) { index ->
+            NewsFeedItem(
+                NewsFeedItemProps(
+                    media = viewModel.items[index].media,
+                    avatar = viewModel.items[index].avatar,
+                    authorName = viewModel.items[index].authorName,
+                    createDate = viewModel.items[index].createDate,
+                    type = viewModel.showNewsFeedType.value,
+                    description = viewModel.items[index].description,
+                )
+            )
+        }
+    }
+}
+
+@Composable
+private fun Title(
+    viewModel: NewsFeedViewModel,
+) {
     Row(
         modifier = Modifier.padding(Theme.values.padding),
         verticalAlignment = Alignment.CenterVertically,
@@ -66,39 +102,27 @@ private fun Title() {
                 contentDescription = null,
             )
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = {
+            viewModel.columCount.value = 1
+            viewModel.showNewsFeedType.value = NewsItemType.FULL
+        }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
                 contentDescription = null,
-                tint = Theme.colors.accent,
+                tint = if(viewModel.showNewsFeedType.value == NewsItemType.FULL)
+                    Theme.colors.accent else Theme.colors.text1,
             )
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = {
+            viewModel.columCount.value = 3
+            viewModel.showNewsFeedType.value = NewsItemType.SHORT
+        }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
                 contentDescription = null,
+                tint = if(viewModel.showNewsFeedType.value == NewsItemType.SHORT)
+                    Theme.colors.accent else Theme.colors.text1,
             )
-        }
-    }
-}
-
-@Composable
-private fun Content(
-    index: Int,
-    viewModel: NewsFeedViewModel,
-) {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
-        columns = GridCells.Fixed(1),
-    ) {
-        item {
-            Title()
-        }
-        items(viewModel.items.size) { index ->
-            Column {
-                NewsFeedItem(viewModel.items[index])
-                Spacer(Modifier.height(Theme.values.padding))
-            }
         }
     }
 }
