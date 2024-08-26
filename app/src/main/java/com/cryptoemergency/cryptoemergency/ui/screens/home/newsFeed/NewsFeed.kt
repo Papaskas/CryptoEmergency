@@ -1,41 +1,104 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 
-import android.net.Uri
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.model.NewsItemType
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.compose.material.Text
+import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.common.NewsFeedItem
+import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 
 @Composable
-fun NewsFeedScreen() {
-    val items = arrayOf(
-        NewsFeedItemProps(
-            media = listOf(Uri.parse("https://img.freepik.com/free-photo/view-3d-cool-modern-bird_23-2150946453.jpg?t=st=1724417216~exp=1724420816~hmac=adebada5671e7769a280f9b52dc72d398834775955cbcf4813db18dd472cbbc7&w=1380")),
-            authorName = "Александр Криптовалюта",
-            avatar = Uri.parse("https://img.freepik.com/free-photo/view-3d-cool-modern-bird_23-2150946453.jpg?t=st=1724417216~exp=1724420816~hmac=adebada5671e7769a280f9b52dc72d398834775955cbcf4813db18dd472cbbc7&w=1380"),
-            createDate = "2022-12-12",
-            type = NewsItemType.FULL,
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id ipsum " +
-                    "vel felis consectetur convallis. Sed vel tempor lectus. Donec vel ipsum et ligula " +
-                    "pulvinar consectetur. Pellentesque habitant morbi tristique senectus et netus et malesu"
-        ),
-        NewsFeedItemProps(
-            media = listOf(Uri.parse("https://img.freepik.com/free-photo/view-3d-cool-modern-bird_23-2150946453.jpg?t=st=1724417216~exp=1724420816~hmac=adebada5671e7769a280f9b52dc72d398834775955cbcf4813db18dd472cbbc7&w=1380")),
-            authorName = "Александр Криптовалюта",
-            avatar = Uri.parse("https://img.freepik.com/free-photo/view-3d-cool-modern-bird_23-2150946453.jpg?t=st=1724417216~exp=1724420816~hmac=adebada5671e7769a280f9b52dc72d398834775955cbcf4813db18dd472cbbc7&w=1380"),
-            createDate = "2022-12-12",
-            type = NewsItemType.FULL,
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id ipsum " +
-                    "vel felis consectetur convallis. Sed vel tempor lectus. Donec vel ipsum et ligula " +
-                    "pulvinar consectetur. Pellentesque habitant morbi tristique senectus et netus et malesu"
-        )
-    )
+fun NewsFeedScreen(
+    viewModel: NewsFeedViewModel = hiltViewModel()
+) {
+    Box(
+        Modifier
+            .background(
+                color = Theme.colors.surface1,
+                shape = RoundedCornerShape(10.dp),
+            )
+            .fillMaxSize()
+    ) {
+        CommonTabs(
+            tabTitles = arrayOf("Общая лента", "Лента подписок", "Общие Cems", "Cems"),
+        ) { index ->
+            Content(index, viewModel)
+        }
+    }
+}
 
-    LazyVerticalGrid(columns = GridCells.Fixed(1)) {
-        items(items.size) { index ->
-            NewsFeedItem(items[index])
+@Composable
+private fun Title() {
+    Row(
+        modifier = Modifier.padding(Theme.values.padding),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = "Лента",
+            style = Theme.typography.h2,
+            color = Theme.colors.text1,
+        )
+        Spacer(Modifier.weight(1f))
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                painter = painterResource(R.drawable.filter),
+                contentDescription = null,
+            )
+        }
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                painter = painterResource(R.drawable.sort_by_large),
+                contentDescription = null,
+                tint = Theme.colors.accent,
+            )
+        }
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                painter = painterResource(R.drawable.sort_by_grid),
+                contentDescription = null,
+            )
+        }
+    }
+}
+
+@Composable
+private fun Content(
+    index: Int,
+    viewModel: NewsFeedViewModel,
+) {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
+        columns = GridCells.Fixed(1),
+    ) {
+        item {
+            Title()
+        }
+        items(viewModel.items.size) { index ->
+            Column {
+                NewsFeedItem(viewModel.items[index])
+                Spacer(Modifier.height(Theme.values.padding))
+            }
         }
     }
 }
