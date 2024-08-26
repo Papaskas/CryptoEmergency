@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ScrollableTabRow
@@ -97,8 +98,7 @@ fun CommonTabs(
             )
         }
 
-        HorizontalSwiper(
-            size = tabTitles.size,
+        HorizontalPager(
             state = pagerState,
         ) { index ->
             content(index)

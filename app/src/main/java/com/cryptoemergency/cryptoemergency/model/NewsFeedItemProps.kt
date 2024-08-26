@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.model
 
 import android.net.Uri
 
-data class NewsFeedItem(
+data class NewsFeedItemProps(
     val media: List<Uri>,
     val avatar: Uri,
     val authorName: String,

@@ -19,13 +19,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.model.NewsFeedItem
+import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun NewsItem(props: NewsFeedItem) {
+fun NewsFeedItem(props: NewsFeedItemProps) {
     Column {
         TitleNews(
             props.avatar,

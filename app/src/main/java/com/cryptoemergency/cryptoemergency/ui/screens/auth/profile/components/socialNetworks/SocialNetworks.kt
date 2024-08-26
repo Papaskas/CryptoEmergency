@@ -31,10 +31,13 @@ import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.EmptyProfilePage
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.TitleSection
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 import com.cryptoemergency.cryptoemergency.viewModels.SocialNetworksViewModel
 
+/**
+ * Блок в секции content - Социальные сети
+ * */
 @Composable
 fun SocialNetworks(
     viewModel: SocialNetworksViewModel = hiltViewModel()

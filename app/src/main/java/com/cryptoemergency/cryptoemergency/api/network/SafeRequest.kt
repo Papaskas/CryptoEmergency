@@ -28,24 +28,25 @@ import java.net.UnknownHostException
  *
  * @param path Путь к запрашиваемой конечной точке API.
  * @param context Контекст, необходимый для извлечения токена из внутреннего хранилища.
- * @param host хост сервера API. Значение по умолчанию получено из BuildConfig.HOST.
- * @param params определяет параметры, которые будут добавлены к URL-адресу. Значением по
+ * @param host Хост сервера API. Значение по умолчанию получено из BuildConfig.HOST.
+ * @param protocol Протокол, который будет использоваться для подключения по URL. По умолчанию берется из BuildConfig.
+ * @param port Номер порта, который будет использоваться для подключения по URL. По умолчанию берется из BuildConfig.
+ * Если нужно использовать обычный Http Https, то порт ставить 80 443 соответсвенно
+ * @param params Определяет параметры, которые будут добавлены к URL-адресу. Значением по
  * умолчанию является пустая строка значений.
  * @param method HTTP-метод, который будет использоваться для запроса. Значение по умолчанию - HttpMethod.Get.
  * @param body Тело запроса в формате JSON. Принимаемый ти - @Serializable data class.
  * Значение по умолчанию - null.
- * @param token токен, который должен быть включен в заголовок запроса. Если значение равно null,
+ * @param token Токен, который должен быть включен в заголовок запроса. Если значение равно null,
  * функция извлечет токен из контекста.
  *
- * @return ApiResponse.Success если запрос выполнен успешно
- *         ApiResponse.Error если запрос содержит ошибку или статус ответа не является кодом статуса успеха.
- *         Ответ ApiResponse содержит статус HTTP, заголовки и обработанные данные ответа
- *         (ответ об успешном завершении или ответ об ошибке).
+ * @return [ApiResponse.Success] или [ApiResponse.Error] в завсисимости от статуса запроса.
+ * Ответ ApiResponse содержит статус HTTP, заголовки и обработанные данные ответа
  *
- * @throws SerializationException если во время сериализации данных ответа возникает ошибка.
- * @throws ServerResponseException если в ответе сервера содержится ошибка.
- * @throws UnknownHostException если нет подключения к Интернету.
- * @throws IOException если во время сетевого подключения возникают ошибки.
+ * @throws SerializationException Если во время сериализации данных ответа возникает ошибка.
+ * @throws ServerResponseException Если в ответе сервера содержится ошибка.
+ * @throws UnknownHostException Если нет подключения к Интернету.
+ * @throws IOException Если во время сетевого подключения возникают ошибки.
  */
 suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.safeRequest(
     path: String,

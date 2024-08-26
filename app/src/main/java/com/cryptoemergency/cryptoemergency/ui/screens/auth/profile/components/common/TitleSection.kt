@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
+/**
+ * Заголовок для секций контента - лента новостей, социальные сети
+ * */
 @Composable
 fun TitleSection(
     title: String,

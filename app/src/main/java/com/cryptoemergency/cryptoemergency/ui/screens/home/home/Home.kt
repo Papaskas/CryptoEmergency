@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
@@ -40,7 +41,6 @@ import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.HorizontalSwiper
 import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 
 @Composable
@@ -97,9 +97,8 @@ private fun Swiper() {
         0f,
     ) { Int.MAX_VALUE }
 
-    HorizontalSwiper(
+    HorizontalPager(
         state = state,
-        size = items.size,
         beyondViewportPageCount = 1,
     ) { page ->
         Box(

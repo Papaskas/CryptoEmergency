@@ -2,6 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
@@ -30,6 +32,8 @@ fun BottomSheet(
     showBottomSheet: MutableState<Boolean>,
     title: String,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(Theme.values.padding),
+    actionIcon: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
@@ -58,24 +62,28 @@ fun BottomSheet(
 
                     Spacer(Modifier.weight(1f))
 
-                    IconButton(onClick = {
-                        scope.launch {
-                            sheetState.hide()
-                        }.invokeOnCompletion {
-                            showBottomSheet.value = false
+                    if(actionIcon != null) {
+                        actionIcon()
+                    } else {
+                        IconButton(onClick = {
+                            scope.launch {
+                                sheetState.hide()
+                            }.invokeOnCompletion {
+                                showBottomSheet.value = false
+                            }
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.close),
+                                contentDescription = "Закрыть модальное окно",
+                            )
                         }
-                    }) {
-                        Icon(
-                            painter = painterResource(R.drawable.close),
-                            contentDescription = "Закрыть модальное окно",
-                        )
                     }
                 }
 
                 CommonHorizontalDivider()
 
                 Column(
-                    Modifier.padding(Theme.values.padding)
+                    Modifier.padding(contentPadding)
                 ) {
                     content()
                 }

@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 
+/**
+ * Блок в секции content - лента новостей
+ * */
 @Composable
 fun NewsFeed() {
     Column {

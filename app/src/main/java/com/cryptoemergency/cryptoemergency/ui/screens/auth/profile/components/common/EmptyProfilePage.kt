@@ -16,6 +16,9 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.LayoutWidth
 
+/**
+ * Заглушка для блоков Content
+ * */
 @Composable
 fun EmptyProfilePage(
     title: String,

@@ -19,6 +19,9 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 
+/**
+* Блок сторизов
+* */
 @Composable
 fun Stories(
     viewModel: ProfileViewModel,

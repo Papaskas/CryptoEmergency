@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cryptoemergency.cryptoemergency"
-        minSdk = 25
+        minSdk = 26
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 1
