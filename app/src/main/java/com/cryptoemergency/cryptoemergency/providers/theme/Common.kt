@@ -57,7 +57,6 @@ data class Typography(
 
 data class CommonShape(
     val hexagonShape: Shape,
-    val hexagonRoundedShape: Shape,
     val diamondShape: Shape,
     val ticketShape: Shape,
     val starShape: Shape,

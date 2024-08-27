@@ -10,13 +10,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.graphics.shapes.CornerRounding
+import androidx.graphics.shapes.RoundedPolygon
+import androidx.graphics.shapes.toPath
+import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
@@ -25,35 +32,10 @@ import kotlin.math.sqrt
 
 val shapes = CommonShape(
     hexagonShape = HexagonShape(),
-    hexagonRoundedShape = RoundedHexagonShape(100f),
     starShape = StarShape(),
     diamondShape = DiamondShape(),
     ticketShape = TicketShape(),
 )
-
-private class RoundedHexagonShape(private val cornerRadius: Float) : Shape {
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        val path = Path().apply {
-            val radius = min(size.width / 2f, size.height / 2f)
-            val triangleHeight = (sqrt(3.0) * radius / 2)
-            val centerX = size.width / 2
-            val centerY = size.height / 2
-
-            moveTo(x = centerX, y = centerY + radius)
-            lineTo(x = (centerX - triangleHeight).toFloat(), y = centerY + radius / 2)
-            lineTo(x = (centerX - triangleHeight).toFloat(), y = centerY - radius / 2)
-            lineTo(x = centerX, y = centerY - radius)
-            lineTo(x = (centerX + triangleHeight).toFloat(), y = centerY - radius / 2)
-            lineTo(x = (centerX + triangleHeight).toFloat(), y = centerY + radius / 2)
-            close()
-        }
-        return Outline.Generic(path)
-    }
-}
 
 private class HexagonShape : Shape {
     override fun createOutline(
@@ -76,6 +58,7 @@ private class HexagonShape : Shape {
 
             close()
         }
+
         return Outline.Generic(path)
     }
 }
@@ -216,7 +199,6 @@ private class DiamondShape : Shape {
 @Composable
 private fun Preview() {
     val hexagonShape = shapes.hexagonShape
-    val hexagonRoundedShape = shapes.hexagonRoundedShape
     val starShape = shapes.starShape
     val diamondShape = shapes.diamondShape
     val ticketShape = shapes.ticketShape
@@ -229,12 +211,6 @@ private fun Preview() {
                 .background(Color.Red)
         )
 
-        Box(
-            Modifier
-                .size(80.dp)
-                .clip(hexagonRoundedShape)
-                .background(Color.Red)
-        )
 
         Box(
             Modifier
@@ -252,7 +228,7 @@ private fun Preview() {
 
         Box(
             Modifier
-                .size(160.dp, 80.dp)
+                .size(270.dp, 160.dp)
                 .clip(ticketShape)
                 .background(Color.Red)
         )

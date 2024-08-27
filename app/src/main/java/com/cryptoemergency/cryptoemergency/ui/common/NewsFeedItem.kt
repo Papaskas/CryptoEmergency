@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
 import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -23,23 +24,43 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asComposePath
+import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.graphics.shapes.CornerRounding
+import androidx.graphics.shapes.RoundedPolygon
+import androidx.graphics.shapes.toPath
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.model.NewsItemType
+import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.shapes
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -80,6 +101,7 @@ private fun TitleNews(
 ) {
     val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val date = LocalDate.parse(createDate, format)
+    val expanded = remember { mutableStateOf(false) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -94,9 +116,10 @@ private fun TitleNews(
             model = avatar,
             contentDescription = "Аватар $authorName",
             modifier = Modifier
-                .clip(Theme.shapes.hexagonShape)
+                .roundedHexagonShape()
+                .rotate(270f)
                 .size(36.dp),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
 
         Spacer(Modifier.width(12.dp))
@@ -119,10 +142,68 @@ private fun TitleNews(
 
         Spacer(Modifier.weight(1f))
 
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                painter = painterResource(R.drawable.more),
-                contentDescription = null,
+        Box {
+            IconButton(onClick = {
+                expanded.value = true
+            }) {
+                Icon(
+                    painter = painterResource(R.drawable.more),
+                    contentDescription = null,
+                )
+            }
+
+            DropMenu(expanded)
+        }
+    }
+}
+
+@Composable
+private fun DropMenu(
+    expanded: MutableState<Boolean>,
+) {
+    data class Type(
+        val title: String,
+        @DrawableRes val icon: Int,
+    )
+    val items = arrayOf(
+        Type("Поделиться", R.drawable.share__outline),
+        Type("Скопировать ссылку", R.drawable.copy__outline),
+        Type("Сохранить", R.drawable.save__outline),
+        Type("Пожаловаться", R.drawable.report),
+    )
+
+    DropdownMenu(
+        modifier = Modifier
+            .background(
+                color = Theme.colors.background2,
+                shape = RoundedCornerShape(10.dp)
+            )
+            .clip(RoundedCornerShape(10.dp)),
+        expanded = expanded.value,
+        onDismissRequest = {
+            expanded.value = false
+        },
+    ) {
+        items.forEach {
+            DropdownMenuItem(
+                onClick = {},
+                text = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(it.icon),
+                            contentDescription = it.title,
+                            tint = if(it.icon == R.drawable.report) Theme.colors.error else Theme.colors.text1
+                        )
+                        Spacer(Modifier.width(10.dp))
+                        Text(
+                            text = it.title,
+                            style = Theme.typography.body1,
+                            color = Theme.colors.text1
+                        )
+                    }
+                }
             )
         }
     }
@@ -142,7 +223,7 @@ private fun Content(
                     contentDescription = null,
                     modifier = Modifier
                         .then(
-                            if(type == NewsItemType.SHORT)
+                            if (type == NewsItemType.SHORT)
                                 Modifier.height(124.dp)
                             else
                                 Modifier.height(375.dp)
@@ -157,7 +238,7 @@ private fun Content(
                 contentDescription = null,
                 modifier = Modifier
                     .then(
-                        if(type == NewsItemType.SHORT)
+                        if (type == NewsItemType.SHORT)
                             Modifier.height(124.dp)
                         else
                             Modifier.height(375.dp)

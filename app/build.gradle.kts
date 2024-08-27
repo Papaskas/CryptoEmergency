@@ -110,6 +110,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.graphics.shapes) // Либа для рисования shapes
+
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler) // Компилятор аннотаций Room
