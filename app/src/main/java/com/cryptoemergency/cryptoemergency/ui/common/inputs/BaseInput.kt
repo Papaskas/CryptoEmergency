@@ -89,7 +89,6 @@ fun BaseInput(
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -97,13 +96,16 @@ fun BaseInput(
     colors: TextFieldColors = TextFieldDefaults.colors(),
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState()
-    val borderModifier = if (isFocused.value) {
-        modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(10.dp))
-    } else if (currentTheme == CurrentTheme.DARK) {
-        modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(10.dp))
-    } else {
-        modifier
-    }
+    val borderModifier =
+        if(isError) {
+            modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(10.dp))
+        } else if (isFocused.value) {
+            modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(10.dp))
+        } else if (currentTheme == CurrentTheme.DARK) {
+            modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(10.dp))
+        } else {
+            modifier
+        }
 
     val cursorBrush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1)
 
@@ -133,7 +135,6 @@ fun BaseInput(
                 isError = isError,
                 prefix = prefix,
                 suffix = suffix,
-                supportingText = supportingText,
                 label = {
                     Text(
                         text = label,

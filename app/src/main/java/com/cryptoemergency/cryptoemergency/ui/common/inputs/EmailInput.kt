@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import com.cryptoemergency.cryptoemergency.lib.emailPatterns
 
 /**
  * Комопнент Input с логикой Email. Наследуется от ValidateInput
@@ -38,15 +39,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun EmailInput(
     value: MutableState<TextFieldValue>,
+    isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    errorMessage: String? = null,
-    successMessage: String? = null,
 ) {
     ValidateInput(
         modifier = modifier,
@@ -56,13 +55,11 @@ fun EmailInput(
         label = "Email",
         isError = isError,
         keyboardActions = keyboardActions,
-        errorMessage = errorMessage,
-        successMessage = successMessage,
         enabled = enabled,
         singleLine = true,
         keyboardOptions = keyboardOptions.copy(
             keyboardType = KeyboardType.Email,
         ),
-        onValidate = {},
+        validators = emailPatterns,
     )
 }

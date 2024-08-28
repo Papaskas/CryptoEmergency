@@ -1,15 +1,42 @@
 package com.cryptoemergency.cryptoemergency.lib
 
+fun validation(
+    text: String,
+    successMessage: String,
+    vararg validators: Validate,
+): Return {
+    for (validator in validators) {
+        if(!text.contains(validator.pattern)) {
+            return Return(
+                isError = true,
+                errorMessage = validator.errorMessage,
+                successMessage = null,
+            )
+        }
+    }
+
+    return Return(
+        isError = false,
+        errorMessage = null,
+        successMessage = successMessage,
+    )
+}
+
+data class Return(
+    val isError: Boolean,
+    val errorMessage: String?,
+    val successMessage: String?,
+)
+
 data class Validate(
     val pattern: Regex,
     val errorMessage: String,
-    val successMessage: String? = null,
 )
 
 object ValidatePattern {
     val isEmail = Validate(
-        Regex("^[A-Za-z](.*)(@)(.+)(\\.)(.+)"),
-        "Некорректная почта"
+        pattern = Regex("^[A-Za-z](.*)(@)(.+)(\\.)(.+)"),
+        errorMessage = "Некорректная почта",
     )
 
     val hasUppercase = Validate(
@@ -42,27 +69,27 @@ object ValidatePattern {
         "Допустимы только цифры"
     )
 
-    val phoneNumber = Validate(
+    val isPhoneNumber = Validate(
         Regex("^+?((d{2,3}) ?d|d)(([ -]?d)|( ?(d{2,3}) ?)){5,12}d$"),
         ""
     )
 
-    val fullName = Validate(
+    val isFullName = Validate(
         Regex("^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$"),
         ""
     )
 
-    val domainName = Validate(
+    val isDomainName = Validate(
         Regex("^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?.)+[a-zA-Z]{2,6}$"),
         ""
     )
 
-    val URL = Validate(
+    val isURL = Validate(
         Regex("(https?):((//)|(\\\\))+[wd:#@%/;$()~_?+-=.&]*"),
         ""
     )
 
-    val notSpaces = Validate(
+    val withoutSpaces = Validate(
         Regex("^\\S*\$"),
         "Пробелы недопустимы"
     )
@@ -72,17 +99,17 @@ object ValidatePattern {
         "Спец символы недопустимы"
     )
 
-    val IPv4 = Validate(
+    val isIPv4 = Validate(
         Regex("((25[0-5]|2[0-4]d|[01]?dd?).){3}(25[0-5]|2[0-4]d|[01]?dd?)"),
         ""
     )
 
-    val IPv6 = Validate(
+    val isIPv6 = Validate(
         Regex("((^|:)([0-9a-fA-F]{0,4})){1,8}$"),
         ""
     )
 
-    val UUID = Validate(
+    val isUUID = Validate(
         Regex("^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$"),
         ""
     )
@@ -94,68 +121,26 @@ object ValidatePattern {
 
     fun inRange(min: Int, max: Int): Validate {
         return Validate(
-            Regex("^.*${min},${max}}$"),
-            "Пределы символов от $min до $max"
+            Regex("^.{$min,$max}$"),
+            "Пределы количества символов от $min до $max"
         )
     }
 }
 
-data class Return(
-    val isError: Boolean,
-    val errorMessage: String?,
-    val successMessage: String?,
+val passwordPatterns = arrayOf(
+    ValidatePattern.notEmpty,
+    ValidatePattern.withoutSpaces,
+    ValidatePattern.hasUppercase,
+    ValidatePattern.hasLowercase,
+    ValidatePattern.hasDigit,
+    ValidatePattern.hasSpecialChar,
+    ValidatePattern.inRange(min = 8, max = 25),
 )
 
-fun validation(
-    text: String,
-    vararg validators: Validate,
-): Return {
-    for (validator in validators) {
-        if(text.contains(validator.pattern)) {
-            return Return(
-                isError = true,
-                errorMessage = validator.errorMessage,
-                successMessage = null,
-            )
-        }
-    }
+val emailPatterns = arrayOf(
+    ValidatePattern.notEmpty,
+    ValidatePattern.withoutSpaces,
+    ValidatePattern.isEmail,
+    ValidatePattern.inRange(min = 7, max = 35)
+)
 
-    return Return(
-        isError = false,
-        errorMessage = null,
-        successMessage = null,
-    )
-}
-
-fun doublePasswordValidation(
-    firstPassword: String,
-    secondPassword: String,
-): Return {
-    val first = passwordValidation(firstPassword)
-    val second = passwordValidation(secondPassword)
-
-    return Return(
-        isError = !first.isError && !second.isError,
-        errorMessage = "Пароли не совпадают",
-        successMessage = "Надежный пароль",
-    )
-}
-
-fun passwordValidation(
-    password: String,
-): Return {
-    return validation(
-        password,
-        ValidatePattern.hasUppercase,
-        ValidatePattern.hasLowercase,
-        ValidatePattern.hasDigit,
-        ValidatePattern.hasSpecialChar,
-        ValidatePattern.inRange(min = 8, max = 21),
-    )
-}
-
-fun emailValidation(
-    email: String
-): Return {
-    return validation(email, ValidatePattern.isEmail)
-}

@@ -37,7 +37,7 @@ import java.net.UnknownHostException
  * @param method HTTP-метод, который будет использоваться для запроса. Значение по умолчанию - HttpMethod.Get.
  * @param body Тело запроса в формате JSON. Принимаемый ти - @Serializable data class.
  * Значение по умолчанию - null.
- * @param token Токен, который должен быть включен в заголовок запроса. Если значение равно null,
+ * @param overrideToken Токен, который должен быть включен в заголовок запроса. Если значение равно null,
  * функция извлечет токен из контекста.
  *
  * @return [ApiResponse.Success] или [ApiResponse.Error] в завсисимости от статуса запроса.
@@ -57,7 +57,7 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
     params: StringValues = StringValues.Empty,
     method: HttpMethod = HttpMethod.Get,
     body: Any? = null,
-    token: String? = null,
+    overrideToken: String? = null,
 ) = try {
     val response =
         request {
@@ -70,8 +70,8 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
                 parameters.appendAll(params)
             }
             contentType(ContentType.Application.Json)
-            if (token != null) {
-                header("Authorization", token)
+            if (overrideToken != null) {
+                header("Authorization", overrideToken)
             } else {
                 header("Authorization", Store(Keys.TOKEN, context).get())
             }

@@ -43,16 +43,13 @@ import com.cryptoemergency.cryptoemergency.R
 @Composable
 fun PasswordInput(
     value: MutableState<TextFieldValue>,
+    isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    errorMessage: String? = null,
-    successMessage: String? = null,
-    onValidate: (() -> Unit)? = null,
     passwordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
     val image = if (passwordVisible.value) R.drawable.visibility else R.drawable.visibility_off
@@ -74,7 +71,6 @@ fun PasswordInput(
                 )
             }
         },
-        supportingText = "Supporting text",
         enabled = enabled,
         maxLines = 1,
         minLines = 1,
@@ -82,22 +78,6 @@ fun PasswordInput(
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
         singleLine = true,
-
-        onValidate = {
-            if (onValidate == null) {
-//                validatePassword(
-//                    textState.value,
-//                    textState.value,
-//                    errorMessage,
-//                    successMessage,
-//                    isError
-//                )
-            } else {
-                onValidate()
-            }
-        },
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-        errorMessage = errorMessage,
-        successMessage = successMessage,
     )
 }

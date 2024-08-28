@@ -115,7 +115,6 @@ fun PhoneInput(
             keyboardActions = keyboardActions,
             visualTransformation = visualTransformation,
             singleLine = true,
-            onValidate = {}
         )
     }
 }
