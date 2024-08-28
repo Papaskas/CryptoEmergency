@@ -3,6 +3,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ fun NewsFeedScreen(
                 shape = RoundedCornerShape(10.dp),
             )
             .fillMaxSize()
+            .padding(top = Theme.values.padding)
     ) {
         CommonTabs(
             tabTitles = arrayOf("Общая лента", "Лента подписок", "Общие Cems", "Cems"),

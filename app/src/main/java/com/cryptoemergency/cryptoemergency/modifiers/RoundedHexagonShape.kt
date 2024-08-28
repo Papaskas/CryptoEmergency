@@ -24,7 +24,8 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 /**
  * Модификатор обрезки контента под hexagon со скругленными краями
  *
- * Предупреждение: модификатор для контента переворачивает и контент, использовать после .rotate(270f)
+ * @param strokeColor Цвет обводки, если null, то нету
+ * @param strokeWidth Толщина линии обводки
  *
  * @sample PreviewSample
  **/
@@ -68,6 +69,7 @@ fun Modifier.roundedHexagonShape(
             }
         }
     }
+        .rotate(270f) // Фикс
 }
 
 @Preview
@@ -78,12 +80,10 @@ private fun PreviewSample() {
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .roundedHexagonShape( // На этом этапе rotate 90f
+            .roundedHexagonShape(
                 strokeColor = Color.Red,
                 strokeWidth = 50f,
             )
-            .rotate(270f) // Исправляем
-            .fillMaxSize(),
-
+            .fillMaxSize()
     )
 }

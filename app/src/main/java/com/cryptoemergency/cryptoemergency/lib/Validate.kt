@@ -1,72 +1,161 @@
 package com.cryptoemergency.cryptoemergency.lib
 
-import androidx.compose.runtime.MutableState
+data class Validate(
+    val pattern: Regex,
+    val errorMessage: String,
+    val successMessage: String? = null,
+)
 
-fun validateEmail(
-    email: String,
-    errorMessage: MutableState<String?>,
-    isError: MutableState<Boolean>,
-) {
-    val emailRegex = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+object ValidatePattern {
+    val isEmail = Validate(
+        Regex("^[A-Za-z](.*)(@)(.+)(\\.)(.+)"),
+        "Некорректная почта"
+    )
 
-    isError.value = !email.matches(emailRegex)
-    if (isError.value) {
-        errorMessage.value = "Некоррекная почта"
-    } else {
-        errorMessage.value = null
+    val hasUppercase = Validate(
+        Regex("[A-Z]"),
+        "Необходима хотя бы одна заглавная буква"
+    )
+
+    val hasLowercase = Validate(
+        Regex("[a-z]"),
+        "Необходима хотя бы одна строчная буква"
+    )
+
+    val hasDigit = Validate(
+        Regex("\\d"),
+        "Необходима хотя бы одна цифра"
+    )
+
+    val hasSpecialChar = Validate(
+        Regex("[!@#\$%^&+=]"),
+        "Необходим хотя бы один спец символ"
+    )
+
+    val onlyLetter = Validate(
+        Regex("^[a-zA-Zа-яА-Я]*\$"),
+        ""
+    )
+
+    val onlyNumber = Validate(
+        Regex("^[0-9]+[0-9]*\$"),
+        "Допустимы только цифры"
+    )
+
+    val phoneNumber = Validate(
+        Regex("^+?((d{2,3}) ?d|d)(([ -]?d)|( ?(d{2,3}) ?)){5,12}d$"),
+        ""
+    )
+
+    val fullName = Validate(
+        Regex("^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$"),
+        ""
+    )
+
+    val domainName = Validate(
+        Regex("^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?.)+[a-zA-Z]{2,6}$"),
+        ""
+    )
+
+    val URL = Validate(
+        Regex("(https?):((//)|(\\\\))+[wd:#@%/;$()~_?+-=.&]*"),
+        ""
+    )
+
+    val notSpaces = Validate(
+        Regex("^\\S*\$"),
+        "Пробелы недопустимы"
+    )
+
+    val notSpecialSymbol = Validate(
+        Regex("^[a-zA-Z0-9]*\$"),
+        "Спец символы недопустимы"
+    )
+
+    val IPv4 = Validate(
+        Regex("((25[0-5]|2[0-4]d|[01]?dd?).){3}(25[0-5]|2[0-4]d|[01]?dd?)"),
+        ""
+    )
+
+    val IPv6 = Validate(
+        Regex("((^|:)([0-9a-fA-F]{0,4})){1,8}$"),
+        ""
+    )
+
+    val UUID = Validate(
+        Regex("^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$"),
+        ""
+    )
+
+    val notEmpty = Validate(
+        Regex(".+"),
+        "Не должно быть пустым"
+    )
+
+    fun inRange(min: Int, max: Int): Validate {
+        return Validate(
+            Regex("^.*${min},${max}}$"),
+            "Пределы символов от $min до $max"
+        )
     }
 }
 
-fun validatePassword(
-    password: String,
-    confirmPassword: String,
-    errorMessage: MutableState<String?>,
-    successMessage: MutableState<String?>,
-    isError: MutableState<Boolean>,
-) {
-    val minLength = 8
-    val hasUppercase = Regex("[A-Z]")
-    val hasLowercase = Regex("[a-z]")
-    val hasDigit = Regex("\\d")
-    val hasSpecialChar = Regex("[!@#\$%^&+=]")
+data class Return(
+    val isError: Boolean,
+    val errorMessage: String?,
+    val successMessage: String?,
+)
 
-    val message =
-        when {
-            password.length < minLength -> "Пароль должен содержать не менее 8 символов"
-            !password.contains(hasUppercase) -> "Пароль должен содержать хотя бы одну заглавную букву"
-            !password.contains(hasLowercase) -> "Пароль должен содержать хотя бы одну строчную букву"
-            !password.contains(hasDigit) -> "Пароль должен содержать хотя бы одну цифру"
-            !password.contains(hasSpecialChar) -> "Пароль должен содержать хотя бы один спец символ"
-            password != confirmPassword -> "Пароли не совпадают"
-            else -> null
-        }
-
-    isError.value = message != null
-    errorMessage.value = message
-
-    if (message == null) {
-        successMessage.value = "Надежный пароль"
-    } else {
-        successMessage.value = null
-    }
-}
-
-// используется для числовых полей(денежных)
-fun isValidNumber(value: String): Boolean {
-    // проверка на то, что значение являесят числом и больше нуля
-    return value.toDoubleOrNull()?.let { it > 0 } ?: false
-}
-
-fun validateOnlyLetters(
+fun validation(
     text: String,
-    errorMessage: MutableState<String?>,
-    isError: MutableState<Boolean>,
-) {
-    if (!text.matches(Regex("^[a-zA-Zа-яА-Я]*$"))) {
-        isError.value = true
-        errorMessage.value = "Разрешенно использовать только буквы"
-    } else {
-        isError.value = false
-        errorMessage.value = null
+    vararg validators: Validate,
+): Return {
+    for (validator in validators) {
+        if(text.contains(validator.pattern)) {
+            return Return(
+                isError = true,
+                errorMessage = validator.errorMessage,
+                successMessage = null,
+            )
+        }
     }
+
+    return Return(
+        isError = false,
+        errorMessage = null,
+        successMessage = null,
+    )
+}
+
+fun doublePasswordValidation(
+    firstPassword: String,
+    secondPassword: String,
+): Return {
+    val first = passwordValidation(firstPassword)
+    val second = passwordValidation(secondPassword)
+
+    return Return(
+        isError = !first.isError && !second.isError,
+        errorMessage = "Пароли не совпадают",
+        successMessage = "Надежный пароль",
+    )
+}
+
+fun passwordValidation(
+    password: String,
+): Return {
+    return validation(
+        password,
+        ValidatePattern.hasUppercase,
+        ValidatePattern.hasLowercase,
+        ValidatePattern.hasDigit,
+        ValidatePattern.hasSpecialChar,
+        ValidatePattern.inRange(min = 8, max = 21),
+    )
+}
+
+fun emailValidation(
+    email: String
+): Return {
+    return validation(email, ValidatePattern.isEmail)
 }

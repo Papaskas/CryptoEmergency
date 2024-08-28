@@ -117,7 +117,6 @@ private fun TitleNews(
             contentDescription = "Аватар $authorName",
             modifier = Modifier
                 .roundedHexagonShape()
-                .rotate(270f)
                 .size(36.dp),
             contentScale = ContentScale.Crop,
         )
