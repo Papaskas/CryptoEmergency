@@ -7,13 +7,10 @@ import android.os.Vibrator
 import androidx.core.content.ContextCompat
 
 /**
- *
  * Вызов вибрации устройства
  *
  * @param context контекст приложения
- *
  * @param milliseconds длительность вибрации в миллисекундах
- *
  * */
 fun vibrate(
     context: Context,

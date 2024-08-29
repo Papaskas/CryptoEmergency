@@ -1,12 +1,8 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
-import androidx.compose.foundation.interaction.Interaction
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -27,14 +23,6 @@ import com.cryptoemergency.cryptoemergency.lib.emailPatterns
  * @param isError указывает, является ли текущее значение текстового поля ошибочным. Если установлено
  * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
  * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
- * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки, как
- * [keyboardType] и [ImeAction].
- * @param keyboardActions когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
- *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
- * [KeyboardOptions.imeAction].
- * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
- * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
- * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  */
 @Composable
 fun EmailInput(
@@ -43,21 +31,16 @@ fun EmailInput(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     ValidateInput(
         modifier = modifier,
-        interactionSource = interactionSource,
         readOnly = readOnly,
         value = value,
         label = "Email",
         isError = isError,
-        keyboardActions = keyboardActions,
         enabled = enabled,
         singleLine = true,
-        keyboardOptions = keyboardOptions.copy(
+        keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
         ),
         validators = emailPatterns,

@@ -1,12 +1,20 @@
 package com.cryptoemergency.cryptoemergency.lib
 
+/**
+ * Функция для валидации текста с использованием нескольких валидаторов.
+ *
+ * @param text Текст для валидации.
+ * @param successMessage Сообщение об успешной валидации.
+ * @param validators Набор валидаторов для проверки текста.
+ * @return [Return], содержащий результат валидации.
+ */
 fun validation(
     text: String,
     successMessage: String,
     vararg validators: Validate,
 ): Return {
     for (validator in validators) {
-        if(!text.contains(validator.pattern)) {
+        if (!text.contains(validator.pattern)) {
             return Return(
                 isError = true,
                 errorMessage = validator.errorMessage,
@@ -22,17 +30,33 @@ fun validation(
     )
 }
 
+/**
+ * Класс для хранения результата валидации.
+ *
+ * @param isError Флаг, указывающий на наличие ошибки.
+ * @param errorMessage Сообщение об ошибке, если есть.
+ * @param successMessage Сообщение об успешной валидации, если есть.
+ */
 data class Return(
     val isError: Boolean,
     val errorMessage: String?,
     val successMessage: String?,
 )
 
+/**
+ * Класс для хранения валидатора.
+ *
+ * @param pattern Регулярное выражение для валидации.
+ * @param errorMessage Сообщение об ошибке, если валидация не пройдена.
+ */
 data class Validate(
     val pattern: Regex,
     val errorMessage: String,
 )
 
+/**
+ * Объект, содержащий предопределенные валидаторы.
+ */
 object ValidatePattern {
     val isEmail = Validate(
         pattern = Regex("^[A-Za-z](.*)(@)(.+)(\\.)(.+)"),
@@ -119,14 +143,75 @@ object ValidatePattern {
         "Не должно быть пустым"
     )
 
-    fun inRange(min: Int, max: Int): Validate {
-        return Validate(
-            Regex("^.{$min,$max}$"),
-            "Пределы количества символов от $min до $max"
+    /**
+     * Валидатор для проверки равенства строк.
+     *
+     * @param toText Текст, с которым нужно сравнить.
+     * @param errorMessage Сообщение об ошибке, если строки не совпадают.
+     * @return [Validate] для проверки равенства строк.
+     *
+     * @sample [ValidationSamples.isEquals]
+     */
+    fun isEquals(
+        toText: String,
+        errorMessage: String = "Строки не совпадают!"
+    ) = Validate(
+        Regex.escape(toText).toRegex(),
+        errorMessage,
+    )
+
+    /**
+     * Валидатор для проверки длины строки в заданном диапазоне.
+     *
+     * @param min Минимальная длина строки.
+     * @param max Максимальная длина строки.
+     * @param errorMessage Сообщение об ошибке, если длина строки не в диапазоне.
+     * @return [Validate] для проверки длины строки.
+     */
+    fun inRange(
+        min: Int,
+        max: Int,
+        errorMessage: String = "Значение должно быть в диапазоне от $min до $max"
+    ) = Validate(
+        Regex("^.{$min,$max}$"),
+        errorMessage,
+    )
+}
+
+/**
+ * Примеры использования функции валидации.
+ */
+private object ValidationSamples {
+    /**
+     * Пример использования валидатора для проверки равенства строк.
+     */
+    fun isEquals() {
+        validation(
+            "Что сравнивать",
+            "Одинаковые",
+            ValidatePattern.isEquals(
+                toText = "С чем сравнивать",
+                errorMessage = "Не совпадают!",
+            )
+        )
+    }
+
+
+    /**
+     * Пример использования валидатора для проверки длины строки в диапазоне.
+     */
+    fun inRange() {
+        validation(
+            "Пример текста",
+            "В диапазоне",
+            ValidatePattern.inRange(min = 5, max = 10),
         )
     }
 }
 
+/**
+ * Набор валидаторов для проверки пароля.
+ */
 val passwordPatterns = arrayOf(
     ValidatePattern.notEmpty,
     ValidatePattern.withoutSpaces,
@@ -137,6 +222,9 @@ val passwordPatterns = arrayOf(
     ValidatePattern.inRange(min = 8, max = 25),
 )
 
+/**
+ * Набор валидаторов для проверки email.
+ */
 val emailPatterns = arrayOf(
     ValidatePattern.notEmpty,
     ValidatePattern.withoutSpaces,

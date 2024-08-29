@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
-import android.util.Log
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -8,11 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,12 +17,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Text
-import com.cryptoemergency.cryptoemergency.lib.Return
 import com.cryptoemergency.cryptoemergency.lib.Validate
 import com.cryptoemergency.cryptoemergency.lib.validation
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import kotlinx.coroutines.delay
 
 /**
  * Компонент Input с логикой обработки валидации. Наследуется от Input
@@ -77,6 +71,7 @@ fun ValidateInput(
     vararg validators: Validate,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    isRequired: Boolean = false,
     readOnly: Boolean = false,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -94,6 +89,7 @@ fun ValidateInput(
     // TODO: реализовать проверку раз в секунду, если афк
     val errorMessage = remember { mutableStateOf<String?>(null) }
     val successMessage = remember { mutableStateOf<String?>(null) }
+
 
     Column {
         Input(
@@ -158,12 +154,12 @@ private fun validate(
 ) {
     val res = validation(text, "", *validators)
 
-    if(res.errorMessage != null) {
+    if (res.errorMessage != null) {
         errorMessage.value = res.errorMessage
         successMessage.value = null
         isError.value = res.isError
 
-    } else if(res.successMessage != null) {
+    } else if (res.successMessage != null) {
         errorMessage.value = null
         successMessage.value = res.successMessage
         isError.value = res.isError

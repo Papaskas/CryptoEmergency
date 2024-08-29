@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -16,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.EmailInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 
 @Composable
@@ -30,11 +28,14 @@ fun ChangeProfileDataScreen(
 
         Spacer(Modifier.height(30.dp))
 
-        EmailInput(
-//            label = "Ваше имя",
+        DateInput(
             value = viewModel.firstName,
-            isError = remember { mutableStateOf(false) }
+            label = "Дата рождения",
         )
+//        Input(
+//            label = "Ваше имя",
+//            value = viewModel.firstName,
+//        )
         Spacer(Modifier.height(10.dp))
         Input(
             label = "Имя пользователя",
