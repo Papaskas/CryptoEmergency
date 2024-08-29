@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -16,6 +18,9 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSelectorBottomMenu
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSelectorDropdown
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 
 @Composable
 fun ChangeProfileDataScreen(
@@ -28,23 +33,23 @@ fun ChangeProfileDataScreen(
 
         Spacer(Modifier.height(30.dp))
 
-        DateInput(
+        Input(
+            label = "Ваше имя",
             value = viewModel.firstName,
-            label = "Дата рождения",
         )
-//        Input(
-//            label = "Ваше имя",
-//            value = viewModel.firstName,
-//        )
         Spacer(Modifier.height(10.dp))
         Input(
             label = "Имя пользователя",
             value = viewModel.username,
         )
         Spacer(Modifier.height(10.dp))
-        Input(
+        MultiLineInput(
             label = "О себе",
             value = viewModel.aboutMe,
+            minLines = 2,
+            maxLines = 5,
+            maxSymbols = 100,
+            isError = remember { mutableStateOf(false) },
         )
         Spacer(Modifier.height(10.dp))
         Input(
@@ -52,14 +57,18 @@ fun ChangeProfileDataScreen(
             value = viewModel.specialization,
         )
         Spacer(Modifier.height(10.dp))
-        Input(
-            label = "Дата рождения",
+        DateInput(
             value = viewModel.birthday,
+            label = "Дата рождения",
         )
         Spacer(Modifier.height(10.dp))
-        Input(
+        InputSelectorBottomMenu(
             label = "Язык",
-            value = viewModel.language,
+            selectedItem = viewModel.language,
+            items = arrayOf(
+                "Русский",
+                "Английский",
+            )
         )
     }
 }

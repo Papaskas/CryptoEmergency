@@ -4,6 +4,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -16,11 +19,17 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
@@ -31,15 +40,16 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param onValueChange Функция меняющая состояние вводимого текста
- * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param enabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
+ * @param isEnabled управляет включенным состоянием этого текстового поля. При значении false этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
  * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
  * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
  * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
  * отображения предварительно заполненных форм, которые пользователь не может редактировать.
- * @param label необязательная метка, которая будет отображаться внутри контейнера текстового поля.
+ * @param disableActiveBorder Отключить обводку при фокусе
+ * @param label метка, которая будет отображаться внутри контейнера текстового поля.
+ * @param postLabel метка отображаемая в правом вверхнем углу, или же напротив label
  * @param placeholder необязательный заполнитель, который отображается, когда текстовое поле находится в фокусе, а
  * вводимый текст пуст
  * @param leadingIcon необязательный начальный значок, который будет отображаться в начале текстового поля
@@ -55,8 +65,8 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
  * Например, вы можете использовать
  * [PasswordVisualTransformation][androidx.compose.ui.text.input.Преобразование пароля] в
  * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
- * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки, как
- * [keyboardType] и [ImeAction].
+ * @param aboveIcon Иконка имеющая абсолютное позиционирование над Input
+ * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки
  * @param keyboardActions когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
  *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
  * [KeyboardOptions.imeAction].
@@ -72,6 +82,8 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param colors Палитра цветов для Input
+ * @param contentAlignment Отношение позиционирования [aboveIcon] к [Input]
+ * @param shape Shape инпута
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,12 +92,16 @@ fun Input(
     label: String,
     modifier: Modifier = Modifier,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
-    enabled: Boolean = true,
+    disableActiveBorder: Boolean = false,
+    isEnabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
+    isRequired: Boolean = false,
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    postLabel: @Composable ((TextStyle) -> Unit)? = null,
+    aboveIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
@@ -95,115 +111,154 @@ fun Input(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     colors: TextFieldColors = TextFieldDefaults.colors(),
+    contentAlignment: Alignment = Alignment.TopStart,
+    shape: Shape = RoundedCornerShape(Theme.shapes.common),
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState()
     val borderModifier =
         when {
             isError -> {
-                modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(10.dp))
-                modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(10.dp))
-            }
-            isFocused.value -> {
-                modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(10.dp))
-                modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(10.dp))
+                Modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(Theme.shapes.common))
+                Modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(Theme.shapes.common))
             }
             currentTheme == CurrentTheme.DARK -> {
-                modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(10.dp))
-                modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(10.dp))
+                Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
+                Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
             }
-            else -> modifier
+            disableActiveBorder -> {
+                Modifier
+            }
+            isFocused.value -> {
+                Modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(Theme.shapes.common))
+                Modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(Theme.shapes.common))
+            }
+            else -> Modifier
         }
 
-    BasicTextField(
-        value = value.value,
-        onValueChange = onValueChange,
-        readOnly = readOnly,
-        cursorBrush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
-        keyboardActions = keyboardActions,
-        keyboardOptions = keyboardOptions,
-        maxLines = maxLines,
-        minLines = minLines,
-        interactionSource = interactionSource,
-        textStyle = Theme.typography.body1.copy(
-            color = Theme.colors.text1
-        ),
-        singleLine = singleLine,
-        modifier = borderModifier.fillMaxWidth(),
-        decorationBox = {
-            TextFieldDefaults.DecorationBox(
-                value = value.value.text,
-                innerTextField = it,
-                singleLine = singleLine,
-                enabled = enabled,
-                leadingIcon = leadingIcon,
-                trailingIcon = trailingIcon,
-                isError = isError,
-                prefix = prefix,
-                suffix = suffix,
-                label = {
-                    Text(
-                        text = label,
-                        style = if (value.value.text.isNotEmpty() || isFocused.value) {
-                            Theme.typography.caption2
-                        } else {
-                            Theme.typography.body1
+    val labelStyle = if (value.value.text.isNotEmpty() || isFocused.value) {
+        Theme.typography.caption2
+    } else {
+        Theme.typography.body1
+    }
+
+    Box(
+        modifier = modifier,
+        contentAlignment = contentAlignment,
+    ) {
+        BasicTextField(
+            value = value.value,
+            onValueChange = onValueChange,
+            readOnly = readOnly,
+            cursorBrush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
+            keyboardActions = keyboardActions,
+            keyboardOptions = keyboardOptions,
+            maxLines = maxLines,
+            minLines = minLines,
+            interactionSource = interactionSource,
+            textStyle = Theme.typography.body1.copy(
+                color = Theme.colors.text1
+            ),
+            singleLine = singleLine,
+            modifier = borderModifier.fillMaxWidth(),
+            decorationBox = {
+                TextFieldDefaults.DecorationBox(
+                    value = value.value.text,
+                    innerTextField = it,
+                    singleLine = singleLine,
+                    enabled = isEnabled,
+                    leadingIcon = leadingIcon,
+                    trailingIcon = trailingIcon,
+                    isError = isError,
+                    prefix = prefix,
+                    suffix = suffix,
+                    label = {
+                        Row {
+                            Label(label, isRequired, labelStyle)
+
+                            postLabel?.let {
+                                Spacer(Modifier.weight(1f))
+                                postLabel(labelStyle)
+                            }
                         }
-                    )
-                },
-                visualTransformation = visualTransformation,
-                interactionSource = interactionSource,
-                shape = RoundedCornerShape(10.dp),
-                colors = colors.copy(
-                    focusedTextColor = Theme.colors.text1,
-                    unfocusedTextColor = Theme.colors.text1,
-                    errorTextColor = Theme.colors.error,
+                    },
+                    visualTransformation = visualTransformation,
+                    interactionSource = interactionSource,
+                    shape = shape,
+                    colors = colors.copy(
+                        focusedTextColor = Theme.colors.text1,
+                        unfocusedTextColor = Theme.colors.text1,
+                        errorTextColor = Theme.colors.error,
 //                    textSelectionColors = Theme.colors.text1,
 
-                    focusedContainerColor = Theme.colors.surface1,
-                    unfocusedContainerColor = Theme.colors.surface1,
-                    errorContainerColor = Theme.colors.surface1,
+                        focusedContainerColor = Theme.colors.surface1,
+                        unfocusedContainerColor = Theme.colors.surface1,
+                        errorContainerColor = Theme.colors.surface1,
 
-                    cursorColor = Theme.colors.accent,
-                    errorCursorColor = Theme.colors.error,
+                        cursorColor = Theme.colors.accent,
+                        errorCursorColor = Theme.colors.error,
 
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        errorIndicatorColor = Color.Transparent,
 
-                    //            focusedLeadingIconColor = focusedLeadingIconColor,
-                    //            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
-                    //            disabledLeadingIconColor = disabledLeadingIconColor,
-                    //            errorLeadingIconColor = errorLeadingIconColor,
-                    //
-                    //            focusedTrailingIconColor = focusedTrailingIconColor,
-                    //            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
-                    //            disabledTrailingIconColor = disabledTrailingIconColor,
-                    //            errorTrailingIconColor = errorTrailingIconColor,
-                    //
-                    focusedLabelColor = Theme.colors.text2,
-                    unfocusedLabelColor = Theme.colors.text2,
-                    disabledLabelColor = Theme.colors.text2,
-                    errorLabelColor = Theme.colors.text2,
-                    //
-                    //            focusedSupportingTextColor = focusedSupportingTextColor,
-                    //            unfocusedSupportingTextColor = unfocusedSupportingTextColor,
-                    //            disabledSupportingTextColor = disabledSupportingTextColor,
-                    //            errorSupportingTextColor = errorSupportingTextColor,
-                    //
-                    //            focusedPrefixColor = focusedPrefixColor,
-                    //            unfocusedPrefixColor = unfocusedPrefixColor,
-                    //            disabledPrefixColor = disabledPrefixColor,
-                    //            errorPrefixColor = errorPrefixColor,
-                    //
-                    //            focusedSuffixColor = focusedSuffixColor,
-                    //            unfocusedSuffixColor = unfocusedSuffixColor,
-                    //            disabledSuffixColor = disabledSuffixColor,
-                    //            errorSuffixColor = errorSuffixColor,
+                        //            focusedLeadingIconColor = focusedLeadingIconColor,
+                        //            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
+                        //            disabledLeadingIconColor = disabledLeadingIconColor,
+                        //            errorLeadingIconColor = errorLeadingIconColor,
+                        //
+                        //            focusedTrailingIconColor = focusedTrailingIconColor,
+                        //            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
+                        //            disabledTrailingIconColor = disabledTrailingIconColor,
+                        //            errorTrailingIconColor = errorTrailingIconColor,
+                        //
+                        focusedLabelColor = Theme.colors.text2,
+                        unfocusedLabelColor = Theme.colors.text2,
+                        disabledLabelColor = Theme.colors.text2,
+                        errorLabelColor = Theme.colors.text2,
+                        //
+                        //            focusedSupportingTextColor = focusedSupportingTextColor,
+                        //            unfocusedSupportingTextColor = unfocusedSupportingTextColor,
+                        //            disabledSupportingTextColor = disabledSupportingTextColor,
+                        //            errorSupportingTextColor = errorSupportingTextColor,
+                        //
+                        //            focusedPrefixColor = focusedPrefixColor,
+                        //            unfocusedPrefixColor = unfocusedPrefixColor,
+                        //            disabledPrefixColor = disabledPrefixColor,
+                        //            errorPrefixColor = errorPrefixColor,
+                        //
+                        //            focusedSuffixColor = focusedSuffixColor,
+                        //            unfocusedSuffixColor = unfocusedSuffixColor,
+                        //            disabledSuffixColor = disabledSuffixColor,
+                        //            errorSuffixColor = errorSuffixColor,
+                    )
                 )
-            )
+            }
+        )
+
+        aboveIcon?.let {
+            it()
         }
-    )
+    }
 }
 
+@Composable
+private fun Label(
+    label: String,
+    isRequired: Boolean,
+    labelStyle: TextStyle,
+) {
+    val annotatedString = buildAnnotatedString {
+        append(label)
+        if (isRequired) {
+            withStyle(style = SpanStyle(color = Theme.colors.error)) {
+                append(" *")
+            }
+        }
+    }
 
+    Text(
+        text = annotatedString,
+        style = labelStyle,
+    )
+}

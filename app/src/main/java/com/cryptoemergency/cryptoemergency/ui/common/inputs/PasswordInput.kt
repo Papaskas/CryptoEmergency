@@ -16,13 +16,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.lib.passwordPatterns
 
 /**
  * Компонент Input с логикой пароля. Наследуется от ValidateInput
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param enabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
+ * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
  * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
@@ -45,7 +46,7 @@ fun PasswordInput(
     value: MutableState<TextFieldValue>,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    isEnabled: Boolean = true,
     readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -61,8 +62,8 @@ fun PasswordInput(
         readOnly = readOnly,
         label = "label",
         isError = isError,
-        prefix = "prefix",
-        suffix = "suffix",
+        //prefix = "prefix",
+        //suffix = "suffix",
         trailingIcon = {
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                 Icon(
@@ -71,7 +72,7 @@ fun PasswordInput(
                 )
             }
         },
-        enabled = enabled,
+        isEnabled = isEnabled,
         maxLines = 1,
         minLines = 1,
         interactionSource = interactionSource,
@@ -79,5 +80,6 @@ fun PasswordInput(
         keyboardOptions = keyboardOptions,
         singleLine = true,
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+        validators = passwordPatterns
     )
 }

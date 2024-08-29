@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.providers.theme
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -56,6 +57,7 @@ data class Typography(
 )
 
 data class CommonShape(
+    val common: Dp,
     val hexagonShape: Shape,
     val diamondShape: Shape,
     val ticketShape: Shape,

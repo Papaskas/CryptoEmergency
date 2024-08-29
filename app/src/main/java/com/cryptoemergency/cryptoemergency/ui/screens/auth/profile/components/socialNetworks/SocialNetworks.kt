@@ -72,7 +72,7 @@ fun SocialNetworks(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ColumnScope.SocialNetworksSelector(
+private fun SocialNetworksSelector(
     selectedOption: MutableState<SocialNetworkIconType>,
 ) {
     FlowRow {
@@ -100,7 +100,7 @@ private fun SocialNetSelectableItem(
             ),
         onClick = { selectedOption.value = socialNetwork },
     ) {
-        if(selected) {
+        if (selected) {
             Icon(
                 painter = painterResource(socialNetwork.activeIcon),
                 contentDescription = socialNetwork.networkName.name,
@@ -118,7 +118,7 @@ private fun SocialNetSelectableItem(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ColumnScope.AddSocialNetwork(
+private fun AddSocialNetwork(
     viewModel: SocialNetworksViewModel,
     selectedOption: MutableState<SocialNetworkIconType>
 ) {
@@ -136,6 +136,7 @@ private fun ColumnScope.AddSocialNetwork(
                         text = network.urlPrefix.value.text,
                     )
                 },
+                isRequired = true,
                 value = network.url,
                 label = "Ссылка",
             )

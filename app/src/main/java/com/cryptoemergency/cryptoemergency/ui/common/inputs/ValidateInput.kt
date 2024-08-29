@@ -8,16 +8,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.lib.Validate
+import com.cryptoemergency.cryptoemergency.lib.ValidatePattern
 import com.cryptoemergency.cryptoemergency.lib.validation
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
@@ -26,7 +31,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  *
  * @param value Значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier Модификатор который должен быть применен к этому текстовому полю.
- * @param enabled Управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
+ * @param isEnabled Управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
  * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
@@ -34,6 +39,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
  * отображения предварительно заполненных форм, которые пользователь не может редактировать.
  * @param label Необязательная метка, которая будет отображаться внутри контейнера текстового поля.
+ * @param postLabel метка отображаемая в правом вверхнем углу, или же напротив label
  * @param placeholder Необязательный заполнитель, который отображается, когда текстовое поле находится в фокусе, а
  * вводимый текст пуст
  * @param leadingIcon Необязательный начальный значок, который будет отображаться в начале текстового поля
@@ -63,20 +69,25 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
+ * @param contentAlignment Отношение позиционирования [aboveIcon] к [Input]
+ * @param validators Параметры валидации, есть готовые в [ValidatePattern]
  */
 @Composable
 fun ValidateInput(
     value: MutableState<TextFieldValue>,
     label: String,
-    vararg validators: Validate,
+    validators: Array<Validate>,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    onValueChange: (TextFieldValue) -> Unit = { value.value = it },
+    isEnabled: Boolean = true,
     isRequired: Boolean = false,
     readOnly: Boolean = false,
+    aboveIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    prefix: String? = null,
-    suffix: String? = null,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
+    postLabel: @Composable ((TextStyle) -> Unit)? = null,
     isError: MutableState<Boolean> = mutableStateOf(false),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -85,11 +96,12 @@ fun ValidateInput(
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: TextFieldColors = TextFieldDefaults.colors(),
+    contentAlignment: Alignment = Alignment.TopStart,
 ) {
     // TODO: реализовать проверку раз в секунду, если афк
     val errorMessage = remember { mutableStateOf<String?>(null) }
     val successMessage = remember { mutableStateOf<String?>(null) }
-
 
     Column {
         Input(
@@ -100,17 +112,22 @@ fun ValidateInput(
                         errorMessage = errorMessage,
                         successMessage = successMessage,
                         isError = isError,
-                        *validators,
+                        validators,
                     )
                 }
             },
+            contentAlignment = contentAlignment,
+            aboveIcon = aboveIcon,
             value = value,
             readOnly = readOnly,
             label = label,
+            postLabel = postLabel,
             isError = isError.value,
-            //prefix = prefix,
-            //suffix = suffix,
-            enabled = enabled,
+            isRequired = isRequired,
+            onValueChange = onValueChange,
+            prefix = prefix,
+            suffix = suffix,
+            isEnabled = isEnabled,
             maxLines = maxLines,
             minLines = minLines,
             interactionSource = interactionSource,
@@ -120,7 +137,7 @@ fun ValidateInput(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             singleLine = singleLine,
-            // colors
+            colors = colors,
         )
 
         Column {
@@ -134,7 +151,7 @@ fun ValidateInput(
                 )
             }
 
-            if(successMessage.value.isNullOrEmpty()) {
+            if (!successMessage.value.isNullOrEmpty()) {
                 Text(
                     text = successMessage.value!!,
                     color = Theme.colors.success,
@@ -150,9 +167,9 @@ private fun validate(
     errorMessage: MutableState<String?>,
     successMessage: MutableState<String?>,
     isError: MutableState<Boolean>,
-    vararg validators: Validate,
+    validators: Array<Validate>,
 ) {
-    val res = validation(text, "", *validators)
+    val res = validation(text, "", validators)
 
     if (res.errorMessage != null) {
         errorMessage.value = res.errorMessage

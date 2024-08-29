@@ -10,20 +10,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.graphics.shapes.CornerRounding
-import androidx.graphics.shapes.RoundedPolygon
-import androidx.graphics.shapes.toPath
-import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
@@ -31,6 +24,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 val shapes = CommonShape(
+    common = 10.dp,
     hexagonShape = HexagonShape(),
     starShape = StarShape(),
     diamondShape = DiamondShape(),

@@ -13,7 +13,7 @@ import com.cryptoemergency.cryptoemergency.lib.emailPatterns
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param enabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
+ * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
  * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
@@ -29,7 +29,7 @@ fun EmailInput(
     value: MutableState<TextFieldValue>,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    isEnabled: Boolean = true,
     readOnly: Boolean = false,
 ) {
     ValidateInput(
@@ -38,7 +38,7 @@ fun EmailInput(
         value = value,
         label = "Email",
         isError = isError,
-        enabled = enabled,
+        isEnabled = isEnabled,
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,

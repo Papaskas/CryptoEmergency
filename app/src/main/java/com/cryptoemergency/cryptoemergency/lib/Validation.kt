@@ -11,7 +11,7 @@ package com.cryptoemergency.cryptoemergency.lib
 fun validation(
     text: String,
     successMessage: String,
-    vararg validators: Validate,
+    validators: Array<Validate>,
 ): Return {
     for (validator in validators) {
         if (!text.contains(validator.pattern)) {
@@ -171,7 +171,7 @@ object ValidatePattern {
     fun inRange(
         min: Int,
         max: Int,
-        errorMessage: String = "Значение должно быть в диапазоне от $min до $max"
+        errorMessage: String = "Превышен диапазон возможных символов, разрешенно от $min до $max"
     ) = Validate(
         Regex("^.{$min,$max}$"),
         errorMessage,
@@ -189,9 +189,11 @@ private object ValidationSamples {
         validation(
             "Что сравнивать",
             "Одинаковые",
-            ValidatePattern.isEquals(
-                toText = "С чем сравнивать",
-                errorMessage = "Не совпадают!",
+            arrayOf(
+                ValidatePattern.isEquals(
+                    toText = "С чем сравнивать",
+                    errorMessage = "Не совпадают!",
+                )
             )
         )
     }
@@ -204,7 +206,9 @@ private object ValidationSamples {
         validation(
             "Пример текста",
             "В диапазоне",
-            ValidatePattern.inRange(min = 5, max = 10),
+            arrayOf(
+                ValidatePattern.inRange(min = 5, max = 10),
+            )
         )
     }
 }

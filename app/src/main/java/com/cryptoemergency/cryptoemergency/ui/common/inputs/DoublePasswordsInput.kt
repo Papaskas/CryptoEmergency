@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param enabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
+ * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
  * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
@@ -36,7 +36,7 @@ import androidx.compose.ui.Modifier
 fun DoublePasswordsInput(
     value: MutableState<String>,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    isEnabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
