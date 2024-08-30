@@ -19,7 +19,6 @@ import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSelectorBottomMenu
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSelectorDropdown
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 
 @Composable

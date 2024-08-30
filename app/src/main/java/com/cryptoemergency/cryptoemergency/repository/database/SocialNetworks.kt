@@ -9,7 +9,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.NetworkName
-import kotlin.jvm.Throws
 
 @Entity(
     tableName = "socialNetworks",
