@@ -2,8 +2,8 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.model.NewsItemType
+import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
+import com.cryptoemergency.cryptoemergency.types.NewsItemType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

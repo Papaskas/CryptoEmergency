@@ -2,10 +2,14 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.changeProfileData
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,66 +19,73 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
+import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSelectorBottomMenu
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
+import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar
 
 @Composable
 fun ChangeProfileDataScreen(
     viewModel: ChangeProfileDataViewModel = hiltViewModel()
 ) {
-    ScrollableScreen {
-        Spacer(Modifier.height(20.dp))
+    Screen(
+        topBar = { ScreenTopBar(title = "Редактировать профиль") }
+    ) {
+        Column(
+            Modifier.verticalScroll(rememberScrollState())
+        ) {
+            Spacer(Modifier.height(20.dp))
 
-        EditAvatar(Modifier.align(Alignment.CenterHorizontally))
+            EditAvatar()
 
-        Spacer(Modifier.height(30.dp))
+            Spacer(Modifier.height(30.dp))
 
-        Input(
-            label = "Ваше имя",
-            value = viewModel.firstName,
-        )
-        Spacer(Modifier.height(10.dp))
-        Input(
-            label = "Имя пользователя",
-            value = viewModel.username,
-        )
-        Spacer(Modifier.height(10.dp))
-        MultiLineInput(
-            label = "О себе",
-            value = viewModel.aboutMe,
-            minLines = 2,
-            maxLines = 5,
-            maxSymbols = 100,
-            isError = remember { mutableStateOf(false) },
-        )
-        Spacer(Modifier.height(10.dp))
-        Input(
-            label = "Специализация",
-            value = viewModel.specialization,
-        )
-        Spacer(Modifier.height(10.dp))
-        DateInput(
-            value = viewModel.birthday,
-            label = "Дата рождения",
-        )
-        Spacer(Modifier.height(10.dp))
-        InputSelectorBottomMenu(
-            label = "Язык",
-            selectedItem = viewModel.language,
-            items = arrayOf(
-                "Русский",
-                "Английский",
+            Input(
+                label = "Ваше имя",
+                value = viewModel.firstName,
             )
-        )
+            Spacer(Modifier.height(10.dp))
+            Input(
+                label = "Имя пользователя",
+                value = viewModel.username,
+            )
+            Spacer(Modifier.height(10.dp))
+            MultiLineInput(
+                label = "О себе",
+                value = viewModel.aboutMe,
+                minLines = 2,
+                maxLines = 5,
+                maxSymbols = 100,
+                isError = remember { mutableStateOf(false) },
+            )
+            Spacer(Modifier.height(10.dp))
+            Input(
+                label = "Специализация",
+                value = viewModel.specialization,
+            )
+            Spacer(Modifier.height(10.dp))
+            DateInput(
+                value = viewModel.birthday,
+                label = "Дата рождения",
+            )
+            Spacer(Modifier.height(10.dp))
+            InputSelectorBottomMenu(
+                label = "Язык",
+                selectedItem = viewModel.language,
+                items = arrayOf(
+                    "Русский",
+                    "Английский",
+                )
+            )
+        }
     }
 }
 
 @Composable
-private fun EditAvatar(modifier: Modifier) {
-    Box(modifier) {
+private fun ColumnScope.EditAvatar() {
+    Box(Modifier.align(Alignment.CenterHorizontally)) {
         Image(
             painter = painterResource(R.drawable.avatar_placeholder2),
             contentDescription = null,

@@ -22,7 +22,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -41,14 +43,15 @@ import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
+import com.cryptoemergency.cryptoemergency.ui.common.Screen
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    ScrollableScreen(
-        padding = PaddingValues(0.dp),
+    Screen(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        horizontalPadding = PaddingValues(0.dp),
     ) {
         ExchangeRate(viewModel)
         Spacer(Modifier.height(15.dp))

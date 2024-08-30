@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common.topBar.components
+package com.cryptoemergency.cryptoemergency.ui.common.topBar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api

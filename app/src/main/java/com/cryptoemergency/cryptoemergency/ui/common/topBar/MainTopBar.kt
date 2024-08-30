@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common.topBar.components
+package com.cryptoemergency.cryptoemergency.ui.common.topBar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -32,7 +32,7 @@ fun MainTopBar() {
             title = {},
             modifier = Modifier.padding(start = Theme.values.padding, end = 10.dp),
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent,
+                containerColor = Theme.colors.backgroundMain,
             ),
             navigationIcon = {
                 Icon(

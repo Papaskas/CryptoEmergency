@@ -21,9 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.model.NewsItemType
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
+import com.cryptoemergency.cryptoemergency.types.NewsItemType
 
 /**
  * Компонент списка новостей,панелью управления и табами
@@ -38,7 +38,11 @@ fun NewsFeed(
     LazyVerticalStaggeredGrid(
         modifier = Modifier.fillMaxSize(),
         columns = StaggeredGridCells.Fixed(columnCount.intValue),
-        verticalItemSpacing = if(showNewsFeedType.value == NewsItemType.FULL) Theme.values.padding else 0.dp, // Отступы только для FULL
+        verticalItemSpacing = if (showNewsFeedType.value == NewsItemType.FULL) {
+            Theme.values.padding
+        } else {
+            0.dp
+        }, // Отступы только для NewsItemType.FULL
     ) {
         item(span = StaggeredGridItemSpan.FullLine) { // Заголовок
             Title(
@@ -89,8 +93,11 @@ private fun Title(
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
                 contentDescription = null,
-                tint = if(showNewsFeedType.value == NewsItemType.FULL)
-                    Theme.colors.accent else Theme.colors.text1,
+                tint = if (showNewsFeedType.value == NewsItemType.FULL) {
+                    Theme.colors.accent
+                } else {
+                    Theme.colors.text1
+                },
             )
         }
         IconButton(onClick = {
@@ -100,8 +107,11 @@ private fun Title(
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
                 contentDescription = null,
-                tint = if(showNewsFeedType.value == NewsItemType.SHORT)
-                    Theme.colors.accent else Theme.colors.text1,
+                tint = if (showNewsFeedType.value == NewsItemType.SHORT) {
+                    Theme.colors.accent
+                } else {
+                    Theme.colors.text1
+                },
             )
         }
     }

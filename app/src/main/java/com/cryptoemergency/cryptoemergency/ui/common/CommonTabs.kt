@@ -26,7 +26,6 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
 /**
  * Компонент вкладок с горизонтальным перелистыванием страниц.
  *
@@ -59,9 +58,9 @@ fun CommonTabs(
     }
 
     Column {
-        Column (
+        Column(
             Modifier.padding(horizontal = Theme.values.padding)
-        ){
+        ) {
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
                 containerColor = Color.Transparent,
@@ -139,4 +138,3 @@ private fun SampleTabsWithComposableFunc() {
         items[index]
     }
 }
-

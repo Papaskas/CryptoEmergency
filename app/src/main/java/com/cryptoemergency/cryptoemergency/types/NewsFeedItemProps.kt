@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.model
+package com.cryptoemergency.cryptoemergency.types
 
 import android.net.Uri
 

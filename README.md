@@ -34,24 +34,6 @@
 * Для перехода по страницам нужно использовать не строки, а импортировать обьект Routes из
   navigation/Routes
 
-# TopBar || BottomBar
-
-* Для каждого маршрута указан свой Top(Bottom)Bar в файле ui/common/top(bottom)Bar/Top(Botton)Bar.kt
-* Для маршрутов стоит по умолчанию компонент
-
-```kotlin
-@Composable
-fun TopBar() {
-    val currentRoute = getCurrentRoute()
-  
-    when (currentRoute) {
-        Routes.Auth.Profile::class.qualifiedName -> ProfileTopBar()
-  
-        else -> MainTopBar()
-    }
-}
-```
-
 # LocalStorage
 
 ## Для локального хранения используются две [библиотеки](https://developer.android.com/topic/libraries/architecture/datastore) - DataStore (ключ: значение) и ProtoDataStore (data class, enum class)

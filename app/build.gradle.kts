@@ -7,8 +7,8 @@ plugins {
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrains.kotlin.android)
 
-    kotlin("android")
     kotlin("kapt")
 }
 

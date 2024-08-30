@@ -1,5 +1,7 @@
 package com.cryptoemergency.cryptoemergency.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import com.cryptoemergency.cryptoemergency.navigation.graphs.authGraphs
@@ -13,7 +15,8 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.Home
+        startDestination = Routes.Home.Home,
+        enterTransition = { fadeIn(animationSpec = tween(200)) },
     ) {
         homeGraphs()
         authGraphs()

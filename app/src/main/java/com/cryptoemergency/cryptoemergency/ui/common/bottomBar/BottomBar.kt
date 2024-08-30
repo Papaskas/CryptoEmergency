@@ -32,7 +32,7 @@ fun BottomBar() {
             BottomItems.entries.forEach { item ->
                 val isSelected = currentRoute == item.route::class.qualifiedName
 
-                if(item.label == null || item.icon == null) {
+                if (item.label == null || item.icon == null) {
                     NavButton(isSelected)
                 } else {
                     NavItem(

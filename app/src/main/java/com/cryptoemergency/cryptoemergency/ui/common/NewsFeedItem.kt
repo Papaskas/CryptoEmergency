@@ -41,10 +41,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.model.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.model.NewsItemType
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
+import com.cryptoemergency.cryptoemergency.types.NewsItemType
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

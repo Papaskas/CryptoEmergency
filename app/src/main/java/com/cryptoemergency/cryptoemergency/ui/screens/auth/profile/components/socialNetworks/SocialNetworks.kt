@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.selection.selectable
@@ -28,7 +27,6 @@ import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
-import com.cryptoemergency.cryptoemergency.ui.common.ScrollableScreen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
@@ -60,9 +58,7 @@ fun SocialNetworks(
     BottomSheet(showBottomSheet = showBottomSheet, title = "Добавить социальную сеть") {
         val selectedOption = remember { mutableStateOf(socialNetworksIcons[0]) }
 
-        ScrollableScreen(
-            padding = PaddingValues(0.dp)
-        ) {
+        Column {
             SocialNetworksSelector(selectedOption)
             AddSocialNetwork(viewModel, selectedOption)
         }
