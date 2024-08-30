@@ -83,6 +83,9 @@ fun MultiLineInput(
     colors: TextFieldColors = TextFieldDefaults.colors(),
     validators: Array<Validate> = arrayOf(),
 ) {
+    val validatorsList = validators.toMutableList()
+    validatorsList.add(ValidatePattern.inRange(0, maxSymbols))
+
     ValidateInput(
         modifier = modifier,
         readOnly = readOnly,
@@ -116,6 +119,6 @@ fun MultiLineInput(
             )
         },
         contentAlignment = Alignment.BottomEnd,
-        validators = arrayOf(*validators, ValidatePattern.inRange(0, maxSymbols)),
+        validators = validatorsList.toTypedArray()
     )
 }

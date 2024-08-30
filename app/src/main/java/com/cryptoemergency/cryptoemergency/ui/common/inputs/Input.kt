@@ -18,9 +18,11 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
@@ -82,8 +84,10 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param colors Палитра цветов для Input
+ * @param isFocused Выделено ли поле
  * @param contentAlignment Отношение позиционирования [aboveIcon] к [Input]
- * @param shape Shape инпута
+ * @param shape определяет форму контейнера этого текстового поля
+ * @param cursorBrush Кисть для рисования курсора
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,31 +114,12 @@ fun Input(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    isFocused: State<Boolean> = interactionSource.collectIsFocusedAsState(),
     colors: TextFieldColors = TextFieldDefaults.colors(),
     contentAlignment: Alignment = Alignment.TopStart,
     shape: Shape = RoundedCornerShape(Theme.shapes.common),
+    cursorBrush: Brush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
 ) {
-    val isFocused = interactionSource.collectIsFocusedAsState()
-    val borderModifier =
-        when {
-            isError -> {
-                Modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(Theme.shapes.common))
-                Modifier.border(1.dp, Theme.colors.error, RoundedCornerShape(Theme.shapes.common))
-            }
-            currentTheme == CurrentTheme.DARK -> {
-                Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
-                Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
-            }
-            disableActiveBorder -> {
-                Modifier
-            }
-            isFocused.value -> {
-                Modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(Theme.shapes.common))
-                Modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(Theme.shapes.common))
-            }
-            else -> Modifier
-        }
-
     val labelStyle = if (value.value.text.isNotEmpty() || isFocused.value) {
         Theme.typography.caption2
     } else {
@@ -149,7 +134,7 @@ fun Input(
             value = value.value,
             onValueChange = onValueChange,
             readOnly = readOnly,
-            cursorBrush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
+            cursorBrush = cursorBrush,
             keyboardActions = keyboardActions,
             keyboardOptions = keyboardOptions,
             maxLines = maxLines,
@@ -159,7 +144,12 @@ fun Input(
                 color = Theme.colors.text1
             ),
             singleLine = singleLine,
-            modifier = borderModifier.fillMaxWidth(),
+            modifier = Modifier.inputBorder(
+                shape,
+                isError,
+                isFocused.value,
+                disableActiveBorder,
+            ).fillMaxWidth(),
             decorationBox = {
                 TextFieldDefaults.DecorationBox(
                     value = value.value.text,
@@ -188,7 +178,6 @@ fun Input(
                         focusedTextColor = Theme.colors.text1,
                         unfocusedTextColor = Theme.colors.text1,
                         errorTextColor = Theme.colors.error,
-//                    textSelectionColors = Theme.colors.text1,
 
                         focusedContainerColor = Theme.colors.surface1,
                         unfocusedContainerColor = Theme.colors.surface1,
@@ -202,35 +191,10 @@ fun Input(
                         disabledIndicatorColor = Color.Transparent,
                         errorIndicatorColor = Color.Transparent,
 
-                        //            focusedLeadingIconColor = focusedLeadingIconColor,
-                        //            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
-                        //            disabledLeadingIconColor = disabledLeadingIconColor,
-                        //            errorLeadingIconColor = errorLeadingIconColor,
-                        //
-                        //            focusedTrailingIconColor = focusedTrailingIconColor,
-                        //            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
-                        //            disabledTrailingIconColor = disabledTrailingIconColor,
-                        //            errorTrailingIconColor = errorTrailingIconColor,
-                        //
                         focusedLabelColor = Theme.colors.text2,
                         unfocusedLabelColor = Theme.colors.text2,
                         disabledLabelColor = Theme.colors.text2,
                         errorLabelColor = Theme.colors.text2,
-                        //
-                        //            focusedSupportingTextColor = focusedSupportingTextColor,
-                        //            unfocusedSupportingTextColor = unfocusedSupportingTextColor,
-                        //            disabledSupportingTextColor = disabledSupportingTextColor,
-                        //            errorSupportingTextColor = errorSupportingTextColor,
-                        //
-                        //            focusedPrefixColor = focusedPrefixColor,
-                        //            unfocusedPrefixColor = unfocusedPrefixColor,
-                        //            disabledPrefixColor = disabledPrefixColor,
-                        //            errorPrefixColor = errorPrefixColor,
-                        //
-                        //            focusedSuffixColor = focusedSuffixColor,
-                        //            unfocusedSuffixColor = unfocusedSuffixColor,
-                        //            disabledSuffixColor = disabledSuffixColor,
-                        //            errorSuffixColor = errorSuffixColor,
                     )
                 )
             }
@@ -241,6 +205,21 @@ fun Input(
         }
     }
 }
+
+@Composable
+fun Modifier.inputBorder(
+    shape: Shape,
+    isError: Boolean,
+    isFocused: Boolean,
+    disableActiveBorder: Boolean,
+) = this.then(
+    when {
+        isError -> Modifier.border(1.dp, Theme.colors.error, shape)
+        isFocused && !disableActiveBorder -> Modifier.border(1.dp, Theme.colors.accent, shape)
+        currentTheme == CurrentTheme.DARK -> Modifier.border(1.dp, Theme.colors.stroke, shape)
+        else -> Modifier
+    }
+)
 
 @Composable
 private fun Label(

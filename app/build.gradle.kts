@@ -1,4 +1,5 @@
-import io.gitlab.arturbosch.detekt.Detekt
+import java.io.File
+import java.util.Base64
 
 plugins {
     alias(libs.plugins.android.application)
@@ -30,14 +31,14 @@ android {
         }
     }
 
-//    signingConfigs {
-//        create("release") {
-//            keyAlias = ""
-//            storeFile = file("")
-//            storePassword = ""
-//            keyPassword = ""
-//        }
-//    }
+    signingConfigs {
+        create("release") {
+            storeFile = file(getKeystoreFile())
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -45,9 +46,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            // signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
 
-            ndk { debugSymbolLevel = "FULL" }
+            ndk { debugSymbolLevel = "NONE" }
 
             buildConfigField(
                 "String",
@@ -68,6 +69,8 @@ android {
 
         debug {
             isMinifyEnabled = false
+            isDebuggable = true
+            isJniDebuggable = true
 
             ndk { debugSymbolLevel = "FULL" }
 
@@ -183,12 +186,26 @@ detekt {
     buildUponDefaultConfig = true
 }
 
-tasks.withType<Detekt>().configureEach {
+tasks.detekt {
     reports {
-        xml.required.set(true)
         html.required.set(true)
-        txt.required.set(true)
-        sarif.required.set(true)
         md.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
     }
+}
+
+fun getKeystoreFile(): File {
+    val keystoreFile = File(rootProject.projectDir, "keystore.jks")
+    if (!keystoreFile.exists()) {
+        val keystoreContent = System.getenv("KEYSTORE_FILE")?.let {
+            Base64.getDecoder().decode(it)
+        }
+        keystoreContent?.let {
+            keystoreFile.writeBytes(it)
+        }
+    }
+
+    return keystoreFile
 }

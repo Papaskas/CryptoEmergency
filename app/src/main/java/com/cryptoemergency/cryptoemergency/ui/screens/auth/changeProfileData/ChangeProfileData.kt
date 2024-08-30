@@ -55,7 +55,7 @@ fun ChangeProfileDataScreen(
             MultiLineInput(
                 label = "О себе",
                 value = viewModel.aboutMe,
-                minLines = 2,
+                minLines = 1,
                 maxLines = 5,
                 maxSymbols = 100,
                 isError = remember { mutableStateOf(false) },

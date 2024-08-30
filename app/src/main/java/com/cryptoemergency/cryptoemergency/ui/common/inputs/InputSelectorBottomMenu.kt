@@ -1,8 +1,14 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Column
@@ -16,18 +22,19 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 /**
@@ -74,13 +81,15 @@ fun InputSelectorBottomMenu(
     val expanded = remember { mutableStateOf(false) }
     val selectedOption = remember { mutableStateOf(items[defaultSelectItem]) }
 
-    LaunchedEffect(selectedOption) {
+    LaunchedEffect(selectedOption.value) {
         selectedItem.value = TextFieldValue(selectedOption.value)
     }
+    val interactionSource = remember { MutableInteractionSource() }
 
-    Column {
+    Column(
+        modifier = modifier,
+    ) {
         Input(
-            modifier = modifier,
             value = selectedItem,
             readOnly = true,
             disableActiveBorder = true,
@@ -90,36 +99,22 @@ fun InputSelectorBottomMenu(
             prefix = prefix,
             suffix = suffix,
             isEnabled = isEnabled,
-            shape = RoundedCornerShape(
-                topStart = 10.dp,
-                topEnd = 10.dp,
-            ),
+            shape = inputShape(expanded.value),
             trailingIcon = {
-                IconButton(onClick = { expanded.value = !expanded.value }) {
-                    Icon(
-                        painter = painterResource(R.drawable.arrow_up),
-                        contentDescription = label,
-                    )
-                }
+                InputTrailingIcon(label, expanded)
             },
             maxLines = maxLines,
             minLines = minLines,
-            interactionSource = remember { MutableInteractionSource() }
-                .also { interactionSource ->
-                    LaunchedEffect(interactionSource) {
-                        interactionSource.interactions.collect {
-                            if (it is PressInteraction.Release) {
-                                expanded.value = !expanded.value
-                            }
-                        }
-                    }
-                },
+            interactionSource = inputInteractionSource(
+                interactionSource,
+                expanded,
+            ),
             singleLine = singleLine,
             colors = colors,
         )
 
         DropDown(
-            expanded = expanded,
+            expanded = expanded.value,
             selectedOption = selectedOption,
             items = items,
         )
@@ -127,59 +122,143 @@ fun InputSelectorBottomMenu(
 }
 
 @Composable
-private fun DropDown(
+private fun inputShape(
+    expanded: Boolean,
+): RoundedCornerShape {
+    return if (expanded) {
+        RoundedCornerShape(
+            topStart = Theme.shapes.common,
+            topEnd = Theme.shapes.common,
+        )
+    } else {
+        RoundedCornerShape(Theme.shapes.common)
+    }
+}
+
+@Composable
+private fun inputInteractionSource(
+    interactionSource: MutableInteractionSource,
     expanded: MutableState<Boolean>,
+): MutableInteractionSource {
+    return interactionSource
+        .also { interaction ->
+            LaunchedEffect(interaction) {
+                interaction.interactions.collect {
+                    if (it is PressInteraction.Release) {
+                        expanded.value = !expanded.value
+                    }
+                }
+            }
+        }
+}
+
+@Composable
+private fun InputTrailingIcon(
+    label: String,
+    expanded: MutableState<Boolean>,
+) {
+    val rotation by animateFloatAsState(if (expanded.value) 180f else 0f, label = label)
+
+    IconButton(onClick = {
+        expanded.value = !expanded.value
+    }) {
+        Icon(
+            painter = painterResource(R.drawable.arrow_up),
+            contentDescription = label,
+            tint = Theme.colors.text1,
+            modifier = Modifier.rotate(rotation)
+        )
+    }
+}
+
+@Composable
+private fun DropDown(
+    expanded: Boolean,
     selectedOption: MutableState<String>,
     items: Array<String>,
 ) {
-    val modifier = if (currentTheme == CurrentTheme.DARK) {
-        Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
-        Modifier.border(1.dp, Theme.colors.stroke, RoundedCornerShape(Theme.shapes.common))
-    } else {
-        Modifier
-    }
+    val density = LocalDensity.current
 
     AnimatedVisibility(
-        modifier = modifier
-            .zIndex(-1f),
-        visible = expanded.value,
-    ) {
-        Column(
-            Modifier
-                .background(
-                    color = Theme.colors.surface1,
-                    shape = RoundedCornerShape(
-                        bottomStart = Theme.shapes.common,
-                        bottomEnd = Theme.shapes.common,
-                    ),
-                )
-                .clip(
-                    RoundedCornerShape(
-                        bottomStart = Theme.shapes.common,
-                        bottomEnd = Theme.shapes.common,
-                    )
+        modifier = Modifier
+            .inputBorder(
+                shape = RoundedCornerShape(
+                    bottomStart = Theme.shapes.common,
+                    bottomEnd = Theme.shapes.common,
                 ),
-        ) {
+                isError = false,
+                isFocused = false,
+                disableActiveBorder = true,
+            )
+            .background(
+                color = Theme.colors.surface1,
+                shape = RoundedCornerShape(
+                    bottomStart = Theme.shapes.common,
+                    bottomEnd = Theme.shapes.common,
+                )
+            )
+            .zIndex(-1f),
+        visible = expanded,
+        enter = slideInVertically {
+            with(density) { -40.dp.roundToPx() }
+        } + expandVertically(
+            expandFrom = Alignment.Top
+        ) + fadeIn(
+            initialAlpha = 0.3f
+        ),
+        exit = slideOutVertically() + shrinkVertically() + fadeOut()
+    ) {
+        Column {
             items.forEach { option ->
                 DropdownMenuItem(
                     onClick = { selectedOption.value = option },
                     text = {
-                        Text(
-                            text = option,
-                            style = Theme.typography.body1,
-                            color = if (selectedOption.value == option) {
-                                Theme.colors.accent
-                            } else {
-                                Theme.colors.text1
-                            }
+                        DropDownText(
+                            option,
+                            selectedOption.value
                         )
-                    }
+                    },
+                    trailingIcon = {
+                        DropDownIcon(
+                            option,
+                            selectedOption.value
+                        )
+                    },
                 )
-
                 if (items.last() != option) {
                     CommonHorizontalDivider()
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun DropDownText(
+    option: String,
+    selectedOption: String,
+) {
+    Text(
+        text = option,
+        style = Theme.typography.body1,
+        color = if (selectedOption == option) {
+            Theme.colors.accent
+        } else {
+            Theme.colors.text1
+        }
+    )
+}
+
+@Composable
+private fun DropDownIcon(
+    option: String,
+    selectedOption: String,
+) {
+    if (selectedOption == option) {
+        Icon(
+            painter = painterResource(R.drawable.success),
+            contentDescription = null,
+            tint = Theme.colors.accent,
+        )
     }
 }
