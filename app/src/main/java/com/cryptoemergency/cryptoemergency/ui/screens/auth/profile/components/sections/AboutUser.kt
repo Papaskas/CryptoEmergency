@@ -3,6 +3,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.s
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo.ProfileInfo
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo.ProfileInfoBottomSheet
 
 /**
  * Блок основной информации о пользователе: имя, статус,
@@ -41,43 +42,45 @@ private fun Bio(viewModel: ProfileViewModel) {
         mutableStateOf(false)
     }
 
-    Row {
-        Image(
-            painter = painterResource(R.drawable.avatar_placeholder),
-            contentDescription = "Уведомления",
-            modifier = Modifier.size(70.dp)
-        )
-
-        Spacer(Modifier.width(16.dp))
-
-        Column {
-            Spacer(Modifier.height(15.dp) )
-
-            Text(
-                text = viewModel.user.name,
-                style = Theme.typography.h2,
-                color = Theme.colors.text1,
+    Box {
+        Row {
+            Image(
+                painter = painterResource(R.drawable.avatar_placeholder),
+                contentDescription = "Уведомления",
+                modifier = Modifier.size(70.dp)
             )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = viewModel.user.statusText,
-                style = Theme.typography.caption1,
-                color = Theme.colors.text2,
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = "Подробнее",
-                style = Theme.typography.caption1,
-                color = Theme.colors.accent,
-                modifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) { showProfileInfo.value = true },
-            )
+
+            Spacer(Modifier.width(16.dp))
+
+            Column {
+                Spacer(Modifier.height(15.dp) )
+
+                Text(
+                    text = viewModel.user.name,
+                    style = Theme.typography.h2,
+                    color = Theme.colors.text1,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = viewModel.user.statusText,
+                    style = Theme.typography.caption1,
+                    color = Theme.colors.text2,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Подробнее",
+                    style = Theme.typography.caption1,
+                    color = Theme.colors.accent,
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) { showProfileInfo.value = true },
+                )
+            }
         }
-    }
 
-    ProfileInfo(showProfileInfo, viewModel)
+        ProfileInfoBottomSheet(showProfileInfo, viewModel)
+    }
 }
 
 @Composable

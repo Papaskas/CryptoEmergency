@@ -1,11 +1,13 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,18 +26,19 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewMo
 /**
  * Выдвижное меню с подробной информацией о пользователе
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileInfo(
+fun BoxScope.ProfileInfoBottomSheet(
     showProfileInfo: MutableState<Boolean>,
     viewModel: ProfileViewModel,
 ) {
     val items = arrayOf(
-        BioInfoType(viewModel.user.username,"Имя пользователя", true),
-        BioInfoType(viewModel.user.statusText,"О себе"),
-        BioInfoType(viewModel.user.specialization,"Специализация"),
-        BioInfoType(viewModel.user.birthday,"Дата рождения"),
-        BioInfoType(viewModel.user.language,"Язык"),
-        BioInfoType(viewModel.user.dateOfRegistration,"Дата регистрации"),
+        BioInfoType(viewModel.user.username, "Имя пользователя", true),
+        BioInfoType(viewModel.user.statusText, "О себе"),
+        BioInfoType(viewModel.user.specialization, "Специализация"),
+        BioInfoType(viewModel.user.birthday, "Дата рождения"),
+        BioInfoType(viewModel.user.language, "Язык"),
+        BioInfoType(viewModel.user.dateOfRegistration, "Дата регистрации"),
     )
 
     BottomSheet(
@@ -43,10 +46,8 @@ fun ProfileInfo(
         showBottomSheet = showProfileInfo,
         title = "Подробнее",
         actionIcon = {
-
         },
     ) {
-
         items.forEach {
             BioInfo(it)
         }
@@ -65,7 +66,7 @@ private fun BioInfo(
         ) {
             Text(
                 text = prop.title,
-                color = if(prop.isUserName) Theme.colors.accent else Theme.colors.text1,
+                color = if (prop.isUserName) Theme.colors.accent else Theme.colors.text1,
                 style = Theme.typography.body1,
             )
             Spacer(Modifier.height(4.dp))
@@ -76,7 +77,7 @@ private fun BioInfo(
             )
         }
 
-        if(prop.isUserName) {
+        if (prop.isUserName) {
             Spacer(Modifier.weight(1f))
 
             IconButton(onClick = { /*TODO*/ }) {

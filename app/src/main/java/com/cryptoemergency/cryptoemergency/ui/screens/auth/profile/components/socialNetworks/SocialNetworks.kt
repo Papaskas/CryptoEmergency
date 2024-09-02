@@ -2,13 +2,17 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.s
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -35,6 +39,7 @@ import com.cryptoemergency.cryptoemergency.viewModels.SocialNetworksViewModel
 /**
  * Блок в секции content - Социальные сети
  * */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SocialNetworks(
     viewModel: SocialNetworksViewModel = hiltViewModel()
@@ -58,7 +63,9 @@ fun SocialNetworks(
     BottomSheet(showBottomSheet = showBottomSheet, title = "Добавить социальную сеть") {
         val selectedOption = remember { mutableStateOf(socialNetworksIcons[0]) }
 
-        Column {
+        Column(
+            Modifier.verticalScroll(rememberScrollState())
+        ) {
             SocialNetworksSelector(selectedOption)
             AddSocialNetwork(viewModel, selectedOption)
         }

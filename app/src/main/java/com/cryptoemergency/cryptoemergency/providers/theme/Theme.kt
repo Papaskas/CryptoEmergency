@@ -5,6 +5,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,22 +24,32 @@ fun MainThemeProvider(
     viewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
-    val isSystemInDarkTheme = isSystemInDarkTheme()
     val colors = remember { mutableStateOf(darkPalette) }
     val icons = remember { mutableStateOf(darkIcons) }
-    val view = LocalView.current
 
-    // Поставить установленную тему или в соответствии системе
-    LaunchedEffect(Unit) {
-        // Достать из хранилища
-        val themeInStorage = viewModel.getThemeFromStorage()
+    ThemeStorageOrSystem(viewModel)
 
-        currentTheme = if (themeInStorage == CurrentTheme.NULL) {
-            if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
-        } else {
-            themeInStorage
-        }
+    ChangeSystemBar()
+
+    RecomposeColorAndIcons(
+        colors,
+        icons,
+    )
+
+    CompositionLocalProvider(
+        LocalColors provides colors.value,
+        LocalTypography provides typography,
+        LocalShape provides shapes,
+        LocalValues provides values,
+        LocalIcons provides icons.value,
+    ) {
+        content()
     }
+}
+
+@Composable
+private fun ChangeSystemBar() {
+    val view = LocalView.current
 
     // Поменять цветовую гамму у StatusBar, NavigationBar
     if (!view.isInEditMode) {
@@ -54,7 +65,13 @@ fun MainThemeProvider(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isLightTheme
         }
     }
+}
 
+@Composable
+private fun RecomposeColorAndIcons(
+    colors: MutableState<Colors>,
+    icons: MutableState<Icons>,
+) {
     // Рекомпозиция при изменение переменной
     LaunchedEffect(currentTheme) {
         colors.value =
@@ -70,13 +87,21 @@ fun MainThemeProvider(
                 CurrentTheme.NULL -> darkIcons
             }
     }
+}
 
-    CompositionLocalProvider(
-        LocalColors provides colors.value,
-        LocalTypography provides typography,
-        LocalShape provides shapes,
-        LocalValues provides values,
-        LocalIcons provides icons.value,
-        content = content,
-    )
+@Composable
+private fun ThemeStorageOrSystem(
+    viewModel: ThemeViewModel,
+    isSystemInDarkTheme: Boolean = isSystemInDarkTheme()
+) {
+    LaunchedEffect(Unit) {
+        // Достать из хранилища
+        val themeInStorage = viewModel.getThemeFromStorage()
+
+        currentTheme = if (themeInStorage == CurrentTheme.NULL) {
+            if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
+        } else {
+            themeInStorage
+        }
+    }
 }

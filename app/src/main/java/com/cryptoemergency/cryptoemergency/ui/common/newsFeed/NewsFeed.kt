@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common
+package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,13 +26,15 @@ import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
 
 /**
- * Компонент списка новостей,панелью управления и табами
+ * Компонент списка новостей, панелью управления и табами
  **/
 @Composable
 fun NewsFeed(
     items: Array<NewsFeedItemProps>,
 ) {
     val showNewsFeedType = remember { mutableStateOf(NewsItemType.FULL) }
+    val showFilterMenu = remember { mutableStateOf(false) }
+    val selectedFilter = remember { mutableStateOf("Все") }
     val columnCount = remember { mutableIntStateOf(1) }
 
     LazyVerticalStaggeredGrid(
@@ -45,9 +47,10 @@ fun NewsFeed(
         }, // Отступы только для NewsItemType.FULL
     ) {
         item(span = StaggeredGridItemSpan.FullLine) { // Заголовок
-            Title(
+            Header(
                 showNewsFeedType,
                 columnCount,
+                showFilterMenu,
             )
         }
         items(items.size) { index ->
@@ -63,12 +66,15 @@ fun NewsFeed(
             )
         }
     }
+
+    FilterBottomSheet(selectedFilter = selectedFilter, showBottomSheet = showFilterMenu)
 }
 
 @Composable
-private fun Title(
+private fun Header(
     showNewsFeedType: MutableState<NewsItemType>,
     columnCount: MutableIntState,
+    showFilterMenu: MutableState<Boolean>
 ) {
     Row(
         modifier = Modifier.padding(horizontal = Theme.values.padding),
@@ -80,7 +86,7 @@ private fun Title(
             color = Theme.colors.text1,
         )
         Spacer(Modifier.weight(1f))
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { showFilterMenu.value = true }) {
             Icon(
                 painter = painterResource(R.drawable.filter),
                 contentDescription = null,

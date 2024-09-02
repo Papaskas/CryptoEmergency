@@ -12,11 +12,9 @@ val LocalNavController =
     staticCompositionLocalOf<NavHostController> { error("No localNavController provided") }
 
 /**
- *
  * @return Возвращает класс типа: package com.cryptoemergency.cryptoemergency.navigation.Routes.Home.Home
  *
  * Пример использования есть в ui/common/bottomBar
- *
  * */
 @Composable
 fun getCurrentRoute(): String? {

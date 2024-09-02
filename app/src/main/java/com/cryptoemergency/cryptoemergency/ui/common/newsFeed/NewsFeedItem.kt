@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common
+package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
 
 import android.net.Uri
 import androidx.annotation.DrawableRes
@@ -34,7 +34,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -56,7 +55,7 @@ fun NewsFeedItem(
 
     Column {
         if (props.type == NewsItemType.FULL) {
-            TitleNews(
+            HeaderNews(
                 props.avatar,
                 props.authorName,
                 props.createDate
@@ -78,7 +77,7 @@ fun NewsFeedItem(
 }
 
 @Composable
-private fun TitleNews(
+private fun HeaderNews(
     avatar: Uri,
     authorName: String,
     createDate: String,
@@ -157,11 +156,7 @@ private fun DropMenu(
 
     DropdownMenu(
         modifier = Modifier
-            .background(
-                color = Theme.colors.background2,
-                shape = RoundedCornerShape(10.dp)
-            )
-            .clip(RoundedCornerShape(10.dp)),
+            .background(color = Theme.colors.background2),
         expanded = expanded.value,
         onDismissRequest = {
             expanded.value = false
@@ -177,7 +172,7 @@ private fun DropMenu(
                         Icon(
                             painter = painterResource(it.icon),
                             contentDescription = it.title,
-                            tint = if(it.icon == R.drawable.report) Theme.colors.error else Theme.colors.text1
+                            tint = if (it.icon == R.drawable.report) Theme.colors.error else Theme.colors.text1
                         )
                         Spacer(Modifier.width(10.dp))
                         Text(
@@ -190,6 +185,7 @@ private fun DropMenu(
             )
         }
     }
+
 }
 
 @Composable
@@ -199,17 +195,18 @@ private fun Content(
     state: PagerState,
 ) {
     Box {
-        if(media.size > 1) {
+        if (media.size > 1) {
             HorizontalPager(state = state) { page ->
                 AsyncImage(
                     model = media[page],
                     contentDescription = null,
                     modifier = Modifier
                         .then(
-                            if (type == NewsItemType.SHORT)
+                            if (type == NewsItemType.SHORT) {
                                 Modifier.height(124.dp)
-                            else
+                            } else {
                                 Modifier.height(375.dp)
+                            }
                         )
                         .fillMaxSize(),
                     contentScale = ContentScale.Crop,
@@ -221,16 +218,16 @@ private fun Content(
                 contentDescription = null,
                 modifier = Modifier
                     .then(
-                        if (type == NewsItemType.SHORT)
+                        if (type == NewsItemType.SHORT) {
                             Modifier.height(124.dp)
-                        else
+                        } else {
                             Modifier.height(375.dp)
+                        }
                     )
                     .fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
         }
-
 
         if (media.size > 1) {
             Row(
@@ -286,7 +283,9 @@ private fun ColumnScope.Pagination(
         ) {
             repeat(media.size) { index ->
                 val size by animateDpAsState(targetValue = if (state.currentPage == index) 6.dp else 4.dp)
-                val color by animateColorAsState(targetValue = if (state.currentPage == index) Theme.colors.accent else Color.Gray)
+                val color by animateColorAsState(
+                    targetValue = if (state.currentPage == index) Theme.colors.accent else Color.Gray
+                )
 
                 Box(
                     modifier = Modifier

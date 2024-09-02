@@ -42,6 +42,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 
@@ -120,6 +121,8 @@ private fun Swiper() {
 
 @Composable
 private fun Menu() {
+    val items = getMenuItems()
+
     LazyVerticalGrid(
         // Так как не знаю конкретную высоту и нельзя указывать fillMaxHeight(ошибка бесконечнх высот),
         // задал maxHeight под предлогом: занимай сколько надо, но не выдавай ошибку
@@ -128,30 +131,16 @@ private fun Menu() {
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         columns = GridCells.Fixed(2),
     ) {
-        items(MenuItems.entries.size) { index ->
-            val item = MenuItems.entries[index]
-            MenuItem(item.title, item.route, item.icon)
+        items(items.size) { index ->
+            val item = items[index]
+
+            MenuItem(
+                item.title,
+                item.route,
+                item.icon,
+            )
         }
     }
-}
-
-private enum class MenuItems(
-    val title: String,
-    val route: Routes,
-    @DrawableRes val icon: Int,
-) {
-    NewsFeed("Лента", Routes.Page.NewsFeed, R.drawable.newsfeed),
-    News("Новости", Routes.Page.News, R.drawable.news),
-    Exchangers("Обменники", Routes.Page.Exchangers, R.drawable.exchangers),
-    Exchanges("Биржи", Routes.Page.Exchanges, R.drawable.exchanges),
-    Chat("Чат", Routes.Home.Chat, R.drawable.chat),
-    Users("Пользователи", Routes.Page.Users, R.drawable.users),
-    ICORating("ICO рейтинг", Routes.Page.ICORating, R.drawable.ico_rating),
-    Startups("Стартапы", Routes.Page.Startups, R.drawable.startups),
-    Web3("Работа Web3", Routes.Page.Web3, R.drawable.web3),
-    Career("Карьеры", Routes.Page.Career, R.drawable.career),
-    Academy("Академия", Routes.Page.Academy, R.drawable.academy),
-    Wallet("CEM кошелек", Routes.Page.Wallet, R.drawable.wallet),
 }
 
 @Composable
@@ -218,3 +207,29 @@ private fun MenuItem(
         }
     }
 }
+
+@Composable
+private fun getMenuItems(): Array<MenuItemType> {
+    val locale = LocalLocale.current
+
+    return arrayOf(
+        MenuItemType(locale.newsFeed, Routes.Page.NewsFeed, R.drawable.newsfeed),
+        MenuItemType(locale.news, Routes.Page.News, R.drawable.news),
+        MenuItemType(locale.exchangers, Routes.Page.Exchangers, R.drawable.exchangers),
+        MenuItemType(locale.exchanges, Routes.Page.Exchanges, R.drawable.exchanges),
+        MenuItemType(locale.chat, Routes.Home.Chat, R.drawable.chat),
+        MenuItemType(locale.users, Routes.Page.Users, R.drawable.users),
+        MenuItemType(locale.ICORating, Routes.Page.ICORating, R.drawable.ico_rating),
+        MenuItemType(locale.startups, Routes.Page.Startups, R.drawable.startups),
+        MenuItemType(locale.workWeb3, Routes.Page.Web3, R.drawable.web3),
+        MenuItemType(locale.career, Routes.Page.Career, R.drawable.career),
+        MenuItemType(locale.academy, Routes.Page.Academy, R.drawable.academy),
+        MenuItemType(locale.wallet, Routes.Page.Wallet, R.drawable.wallet),
+    )
+}
+
+private data class MenuItemType(
+    val title: String,
+    val route: Routes,
+    @DrawableRes val icon: Int,
+)

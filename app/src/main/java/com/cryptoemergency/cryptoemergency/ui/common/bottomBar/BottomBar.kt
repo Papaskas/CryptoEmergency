@@ -16,11 +16,14 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localNavController.getCurrentRoute
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @Composable
 fun BottomBar() {
+    val items = getBottomItems()
+
     Column {
         CommonHorizontalDivider()
 
@@ -29,7 +32,7 @@ fun BottomBar() {
         ) {
             val currentRoute = getCurrentRoute()
 
-            BottomItems.entries.forEach { item ->
+            items.forEach { item ->
                 val isSelected = currentRoute == item.route::class.qualifiedName
 
                 if (item.label == null || item.icon == null) {
@@ -124,14 +127,21 @@ private fun RowScope.NavButton(
     )
 }
 
-private enum class BottomItems(
+@Composable
+private fun getBottomItems(): List<BottomItem> {
+    val locale = LocalLocale.current
+
+    return listOf(
+        BottomItem(locale.home, R.drawable.home__filled, Routes.Home.Home),
+        BottomItem(locale.news, R.drawable.news_feed__filled, Routes.Home.News),
+        BottomItem(null, null, Routes.Home.AddedStory),
+        BottomItem(locale.chat, R.drawable.chat__filled, Routes.Home.Chat),
+        BottomItem(locale.more, R.drawable.more__filled, Routes.Home.Menu)
+    )
+}
+
+private data class BottomItem(
     val label: String?,
     @DrawableRes val icon: Int?,
     val route: Routes,
-) {
-    Home("Главная", R.drawable.home__filled, Routes.Home.Home),
-    News("Лента", R.drawable.news_feed__filled, Routes.Home.News),
-    Add(null, null, Routes.Home.AddedStory),
-    Chat("Чат", R.drawable.chat__filled, Routes.Home.Chat),
-    Menu("Еще", R.drawable.more__filled, Routes.Home.Menu),
-}
+)

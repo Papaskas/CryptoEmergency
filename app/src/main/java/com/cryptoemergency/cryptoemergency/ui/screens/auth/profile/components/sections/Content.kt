@@ -32,10 +32,23 @@ fun ColumnScope.Content(viewModel: ProfileViewModel) {
 
 @Composable
 private fun Tabs() {
-    val titles = arrayOf("Моя лента", "Социальные сети")
+    val titles = arrayOf(
+        "Общая лента",
+        "Лента подписок",
+        "Все cems",
+        "Cems подписок",
+        "Лента отметок",
+        "Социальные сети",
+        "Закладки"
+    )
     val content = arrayOf<@Composable () -> Unit>(
         { NewsFeed() },
+        { NewsFeed() },
+        { NewsFeed() },
+        { NewsFeed() },
+        { NewsFeed() },
         { SocialNetworks() },
+        { NewsFeed() },
     )
 
     CommonTabs(

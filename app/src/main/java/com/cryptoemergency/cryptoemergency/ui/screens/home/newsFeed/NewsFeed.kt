@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
-import com.cryptoemergency.cryptoemergency.ui.common.NewsFeed
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.newsFeed.NewsFeed
 
 @Composable
 fun NewsFeedScreen(
@@ -36,7 +36,15 @@ fun NewsFeedScreen(
                 .padding(top = Theme.values.padding)
         ) {
             CommonTabs(
-                tabTitles = arrayOf("Общая лента", "Лента подписок", "Общие Cems", "Cems"),
+                tabTitles = arrayOf(
+                    "Общая лента",
+                    "Лента подписок",
+                    "Все cems",
+                    "Cems подписок",
+                    "Лента отметок",
+                    "Социальные сети",
+                    "Закладки",
+                ),
             ) { _ ->
                 NewsFeed(
                     items = viewModel.items

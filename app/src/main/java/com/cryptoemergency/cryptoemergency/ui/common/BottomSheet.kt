@@ -12,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -19,8 +20,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.launch
@@ -31,61 +32,70 @@ fun BottomSheet(
     showBottomSheet: MutableState<Boolean>,
     title: String,
     modifier: Modifier = Modifier,
+    sheetState: SheetState = rememberModalBottomSheetState(),
     contentPadding: PaddingValues = PaddingValues(Theme.values.padding),
     actionIcon: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    if (!showBottomSheet.value) return
+
+    ModalBottomSheet(
+        modifier = modifier.fillMaxHeight(),
+        shape = RoundedCornerShape(Theme.shapes.common),
+        sheetState = sheetState,
+        dragHandle = null,
+        scrimColor = Color.Black.copy(alpha = .9f),
+        onDismissRequest = { showBottomSheet.value = false },
+        containerColor = Theme.colors.background2,
+    ) {
+        Header(title, sheetState, showBottomSheet, actionIcon)
+
+        CommonHorizontalDivider()
+
+        Column(
+            Modifier.padding(contentPadding)
+        ) {
+            content()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Header(
+    title: String,
+    sheetState: SheetState,
+    showBottomSheet: MutableState<Boolean>,
+    actionIcon: @Composable (() -> Unit)? = null,
+) {
     val scope = rememberCoroutineScope()
 
-    if(showBottomSheet.value) {
-        ModalBottomSheet(
-            modifier = modifier.fillMaxHeight(),
-            shape = RoundedCornerShape(10.dp),
-            sheetState = sheetState,
-            //scrimColor = Color(0x50666666),
-            dragHandle = null,
-            onDismissRequest = { showBottomSheet.value = false },
-            containerColor = Theme.colors.background2,
-        ) {
-            Column {
-                Row(
-                    Modifier.padding(Theme.values.padding),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = title,
-                        style = Theme.typography.h2,
-                        color = Theme.colors.text1,
-                    )
+    Row(
+        modifier = Modifier.padding(Theme.values.padding),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = title,
+            style = Theme.typography.h2,
+            color = Theme.colors.text1,
+        )
 
-                    Spacer(Modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
 
-                    if(actionIcon != null) {
-                        actionIcon()
-                    } else {
-                        IconButton(onClick = {
-                            scope.launch {
-                                sheetState.hide()
-                            }.invokeOnCompletion {
-                                showBottomSheet.value = false
-                            }
-                        }) {
-                            Icon(
-                                painter = painterResource(R.drawable.close),
-                                contentDescription = "Закрыть модальное окно",
-                            )
-                        }
-                    }
+        if (actionIcon != null) {
+            actionIcon()
+        } else {
+            IconButton(onClick = {
+                scope.launch {
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    showBottomSheet.value = false
                 }
-
-                CommonHorizontalDivider()
-
-                Column(
-                    Modifier.padding(contentPadding)
-                ) {
-                    content()
-                }
+            }) {
+                Icon(
+                    painter = painterResource(R.drawable.close),
+                    contentDescription = "Закрыть модальное окно",
+                )
             }
         }
     }
