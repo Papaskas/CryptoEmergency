@@ -1,64 +1,73 @@
-# Полезные ссылки
+# <a id="urls">Полезные ссылки</a>
 
-* [dagger hilt](https://dagger.dev/hilt/)
-* [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
-* [Безопасная маршрутизация](https://developer.android.com/guide/navigation/design/type-safety)
-* [Локальное хранилише](https://developer.android.com/topic/libraries/architecture/datastore)
-* [SvgToCompose](https://www.composables.com/svgtocompose)
+> [Dagger hilt - внедрение зависимостей](https://dagger.dev/hilt/)<br/>
+> [Detekt - линтер](https://plugins.jetbrains.com/plugin/10761-detekt)<br/>
+> [Безопасная маршрутизация](https://developer.android.com/guide/navigation/design/type-safety)<br/>
+> [Store, ProtoStore - локальное хранилище](https://developer.android.com/topic/libraries/architecture/datastore)<br/>
+> [SvgToCompose](https://www.composables.com/svgtocompose)<br/>
 
 # Lint
 
-* В проекте установлен detekt (app/config/detekt/detekt.yml)
-* Для его инициализации в android studio нужно скачать плагин [detekt](https://plugins.jetbrains.com/plugin/10761-detekt)
-* Его активация описана в описании плагина
+> В проекте установлен `detekt` - `app/config/detekt/detekt.yml`<br/>
+> Для его инициализации в android studio нужно скачать плагин [detekt](#urls)<br/>
+> Его активация описана в описании плагина
 
 # Логирование
 
-* В release сборке логирования - нет.
-* Log.{} - убирается в конфиге proguard-rules.pro
-* Логирование сетевых запросов убирается проверкой BuildConfig.DEBUG в файле api/network/HttpClient
+> В `release` сборке логирования - нет.<br/>
+> Log.{} - убирается в конфиге `proguard-rules.pro`<br/>
+> Логирование сетевых запросов убирается проверкой `BuildConfig.DEBUG` в файле `api/network/HttpClient`
 
 # Тема, цвета, значения, иконки к темам, типография
 
-* Все файлы находятся в папке providers/theme/Theme
-* По умолчанию стоит темная тема
-* Использование цветовой схемы:
-  * Text(color = Theme.colors.primary)
+> Все файлы находятся в папке `providers/theme/Theme`<br/>
+> По умолчанию стоит темная тема.<br/>
+> Использование цветовой схемы:
+  >> Text(color = Theme.colors.primary)
 
 # Routing
 
-* Используется типобезопасные маршруты, смотри официальную [документацию](https://developer.android.com/guide/navigation/design/type-safety)
-* Основной и единственный файл роутинга - navigation/Navigation
-* Для контроля роутинга необходимо пользоваться методом LocalNavController.current из
-  providers/LocalNavController
-* Для перехода по страницам нужно использовать не строки, а импортировать обьект Routes из
-  navigation/Routes
+> Используется типобезопасные маршруты, смотри официальную [документацию](#urls)
+> Основной и единственный файл роутинга - `navigation/Navigation`
+> Для контроля роутинга необходимо пользоваться методом `LocalNavController.current` из
+  `providers/LocalNavController`
+> Для перехода по страницам нужно использовать не строки, а импортировать обьект Routes из
+  `navigation/Routes`
 
 # LocalStorage
 
-## Для локального хранения используются две [библиотеки](https://developer.android.com/topic/libraries/architecture/datastore) - DataStore (ключ: значение) и ProtoDataStore (data class, enum class)
+---
 
-* Эти библиотеки интегрированы в проект с помощью hilt >> module/(Proto)Store.kt
-* Они работают в IO потоке
+### Для локального хранения используются две [библиотеки](#urls) - `DataStore` (ключ: значение) и `ProtoDataStore` (`data class`, `enum class`)
 
-## Как они работают в целом
+> Эти библиотеки интегрированы в проект с помощью `hilt` >> `module/(Proto)Store.kt`<br/>
+> Они работают в IO потоке
 
-* В проекте есть конструторы доступа к хранилищю (api/store/*.kt) - их трогать никогда не надо
-* На вход они ожидают контекст и ключ доступа (обычный дата класс с заранее определенными параметрами)
-* Смотря на этот ключ код будет определять куда смотреть и что отдавать
+---
 
-## Что такое ключ
+### Как они работают в целом
 
-* Ключ - представление в виде ключей, используемых для хранения и извлечения данных в хранилище.
-* Каждый ключ связан с определенным типом данных, значением по умолчанию и сериализатором (Сериализатор только для ProtoStore).
+> В проекте есть конструторы доступа к хранилищю `api/store/*.kt` - их трогать никогда не надо<br/>
+> На вход они ожидают контекст и ключ доступа (обычный дата класс с заранее определенными параметрами)<br/>
+> Смотря на этот ключ код будет определять куда смотреть и что отдавать
 
-* Ключи находятся в repository/store/(Proto)Keys.kt
-* В этой папке есть файл GenericSerializer - нужен только для сериализации Proto данных (data class, enum class)
-* Также есть папка data - интерфейсы хранимых данных в ProtoStore
-* Ключ в случае обычного Store(ключ: значение) - дополнительная документация о нем описана в JavaDoc в store/Keys.kt
-*
+---
+
+### Что такое ключ
+
+> Ключ - представление в виде ключей, используемых для хранения и извлечения данных в хранилище.<br/>
+> Каждый ключ связан с определенным типом данных, значением по умолчанию и сериализатором (Сериализатор только для `ProtoStore`).
+
+> Ключи находятся в `repository/store/(Proto)Keys.kt`<br/>
+> В этой папке есть файл `GenericSerializer` - нужен только для сериализации Proto данных (`data class`, `enum class`)<br/>
+> Также есть папка `data` - интерфейсы хранимых данных в `ProtoStore`<br/>
+
+---
+#### Пример ключа в случае обычного `Store`(ключ: значение) - дополнительная документация о нем описана в JavaDoc в `store/Keys.kt`<br/>
+
 ```kotlin
-sealed class Keys<T>( // Коллекция обычных ключей
+// Коллекция обычных ключей
+sealed class Keys<T>( 
     val key: Preferences.Key<T>,
     val defaultValue: T,
 ) {
@@ -68,8 +77,9 @@ sealed class Keys<T>( // Коллекция обычных ключей
     ) 
 }
 ```
+---
 
-* Ключ в случае ProtoStore(data class, enum class) - дополнительная документация о нем описана в JavaDoc в store/ProtoKeys.kt
+#### Пример ключа в случае `ProtoStore`(`data class`, `enum class`) - дополнительная документация о нем описана в JavaDoc в `store/ProtoKeys.kt`
 
 ```kotlin
 sealed class ProtoKeys<T>(
@@ -106,9 +116,11 @@ data class User(
 )
 ```
 
-## Использование
+---
 
-1. Во ViewModel получить нужный конструктор (Store, ProtoStore)
+### Использование
+
+1. В `HiltViewModel` получить нужный конструктор (`Store`, `ProtoStore`)
 2. Использовать методы хранилища
 ```kotlin
 @HiltViewModel
@@ -125,24 +137,29 @@ class ThemeViewModel @Inject constructor(
 }
 ```
 
-## Создание
+---
 
-* Для создания новых данных хранилища нужно сделать следующее
-1. Создать ключ в (Proto)Keys.kt
-2. Добавить новый ключ в module/(Proto)StoreModule.kt, согласно документации hilt
-3. Все
+### Создание
+
+> Для создания новых данных хранилища нужно сделать следующее<br/>
+>> 1. Создать ключ в `(Proto)Keys.kt`<br/>
+>> 2. Добавить новый ключ в `module/(Proto)StoreModule.kt`, согласно документации `hilt`
 
 # Бд
 
-* В качестве базы данных предустановлен Room интегрированный в Hilt
+> В качестве базы данных предустановлен `Room` интегрированный в `Hilt`
 
 # Network request
 
-* Основной конструктор запросов: api/network/SafeRequest.kt - его трогать нельзя. От него следует
-  создать другие запросы
-* Интерфейс полей ответа находится в api/network/ApiResponse
-* Создание запроса:
-  * В папке repository/requests создать файл с функцией такого типа:
+> Основной конструктор запросов: `api/network/SafeRequest.kt` - его трогать нельзя. От него следует
+  создать другие запросы<br/>
+> Интерфейс полей ответа находится в `api/network/ApiResponse`<br/>
+
+---
+
+### Создание запроса:
+
+> В папке `repository/requests` создать файл с функцией такого типа:
 
 ```kotlin
 @kotlinx.serialization.Serializable
