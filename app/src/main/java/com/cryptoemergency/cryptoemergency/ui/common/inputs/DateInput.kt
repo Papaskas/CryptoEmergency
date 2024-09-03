@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.Convert
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
@@ -97,6 +98,8 @@ private fun DatePickerModal(
     state: DatePickerState,
     showDatePicker: MutableState<Boolean>,
 ) {
+    val locale = LocalLocale.current
+
     DatePickerDialog(
         onDismissRequest = {
             showDatePicker.value = !showDatePicker.value
@@ -106,14 +109,14 @@ private fun DatePickerModal(
                 state.selectedDateMillis
                 showDatePicker.value = !showDatePicker.value
             }) {
-                Text("Сохранить")
+                Text(locale.save)
             }
         },
         dismissButton = {
             TextButton(onClick = {
                 showDatePicker.value = !showDatePicker.value
             }) {
-                Text("Отмена")
+                Text(locale.cancel)
             }
         },
         colors = DatePickerDefaults.colors().copy(

@@ -66,7 +66,7 @@ val typography = Typography(
         letterSpacing = 12.sp * (-2 / 100f),
         lineHeight = 16.sp,
     ),
-    subscribersCount = TextStyle(
+    subscribesCount = TextStyle(
         fontFamily = manropeFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 17.sp,

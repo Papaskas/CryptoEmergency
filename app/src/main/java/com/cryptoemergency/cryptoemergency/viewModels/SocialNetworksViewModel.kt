@@ -3,8 +3,8 @@ package com.cryptoemergency.cryptoemergency.viewModels
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.NetworkName
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.SocialNetworkType
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks.NetworkName
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks.SocialNetworkType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject

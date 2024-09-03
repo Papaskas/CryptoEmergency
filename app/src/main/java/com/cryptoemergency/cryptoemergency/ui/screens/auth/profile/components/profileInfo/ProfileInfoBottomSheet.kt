@@ -1,8 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo
 
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -18,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -28,25 +27,26 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewMo
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BoxScope.ProfileInfoBottomSheet(
+fun ProfileInfoBottomSheet(
     showProfileInfo: MutableState<Boolean>,
     viewModel: ProfileViewModel,
 ) {
+    val locale = LocalLocale.current
+
     val items = arrayOf(
-        BioInfoType(viewModel.user.username, "Имя пользователя", true),
-        BioInfoType(viewModel.user.statusText, "О себе"),
-        BioInfoType(viewModel.user.specialization, "Специализация"),
-        BioInfoType(viewModel.user.birthday, "Дата рождения"),
-        BioInfoType(viewModel.user.language, "Язык"),
-        BioInfoType(viewModel.user.dateOfRegistration, "Дата регистрации"),
+        BioInfoType(viewModel.user.username, locale.labels.username, true),
+        BioInfoType(viewModel.user.statusText, locale.labels.aboutMe),
+        BioInfoType(viewModel.user.specialization, locale.labels.specialization),
+        BioInfoType(viewModel.user.birthday, locale.labels.birthday),
+        BioInfoType(viewModel.user.language, locale.labels.language),
+        BioInfoType(viewModel.user.dateOfRegistration, locale.labels.dateOfRegistration),
     )
 
     BottomSheet(
-        contentPadding = PaddingValues(0.dp),
+        contentPadding = 0.dp,
         showBottomSheet = showProfileInfo,
-        title = "Подробнее",
-        actionIcon = {
-        },
+        title = locale.moreDetails,
+        actionIcon = {},
     ) {
         items.forEach {
             BioInfo(it)

@@ -4,8 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -39,17 +38,19 @@ fun FilterBottomSheet(
     selectedFilter: MutableState<String>,
     showBottomSheet: MutableState<Boolean>,
 ) {
+    val locale = LocalLocale.current
+
     val items = arrayOf(
-        ItemType(R.drawable.infinity, "Все",),
-        ItemType(R.drawable.image, "Фото"),
-        ItemType(R.drawable.video, "Видео"),
-        ItemType(R.drawable.text, "Текст"),
+        ItemType(R.drawable.infinity, locale.filter.all),
+        ItemType(R.drawable.image, locale.filter.photo),
+        ItemType(R.drawable.video, locale.filter.video),
+        ItemType(R.drawable.text, locale.filter.text),
     )
 
     BottomSheet(
         showBottomSheet = showBottomSheet,
-        title = "Фильтр",
-        contentPadding = PaddingValues(0.dp),
+        title = locale.titles.filter,
+        contentPadding = 0.dp,
     ) {
         items.forEach {
             Item(
@@ -93,7 +94,7 @@ private fun Item(
             Text(
                 text = props.title,
                 style = Theme.typography.body1,
-                color = if (state.value == props.title) Theme.colors.accent else Theme.colors.text4,
+                color = if (state.value == props.title) Theme.colors.accent else Theme.colors.text1,
             )
         }
     }

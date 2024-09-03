@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.passwordPatterns
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 
 /**
  * Компонент Input с логикой пароля. Наследуется от ValidateInput
@@ -53,6 +54,7 @@ fun PasswordInput(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     passwordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
+    val locale = LocalLocale.current
     val image = if (passwordVisible.value) R.drawable.visibility else R.drawable.visibility_off
     val description = if (passwordVisible.value) "Скрыть пароль" else "Показать пароль"
 
@@ -60,7 +62,7 @@ fun PasswordInput(
         modifier = modifier,
         value = value,
         readOnly = readOnly,
-        label = "label",
+        label = locale.labels.password,
         isError = isError,
         //prefix = "prefix",
         //suffix = "suffix",

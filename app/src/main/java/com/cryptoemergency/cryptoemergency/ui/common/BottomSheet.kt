@@ -2,10 +2,10 @@ package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ fun BottomSheet(
     title: String,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(),
-    contentPadding: PaddingValues = PaddingValues(Theme.values.padding),
+    contentPadding: Dp = Theme.values.padding,
     actionIcon: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -41,7 +42,10 @@ fun BottomSheet(
 
     ModalBottomSheet(
         modifier = modifier.fillMaxHeight(),
-        shape = RoundedCornerShape(Theme.shapes.common),
+        shape = RoundedCornerShape(
+            topStart = Theme.shapes.common,
+            topEnd = Theme.shapes.common,
+        ),
         sheetState = sheetState,
         dragHandle = null,
         scrimColor = Color.Black.copy(alpha = .9f),
@@ -53,7 +57,7 @@ fun BottomSheet(
         CommonHorizontalDivider()
 
         Column(
-            Modifier.padding(contentPadding)
+            modifier = Modifier.padding(contentPadding)
         ) {
             content()
         }

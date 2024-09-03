@@ -1,35 +1,39 @@
 package com.cryptoemergency.cryptoemergency.lib
 
 import android.util.Log
+import androidx.compose.runtime.Composable
 import com.cryptoemergency.cryptoemergency.BuildConfig
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import io.ktor.http.HttpStatusCode
 
+@Composable
 fun handleServerError(statusCode: HttpStatusCode): String {
     Log.e(
         "handleServerError",
         "Error code: ${statusCode.value},\n description: ${statusCode.description}",
     )
+    val locale = LocalLocale.current
 
     return when (statusCode.value) {
         -1 -> {
             if (BuildConfig.DEBUG) {
-                "Ошибка сериализации данных"
+                locale.httpExceptionMessage.serializationException
             } else {
-                "Непредвиденная ошибка -1"
+                locale.httpExceptionMessage.internalServerError
             }
         }
-        -1000 -> "Нет подключения к интернету"
-        -900 -> "Удаленный сервер недоступен"
-        HttpStatusCode.Forbidden.value -> "Отказано в доступе"
-        HttpStatusCode.MethodNotAllowed.value -> "Не разрешенный метод"
-        HttpStatusCode.TooManyRequests.value -> "Превышен лимит запросов"
-        HttpStatusCode.RequestTimeout.value -> "Превышено время ожидания"
-        HttpStatusCode.InternalServerError.value -> "Непредвиденная ошибка сервера"
+        -1000 -> locale.httpExceptionMessage.unknownHostException
+        -900 -> locale.httpExceptionMessage.IOException
+        HttpStatusCode.Forbidden.value -> locale.httpExceptionMessage.forbidden
+        HttpStatusCode.MethodNotAllowed.value -> locale.httpExceptionMessage.methodNotAllowed
+        HttpStatusCode.TooManyRequests.value -> locale.httpExceptionMessage.tooManyRequests
+        HttpStatusCode.RequestTimeout.value -> locale.httpExceptionMessage.requestTimeout
+        HttpStatusCode.InternalServerError.value -> locale.httpExceptionMessage.internalServerError
         else -> {
             if (BuildConfig.DEBUG) {
-                "Непредвиденная ошибка клиента"
+                locale.httpExceptionMessage.internalClientError
             } else {
-                "Непредвиденная ошибка сервера"
+                locale.httpExceptionMessage.internalServerError
             }
         }
     }

@@ -8,7 +8,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks.NetworkName
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks.NetworkName
 
 @Entity(
     tableName = "socialNetworks",

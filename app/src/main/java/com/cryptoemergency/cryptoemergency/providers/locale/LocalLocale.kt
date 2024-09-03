@@ -13,9 +13,10 @@ val LocalLocale = staticCompositionLocalOf<Lang> { error("No localLang provided"
 @Composable
 fun LocalLocaleProvider(content: @Composable () -> Unit) {
     val locale = LocalContext.current.resources.configuration.locales[0]
+
     val lang = remember(locale) {
         when (locale.language) {
-            "es" -> englishLang
+            "en" -> englishLang
             "ru" -> russianLang
             else -> russianLang
         }

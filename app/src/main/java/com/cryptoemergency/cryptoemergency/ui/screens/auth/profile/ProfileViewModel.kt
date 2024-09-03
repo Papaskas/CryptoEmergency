@@ -16,8 +16,8 @@ data class SocialNetwork(
 data class User(
     val avatarUrl: String,
     val name: String,
+    val countSubscriptions: Int,
     val countSubscribers: Int,
-    val countSubscribes: Int,
     val socialNetworks: List<SocialNetwork>,
     val username: String,
     val statusText: String,
@@ -34,8 +34,8 @@ class ProfileViewModel @Inject constructor(
     val user = User(
         avatarUrl = "https://example.com/avatar.jpg",
         name = "Romanov Alex",
-        countSubscribers = 1000,
-        countSubscribes = 500,
+        countSubscriptions = 1000,
+        countSubscribers = 500,
         socialNetworks = listOf(
             SocialNetwork(R.drawable.facebook, "Facebook", "","https://www.facebook.com/user"),
             SocialNetwork(R.drawable.instagram, "Instagram", "", "https://www.instagram.com/user"),

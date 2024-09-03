@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo.ProfileInfoBottomSheet
@@ -38,22 +39,21 @@ fun AboutUser(viewModel: ProfileViewModel) {
 
 @Composable
 private fun Bio(viewModel: ProfileViewModel) {
-    val showProfileInfo = remember {
-        mutableStateOf(false)
-    }
+    val locale = LocalLocale.current
+    val showProfileInfo = remember { mutableStateOf(false) }
 
     Box {
         Row {
             Image(
                 painter = painterResource(R.drawable.avatar_placeholder),
-                contentDescription = "Уведомления",
+                contentDescription = null,
                 modifier = Modifier.size(70.dp)
             )
 
             Spacer(Modifier.width(16.dp))
 
             Column {
-                Spacer(Modifier.height(15.dp) )
+                Spacer(Modifier.height(15.dp))
 
                 Text(
                     text = viewModel.user.name,
@@ -68,7 +68,7 @@ private fun Bio(viewModel: ProfileViewModel) {
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Подробнее",
+                    text = locale.moreDetails,
                     style = Theme.typography.caption1,
                     color = Theme.colors.accent,
                     modifier = Modifier.clickable(
@@ -85,16 +85,18 @@ private fun Bio(viewModel: ProfileViewModel) {
 
 @Composable
 private fun Subscribes(viewModel: ProfileViewModel) {
+    val locale = LocalLocale.current.profile
+
     Row {
         Column {
             Text(
-                text = viewModel.user.countSubscribes.toString(),
-                style = Theme.typography.subscribersCount,
+                text = viewModel.user.countSubscribers.toString(),
+                style = Theme.typography.subscribesCount,
                 color = Theme.colors.text1,
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = "Подписки",
+                text = locale.subscribers,
                 style = Theme.typography.caption1,
                 color = Theme.colors.text2,
             )
@@ -102,13 +104,13 @@ private fun Subscribes(viewModel: ProfileViewModel) {
         Spacer(Modifier.width(15.dp))
         Column {
             Text(
-                text = viewModel.user.countSubscribers.toString(),
-                style = Theme.typography.subscribersCount,
+                text = viewModel.user.countSubscriptions.toString(),
+                style = Theme.typography.subscribesCount,
                 color = Theme.colors.text1,
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = "Подписчики",
+                text = locale.subscriptions,
                 style = Theme.typography.caption1,
                 color = Theme.colors.text2,
             )

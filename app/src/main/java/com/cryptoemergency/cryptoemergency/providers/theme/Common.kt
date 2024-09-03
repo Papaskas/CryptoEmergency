@@ -52,7 +52,7 @@ data class Typography(
     val body1: TextStyle,
     val caption1: TextStyle,
     val caption2: TextStyle,
-    val subscribersCount: TextStyle,
+    val subscribesCount: TextStyle,
 )
 
 data class CommonShape(

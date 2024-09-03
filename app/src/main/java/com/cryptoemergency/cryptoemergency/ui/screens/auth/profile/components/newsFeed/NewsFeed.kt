@@ -2,6 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.n
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 
@@ -10,15 +11,15 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.co
  * */
 @Composable
 fun NewsFeed() {
-    Column {
-        TitleSection(title = "Моя лента")
-        EmptyProfilePage(
-            title = "Новостной список пуст",
-            message = "Добавьте новости\nв свой профиль",
-            buttonText = "Добавить новость",
-            onClick = {
+    val locale = LocalLocale.current
 
-            }
+    Column {
+        TitleSection(title = locale.newsFeedSection.myFeed)
+        EmptyProfilePage(
+            title = locale.newsFeedSection.emptyTitle,
+            message = locale.newsFeedSection.emptyDescription,
+            buttonText = locale.newsFeedSection.addNews,
+            onClick = {}
         )
     }
 }

@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
@@ -30,8 +31,10 @@ import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar
 fun ChangeProfileDataScreen(
     viewModel: ChangeProfileDataViewModel = hiltViewModel()
 ) {
+    val locale = LocalLocale.current
+
     Screen(
-        topBar = { ScreenTopBar(title = "Редактировать профиль") }
+        topBar = { ScreenTopBar(title = locale.titles.changeProfile) }
     ) {
         Column(
             Modifier.verticalScroll(rememberScrollState())
@@ -43,17 +46,17 @@ fun ChangeProfileDataScreen(
             Spacer(Modifier.height(30.dp))
 
             Input(
-                label = "Ваше имя",
+                label = locale.labels.yourName,
                 value = viewModel.firstName,
             )
             Spacer(Modifier.height(10.dp))
             Input(
-                label = "Имя пользователя",
+                label = locale.labels.username,
                 value = viewModel.username,
             )
             Spacer(Modifier.height(10.dp))
             MultiLineInput(
-                label = "О себе",
+                label = locale.labels.aboutMe,
                 value = viewModel.aboutMe,
                 minLines = 1,
                 maxLines = 5,
@@ -62,21 +65,21 @@ fun ChangeProfileDataScreen(
             )
             Spacer(Modifier.height(10.dp))
             Input(
-                label = "Специализация",
+                label = locale.labels.specialization,
                 value = viewModel.specialization,
             )
             Spacer(Modifier.height(10.dp))
             DateInput(
+                label = locale.labels.birthday,
                 value = viewModel.birthday,
-                label = "Дата рождения",
             )
             Spacer(Modifier.height(10.dp))
             InputSelectorBottomMenu(
-                label = "Язык",
+                label = locale.labels.language,
                 selectedItem = viewModel.language,
                 items = arrayOf(
-                    "Русский",
-                    "Английский",
+                    locale.languages.russian,
+                    locale.languages.english,
                 )
             )
         }

@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.MutableState
@@ -12,8 +12,8 @@ enum class NetworkName {
 data class SocialNetworkType(
     val networkName: NetworkName,
     val urlPrefix: MutableState<TextFieldValue>,
-    val url:  MutableState<TextFieldValue>,
-    val description:  MutableState<TextFieldValue>,
+    val url: MutableState<TextFieldValue>,
+    val description: MutableState<TextFieldValue>,
 )
 
 data class SocialNetworkIconType(

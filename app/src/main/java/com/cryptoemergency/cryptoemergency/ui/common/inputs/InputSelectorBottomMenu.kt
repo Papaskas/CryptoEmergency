@@ -9,6 +9,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Column
@@ -60,6 +61,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
  * что 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
  * @param minLines Минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
  *, чтобы 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
+ * @param expanded Состояние открытия меню
  */
 @Composable
 fun InputSelectorBottomMenu(
@@ -76,15 +78,15 @@ fun InputSelectorBottomMenu(
     singleLine: Boolean = false,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
     colors: TextFieldColors = TextFieldDefaults.colors(),
 ) {
-    val expanded = remember { mutableStateOf(false) }
     val selectedOption = remember { mutableStateOf(items[defaultSelectItem]) }
 
     LaunchedEffect(selectedOption.value) {
         selectedItem.value = TextFieldValue(selectedOption.value)
     }
-    val interactionSource = remember { MutableInteractionSource() }
 
     Column(
         modifier = modifier,

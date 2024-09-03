@@ -1,5 +1,7 @@
 package com.cryptoemergency.cryptoemergency.lib
 
+import androidx.compose.runtime.Composable
+
 /**
  * Функция для валидации текста с использованием нескольких валидаторов.
  *

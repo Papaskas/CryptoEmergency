@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
@@ -21,6 +22,8 @@ import com.cryptoemergency.cryptoemergency.ui.common.newsFeed.NewsFeed
 fun NewsFeedScreen(
     viewModel: NewsFeedViewModel = hiltViewModel()
 ) {
+    val locale = LocalLocale.current
+
     Screen(
         horizontalPadding = PaddingValues(0.dp),
     ) {
@@ -37,13 +40,13 @@ fun NewsFeedScreen(
         ) {
             CommonTabs(
                 tabTitles = arrayOf(
-                    "Общая лента",
-                    "Лента подписок",
-                    "Все cems",
-                    "Cems подписок",
-                    "Лента отметок",
-                    "Социальные сети",
-                    "Закладки",
+                    locale.tabs.generalFeed,
+                    locale.tabs.subscriptionFeed,
+                    locale.tabs.allCems,
+                    locale.tabs.cemsSubscriptions,
+                    locale.tabs.subscriptionFeed,
+                    locale.tabs.socialNetworks,
+                    locale.tabs.bookmarks,
                 ),
             ) { _ ->
                 NewsFeed(

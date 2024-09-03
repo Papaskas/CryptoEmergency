@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.viewModels.ThemeViewModel
@@ -24,17 +25,17 @@ fun ProfileTopBar(
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     val navController = LocalNavController.current
+    val locale = LocalLocale.current
 
     Column {
         TopAppBar(
             title = {
                 Text(
-                    text = "Мой профиль",
+                    text = locale.titles.myProfile,
                     style = Theme.typography.h3,
                     color = Theme.colors.text1,
                 )
             },
-//            modifier = Modifier.padding(start = Theme.values.padding, end = 10.dp),
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent,
             ),

@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
@@ -143,15 +144,17 @@ private fun HeaderNews(
 private fun DropMenu(
     expanded: MutableState<Boolean>,
 ) {
+    val locale = LocalLocale.current
     data class Type(
         val title: String,
         @DrawableRes val icon: Int,
     )
     val items = arrayOf(
-        Type("Поделиться", R.drawable.share__outline),
-        Type("Скопировать ссылку", R.drawable.copy__outline),
-        Type("Сохранить", R.drawable.save__outline),
-        Type("Пожаловаться", R.drawable.report),
+        Type(locale.share, R.drawable.share__outline),
+        Type(locale.copyUrl, R.drawable.copy__outline),
+        Type(locale.save, R.drawable.save__outline),
+        Type(locale.unsubscribe, R.drawable.unsubscribe),
+        Type(locale.report, R.drawable.report),
     )
 
     DropdownMenu(
@@ -339,6 +342,8 @@ private fun Toolbar() {
 private fun Description(
     description: String?,
 ) {
+    val locale = LocalLocale.current.newsFeedSection
+
     description?.let {
         Text(
             text = description,
@@ -346,7 +351,7 @@ private fun Description(
             color = Theme.colors.text1,
         )
         Text(
-            text = "Показать еще",
+            text = locale.showMore,
             style = Theme.typography.body1,
             color = Theme.colors.accent,
         )

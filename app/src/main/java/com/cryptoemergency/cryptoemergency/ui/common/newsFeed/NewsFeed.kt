@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
@@ -32,9 +33,10 @@ import com.cryptoemergency.cryptoemergency.types.NewsItemType
 fun NewsFeed(
     items: Array<NewsFeedItemProps>,
 ) {
+    val locale = LocalLocale.current
     val showNewsFeedType = remember { mutableStateOf(NewsItemType.FULL) }
     val showFilterMenu = remember { mutableStateOf(false) }
-    val selectedFilter = remember { mutableStateOf("Все") }
+    val selectedFilter = remember { mutableStateOf(locale.filter.all) }
     val columnCount = remember { mutableIntStateOf(1) }
 
     LazyVerticalStaggeredGrid(
@@ -76,12 +78,14 @@ private fun Header(
     columnCount: MutableIntState,
     showFilterMenu: MutableState<Boolean>
 ) {
+    val locale = LocalLocale.current.newsFeedSection
+
     Row(
         modifier = Modifier.padding(horizontal = Theme.values.padding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Лента",
+            text = locale.myFeed,
             style = Theme.typography.h2,
             color = Theme.colors.text1,
         )
@@ -89,7 +93,7 @@ private fun Header(
         IconButton(onClick = { showFilterMenu.value = true }) {
             Icon(
                 painter = painterResource(R.drawable.filter),
-                contentDescription = null,
+                contentDescription = "filter",
             )
         }
         IconButton(onClick = {
@@ -98,7 +102,7 @@ private fun Header(
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
-                contentDescription = null,
+                contentDescription = "sort by large",
                 tint = if (showNewsFeedType.value == NewsItemType.FULL) {
                     Theme.colors.accent
                 } else {
@@ -112,7 +116,7 @@ private fun Header(
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
-                contentDescription = null,
+                contentDescription = "sort by grid",
                 tint = if (showNewsFeedType.value == NewsItemType.SHORT) {
                     Theme.colors.accent
                 } else {

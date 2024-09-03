@@ -1,8 +1,7 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.socialNetworks
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
@@ -28,39 +27,42 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.lib.Listener
+import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 import com.cryptoemergency.cryptoemergency.viewModels.SocialNetworksViewModel
 
 /**
  * Блок в секции content - Социальные сети
- * */
+ **/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SocialNetworks(
+fun AddSocialNetworks(
     viewModel: SocialNetworksViewModel = hiltViewModel()
 ) {
+    val locale = LocalLocale.current
     val showBottomSheet = remember { mutableStateOf(false) }
 
     Listener(message = viewModel.message)
 
     Column {
-        TitleSection(title = "Социальные сети")
+        TitleSection(title = locale.socialNetworks)
         EmptyProfilePage(
-            title = "Социальных сетей пока нет",
-            message = "Добавьте социальных сетей\nв свой профиль",
-            buttonText = "Добавить социальную сеть",
+            title = locale.socialNetworksSection.emptyTitle,
+            message = locale.socialNetworksSection.emptyDescription,
+            buttonText = locale.socialNetworksSection.addSocialNetwork,
             onClick = {
                 showBottomSheet.value = true
             }
         )
     }
 
-    BottomSheet(showBottomSheet = showBottomSheet, title = "Добавить социальную сеть") {
+    BottomSheet(showBottomSheet = showBottomSheet, title = locale.titles.addSocialNetworks) {
         val selectedOption = remember { mutableStateOf(socialNetworksIcons[0]) }
 
         Column(
@@ -79,7 +81,7 @@ private fun SocialNetworksSelector(
 ) {
     FlowRow {
         socialNetworksIcons.forEach {
-            SocialNetSelectableItem(
+            SelectableItem(
                 it,
                 selectedOption,
             )
@@ -88,7 +90,7 @@ private fun SocialNetworksSelector(
 }
 
 @Composable
-private fun SocialNetSelectableItem(
+private fun SelectableItem(
     socialNetwork: SocialNetworkIconType,
     selectedOption: MutableState<SocialNetworkIconType>,
 ) {
@@ -124,6 +126,7 @@ private fun AddSocialNetwork(
     viewModel: SocialNetworksViewModel,
     selectedOption: MutableState<SocialNetworkIconType>
 ) {
+    val locale = LocalLocale.current
     val socialNetworks = viewModel.socialNetworks.collectAsState()
     val filteredNetworks =
         socialNetworks.value.filter { it.networkName == selectedOption.value.networkName }.toMutableList()
@@ -140,15 +143,18 @@ private fun AddSocialNetwork(
                 },
                 isRequired = true,
                 value = network.url,
-                label = "Ссылка",
+                label = locale.url,
             )
 
             Spacer(Modifier.height(15.dp))
 
-            Input(
+            MultiLineInput(
                 value = network.description,
-                label = "Описание",
-                singleLine = false,
+                label = locale.description,
+                isError = mutableStateOf(false),
+                maxSymbols = 100,
+                maxLines = 3,
+                minLines = 1,
             )
 
             Spacer(Modifier.height(15.dp))
@@ -156,7 +162,7 @@ private fun AddSocialNetwork(
     }
 
     Text(
-        text = "Добавить еще",
+        text = locale.socialNetworksSection.addMore,
         style = Theme.typography.body1,
         color = Theme.colors.accent,
         modifier = Modifier.clickable(
@@ -182,6 +188,6 @@ private fun AddSocialNetwork(
 //                    description.value.text,
 //                )
         },
-        text = "Добавить социальную сеть",
+        text = locale.titles.addSocialNetworks,
     )
 }
