@@ -5,6 +5,9 @@
 > [Безопасная маршрутизация](https://developer.android.com/guide/navigation/design/type-safety)<br/>
 > [Store, ProtoStore - локальное хранилище](https://developer.android.com/topic/libraries/architecture/datastore)<br/>
 > [SvgToCompose](https://www.composables.com/svgtocompose)<br/>
+> [Room - БД](https://developer.android.com/jetpack/androidx/releases/room)
+
+---
 
 # Lint
 
@@ -12,27 +15,35 @@
 > Для его инициализации в android studio нужно скачать плагин [detekt](#urls)<br/>
 > Его активация описана в описании плагина
 
+---
+
 # Логирование
 
 > В `release` сборке логирования - нет.<br/>
 > Log.{} - убирается в конфиге `proguard-rules.pro`<br/>
 > Логирование сетевых запросов убирается проверкой `BuildConfig.DEBUG` в файле `api/network/HttpClient`
 
+---
+
 # Тема, цвета, значения, иконки к темам, типография
 
 > Все файлы находятся в папке `providers/theme/Theme`<br/>
 > По умолчанию стоит темная тема.<br/>
 > Использование цветовой схемы:
-  >> Text(color = Theme.colors.primary)
+>```kotlin
+>  Text(color = Theme.colors.primary)
+>```
+
+---
 
 # Routing
 
-> Используется типобезопасные маршруты, смотри официальную [документацию](#urls)
-> Основной и единственный файл роутинга - `navigation/Navigation`
+> Используются типобезопасные маршруты, смотри [официальную документацию](#urls)<br/>
+> Основной и единственный файл роутинга - `navigation/Navigation`<br/>
 > Для контроля роутинга необходимо пользоваться методом `LocalNavController.current` из
-  `providers/LocalNavController`
+  `providers/LocalNavController`<br/>
 > Для перехода по страницам нужно использовать не строки, а импортировать обьект Routes из
-  `navigation/Routes`
+  `navigation/Routes`<br/>
 
 # LocalStorage
 
@@ -40,7 +51,7 @@
 
 ### Для локального хранения используются две [библиотеки](#urls) - `DataStore` (ключ: значение) и `ProtoDataStore` (`data class`, `enum class`)
 
-> Эти библиотеки интегрированы в проект с помощью `hilt` >> `module/(Proto)Store.kt`<br/>
+> Эти библиотеки интегрированы в проект с помощью [hilt](#urls) >> `module/(Proto)Store.kt`<br/>
 > Они работают в IO потоке
 
 ---
@@ -143,13 +154,17 @@ class ThemeViewModel @Inject constructor(
 
 > Для создания новых данных хранилища нужно сделать следующее<br/>
 >> 1. Создать ключ в `(Proto)Keys.kt`<br/>
->> 2. Добавить новый ключ в `module/(Proto)StoreModule.kt`, согласно документации `hilt`
+>> 2. Добавить новый ключ в `module/(Proto)StoreModule.kt`, согласно документации [Hilt](#urls)
+
+---
 
 # Бд
 
-> В качестве базы данных предустановлен `Room` интегрированный в `Hilt`
+> В качестве базы данных предустановлен [Room](#urls) интегрированный в [Hilt](#urls)
 
-# Network request
+---
+
+# Сетевые запросы
 
 > Основной конструктор запросов: `api/network/SafeRequest.kt` - его трогать нельзя. От него следует
   создать другие запросы<br/>
