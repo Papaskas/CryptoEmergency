@@ -26,15 +26,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
+import com.cryptoemergency.cryptoemergency.modifiers.copyTextToClipboard
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
+import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.ui.common.ButtonType
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
@@ -58,7 +62,7 @@ fun QRCodeScreen(
             color = viewModel.selectedOption.value,
         )
 
-        BottomNav(viewModel)
+        BottomNav(viewModel, text)
     }
 }
 
@@ -77,6 +81,11 @@ private fun ColumnScope.QRCode(
             modifier = Modifier
                 .clip(RoundedCornerShape(Theme.values.shape))
                 .background(Color.White)
+                .border(
+                    1.dp,
+                    Theme.colors.strokeVariant,
+                    RoundedCornerShape(Theme.values.shape)
+                )
                 .padding(
                     top = 30.dp,
                     bottom = 20.dp,
@@ -126,14 +135,15 @@ private fun ColumnScope.QRCode(
 
 @Composable
 private fun BottomNav(
-    viewModel: QRCodeViewModel
+    viewModel: QRCodeViewModel,
+    text: String,
 ) {
     Surface(
         shape = RoundedCornerShape(
             topStart = Theme.values.shape,
             topEnd = Theme.values.shape,
         ),
-        color = Theme.colors.surface1,
+        color = Theme.colors.surface3,
         modifier = Modifier
             .commonBorder(
                 shape = RoundedCornerShape(
@@ -144,7 +154,7 @@ private fun BottomNav(
     ) {
         Column {
             Heading()
-            Body(viewModel)
+            Body(viewModel, text)
         }
     }
 }
@@ -166,7 +176,10 @@ private fun Heading() {
 @Composable
 private fun Body(
     viewModel: QRCodeViewModel,
+    text: String,
 ) {
+    val context = LocalContext.current
+
     Column(
         Modifier.padding(Theme.values.padding)
     ) {
@@ -183,6 +196,12 @@ private fun Body(
         Spacer(Modifier.height(Theme.values.padding))
 
         CommonButton(onClick = { /*TODO*/ }, text = "Поделиться")
+        Spacer(Modifier.height(10.dp))
+        CommonButton(
+            onClick = { copyTextToClipboard(context, text, "LABEL") },
+            text = "Копировать ссылку",
+            buttonType = ButtonType.Secondary,
+        )
     }
 }
 
@@ -196,7 +215,11 @@ private fun SelectableItem(
         modifier = Modifier
             .then(
                 if (viewModel.selectedOption.value == tint) {
-                    Modifier.border(1.dp, Theme.colors.accent, RoundedCornerShape(Theme.values.shape))
+                    Modifier.border(
+                        1.dp,
+                        Theme.colors.accent,
+                        RoundedCornerShape(Theme.values.shape)
+                    )
                 } else {
                     Modifier
                 }

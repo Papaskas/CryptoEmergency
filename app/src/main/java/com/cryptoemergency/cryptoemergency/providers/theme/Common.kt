@@ -37,6 +37,8 @@ data class Colors(
     val backgroundMain: Color,
     val background2: Color,
     val background3: Color,
+    val background4: Color,
+
     val surface1: Color,
     val surface2: Color,
     val surface3: Color,

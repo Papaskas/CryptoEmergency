@@ -18,6 +18,8 @@ val darkPalette = Colors(
     backgroundMain = DarkColors.BgB100,
     background2 = DarkColors.BgB90,
     background3 = DarkColors.BgG100,
+    background4 = DarkColors.StrokeB,
+
     surface1 = DarkColors.BgB80,
     surface2 = DarkColors.BgG100,
     surface3 = DarkColors.BgB80,
@@ -42,6 +44,8 @@ val lightPalette = Colors(
     backgroundMain = LightColors.BgW100,
     background2 = LightColors.BgW90,
     background3 = LightColors.BgW90,
+    background4 = LightColors.BgG,
+
     surface1 = LightColors.BgG,
     surface2 = LightColors.BgG,
     surface3 = LightColors.BgW90,
