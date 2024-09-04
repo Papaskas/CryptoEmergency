@@ -32,6 +32,7 @@ data class Colors(
     val text6: Color,
 
     val stroke: Color,
+    val strokeVariant: Color,
 
     val backgroundMain: Color,
     val background2: Color,
@@ -56,7 +57,6 @@ data class Typography(
 )
 
 data class CommonShape(
-    val common: Dp,
     val hexagonShape: Shape,
     val diamondShape: Shape,
     val ticketShape: Shape,
@@ -65,6 +65,7 @@ data class CommonShape(
 
 data class Values(
     val padding: Dp,
+    val shape: Dp,
 )
 
 data class Icons(

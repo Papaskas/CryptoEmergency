@@ -136,6 +136,8 @@ dependencies {
     implementation(libs.slf4j.api) // логирование
     implementation(libs.logback.classic) // логирование
 
+    implementation(libs.compose.qr.code) // QR code
+
     implementation(libs.core.ktx)
 
     implementation(libs.androidx.navigation.compose)

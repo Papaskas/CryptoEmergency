@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -32,10 +31,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 
 /**
  * Базовый компонент Input с базовыми стилями, но без логики
@@ -96,7 +93,6 @@ fun Input(
     label: String,
     modifier: Modifier = Modifier,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
-    disableActiveBorder: Boolean = false,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
@@ -114,13 +110,13 @@ fun Input(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    isFocused: State<Boolean> = interactionSource.collectIsFocusedAsState(),
+    isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     contentAlignment: Alignment = Alignment.TopStart,
-    shape: Shape = RoundedCornerShape(Theme.shapes.common),
+    shape: Shape = RoundedCornerShape(Theme.values.shape),
     cursorBrush: Brush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
 ) {
-    val labelStyle = if (value.value.text.isNotEmpty() || isFocused.value) {
+    val labelStyle = if (value.value.text.isNotEmpty() || isFocused) {
         Theme.typography.caption2
     } else {
         Theme.typography.body1
@@ -144,11 +140,10 @@ fun Input(
                 color = Theme.colors.text1
             ),
             singleLine = singleLine,
-            modifier = Modifier.inputBorder(
-                shape,
-                isError,
-                isFocused.value,
-                disableActiveBorder,
+            modifier = Modifier.commonBorder(
+                shape = shape,
+                isError = isError,
+                isFocused = isFocused,
             ).fillMaxWidth(),
             decorationBox = {
                 TextFieldDefaults.DecorationBox(
@@ -205,21 +200,6 @@ fun Input(
         }
     }
 }
-
-@Composable
-fun Modifier.inputBorder(
-    shape: Shape,
-    isError: Boolean,
-    isFocused: Boolean,
-    disableActiveBorder: Boolean,
-) = this.then(
-    when {
-        isError -> Modifier.border(1.dp, Theme.colors.error, shape)
-        isFocused && !disableActiveBorder -> Modifier.border(1.dp, Theme.colors.accent, shape)
-        currentTheme == CurrentTheme.DARK -> Modifier.border(1.dp, Theme.colors.stroke, shape)
-        else -> Modifier
-    }
-)
 
 @Composable
 private fun Label(

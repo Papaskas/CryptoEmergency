@@ -35,6 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
@@ -93,8 +94,8 @@ fun InputSelectorBottomMenu(
     ) {
         Input(
             value = selectedItem,
+            isFocused = false,
             readOnly = true,
-            disableActiveBorder = true,
             label = label,
             isError = isError.value,
             isRequired = isRequired,
@@ -129,11 +130,11 @@ private fun inputShape(
 ): RoundedCornerShape {
     return if (expanded) {
         RoundedCornerShape(
-            topStart = Theme.shapes.common,
-            topEnd = Theme.shapes.common,
+            topStart = Theme.values.shape,
+            topEnd = Theme.values.shape,
         )
     } else {
-        RoundedCornerShape(Theme.shapes.common)
+        RoundedCornerShape(Theme.values.shape)
     }
 }
 
@@ -183,20 +184,19 @@ private fun DropDown(
 
     AnimatedVisibility(
         modifier = Modifier
-            .inputBorder(
+            .commonBorder(
                 shape = RoundedCornerShape(
-                    bottomStart = Theme.shapes.common,
-                    bottomEnd = Theme.shapes.common,
+                    bottomStart = Theme.values.shape,
+                    bottomEnd = Theme.values.shape,
                 ),
                 isError = false,
                 isFocused = false,
-                disableActiveBorder = true,
             )
             .background(
                 color = Theme.colors.surface1,
                 shape = RoundedCornerShape(
-                    bottomStart = Theme.shapes.common,
-                    bottomEnd = Theme.shapes.common,
+                    bottomStart = Theme.values.shape,
+                    bottomEnd = Theme.values.shape,
                 )
             )
             .zIndex(-1f),

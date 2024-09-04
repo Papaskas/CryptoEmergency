@@ -5,14 +5,15 @@ import androidx.compose.ui.graphics.Color
 val darkPalette = Colors(
     accent = DarkColors.accent,
 
-    text1 = DarkColors.TextW90,
-    text2 = DarkColors.TextG40,
-    text3 = DarkColors.TextG100,
-    text4 = DarkColors.TextG20,
-    text5 = DarkColors.TextG20,
-    text6 = DarkColors.TextW100,
+    text1 = DarkColors.W90,
+    text2 = DarkColors.G40,
+    text3 = DarkColors.G100,
+    text4 = DarkColors.G20,
+    text5 = DarkColors.G20,
+    text6 = DarkColors.W100,
 
     stroke = DarkColors.StrokeB,
+    strokeVariant = DarkColors.StrokeB,
 
     backgroundMain = DarkColors.BgB100,
     background2 = DarkColors.BgB90,
@@ -28,14 +29,15 @@ val darkPalette = Colors(
 val lightPalette = Colors(
     accent = LightColors.accent,
 
-    text1 = LightColors.TextB100,
-    text2 = LightColors.TextG,
-    text3 = LightColors.TextG,
-    text4 = LightColors.TextG,
-    text5 = LightColors.TextB90,
-    text6 = LightColors.TextB100,
+    text1 = LightColors.B100,
+    text2 = LightColors.G,
+    text3 = LightColors.G,
+    text4 = LightColors.G,
+    text5 = LightColors.B90,
+    text6 = LightColors.B100,
 
     stroke = LightColors.StrokeB20,
+    strokeVariant = LightColors.StrokeB30,
 
     backgroundMain = LightColors.BgW100,
     background2 = LightColors.BgW90,
@@ -48,14 +50,14 @@ val lightPalette = Colors(
     error = LightColors.error,
 )
 
-private object DarkColors {
+object DarkColors {
     val accent = Color(0xFFAB55FF)
 
-    val TextW100 = Color(0xFFFFFFFF)
-    val TextW90 = Color(0xFFF8F8FA)
-    val TextG100 = Color(0xFF5B5D5D)
-    val TextG20 = Color(0xFFC4C8C7)
-    val TextG40 = Color(0xFF878A89)
+    val W100 = Color(0xFFFFFFFF)
+    val W90 = Color(0xFFF8F8FA)
+    val G100 = Color(0xFF5B5D5D)
+    val G20 = Color(0xFFC4C8C7)
+    val G40 = Color(0xFF878A89)
 
     val BgB100 = Color(0xFF151516)
     val BgB90 = Color(0xFF161617)
@@ -68,13 +70,13 @@ private object DarkColors {
     val success = Color(0xFF6ED960)
 }
 
-private object LightColors {
+object LightColors {
     val accent = Color(0xFF8E4BFF)
 
-    val TextW100 = Color(0xFFFFFFFF)
-    val TextB100 = Color(0xFF343434)
-    val TextB90 = Color(0xFF474C4F)
-    val TextG = Color(0xFF999FAB)
+    val W100 = Color(0xFFFFFFFF)
+    val B100 = Color(0xFF343434)
+    val B90 = Color(0xFF474C4F)
+    val G = Color(0xFF999FAB)
 
     val BgW100 = Color(0xFFFFFFFF)
     val BgW90 = Color(0xFFFCFCFC)

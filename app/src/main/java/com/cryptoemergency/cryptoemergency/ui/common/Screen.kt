@@ -33,7 +33,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
  * отображаемым внутри [SnackbarHost].
  * @param contentColor Цвет содержимого
  * @param containerColor Цвет фона контейнера
- * @param horizontalPadding Горизонтальное отступы для контента
+ * @param padding Горизонтальное отступы для контента
  * @param bottomSpacing Пустое пространство снизу
  * @param bottomBar Компонент [NavigationBar] для отображения нижней панели
  * @param topBar Компонент [TopAppBar] для отображения верхней панели
@@ -45,7 +45,7 @@ fun Screen(
     snackbar: SnackbarHostState = LocalSnackbar.current,
     contentColor: Color = Theme.colors.text2,
     containerColor: Color = Theme.colors.backgroundMain,
-    horizontalPadding: PaddingValues = PaddingValues(horizontal = Theme.values.padding),
+    padding: PaddingValues = PaddingValues(horizontal = Theme.values.padding),
     bottomSpacing: Dp = 35.dp,
     bottomBar: @Composable () -> Unit = { BottomBar() },
     topBar: @Composable () -> Unit = { MainTopBar() },
@@ -70,7 +70,7 @@ fun Screen(
                     top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding(),
                 )
-                .padding(horizontalPadding),
+                .padding(padding),
         ) {
             Column(
                 modifier = modifier,

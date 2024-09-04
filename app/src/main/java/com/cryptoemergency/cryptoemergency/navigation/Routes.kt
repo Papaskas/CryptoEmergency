@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 /**
  * Закрытый класс, представляющий различные маршруты в приложении. Этот класс гарантирует,
- * что в нем определены все возможные маршруты, обеспечивая безопасность типов и проверку полноты.
- * Внутри определяются интрефейсы для блокировки редиректа на них
- * */
+ * что в нем определены все возможные маршруты, обеспечивая безопасность типов.
+ * Внутри определяются интрефейсы для блокировки редиректа на них.
+ **/
 sealed class Routes {
     interface Home {
         @Serializable
@@ -58,6 +58,11 @@ sealed class Routes {
 
         @Serializable
         data object Wallet : Routes()
+
+        @Serializable
+        data class QRCode(
+            val text: String
+        ) : Routes()
     }
 
     interface Auth {

@@ -25,7 +25,7 @@ fun NewsFeedScreen(
     val locale = LocalLocale.current
 
     Screen(
-        horizontalPadding = PaddingValues(0.dp),
+        padding = PaddingValues(0.dp),
     ) {
         Spacer(Modifier.height(35.dp))
 

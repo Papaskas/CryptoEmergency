@@ -24,7 +24,6 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 val shapes = CommonShape(
-    common = 10.dp,
     hexagonShape = HexagonShape(),
     starShape = StarShape(),
     diamondShape = DiamondShape(),

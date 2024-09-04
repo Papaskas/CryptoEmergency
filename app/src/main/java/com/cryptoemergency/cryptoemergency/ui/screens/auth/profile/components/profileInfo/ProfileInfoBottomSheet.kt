@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
@@ -49,15 +51,23 @@ fun ProfileInfoBottomSheet(
         actionIcon = {},
     ) {
         items.forEach {
-            BioInfo(it)
+            BioInfo(
+                title = it.title,
+                isUserName = it.isUserName,
+                description = it.description,
+            )
         }
     }
 }
 
 @Composable
 private fun BioInfo(
-    prop: BioInfoType,
+    title: String,
+    isUserName: Boolean,
+    description: String,
 ) {
+    val navController = LocalNavController.current
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -65,22 +75,26 @@ private fun BioInfo(
             Modifier.padding(Theme.values.padding)
         ) {
             Text(
-                text = prop.title,
-                color = if (prop.isUserName) Theme.colors.accent else Theme.colors.text1,
+                text = title,
+                color = if (isUserName) Theme.colors.accent else Theme.colors.text1,
                 style = Theme.typography.body1,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = prop.description,
+                text = description,
                 color = Theme.colors.text2,
                 style = Theme.typography.caption2,
             )
         }
 
-        if (prop.isUserName) {
+        if (isUserName) {
             Spacer(Modifier.weight(1f))
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {
+                navController.navigate(Routes.Page.QRCode(
+                    text = title,
+                ))
+            }) {
                 Icon(
                     painter = painterResource(R.drawable.qr_filled),
                     contentDescription = null,
