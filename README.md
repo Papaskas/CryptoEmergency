@@ -7,23 +7,17 @@
 > [SvgToCompose](https://www.composables.com/svgtocompose)<br/>
 > [Room - БД](https://developer.android.com/jetpack/androidx/releases/room)
 
----
-
 # Lint
 
 > В проекте установлен `detekt` - `app/config/detekt/detekt.yml`<br/>
 > Для его инициализации в android studio нужно скачать плагин [detekt](#urls)<br/>
 > Его активация описана в описании плагина
 
----
-
 # Логирование
 
 > В `release` сборке логирования - нет.<br/>
 > Log.{} - убирается в конфиге `proguard-rules.pro`<br/>
 > Логирование сетевых запросов убирается проверкой `BuildConfig.DEBUG` в файле `api/network/HttpClient`
-
----
 
 # Тема, цвета, значения, иконки к темам, типография
 
@@ -33,8 +27,6 @@
 >```kotlin
 >  Text(color = Theme.colors.primary)
 >```
-
----
 
 # Routing
 
@@ -46,8 +38,6 @@
   `navigation/Routes`<br/>
 
 # LocalStorage
-
----
 
 ### Для локального хранения используются две [библиотеки](#urls) - `DataStore` (ключ: значение) и `ProtoDataStore` (`data class`, `enum class`)
 
@@ -74,6 +64,7 @@
 > Также есть папка `data` - интерфейсы хранимых данных в `ProtoStore`<br/>
 
 ---
+
 #### Пример ключа в случае обычного `Store`(ключ: значение) - дополнительная документация о нем описана в JavaDoc в `store/Keys.kt`<br/>
 
 ```kotlin
@@ -162,8 +153,6 @@ class ThemeViewModel @Inject constructor(
 
 > В качестве базы данных предустановлен [Room](#urls) интегрированный в [Hilt](#urls)
 
----
-
 # Сетевые запросы
 
 > Основной конструктор запросов: `api/network/SafeRequest.kt` - его трогать нельзя. От него следует
@@ -172,7 +161,7 @@ class ThemeViewModel @Inject constructor(
 
 ---
 
-### Создание запроса:
+#### Создание запроса:
 
 > В папке `repository/requests` создать файл с функцией такого типа:
 
