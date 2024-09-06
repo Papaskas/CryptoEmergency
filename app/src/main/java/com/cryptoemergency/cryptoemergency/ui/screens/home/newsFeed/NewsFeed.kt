@@ -31,6 +31,16 @@ import com.cryptoemergency.cryptoemergency.ui.common.newsFeed.NewsFeedHeader
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
 import kotlin.math.roundToInt
 
+/**
+ * Как работает скрытие элементов
+ *
+ * 1) TopBar & BottomBar не имеют [padding], что значит элементы под них проваливаются
+ * 2) Когда начинается движение, они с помощью [offset] уходят за края
+ * 3) Поскольку динамическое изменение [padding] тормознутое, то отстут от верха утановлен с помощью [offset]
+ * и переменной [topBarOffset] заданный в [Surface]
+ * 4) То есть дочерний элемент с помощью [offset] отступает только от верха, а когда происходит прокрутка
+ * двигается вверх до ограничителя 35.dp - для StatusBar
+ * */
 @Composable
 fun NewsFeedScreen(
     viewModel: NewsFeedViewModel = hiltViewModel()
@@ -39,47 +49,51 @@ fun NewsFeedScreen(
     val showFilterMenu = remember { mutableStateOf(false) }
     val newsItemType = remember { mutableStateOf(NewsItemType.FULL) }
 
-    val toUpHeight = 110.dp // На сколько поднимать
-    val barsHeightPx = with(LocalDensity.current) { toUpHeight.roundToPx().toFloat() }
-    val barsOffsetHeightPx = remember { mutableFloatStateOf(0f) }
+    val topBarHeight = 110.dp
+    val topBarHeightPx = with(LocalDensity.current) { topBarHeight.roundToPx().toFloat() }
+    val topBarOffsetHeightPx = remember { mutableFloatStateOf(0f) }
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.y
-                val newOffset = barsOffsetHeightPx.floatValue + delta
-                barsOffsetHeightPx.floatValue = newOffset.coerceIn(-barsHeightPx, 0f)
+                val newOffset = topBarOffsetHeightPx.floatValue + delta
+                topBarOffsetHeightPx.floatValue = newOffset.coerceIn(-topBarHeightPx, 0f)
                 return Offset.Zero
             }
         }
     }
 
-    val bottomPadding by remember {
-        derivedStateOf { (toUpHeight + barsOffsetHeightPx.floatValue.dp).coerceAtLeast(0.dp) }
-    }
-
-    val topPadding by remember {
-        derivedStateOf { (toUpHeight + barsOffsetHeightPx.floatValue.dp).coerceAtLeast(25.dp) }
+    val topBarOffset by remember {
+        derivedStateOf {
+            (topBarHeight + topBarOffsetHeightPx.floatValue.dp).coerceAtLeast(35.dp) // 35.dp == StatusBar
+        }
     }
 
     Screen(
         topBar = {
             MainTopBar(
-                Modifier.offset { IntOffset(x = 0, y = barsOffsetHeightPx.floatValue.roundToInt()) },
+                Modifier.offset { IntOffset(x = 0, y = topBarOffsetHeightPx.floatValue.roundToInt()) },
             )
         },
         bottomBar = {
             BottomBar(
-                Modifier.offset { IntOffset(x = 0, y = -(barsOffsetHeightPx.floatValue.roundToInt())) },
+                Modifier.offset { IntOffset(x = 0, y = -(topBarOffsetHeightPx.floatValue.roundToInt())) },
             )
         },
         scaffoldModifier = Modifier.nestedScroll(nestedScrollConnection),
         horizontalPadding = 0.dp,
-        bottomPadding = bottomPadding,
-        topPadding = topPadding,
+        bottomPadding = 0.dp,
+        topPadding = 0.dp,
         boxModifier = Modifier.padding(0.dp)
     ) {
         Surface(
+            modifier = Modifier.offset {
+                IntOffset(
+                    x = 0,
+                    y = topBarOffset.roundToPx()
+                )
+            },
             color = Theme.colors.surface1,
             shape = RoundedCornerShape(
                 topStart = Theme.values.shape,
@@ -104,6 +118,7 @@ fun NewsFeedScreen(
                     )
 
                     NewsFeed(
+                        showFilterMenu = showFilterMenu,
                         items = viewModel.items,
                         newsItemType = newsItemType,
                     )
