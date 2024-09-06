@@ -45,7 +45,7 @@ val russianLang = Lang(
     ),
 
     tabs = Tabs(
-        generalFeed = "Обшая лента",
+        generalFeed = "Общая лента",
         subscriptionFeed = "Лента подписок",
         allCems = "Все Cems",
         cemsSubscriptions = "Cems подписчиков",

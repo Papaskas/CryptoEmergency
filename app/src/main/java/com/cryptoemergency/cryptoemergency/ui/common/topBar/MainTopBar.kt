@@ -3,8 +3,11 @@ package com.cryptoemergency.cryptoemergency.ui.common.topBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,28 +27,32 @@ import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopBar() {
+fun MainTopBar(
+    modifier: Modifier = Modifier,
+) {
     val navController = LocalNavController.current
 
-    Column {
+    Column(modifier) {
         TopAppBar(
             title = {},
-            modifier = Modifier.padding(start = Theme.values.padding, end = 10.dp),
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Theme.colors.backgroundMain,
             ),
             navigationIcon = {
-                Icon(
-                    painter = painterResource(Theme.icons.logo),
-                    contentDescription = "Лого",
-                    tint = Color.Unspecified,
-                    modifier = Modifier.clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                    ) {
-                        navController.navigate(Routes.Home.Home)
-                    }
-                )
+                Row {
+                    Spacer(Modifier.width(Theme.values.padding))
+                    Icon(
+                        painter = painterResource(Theme.icons.logo),
+                        contentDescription = "Лого",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) {
+                            navController.navigate(Routes.Home.Home)
+                        }
+                    )
+                }
             },
             actions = {
                 IconButton(onClick = { /**/ }) {
@@ -65,6 +72,7 @@ fun MainTopBar() {
                         tint = Color.Unspecified,
                     )
                 }
+                Spacer(Modifier.width(10.dp))
             }
         )
 

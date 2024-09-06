@@ -29,7 +29,7 @@ fun MainThemeProvider(
 
     ThemeStorageOrSystem(viewModel)
 
-    ChangeSystemBar()
+    ChangeSystemBarColors()
 
     RecomposeColorAndIcons(
         colors,
@@ -48,7 +48,7 @@ fun MainThemeProvider(
 }
 
 @Composable
-private fun ChangeSystemBar() {
+private fun ChangeSystemBarColors() {
     val view = LocalView.current
 
     // Поменять цветовую гамму у StatusBar, NavigationBar

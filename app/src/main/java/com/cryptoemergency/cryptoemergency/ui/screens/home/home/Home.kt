@@ -52,7 +52,7 @@ fun HomeScreen(
 ) {
     Screen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
-        padding = PaddingValues(0.dp),
+        horizontalPadding = 0.dp,
     ) {
         ExchangeRate(viewModel)
         Spacer(Modifier.height(15.dp))

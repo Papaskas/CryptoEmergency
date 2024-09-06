@@ -10,6 +10,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
@@ -21,10 +22,12 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @Composable
-fun BottomBar() {
+fun BottomBar(
+    modifier: Modifier = Modifier,
+) {
     val items = getBottomItems()
 
-    Column {
+    Column(modifier) {
         CommonHorizontalDivider()
 
         NavigationBar(

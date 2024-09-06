@@ -36,8 +36,6 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
 import com.cryptoemergency.cryptoemergency.modifiers.copyTextToClipboard
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 import com.cryptoemergency.cryptoemergency.ui.common.ButtonType
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -54,7 +52,7 @@ fun QRCodeScreen(
     Screen(
         topBar = { ScreenTopBar(title = "") },
         bottomBar = {},
-        padding = PaddingValues(0.dp),
+        horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
     ) {
         QRCode(

@@ -24,7 +24,7 @@ fun ProfileScreen(
 ) {
     Screen(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-        padding = PaddingValues(0.dp),
+        horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
         topBar = { ProfileTopBar() },
     ) {

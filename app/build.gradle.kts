@@ -41,11 +41,12 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            signingConfig = signingConfigs.getByName("release")
 
             ndk { debugSymbolLevel = "NONE" }
 
@@ -71,7 +72,7 @@ android {
             isDebuggable = true
             isJniDebuggable = true
 
-            ndk { debugSymbolLevel = "FULL" }
+            ndk { debugSymbolLevel = "SYMBOL_TABLE" }
 
             buildConfigField(
                 "String",

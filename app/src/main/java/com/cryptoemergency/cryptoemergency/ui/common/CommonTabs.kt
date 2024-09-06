@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun CommonTabs(
+    modifier: Modifier = Modifier,
     modifierTabRow: Modifier = Modifier,
     modifierTab: Modifier = Modifier,
     tabTitles: Array<String>,
@@ -57,9 +58,13 @@ fun CommonTabs(
         }
     }
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Column(
-            Modifier.padding(horizontal = Theme.values.padding)
+            modifierTabRow
+                .fillMaxWidth()
+                .padding(horizontal = Theme.values.padding)
         ) {
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
@@ -67,7 +72,6 @@ fun CommonTabs(
                 contentColor = Theme.colors.accent,
                 edgePadding = 0.dp,
                 divider = {},
-                modifier = modifierTabRow.fillMaxWidth(),
             ) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
