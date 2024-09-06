@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="news feed">Лента</string>
+    <string name="news">Новости</string>
+    <string name="exchanges">Биржи</string>
+    <string name="exchangers">Обменники</string>
+    <string name="chat">Чат</string>
+    <string name="users">Пользователи</string>
+    <string name="ico_rating">ICO рейтинг</string>
+    <string name="startups">Стартапы</string>
+    <string name="work_web3">Работа в web3</string>
+    <string name="career">Карьера</string>
+    <string name="academy">Академия</string>
+    <string name="wallet">CEM кошелек</string>
+    <string name="home">Главная</string>
+    <string name="more">Еще</string>
+    <string name="share">Поделиться</string>
+    <string name="copy_url">Скопировать ссылку</string>
+    <string name="save">Сохранить</string>
+    <string name="unsubscribe">Отписаться</string>
+    <string name="report">Пожаловаться</string>
+    <string name="cancel">Отмена</string>
+    <string name="description">Описание</string>
+    <string name="url">Ссылка</string>
+    <string name="more_details">Подробнее</string>
+    <string name="social_network">Социальная сеть</string>
+    <string name="news_feed">Лента новостей</string>
+    <string name="general_feed">Общая лента</string>
+    <string name="subscription_feed">Лента подписок</string>
+    <string name="all_cems">Все Cems</string>
+    <string name="cems_subscriptions">Cems подписчиков</string>
+    <string name="tag_feed">Лента отметок</string>
+    <string name="subsription">Подписка</string>
+    <string name="subscriber">Подписчик</string>
+    <string name="bookmark">Закладка</string>
+</resources>

@@ -19,6 +19,12 @@
 > Log.{} - убирается в конфиге `proguard-rules.pro`<br/>
 > Логирование сетевых запросов убирается проверкой `BuildConfig.DEBUG` в файле `api/network/HttpClient`
 
+# Locale
+
+> Все локале определены в стнадратном для андроид `xml`
+> Для добавления новых локалей необходимо добавить не только `xml`, но и в `gradle.android.defaultConfig.resourceConfigurations`
+> Язык по умолчанию обязательно [английский](https://habr.com/ru/companies/alconost/articles/581926/)
+
 # Тема, цвета, значения, иконки к темам, типография
 
 > Все файлы находятся в папке `providers/theme/Theme`<br/>

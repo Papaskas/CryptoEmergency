@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">Crypto Emergency</string>
+    <string name="app_name" translatable="false">Crypto Emergency</string>
+    <string name="news_feed">News feed</string>
+    <string name="news">News</string>
+    <string name="exchanges">Exchanges</string>
+    <string name="exchangers">Exchangers</string>
+    <string name="chat">Chat</string>
+    <string name="users">Users</string>
+    <string name="ico_rating">ICO rating</string>
+    <string name="startups">Startups</string>
+    <string name="work_web3">Work in Web3</string>
+    <string name="career">Career</string>
+    <string name="academy">Academy</string>
+    <string name="wallet">Wallet</string>
+    <string name="home">Home</string>
+    <string name="more">More</string>
+    <string name="share">Share</string>
+    <string name="copy_url">Copy url</string>
+    <string name="save">Save</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="report">Report</string>
+    <string name="cancel">Cancel</string>
+    <string name="description">Description</string>
+    <string name="url">Url</string>
+    <string name="more_details">More details</string>
+    <string name="social_network">Social network</string>
+    <string name="subsription">Subsription</string>
+    <string name="subscriber">Subscribers</string>
+    <string name="general_feed">General feed</string>
+    <string name="subscription_feed">Subscription feed</string>
+    <string name="all_cems">All Cems</string>
+    <string name="cems_subscriptions">Cems subscriptions</string>
+    <string name="tag_feed">Tag feed</string>
+    <string name="bookmark">Bookmark</string>
 </resources>
