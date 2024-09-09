@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
 
@@ -22,14 +22,14 @@ fun NewsFeedHeader(
     showFilterMenu: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
-    val locale = LocalLocale.current.newsFeedSection
+    val context = LocalContext.current
 
     Row(
-        modifier = modifier.padding(horizontal = Theme.values.padding),
+        modifier = modifier.padding(horizontal = Theme.dimens.padding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = locale.myFeed,
+            text = context.getString(R.string.my_feed),
             style = Theme.typography.h2,
             color = Theme.colors.text1,
         )

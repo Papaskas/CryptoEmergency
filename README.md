@@ -21,8 +21,8 @@
 
 # Locale
 
-> Все локале определены в стнадратном для андроид `xml`
-> Для добавления новых локалей необходимо добавить не только `xml`, но и в `gradle.android.defaultConfig.resourceConfigurations`
+> Все локале определены в стнадратном для андроид `xml`</br>
+> Для добавления новых локалей необходимо добавить не только `xml`, но и в `gradle.android.defaultConfig.resourceConfigurations`</br>
 > Язык по умолчанию обязательно [английский](https://habr.com/ru/companies/alconost/articles/581926/)
 
 # Тема, цвета, значения, иконки к темам, типография

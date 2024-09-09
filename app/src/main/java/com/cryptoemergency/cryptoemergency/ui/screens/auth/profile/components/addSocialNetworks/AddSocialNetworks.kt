@@ -22,12 +22,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.Listener
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
@@ -45,24 +46,33 @@ import com.cryptoemergency.cryptoemergency.viewModels.SocialNetworksViewModel
 fun AddSocialNetworks(
     viewModel: SocialNetworksViewModel = hiltViewModel()
 ) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
     val showBottomSheet = remember { mutableStateOf(false) }
 
     Listener(message = viewModel.message)
 
     Column {
-        TitleSection(title = locale.socialNetworks)
+        TitleSection(title = res.getQuantityString(R.plurals.social_network, 3))
         EmptyProfilePage(
-            title = locale.socialNetworksSection.emptyTitle,
-            message = locale.socialNetworksSection.emptyDescription,
-            buttonText = locale.socialNetworksSection.addSocialNetwork,
+            title = res.getString(
+                R.string.empty,
+                res.getQuantityString(R.plurals.social_network, 5),
+            ),
+            message = res.getString(
+                R.string.empty,
+                res.getQuantityString(R.plurals.social_network, 5),
+            ),
+            buttonText = res.getString(
+                R.string.add,
+                res.getQuantityString(R.plurals.social_network, 3).lowercase(),
+            ),
             onClick = {
                 showBottomSheet.value = true
             }
         )
     }
 
-    BottomSheet(showBottomSheet = showBottomSheet, title = locale.titles.addSocialNetworks) {
+    BottomSheet(showBottomSheet = showBottomSheet, title = res.getQuantityString(R.plurals.social_network, 3)) {
         val selectedOption = remember { mutableStateOf(socialNetworksIcons[0]) }
 
         Column(
@@ -126,7 +136,7 @@ private fun AddSocialNetwork(
     viewModel: SocialNetworksViewModel,
     selectedOption: MutableState<SocialNetworkIconType>
 ) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
     val socialNetworks = viewModel.socialNetworks.collectAsState()
     val filteredNetworks =
         socialNetworks.value.filter { it.networkName == selectedOption.value.networkName }.toMutableList()
@@ -143,14 +153,14 @@ private fun AddSocialNetwork(
                 },
                 isRequired = true,
                 value = network.url,
-                label = locale.url,
+                label = res.getString(R.string.url),
             )
 
             Spacer(Modifier.height(15.dp))
 
             MultiLineInput(
                 value = network.description,
-                label = locale.description,
+                label = res.getString(R.string.description),
                 isError = mutableStateOf(false),
                 maxSymbols = 100,
                 maxLines = 3,
@@ -162,7 +172,10 @@ private fun AddSocialNetwork(
     }
 
     Text(
-        text = locale.socialNetworksSection.addMore,
+        text = res.getString(
+            R.string.add,
+            res.getString(R.string.more).lowercase()
+        ),
         style = Theme.typography.body1,
         color = Theme.colors.accent,
         modifier = Modifier.clickable(
@@ -188,6 +201,9 @@ private fun AddSocialNetwork(
 //                    description.value.text,
 //                )
         },
-        text = locale.titles.addSocialNetworks,
+        text = res.getString(
+            R.string.add,
+            res.getQuantityString(R.plurals.social_network, 3).lowercase(),
+        ),
     )
 }

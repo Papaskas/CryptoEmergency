@@ -76,12 +76,12 @@ private fun ColumnScope.QRCode(
     ) {
         Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(Theme.values.shape))
+                .clip(RoundedCornerShape(Theme.dimens.shape))
                 .background(Color.White)
                 .border(
                     1.dp,
                     Theme.colors.strokeVariant,
-                    RoundedCornerShape(Theme.values.shape)
+                    RoundedCornerShape(Theme.dimens.shape)
                 )
                 .padding(
                     top = 30.dp,
@@ -118,7 +118,7 @@ private fun ColumnScope.QRCode(
                 }
             }
 
-            Spacer(Modifier.height(Theme.values.padding))
+            Spacer(Modifier.height(Theme.dimens.padding))
 
             Text(
                 text = text,
@@ -137,15 +137,15 @@ private fun BottomNav(
 ) {
     Surface(
         shape = RoundedCornerShape(
-            topStart = Theme.values.shape,
-            topEnd = Theme.values.shape,
+            topStart = Theme.dimens.shape,
+            topEnd = Theme.dimens.shape,
         ),
         color = Theme.colors.surface3,
         modifier = Modifier
             .commonBorder(
                 shape = RoundedCornerShape(
-                    topStart = Theme.values.shape,
-                    topEnd = Theme.values.shape,
+                    topStart = Theme.dimens.shape,
+                    topEnd = Theme.dimens.shape,
                 )
             )
     ) {
@@ -163,7 +163,7 @@ private fun Heading() {
             text = "QR-код",
             style = Theme.typography.h2,
             color = Theme.colors.text1,
-            modifier = Modifier.padding(Theme.values.padding)
+            modifier = Modifier.padding(Theme.dimens.padding)
         )
 
         CommonHorizontalDivider()
@@ -178,7 +178,7 @@ private fun Body(
     val context = LocalContext.current
 
     Column(
-        Modifier.padding(Theme.values.padding)
+        Modifier.padding(Theme.dimens.padding)
     ) {
         Row {
             viewModel.options.forEach {
@@ -186,11 +186,11 @@ private fun Body(
                     tint = it,
                     viewModel = viewModel,
                 )
-                Spacer(Modifier.width(Theme.values.padding))
+                Spacer(Modifier.width(Theme.dimens.padding))
             }
         }
 
-        Spacer(Modifier.height(Theme.values.padding))
+        Spacer(Modifier.height(Theme.dimens.padding))
 
         CommonButton(onClick = { /*TODO*/ }, text = "Поделиться")
         Spacer(Modifier.height(10.dp))
@@ -215,13 +215,13 @@ private fun SelectableItem(
                     Modifier.border(
                         1.dp,
                         Theme.colors.accent,
-                        RoundedCornerShape(Theme.values.shape)
+                        RoundedCornerShape(Theme.dimens.shape)
                     )
                 } else {
                     Modifier
                 }
             )
-            .clip(RoundedCornerShape(Theme.values.shape))
+            .clip(RoundedCornerShape(Theme.dimens.shape))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -232,14 +232,14 @@ private fun SelectableItem(
         Surface(
             modifier = Modifier.padding(20.dp),
             color = Color.White,
-            shape = RoundedCornerShape(Theme.values.shape)
+            shape = RoundedCornerShape(Theme.dimens.shape)
         ) {
             Icon(
                 modifier = Modifier
                     .border(
                         1.dp,
                         Theme.colors.strokeVariant,
-                        RoundedCornerShape(Theme.values.shape)
+                        RoundedCornerShape(Theme.dimens.shape)
                     )
                     .background(Color.White)
                     .padding(10.dp),

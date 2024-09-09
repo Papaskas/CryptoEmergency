@@ -33,7 +33,7 @@ fun BottomSheet(
     title: String,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(),
-    contentPadding: Dp = Theme.values.padding,
+    contentPadding: Dp = Theme.dimens.padding,
     actionIcon: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -42,8 +42,8 @@ fun BottomSheet(
     ModalBottomSheet(
         modifier = modifier.fillMaxHeight(),
         shape = RoundedCornerShape(
-            topStart = Theme.values.shape,
-            topEnd = Theme.values.shape,
+            topStart = Theme.dimens.shape,
+            topEnd = Theme.dimens.shape,
         ),
         sheetState = sheetState,
         dragHandle = null,
@@ -74,7 +74,7 @@ private fun Header(
     val scope = rememberCoroutineScope()
 
     Row(
-        modifier = Modifier.padding(Theme.values.padding),
+        modifier = Modifier.padding(Theme.dimens.padding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(

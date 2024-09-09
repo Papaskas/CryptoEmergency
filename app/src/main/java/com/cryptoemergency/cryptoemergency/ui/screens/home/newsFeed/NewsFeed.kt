@@ -16,11 +16,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
@@ -45,7 +46,7 @@ import kotlin.math.roundToInt
 fun NewsFeedScreen(
     viewModel: NewsFeedViewModel = hiltViewModel()
 ) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
     val showFilterMenu = remember { mutableStateOf(false) }
     val newsItemType = remember { mutableStateOf(NewsItemType.FULL) }
 
@@ -96,19 +97,19 @@ fun NewsFeedScreen(
             },
             color = Theme.colors.surface1,
             shape = RoundedCornerShape(
-                topStart = Theme.values.shape,
-                topEnd = Theme.values.shape,
+                topStart = Theme.dimens.shape,
+                topEnd = Theme.dimens.shape,
             ),
         ) {
             CommonTabs(
                 tabTitles = arrayOf(
-                    locale.tabs.generalFeed,
-                    locale.tabs.subscriptionFeed,
-                    locale.tabs.allCems,
-                    locale.tabs.cemsSubscriptions,
-                    locale.tabs.subscriptionFeed,
-                    locale.tabs.socialNetworks,
-                    locale.tabs.bookmarks,
+                    res.getString(R.string.general_feed),
+                    res.getString(R.string.subscription_feed),
+                    res.getString(R.string.all_cems),
+                    res.getString(R.string.cems_subscriptions),
+                    res.getString(R.string.subscription_feed),
+                    res.getQuantityString(R.plurals.social_network, 3),
+                    res.getString(R.string.bookmark),
                 ),
             ) { _ ->
                 Column {

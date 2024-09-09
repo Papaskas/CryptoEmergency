@@ -27,13 +27,13 @@ fun ProfileScreen(
         bottomSpacing = 0.dp,
         topBar = { ProfileTopBar() },
     ) {
-        Box(modifier = Modifier.padding(Theme.values.padding)) {
+        Box(modifier = Modifier.padding(Theme.dimens.padding)) {
             AboutUser(viewModel)
         }
 
         CommonHorizontalDivider()
 
-        Box(modifier = Modifier.padding(Theme.values.padding)) {
+        Box(modifier = Modifier.padding(Theme.dimens.padding)) {
             Stories(viewModel)
         }
 

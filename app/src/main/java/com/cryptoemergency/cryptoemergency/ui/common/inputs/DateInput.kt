@@ -19,11 +19,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.Convert
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
@@ -98,7 +98,7 @@ private fun DatePickerModal(
     state: DatePickerState,
     showDatePicker: MutableState<Boolean>,
 ) {
-    val locale = LocalLocale.current
+    val context = LocalContext.current
 
     DatePickerDialog(
         onDismissRequest = {
@@ -109,14 +109,18 @@ private fun DatePickerModal(
                 state.selectedDateMillis
                 showDatePicker.value = !showDatePicker.value
             }) {
-                Text(locale.save)
+                Text(
+                    text = context.getString(R.string.save),
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = {
                 showDatePicker.value = !showDatePicker.value
             }) {
-                Text(locale.cancel)
+                Text(
+                    text = context.getString(R.string.cancel),
+                )
             }
         },
         colors = DatePickerDefaults.colors().copy(

@@ -36,12 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
@@ -94,11 +94,11 @@ private fun HeaderNews(
                 color = Theme.colors.surface2,
                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
             )
-            .padding(Theme.values.padding),
+            .padding(Theme.dimens.padding),
     ) {
         AsyncImage(
             model = avatar,
-            contentDescription = "Аватар $authorName",
+            contentDescription = authorName,
             modifier = Modifier
                 .roundedHexagonShape()
                 .size(36.dp),
@@ -144,17 +144,19 @@ private fun HeaderNews(
 private fun DropMenu(
     expanded: MutableState<Boolean>,
 ) {
-    val locale = LocalLocale.current
+    val context = LocalContext.current
+
     data class Type(
         val title: String,
         @DrawableRes val icon: Int,
     )
+
     val items = arrayOf(
-        Type(locale.share, R.drawable.share__outline),
-        Type(locale.copyUrl, R.drawable.copy__outline),
-        Type(locale.save, R.drawable.save__outline),
-        Type(locale.unsubscribe, R.drawable.unsubscribe),
-        Type(locale.report, R.drawable.report),
+        Type(context.getString(R.string.share), R.drawable.share__outline),
+        Type(context.getString(R.string.copy_url), R.drawable.copy__outline),
+        Type(context.getString(R.string.save), R.drawable.save__outline),
+        Type(context.getString(R.string.unsubscribe), R.drawable.unsubscribe),
+        Type(context.getString(R.string.report), R.drawable.report),
     )
 
     DropdownMenu(
@@ -235,7 +237,7 @@ private fun Content(
         if (media.size > 1) {
             Row(
                 Modifier
-                    .offset(x = -(Theme.values.padding), y = Theme.values.padding)
+                    .offset(x = -(Theme.dimens.padding), y = Theme.dimens.padding)
                     .align(Alignment.TopEnd)
                     .background(
                         color = Theme.colors.background2.copy(alpha = .5f),
@@ -265,7 +267,7 @@ private fun Bottom(
                 color = Theme.colors.surface2,
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
             )
-            .padding(Theme.values.padding),
+            .padding(Theme.dimens.padding),
     ) {
         Pagination(media, state)
         Toolbar()
@@ -305,25 +307,30 @@ private fun ColumnScope.Pagination(
 
 @Composable
 private fun Toolbar() {
+    val context = LocalContext.current
+
     Row(
-        Modifier.padding(bottom = Theme.values.padding)
+        Modifier.padding(bottom = Theme.dimens.padding)
     ) {
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 painter = painterResource(R.drawable.heart__outline),
-                contentDescription = "Поставить лайк"
+                contentDescription = context.getString(R.string.like)
             )
         }
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 painter = painterResource(R.drawable.commnet),
-                contentDescription = "Открыть комментарии"
+                contentDescription = context.getString(
+                    R.string.open,
+                    context.resources.getQuantityString(R.plurals.comment, 99)
+                )
             )
         }
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 painter = painterResource(R.drawable.share__outline),
-                contentDescription = "Поделиться"
+                contentDescription = context.getString(R.string.share)
             )
         }
 
@@ -332,7 +339,7 @@ private fun Toolbar() {
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 painter = painterResource(R.drawable.save__outline),
-                contentDescription = "Поделиться"
+                contentDescription = context.getString(R.string.save)
             )
         }
     }
@@ -342,7 +349,7 @@ private fun Toolbar() {
 private fun Description(
     description: String?,
 ) {
-    val locale = LocalLocale.current.newsFeedSection
+    val res = LocalContext.current.resources
 
     description?.let {
         Text(
@@ -351,7 +358,10 @@ private fun Description(
             color = Theme.colors.text1,
         )
         Text(
-            text = locale.showMore,
+            text = res.getString(
+                R.string.show,
+                res.getString(R.string.more).lowercase(),
+            ),
             style = Theme.typography.body1,
             color = Theme.colors.accent,
         )

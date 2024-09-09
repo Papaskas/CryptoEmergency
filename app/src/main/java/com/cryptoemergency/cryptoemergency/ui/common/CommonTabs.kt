@@ -64,7 +64,7 @@ fun CommonTabs(
         Column(
             modifierTabRow
                 .fillMaxWidth()
-                .padding(horizontal = Theme.values.padding)
+                .padding(horizontal = Theme.dimens.padding)
         ) {
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,

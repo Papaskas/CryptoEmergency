@@ -39,7 +39,7 @@ fun MainTopBar(
             ),
             navigationIcon = {
                 Row {
-                    Spacer(Modifier.width(Theme.values.padding))
+                    Spacer(Modifier.width(Theme.dimens.padding))
                     Icon(
                         painter = painterResource(Theme.icons.logo),
                         contentDescription = "Лого",

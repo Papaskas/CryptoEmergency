@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localNavController.getCurrentRoute
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
@@ -25,8 +25,6 @@ import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 fun BottomBar(
     modifier: Modifier = Modifier,
 ) {
-    val items = getBottomItems()
-
     Column(modifier) {
         CommonHorizontalDivider()
 
@@ -35,7 +33,7 @@ fun BottomBar(
         ) {
             val currentRoute = getCurrentRoute()
 
-            items.forEach { item ->
+            getBottomItems().forEach { item ->
                 val isSelected = currentRoute == item.route::class.qualifiedName
 
                 if (item.label == null || item.icon == null) {
@@ -55,10 +53,10 @@ fun BottomBar(
 
 @Composable
 private fun RowScope.NavItem(
-    route: Routes,
-    @DrawableRes icon: Int,
-    selected: Boolean,
     label: String,
+    @DrawableRes icon: Int,
+    route: Routes,
+    selected: Boolean,
 ) {
     val navController = LocalNavController.current
 
@@ -108,7 +106,7 @@ private fun RowScope.NavButton(
                     tint = if (isSelected) Theme.colors.accent else Theme.colors.text4
                 )
                 Icon(
-                    painter = painterResource(R.drawable.added_btn_plus), // Неизменная часть
+                    painter = painterResource(R.drawable.added_btn_plus), // Крестовина
                     contentDescription = null,
                     tint = Theme.colors.background2
                 )
@@ -131,15 +129,38 @@ private fun RowScope.NavButton(
 }
 
 @Composable
-private fun getBottomItems(): List<BottomItem> {
-    val locale = LocalLocale.current
+private fun getBottomItems (): List<BottomItem> {
+    val res = LocalContext.current.resources
 
     return listOf(
-        BottomItem(locale.home, R.drawable.home__filled, Routes.Home.Home),
-        BottomItem(locale.news, R.drawable.news_feed__filled, Routes.Home.News),
-        BottomItem(null, null, Routes.Home.AddedStory),
-        BottomItem(locale.chat, R.drawable.chat__filled, Routes.Home.Chat),
-        BottomItem(locale.more, R.drawable.more__filled, Routes.Home.Menu)
+        BottomItem(
+            res.getString(R.string.home),
+            R.drawable.home__filled,
+            Routes.Home.Home,
+        ),
+        BottomItem(
+            res.getQuantityString(
+                R.plurals.news,
+                2
+            ),
+            R.drawable.news_feed__filled,
+            Routes.Home.News,
+        ),
+        BottomItem(
+            null,
+            null,
+            Routes.Home.AddedStory,
+        ),
+        BottomItem(
+            res.getString(R.string.chat),
+            R.drawable.chat__filled,
+            Routes.Home.Chat
+        ),
+        BottomItem(
+            res.getString(R.string.more),
+            R.drawable.more__filled,
+            Routes.Home.Menu,
+        )
     )
 }
 

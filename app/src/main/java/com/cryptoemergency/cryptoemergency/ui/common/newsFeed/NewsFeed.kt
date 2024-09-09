@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.cryptoemergency.cryptoemergency.providers.locale.Lang
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
 import com.cryptoemergency.cryptoemergency.types.NewsItemType
@@ -33,8 +34,8 @@ fun NewsFeed(
     newsItemType: MutableState<NewsItemType>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    locale: Lang = LocalLocale.current,
-    selectedFilter: MutableState<String> = mutableStateOf(locale.filter.all),
+    context: Context = LocalContext.current,
+    selectedFilter: MutableState<String> = mutableStateOf(context.getString(R.string.all)),
     showFilterMenu: MutableState<Boolean> = mutableStateOf(false),
 ) {
     LazyColumn(
@@ -43,7 +44,7 @@ fun NewsFeed(
         contentPadding = PaddingValues(0.dp),
         verticalArrangement = Arrangement.spacedBy(
             if (newsItemType.value == NewsItemType.FULL) {
-                Theme.values.padding
+                Theme.dimens.padding
             } else {
                 0.dp
             },
@@ -72,7 +73,10 @@ fun NewsFeed(
         }
     }
 
-    FilterBottomSheet(selectedFilter = selectedFilter, showBottomSheet = showFilterMenu)
+    FilterBottomSheet(
+        selectedFilter = selectedFilter,
+        showBottomSheet = showFilterMenu
+    )
 }
 
 @Composable

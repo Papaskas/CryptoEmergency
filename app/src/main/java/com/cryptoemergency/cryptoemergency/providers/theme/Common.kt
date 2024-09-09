@@ -65,7 +65,7 @@ data class CommonShape(
     val starShape: Shape,
 )
 
-data class Values(
+data class Dimens(
     val padding: Dp,
     val shape: Dp,
 )
@@ -97,10 +97,10 @@ object Theme {
         @ReadOnlyComposable
         get() = LocalIcons.current
 
-    val values: Values
+    val dimens: Dimens
         @Composable
         @ReadOnlyComposable
-        get() = LocalValues.current
+        get() = LocalDimens.current
 }
 
 val LocalColors =
@@ -123,8 +123,8 @@ val LocalIcons =
         error("No icons provided")
     }
 
-val LocalValues =
-    staticCompositionLocalOf<Values> {
-        error("No icons provided")
+val LocalDimens =
+    staticCompositionLocalOf<Dimens> {
+        error("No dimens provided")
     }
 

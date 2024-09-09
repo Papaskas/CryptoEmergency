@@ -11,13 +11,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.passwordPatterns
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 
 /**
  * Компонент Input с логикой пароля. Наследуется от ValidateInput
@@ -54,18 +54,22 @@ fun PasswordInput(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     passwordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
-    val locale = LocalLocale.current
+    val context = LocalContext.current
     val image = if (passwordVisible.value) R.drawable.visibility else R.drawable.visibility_off
-    val description = if (passwordVisible.value) "Скрыть пароль" else "Показать пароль"
+    val description = if (passwordVisible.value) {
+        context.getString(R.string.hide, R.string.password)
+    } else {
+        context.getString(R.string.show, R.string.password)
+    }
 
     ValidateInput(
         modifier = modifier,
         value = value,
         readOnly = readOnly,
-        label = locale.labels.password,
+        label = context.getString(R.string.password),
         isError = isError,
-        //prefix = "prefix",
-        //suffix = "suffix",
+        // prefix = "prefix",
+        // suffix = "suffix",
         trailingIcon = {
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                 Icon(

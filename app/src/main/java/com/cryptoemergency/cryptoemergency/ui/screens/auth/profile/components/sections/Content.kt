@@ -6,8 +6,9 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
@@ -35,16 +36,16 @@ fun ColumnScope.Content(
 
 @Composable
 private fun Tabs() {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
 
     val titles = arrayOf(
-        locale.tabs.generalFeed,
-        locale.tabs.subscriptionFeed,
-        locale.tabs.allCems,
-        locale.tabs.cemsSubscriptions,
-        locale.tabs.subscriptionFeed,
-        locale.tabs.socialNetworks,
-        locale.tabs.bookmarks,
+        res.getString(R.string.general_feed),
+        res.getString(R.string.subscription_feed),
+        res.getString(R.string.all_cems),
+        res.getString(R.string.cems_subscriptions),
+        res.getString(R.string.subscription_feed),
+        res.getQuantityString(R.plurals.social_network, 3),
+        res.getString(R.string.bookmark),
     )
     val content = arrayOf<@Composable () -> Unit>(
         { NewsFeed() },

@@ -40,7 +40,7 @@ fun MainThemeProvider(
         LocalColors provides colors.value,
         LocalTypography provides typography,
         LocalShape provides shapes,
-        LocalValues provides values,
+        LocalDimens provides dimens,
         LocalIcons provides icons.value,
     ) {
         content()

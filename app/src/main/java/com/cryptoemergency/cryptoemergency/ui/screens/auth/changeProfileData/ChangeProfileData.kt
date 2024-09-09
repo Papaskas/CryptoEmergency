@@ -15,11 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DateInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
@@ -31,10 +31,10 @@ import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar
 fun ChangeProfileDataScreen(
     viewModel: ChangeProfileDataViewModel = hiltViewModel()
 ) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
 
     Screen(
-        topBar = { ScreenTopBar(title = locale.titles.changeProfile) }
+        topBar = { ScreenTopBar(title = res.getString(R.string.change_profile)) }
     ) {
         Column(
             Modifier.verticalScroll(rememberScrollState())
@@ -46,17 +46,17 @@ fun ChangeProfileDataScreen(
             Spacer(Modifier.height(30.dp))
 
             Input(
-                label = locale.labels.yourName,
+                label = res.getString(R.string.your_name),
                 value = viewModel.firstName,
             )
             Spacer(Modifier.height(10.dp))
             Input(
-                label = locale.labels.username,
+                label = res.getString(R.string.username),
                 value = viewModel.username,
             )
             Spacer(Modifier.height(10.dp))
             MultiLineInput(
-                label = locale.labels.aboutMe,
+                label = res.getString(R.string.about_me),
                 value = viewModel.aboutMe,
                 minLines = 1,
                 maxLines = 5,
@@ -65,21 +65,21 @@ fun ChangeProfileDataScreen(
             )
             Spacer(Modifier.height(10.dp))
             Input(
-                label = locale.labels.specialization,
+                label = res.getString(R.string.specialization),
                 value = viewModel.specialization,
             )
             Spacer(Modifier.height(10.dp))
             DateInput(
-                label = locale.labels.birthday,
+                label = res.getString(R.string.birthday),
                 value = viewModel.birthday,
             )
             Spacer(Modifier.height(10.dp))
             InputSelectorBottomMenu(
-                label = locale.labels.language,
+                label = res.getString(R.string.language),
                 selectedItem = viewModel.language,
                 items = arrayOf(
-                    locale.languages.russian,
-                    locale.languages.english,
+                    res.getString(R.string.language__russian),
+                    res.getString(R.string.language__english),
                 )
             )
         }

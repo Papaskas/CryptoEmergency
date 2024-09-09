@@ -13,12 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -33,21 +33,21 @@ fun ProfileInfoBottomSheet(
     showProfileInfo: MutableState<Boolean>,
     viewModel: ProfileViewModel,
 ) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
 
     val items = arrayOf(
-        BioInfoType(viewModel.user.username, locale.labels.username, true),
-        BioInfoType(viewModel.user.statusText, locale.labels.aboutMe),
-        BioInfoType(viewModel.user.specialization, locale.labels.specialization),
-        BioInfoType(viewModel.user.birthday, locale.labels.birthday),
-        BioInfoType(viewModel.user.language, locale.labels.language),
-        BioInfoType(viewModel.user.dateOfRegistration, locale.labels.dateOfRegistration),
+        BioInfoType(viewModel.user.username, res.getString(R.string.username), true),
+        BioInfoType(viewModel.user.statusText, res.getString(R.string.about_me)),
+        BioInfoType(viewModel.user.specialization, res.getString(R.string.specialization)),
+        BioInfoType(viewModel.user.birthday, res.getString(R.string.birthday)),
+        BioInfoType(viewModel.user.language, res.getString(R.string.language)),
+        BioInfoType(viewModel.user.dateOfRegistration, res.getString(R.string.date_of_registration)),
     )
 
     BottomSheet(
         contentPadding = 0.dp,
         showBottomSheet = showProfileInfo,
-        title = locale.moreDetails,
+        title = res.getString(R.string.more_details),
         actionIcon = {},
     ) {
         items.forEach {
@@ -72,7 +72,7 @@ private fun BioInfo(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
-            Modifier.padding(Theme.values.padding)
+            Modifier.padding(Theme.dimens.padding)
         ) {
             Text(
                 text = title,

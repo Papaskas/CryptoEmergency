@@ -2,7 +2,8 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.n
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
+import androidx.compose.ui.platform.LocalContext
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 
@@ -11,14 +12,32 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.co
  * */
 @Composable
 fun NewsFeed() {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
 
     Column {
-        TitleSection(title = locale.newsFeedSection.myFeed)
+        TitleSection(title = res.getString(R.string.my_feed))
         EmptyProfilePage(
-            title = locale.newsFeedSection.emptyTitle,
-            message = locale.newsFeedSection.emptyDescription,
-            buttonText = locale.newsFeedSection.addNews,
+            title = res.getString(
+                R.string.empty,
+                res.getQuantityString(
+                    R.plurals.news,
+                    5,
+                ),
+            ),
+            message = res.getString(
+                R.string.empty,
+                res.getQuantityString(
+                    R.plurals.news,
+                    5,
+                ),
+            ),
+            buttonText = res.getString(
+                R.string.add,
+                res.getQuantityString(
+                    R.plurals.news,
+                    2,
+                ).lowercase(),
+            ),
             onClick = {}
         )
     }

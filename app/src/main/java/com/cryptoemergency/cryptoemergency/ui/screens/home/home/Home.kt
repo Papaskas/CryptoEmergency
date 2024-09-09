@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -41,7 +42,6 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 
@@ -58,7 +58,7 @@ fun HomeScreen(
         Swiper()
         Spacer(Modifier.height(30.dp))
         Box(
-            Modifier.padding(horizontal = Theme.values.padding)
+            Modifier.padding(horizontal = Theme.dimens.padding)
         ) {
             Menu()
         }
@@ -209,21 +209,21 @@ private fun MenuItem(
 
 @Composable
 private fun getMenuItems(): Array<MenuItemType> {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
 
     return arrayOf(
-        MenuItemType(locale.newsFeed, Routes.Page.NewsFeed, R.drawable.newsfeed),
-        MenuItemType(locale.news, Routes.Page.News, R.drawable.news),
-        MenuItemType(locale.exchangers, Routes.Page.Exchangers, R.drawable.exchangers),
-        MenuItemType(locale.exchanges, Routes.Page.Exchanges, R.drawable.exchanges),
-        MenuItemType(locale.chat, Routes.Home.Chat, R.drawable.chat),
-        MenuItemType(locale.users, Routes.Page.Users, R.drawable.users),
-        MenuItemType(locale.ICORating, Routes.Page.ICORating, R.drawable.ico_rating),
-        MenuItemType(locale.startups, Routes.Page.Startups, R.drawable.startups),
-        MenuItemType(locale.workWeb3, Routes.Page.Web3, R.drawable.web3),
-        MenuItemType(locale.career, Routes.Page.Career, R.drawable.career),
-        MenuItemType(locale.academy, Routes.Page.Academy, R.drawable.academy),
-        MenuItemType(locale.wallet, Routes.Page.Wallet, R.drawable.wallet),
+        MenuItemType(res.getString(R.string.news_feed), Routes.Page.NewsFeed, R.drawable.newsfeed),
+        MenuItemType(res.getString(R.string.news), Routes.Page.News, R.drawable.news),
+        MenuItemType(res.getString(R.string.exchangers), Routes.Page.Exchangers, R.drawable.exchangers),
+        MenuItemType(res.getString(R.string.exchanges), Routes.Page.Exchanges, R.drawable.exchanges),
+        MenuItemType(res.getString(R.string.chat), Routes.Home.Chat, R.drawable.chat),
+        MenuItemType(res.getQuantityString(R.plurals.user, 9), Routes.Page.Users, R.drawable.users),
+        MenuItemType(res.getString(R.string.ico_rating), Routes.Page.ICORating, R.drawable.ico_rating),
+        MenuItemType(res.getString(R.string.startups), Routes.Page.Startups, R.drawable.startups),
+        MenuItemType(res.getString(R.string.work_web3), Routes.Page.Web3, R.drawable.web3),
+        MenuItemType(res.getString(R.string.career), Routes.Page.Career, R.drawable.career),
+        MenuItemType(res.getString(R.string.academy), Routes.Page.Academy, R.drawable.academy),
+        MenuItemType(res.getString(R.string.wallet), Routes.Page.Wallet, R.drawable.wallet),
     )
 }
 

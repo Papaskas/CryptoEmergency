@@ -15,10 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo.ProfileInfoBottomSheet
@@ -39,14 +39,14 @@ fun AboutUser(viewModel: ProfileViewModel) {
 
 @Composable
 private fun Bio(viewModel: ProfileViewModel) {
-    val locale = LocalLocale.current
+    val res = LocalContext.current.resources
     val showProfileInfo = remember { mutableStateOf(false) }
 
     Box {
         Row {
             Image(
                 painter = painterResource(R.drawable.avatar_placeholder),
-                contentDescription = null,
+                contentDescription = viewModel.user.name,
                 modifier = Modifier.size(70.dp)
             )
 
@@ -68,7 +68,7 @@ private fun Bio(viewModel: ProfileViewModel) {
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = locale.moreDetails,
+                    text = res.getString(R.string.more_details),
                     style = Theme.typography.caption1,
                     color = Theme.colors.accent,
                     modifier = Modifier.clickable(
@@ -85,7 +85,7 @@ private fun Bio(viewModel: ProfileViewModel) {
 
 @Composable
 private fun Subscribes(viewModel: ProfileViewModel) {
-    val locale = LocalLocale.current.profile
+    val res = LocalContext.current.resources
 
     Row {
         Column {
@@ -96,7 +96,7 @@ private fun Subscribes(viewModel: ProfileViewModel) {
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = locale.subscribers,
+                text = res.getString(R.string.subscribers),
                 style = Theme.typography.caption1,
                 color = Theme.colors.text2,
             )
@@ -110,7 +110,7 @@ private fun Subscribes(viewModel: ProfileViewModel) {
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = locale.subscriptions,
+                text = res.getString(R.string.subscriptions),
                 style = Theme.typography.caption1,
                 color = Theme.colors.text2,
             )

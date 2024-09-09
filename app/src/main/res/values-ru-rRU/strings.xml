@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="news feed">Лента</string>
-    <string name="news">Новости</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="news">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Новость</item>
+        <item quantity="few">Новости</item>
+        <item quantity="many">Новостей</item>
+    </plurals>
     <string name="exchanges">Биржи</string>
     <string name="exchangers">Обменники</string>
     <string name="chat">Чат</string>
-    <string name="users">Пользователи</string>
+    <plurals name="user">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Пользователь</item>
+        <item quantity="few">Пользователя</item>
+        <item quantity="many">Пользователи</item>
+    </plurals>
     <string name="ico_rating">ICO рейтинг</string>
     <string name="startups">Стартапы</string>
     <string name="work_web3">Работа в web3</string>
@@ -23,14 +30,87 @@
     <string name="description">Описание</string>
     <string name="url">Ссылка</string>
     <string name="more_details">Подробнее</string>
-    <string name="social_network">Социальная сеть</string>
+    <plurals name="social_network">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Социальная сеть</item>
+        <item quantity="few">Социальные сети</item>
+        <item quantity="many">Социальных сетей</item>
+    </plurals>
     <string name="news_feed">Лента новостей</string>
     <string name="general_feed">Общая лента</string>
     <string name="subscription_feed">Лента подписок</string>
     <string name="all_cems">Все Cems</string>
     <string name="cems_subscriptions">Cems подписчиков</string>
     <string name="tag_feed">Лента отметок</string>
-    <string name="subsription">Подписка</string>
-    <string name="subscriber">Подписчик</string>
+    <string name="subscriptions">Подписки</string>
+    <string name="subscribers">Подписчики</string>
     <string name="bookmark">Закладка</string>
+    <string name="your_name">Ваше имя</string>
+    <string name="username">Имя пользователя</string>
+    <string name="about_me">О себе</string>
+    <string name="specialization">Специализация</string>
+    <string name="birthday">День рождения</string>
+    <string name="language">Язык</string>
+    <string name="password">Пароль</string>
+    <string name="date_of_registration">Дата регистрации</string>
+    <string name="language__russian">Русский</string>
+    <string name="language__english">Английский</string>
+    <string name="error__is_not_email">Некорректная почта</string>
+    <string name="error__not_has_uppercase">Необходима хотя бы одна заглавная буква</string>
+    <string name="error__not_has_lowercase">Необходима хотя бы одна строчная буква</string>
+    <string name="error__not_has_digit">Необходима хотя бы одна цифра</string>
+    <string name="error__not_has_special_char">Необходим хотя бы один спец символ</string>
+    <string name="error__only_letter">Допустимы только буквы</string>
+    <string name="error__only_number">Допустимы только цифры</string>
+    <string name="error__is_not_phone_number">Некорректный номер телефона</string>
+    <string name="error__is_not_full_name">Это не полное имя</string>
+    <string name="error__is_not_domain_name">Это не доменное имя</string>
+    <string name="error__is_not_url">Это не url</string>
+    <string name="error__without_spaces">Пробелы недопустимы</string>
+    <string name="error__without_special_char">Спец символы недопустимы</string>
+    <string name="error__is_not_ipv4">Это не IPv4</string>
+    <string name="error__is_not_ipv6">Это не IPv6</string>
+    <string name="error__is_not_uuid">Это не UUID</string>
+    <string name="error_is_not_empty">Не должно быть пустым</string>
+    <string name="error__is_not_equals">Строки не совпадают</string>
+    <string name="error__not_in_range">Превышен диапазон возможных символов</string>
+    <string name="error__io_exception">IO Exception</string>
+    <string name="error__serialization_exception">Ошибка сериализации данных</string>
+    <string name="error__unknown_host_exception">Неизвестный удаленный сервер</string>
+    <string name="error__forbidden">Отказано в доступе</string>
+    <string name="error__method_not_allowed">Не разрешенный метод</string>
+    <string name="error__too_many_request">Превышен лимит запросов</string>
+    <string name="error__request_timeout">Превышено время ожидания</string>
+    <string name="error__internal_server">Непредвиденная ошибка сервера</string>
+    <string name="error__internal_client">Непредвиденная ошибка клиента</string>
+    <string name="all">Все</string>
+    <string name="text">Текст</string>
+    <plurals name="photo">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Фото</item>
+        <item quantity="few">Фотографии</item>
+        <item quantity="many">Фотографии</item>
+    </plurals>
+    <plurals name="video">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Видео</item>
+        <item quantity="few">Видеозаписи</item>
+        <item quantity="many">Видеозаписей</item>
+    </plurals>
+    <string name="my_profile">Мой профиль</string>
+    <string name="change_profile">Редактировать профиль</string>
+    <plurals name="comment">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Комментарий</item>
+        <item quantity="few">Комментария</item>
+        <item quantity="many">Комментариев</item>
+        <item quantity="other">Комментарии</item>
+    </plurals>
+    <string name="post_in_news_feed">Пост в ленте</string>
+    <string name="filter">Фильтр</string>
+    <string name="my_feed">Моя лента</string>
+    <string name="empty">%s пока нет</string>
+    <string name="add">Добавить %s</string>
+    <string name="show">Показать %s</string>
+    <string name="hide">Скрыть %s</string>
+    <string name="like">Лайк</string>
+    <string name="open">Открыть %s</string>
+    <string name="back">Назад</string>
+    <string name="change_theme">Изменить тему</string>
 </resources>

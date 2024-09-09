@@ -19,11 +19,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.locale.LocalLocale
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -38,24 +38,25 @@ fun FilterBottomSheet(
     selectedFilter: MutableState<String>,
     showBottomSheet: MutableState<Boolean>,
 ) {
-    val locale = LocalLocale.current
+    val context = LocalContext.current
 
     val items = arrayOf(
-        ItemType(R.drawable.infinity, locale.filter.all),
-        ItemType(R.drawable.image, locale.filter.photo),
-        ItemType(R.drawable.video, locale.filter.video),
-        ItemType(R.drawable.text, locale.filter.text),
+        ItemType(R.drawable.infinity, context.getString(R.string.all)),
+        ItemType(R.drawable.image, context.resources.getQuantityString(R.plurals.photo, 1)),
+        ItemType(R.drawable.video, context.resources.getQuantityString(R.plurals.video, 1)),
+        ItemType(R.drawable.text, context.getString(R.string.text)),
     )
 
     BottomSheet(
         showBottomSheet = showBottomSheet,
-        title = locale.titles.filter,
+        title = context.getString(R.string.filter),
         contentPadding = 0.dp,
     ) {
         items.forEach {
             Item(
                 state = selectedFilter,
-                props = it,
+                icon = it.icon,
+                title = it.title,
             )
         }
     }
@@ -64,37 +65,38 @@ fun FilterBottomSheet(
 @Composable
 private fun Item(
     state: MutableState<String>,
-    props: ItemType,
+    title: String,
+    @DrawableRes icon: Int,
 ) {
+    val context = LocalContext.current
+
     Box(
         Modifier
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
-            ) {
-                state.value = props.title
-            },
+            ) { state.value = title },
     ) {
         Row(
             modifier = Modifier
                 .height(50.dp)
-                .padding(horizontal = Theme.values.padding),
+                .padding(horizontal = Theme.dimens.padding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                painter = painterResource(props.icon),
-                contentDescription = props.title,
-                tint = if (state.value == props.title) Theme.colors.accent else Theme.colors.text4,
+                painter = painterResource(icon),
+                contentDescription = title,
+                tint = if (state.value == title) Theme.colors.accent else Theme.colors.text4,
                 modifier = Modifier.size(24.dp)
             )
 
             Spacer(Modifier.width(12.dp))
 
             Text(
-                text = props.title,
+                text = title,
                 style = Theme.typography.body1,
-                color = if (state.value == props.title) Theme.colors.accent else Theme.colors.text1,
+                color = if (state.value == title) Theme.colors.accent else Theme.colors.text1,
             )
         }
     }

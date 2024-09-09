@@ -20,7 +20,7 @@ fun TitleSection(
     onClick: (() -> Unit)? = null
 ) {
     Row(
-        modifier = Modifier.padding(Theme.values.padding)
+        modifier = Modifier.padding(Theme.dimens.padding)
     ) {
         Row {
             Text(

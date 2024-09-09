@@ -49,7 +49,7 @@ fun Screen(
     contentColor: Color = Theme.colors.text2,
     containerColor: Color = Theme.colors.backgroundMain,
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    horizontalPadding: Dp = Theme.values.padding,
+    horizontalPadding: Dp = Theme.dimens.padding,
     topPadding: Dp? = null,
     bottomPadding: Dp? = null,
     bottomSpacing: Dp = 35.dp,
