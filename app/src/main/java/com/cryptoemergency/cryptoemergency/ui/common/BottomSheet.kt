@@ -15,6 +15,8 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -36,7 +38,7 @@ fun BottomSheet(
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(),
     contentPadding: Dp = Theme.dimens.padding,
-    actionIcon: @Composable (() -> Unit)? = null,
+    actionIcon: @Composable ((onClick: () -> Unit) -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     if (!showBottomSheet.value) return
@@ -52,8 +54,8 @@ fun BottomSheet(
         sheetState = sheetState,
         dragHandle = null,
         onDismissRequest = {
-            showBottomSheet.value = false
             globalModifier.value = Modifier
+            showBottomSheet.value = false
         },
         containerColor = Theme.colors.background2,
     ) {
@@ -75,7 +77,7 @@ private fun Header(
     title: String,
     sheetState: SheetState,
     showBottomSheet: MutableState<Boolean>,
-    actionIcon: @Composable (() -> Unit)? = null,
+    actionIcon: @Composable ((onClick: () -> Unit) -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -92,10 +94,18 @@ private fun Header(
         Spacer(Modifier.weight(1f))
 
         if (actionIcon != null) {
-            actionIcon()
+            actionIcon {
+                scope.launch {
+                    globalModifier.value = Modifier
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    showBottomSheet.value = false
+                }
+            }
         } else {
             IconButton(onClick = {
                 scope.launch {
+                    globalModifier.value = Modifier
                     sheetState.hide()
                 }.invokeOnCompletion {
                     showBottomSheet.value = false
@@ -103,7 +113,7 @@ private fun Header(
             }) {
                 Icon(
                     painter = painterResource(R.drawable.close),
-                    contentDescription = "Закрыть модальное окно",
+                    contentDescription = null,
                 )
             }
         }

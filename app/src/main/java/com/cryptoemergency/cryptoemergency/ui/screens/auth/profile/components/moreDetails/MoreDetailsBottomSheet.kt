@@ -22,6 +22,7 @@ import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNav
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.globalModifier
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 
 /**
@@ -51,7 +52,10 @@ fun MoreDetailsBottomSheet(
         title = res.getString(R.string.more_details),
         actionIcon = {
             IconButton(
-                onClick = { navController.navigate(Routes.Auth.ChangeProfileData) }
+                onClick = {
+                    navController.navigate(Routes.Auth.ChangeProfileData)
+                    it()
+                }
             ) {
                 Icon(
                     painter = painterResource(R.drawable.edit__filled),
@@ -101,6 +105,7 @@ private fun BioInfo(
             Spacer(Modifier.weight(1f))
 
             IconButton(onClick = {
+                globalModifier.value = Modifier
                 navController.navigate(Routes.Page.QRCode(
                     text = title,
                 ))
