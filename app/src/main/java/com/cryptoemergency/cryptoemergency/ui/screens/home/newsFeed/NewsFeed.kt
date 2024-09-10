@@ -84,9 +84,6 @@ fun NewsFeedScreen(
         },
         scaffoldModifier = Modifier.nestedScroll(nestedScrollConnection),
         horizontalPadding = 0.dp,
-        //bottomPadding = 0.dp,
-        //topPadding = 0.dp,
-        modifier = Modifier.padding(0.dp)
     ) {
         Surface(
             modifier = Modifier.offset {

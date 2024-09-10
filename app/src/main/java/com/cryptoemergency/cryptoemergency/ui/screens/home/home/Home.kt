@@ -10,9 +10,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -169,61 +171,77 @@ private fun MenuItem(
     route: Routes,
     @DrawableRes icon: Int,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
     val navController = LocalNavController.current
 
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
             .clickable(
-                interactionSource = interactionSource,
+                interactionSource = null,
                 indication = rememberRipple(),
             ) {
                 navController.navigate(route)
             }
     ) {
-        Row(
+        Box(
             modifier = Modifier
                 .height(85.dp)
+                .fillMaxWidth()
                 .background(
                     color = Theme.colors.surface1,
                     shape = RoundedCornerShape(10.dp),
                 )
                 .padding(horizontal = 10.dp, vertical = 6.dp)
         ) {
-            Column(
-                modifier = Modifier.align(Alignment.Bottom)
-            ) {
-                Text(
-                    text = title,
-                    style = Theme.typography.h3,
-                    color = Theme.colors.text6,
-                    modifier = Modifier.align(Alignment.Start)
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Column(
-                modifier = Modifier.align(Alignment.Top)
-            ) {
-                Box {
-                    Icon(
-                        painter = painterResource(id = icon),
-                        tint = Color.Unspecified,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .zIndex(2f)
-                            .size(24.dp)
-                            .align(Alignment.Center)
-                    )
+            Title(title)
 
-                    Icon(
-                        painter = painterResource(Theme.icons.hexagonOnMainMenu),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier.zIndex(1f)
-                    )
-                }
-            }
+            Icon(icon)
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.Title(
+    title: String,
+) {
+    Column(
+        modifier = Modifier.align(Alignment.BottomStart)
+    ) {
+        Text(
+            text = title,
+            style = Theme.typography.h3,
+            color = Theme.colors.text6,
+            modifier = Modifier.align(Alignment.Start)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.Icon(
+    @DrawableRes icon: Int,
+) {
+    Column(
+        modifier = Modifier.align(Alignment.TopEnd)
+    ) {
+        Box {
+            Icon(
+                painter = painterResource(id = icon),
+                tint = Color.Unspecified,
+                contentDescription = null,
+                modifier = Modifier
+                    .zIndex(2f)
+                    .size(24.dp)
+                    .align(Alignment.Center)
+            )
+
+            Icon(
+                painter = painterResource(Theme.icons.hexagonOnMainMenu),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier
+                    .size(50.dp, 57.dp)
+                    .zIndex(1f)
+            )
         }
     }
 }

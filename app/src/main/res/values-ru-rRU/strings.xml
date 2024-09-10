@@ -5,6 +5,7 @@
         <item quantity="few">Новости</item>
         <item quantity="many">Новостей</item>
     </plurals>
+    <string name="news">Новости</string>
     <string name="exchanges">Биржи</string>
     <string name="exchangers">Обменники</string>
     <string name="chat">Чат</string>
@@ -35,7 +36,7 @@
         <item quantity="few">Социальные сети</item>
         <item quantity="many">Социальных сетей</item>
     </plurals>
-    <string name="news_feed">Лента новостей</string>
+    <string name="news_feed">Лента</string>
     <string name="general_feed">Общая лента</string>
     <string name="subscription_feed">Лента подписок</string>
     <string name="all_cems">Все Cems</string>
