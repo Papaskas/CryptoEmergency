@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -54,11 +57,19 @@ fun QRCodeScreen(
         horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
     ) {
-        Column {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding())
+        ) {
+            Spacer(Modifier.weight(1f))
+
             QRCode(
                 text = text,
                 color = viewModel.selectedOption.value,
             )
+
+            Spacer(Modifier.weight(1f))
 
             BottomNav(viewModel, text)
         }
@@ -66,24 +77,23 @@ fun QRCodeScreen(
 }
 
 @Composable
-private fun ColumnScope.QRCode(
+private fun QRCode(
     text: String,
     color: Color,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .fillMaxSize()
-            .weight(1f),
+            .padding(horizontal = 68.dp,),
     ) {
         Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(Theme.dimens.shape))
+                .clip(RoundedCornerShape(20.dp))
                 .background(Color.White)
                 .border(
                     1.dp,
                     Theme.colors.strokeVariant,
-                    RoundedCornerShape(Theme.dimens.shape)
+                    RoundedCornerShape(20.dp)
                 )
                 .padding(
                     top = 30.dp,
@@ -98,35 +108,53 @@ private fun ColumnScope.QRCode(
                     background = Color.White,
                     foreground = color,
                 ),
-                modifier = Modifier
-                    .size(300.dp),
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .padding(15.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.cem_coin),
-                        contentDescription = text,
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+                modifier = Modifier.size(170.dp),
+            ) { AboveIcon(text, color) }
 
-            Spacer(Modifier.height(Theme.dimens.padding))
+            Title(text, color)
+        }
+    }
+}
 
-            Text(
-                text = text,
-                textAlign = TextAlign.Center,
-                color = color,
-                style = Theme.typography.h2,
+@Composable
+private fun Title(
+    text: String,
+    color: Color,
+) {
+    Spacer(Modifier.height(Theme.dimens.padding))
+
+    Text(
+        text = text,
+        textAlign = TextAlign.Center,
+        color = color,
+        style = Theme.typography.h2,
+    )
+}
+
+@Composable
+private fun AboveIcon(
+    text: String,
+    color: Color,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(5.dp)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(55.dp)
+                .background(Color.White)
+                .clip(CircleShape)
+                .background(color)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.cem_coin),
+                contentDescription = text,
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
             )
         }
     }
@@ -144,8 +172,10 @@ private fun BottomNav(
         ),
         color = Theme.colors.surface3,
         modifier = Modifier
-            .commonBorder(
-                shape = RoundedCornerShape(
+            .border(
+                1.dp,
+                Theme.colors.stroke,
+                RoundedCornerShape(
                     topStart = Theme.dimens.shape,
                     topEnd = Theme.dimens.shape,
                 )
@@ -162,7 +192,7 @@ private fun BottomNav(
 private fun Heading() {
     Column {
         Text(
-            text = "QR-код",
+            text = "QR-code",
             style = Theme.typography.h2,
             color = Theme.colors.text1,
             modifier = Modifier.padding(Theme.dimens.padding)
@@ -194,10 +224,15 @@ private fun Body(
 
         Spacer(Modifier.height(Theme.dimens.padding))
 
-        CommonButton(onClick = { /*TODO*/ }, text = "Поделиться")
-        Spacer(Modifier.height(10.dp))
         CommonButton(
-            onClick = { copyTextToClipboard(context, text, "LABEL") },
+            onClick = { /*TODO*/ },
+            text = "Поделиться",
+        )
+
+        Spacer(Modifier.height(10.dp))
+
+        CommonButton(
+            onClick = { copyTextToClipboard(context, text, text) },
             text = "Копировать ссылку",
             buttonType = ButtonType.Secondary,
         )
@@ -210,6 +245,7 @@ private fun SelectableItem(
     viewModel: QRCodeViewModel,
 ) {
     Surface(
+        shape = RoundedCornerShape(Theme.dimens.shape),
         color = Theme.colors.surface2,
         modifier = Modifier
             .then(
@@ -223,7 +259,6 @@ private fun SelectableItem(
                     Modifier
                 }
             )
-            .clip(RoundedCornerShape(Theme.dimens.shape))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -232,18 +267,20 @@ private fun SelectableItem(
             }
     ) {
         Surface(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier
+
+                .padding(20.dp),
             color = Color.White,
             shape = RoundedCornerShape(Theme.dimens.shape)
         ) {
             Icon(
                 modifier = Modifier
+                    .background(Color.White)
                     .border(
                         1.dp,
                         Theme.colors.strokeVariant,
                         RoundedCornerShape(Theme.dimens.shape)
                     )
-                    .background(Color.White)
                     .padding(10.dp),
                 painter = painterResource(R.drawable.qr_filled),
                 contentDescription = null,

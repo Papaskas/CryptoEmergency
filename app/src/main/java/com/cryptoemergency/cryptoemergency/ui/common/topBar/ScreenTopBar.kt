@@ -32,7 +32,7 @@ fun ScreenTopBar(
                 )
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent,
+                containerColor = Theme.colors.backgroundMain,
             ),
             navigationIcon = {
                 IconButton(onClick = {
