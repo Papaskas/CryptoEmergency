@@ -54,12 +54,14 @@ fun QRCodeScreen(
         horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
     ) {
-        QRCode(
-            text = text,
-            color = viewModel.selectedOption.value,
-        )
+        Column {
+            QRCode(
+                text = text,
+                color = viewModel.selectedOption.value,
+            )
 
-        BottomNav(viewModel, text)
+            BottomNav(viewModel, text)
+        }
     }
 }
 

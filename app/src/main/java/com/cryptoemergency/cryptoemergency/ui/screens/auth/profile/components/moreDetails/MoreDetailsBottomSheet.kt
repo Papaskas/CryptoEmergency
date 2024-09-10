@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.moreDetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,11 +29,12 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewMo
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileInfoBottomSheet(
+fun MoreDetailsBottomSheet(
     showProfileInfo: MutableState<Boolean>,
     viewModel: ProfileViewModel,
 ) {
     val res = LocalContext.current.resources
+    val navController = LocalNavController.current
 
     val items = arrayOf(
         BioInfoType(viewModel.user.username, res.getString(R.string.username), true),
@@ -48,7 +49,16 @@ fun ProfileInfoBottomSheet(
         contentPadding = 0.dp,
         showBottomSheet = showProfileInfo,
         title = res.getString(R.string.more_details),
-        actionIcon = {},
+        actionIcon = {
+            IconButton(
+                onClick = { navController.navigate(Routes.Auth.ChangeProfileData) }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.edit__filled),
+                    contentDescription = null,
+                )
+            }
+        },
     ) {
         items.forEach {
             BioInfo(

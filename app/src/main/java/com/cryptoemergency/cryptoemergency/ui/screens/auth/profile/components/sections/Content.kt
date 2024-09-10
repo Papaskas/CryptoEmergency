@@ -3,9 +3,13 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.s
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
@@ -19,16 +23,18 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.ne
  * Блок основного контента профиля: социальные сети, лента новостей и т.п.
  * */
 @Composable
-fun ColumnScope.Content(
+fun Content(
     viewModel: ProfileViewModel
 ) {
-    Column(
-        Modifier
-            .weight(1f)
-            .background(
-                color = Theme.colors.surface1,
-                shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
-            )
+    Surface(
+        color = Theme.colors.surface1,
+        shape = RoundedCornerShape(
+            topStart = Theme.dimens.shape,
+            topEnd = Theme.dimens.shape,
+        ),
+        modifier = Modifier
+            .fillMaxSize()
+            .heightIn(min = 500.dp),
     ) {
         Tabs()
     }
@@ -58,6 +64,7 @@ private fun Tabs() {
     )
 
     CommonTabs(
+        modifier = Modifier.fillMaxSize(),
         tabTitles = titles,
     ) { page ->
         content[page]()

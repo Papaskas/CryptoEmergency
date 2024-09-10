@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,18 +45,16 @@ import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
 fun Screen(
     modifier: Modifier = Modifier,
     scaffoldModifier: Modifier = Modifier,
-    boxModifier: Modifier = Modifier,
+    snackbarModifier: Modifier = Modifier,
     snackbar: SnackbarHostState = LocalSnackbar.current,
     contentColor: Color = Theme.colors.text2,
     containerColor: Color = Theme.colors.backgroundMain,
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
     horizontalPadding: Dp = Theme.dimens.padding,
-    topPadding: Dp? = null,
-    bottomPadding: Dp? = null,
     bottomSpacing: Dp = 35.dp,
     bottomBar: @Composable () -> Unit = { BottomBar() },
     topBar: @Composable () -> Unit = { MainTopBar() },
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.(PaddingValues) -> Unit,
 ) {
     Scaffold(
         modifier = scaffoldModifier.fillMaxSize(),
@@ -65,34 +64,18 @@ fun Screen(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbar,
-                modifier = Modifier.imePadding(),
+                modifier = snackbarModifier.imePadding(),
             )
         },
         bottomBar = bottomBar,
         topBar = topBar,
     ) { innerPadding ->
-        Box(
-            modifier = boxModifier
-                .padding(
-                    top = topPadding?.let {
-                        topPadding
-                    } ?: run {
-                        innerPadding.calculateTopPadding()
-                    },
-                    bottom = bottomPadding?.let {
-                        bottomPadding
-                    } ?: run {
-                        innerPadding.calculateBottomPadding()
-                    }
-                )
+        Column(
+            modifier = modifier
                 .padding(horizontal = horizontalPadding),
         ) {
-            Column(
-                modifier = modifier,
-            ) {
-                content()
-                Spacer(Modifier.height(bottomSpacing))
-            }
+            content(innerPadding)
+            Spacer(Modifier.height(bottomSpacing))
         }
     }
 }

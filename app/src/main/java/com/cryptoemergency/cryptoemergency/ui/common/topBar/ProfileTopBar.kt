@@ -37,7 +37,7 @@ fun ProfileTopBar(
                 )
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent,
+                containerColor = Theme.colors.backgroundMain,
             ),
             navigationIcon = {
                 IconButton(onClick = {

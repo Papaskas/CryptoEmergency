@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -22,21 +23,29 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     Screen(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
         topBar = { ProfileTopBar() },
     ) {
-        Box(modifier = Modifier.padding(Theme.dimens.padding)) {
-            AboutUser(viewModel)
+        Column(
+            Modifier
+                .padding(it)
+                .fillMaxSize()
+        ) {
+            Box(Modifier.padding(Theme.dimens.padding)) {
+                AboutUser(viewModel)
+            }
+
+            CommonHorizontalDivider()
+
+            Box(Modifier.padding(Theme.dimens.padding)) {
+                Stories(viewModel)
+            }
+
+            Content(viewModel)
         }
-
-        CommonHorizontalDivider()
-
-        Box(modifier = Modifier.padding(Theme.dimens.padding)) {
-            Stories(viewModel)
-        }
-
-        Content(viewModel)
     }
 }

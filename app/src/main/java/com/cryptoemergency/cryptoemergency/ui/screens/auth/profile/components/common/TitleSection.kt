@@ -29,7 +29,7 @@ fun TitleSection(
                 color = Theme.colors.text1,
             )
 
-            if (count!= null) {
+            if (count != null) {
                 Text(
                     text = "$count",
                 )

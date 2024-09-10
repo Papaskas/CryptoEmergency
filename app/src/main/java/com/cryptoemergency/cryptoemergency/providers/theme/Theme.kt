@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,7 +28,7 @@ fun MainThemeProvider(
 
     ThemeStorageOrSystem(viewModel)
 
-    ChangeSystemBarColors()
+    RecomposeSystemBarsColors()
 
     RecomposeColorAndIcons(
         colors,
@@ -42,31 +41,28 @@ fun MainThemeProvider(
         LocalShape provides shapes,
         LocalDimens provides dimens,
         LocalIcons provides icons.value,
-    ) {
-        content()
-    }
+    ) { content() }
 }
 
+// Поменять цветовую гамму у StatusBar, NavigationBar при рекомпозиции
 @Composable
-private fun ChangeSystemBarColors() {
+private fun RecomposeSystemBarsColors() {
     val view = LocalView.current
 
-    // Поменять цветовую гамму у StatusBar, NavigationBar
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            val isLightTheme = when (currentTheme) {
-                CurrentTheme.DARK -> false
-                CurrentTheme.LIGHT -> true
-                CurrentTheme.NULL -> false
-            }
-
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isLightTheme
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isLightTheme
+    LaunchedEffect(currentTheme) {
+        val window = (view.context as Activity).window
+        val isLightTheme = when (currentTheme) {
+            CurrentTheme.DARK -> false
+            CurrentTheme.LIGHT -> true
+            CurrentTheme.NULL -> false
         }
+
+        WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isLightTheme
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isLightTheme
     }
 }
 
+// Поменять иконки и цвета при рекомпозиции
 @Composable
 private fun RecomposeColorAndIcons(
     colors: MutableState<Colors>,
@@ -89,6 +85,7 @@ private fun RecomposeColorAndIcons(
     }
 }
 
+// Тема из хранилища если есть или системная
 @Composable
 private fun ThemeStorageOrSystem(
     viewModel: ThemeViewModel,

@@ -5,11 +5,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
@@ -33,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -53,14 +58,18 @@ fun HomeScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         horizontalPadding = 0.dp,
     ) {
-        ExchangeRate(viewModel)
-        Spacer(Modifier.height(15.dp))
-        Swiper()
-        Spacer(Modifier.height(30.dp))
-        Box(
-            Modifier.padding(horizontal = Theme.dimens.padding)
+        Column(
+            Modifier.padding(it)
         ) {
-            Menu()
+            ExchangeRate(viewModel)
+            Spacer(Modifier.height(15.dp))
+            Swiper()
+            Spacer(Modifier.height(30.dp))
+            Box(
+                Modifier.padding(horizontal = Theme.dimens.padding)
+            ) {
+                Menu()
+            }
         }
     }
 }
@@ -100,19 +109,31 @@ private fun Swiper() {
         0f,
     ) { Int.MAX_VALUE }
 
+    val configuration = LocalConfiguration.current
+    val width = configuration.screenWidthDp.dp - Theme.dimens.padding * 2
+
     HorizontalPager(
+        contentPadding = PaddingValues(
+            horizontal = Theme.dimens.padding
+        ),
         state = state,
         beyondViewportPageCount = 1,
     ) { page ->
         Box(
-            modifier = Modifier.swiperAnimation(state, page),
+            modifier = Modifier
+               .swiperAnimation(state, page),
+            contentAlignment = Alignment.Center,
         ) {
             Image(
                 painter = painterResource(items[page % items.size]),
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(142.dp)
+                    .size(
+                        width = width,
+                        height = 142.dp,
+                    )
+                    .clip(RoundedCornerShape(Theme.dimens.shape))
             )
         }
     }

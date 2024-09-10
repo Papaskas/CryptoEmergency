@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.profileInfo.ProfileInfoBottomSheet
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.moreDetails.MoreDetailsBottomSheet
 
 /**
  * Блок основной информации о пользователе: имя, статус,
@@ -79,7 +79,7 @@ private fun Bio(viewModel: ProfileViewModel) {
             }
         }
 
-        ProfileInfoBottomSheet(showProfileInfo, viewModel)
+        MoreDetailsBottomSheet(showProfileInfo, viewModel)
     }
 }
 
