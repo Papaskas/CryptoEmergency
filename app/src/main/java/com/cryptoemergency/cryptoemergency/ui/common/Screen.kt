@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -18,6 +17,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -57,7 +58,9 @@ fun Screen(
     content: @Composable ColumnScope.(PaddingValues) -> Unit,
 ) {
     Scaffold(
-        modifier = scaffoldModifier.fillMaxSize(),
+        modifier = scaffoldModifier
+            .then(globalModifier.value)
+            .fillMaxSize(),
         contentColor = contentColor,
         containerColor = containerColor,
         contentWindowInsets = contentWindowInsets,
@@ -79,3 +82,8 @@ fun Screen(
         }
     }
 }
+
+/**
+ * Глобальные стили применяемые к текущей странице, на момент создания нужны только для блюра BottomSheet
+ * */
+val globalModifier: MutableState<Modifier> = mutableStateOf(Modifier)
