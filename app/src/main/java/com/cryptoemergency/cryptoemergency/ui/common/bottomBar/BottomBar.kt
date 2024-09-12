@@ -139,10 +139,7 @@ private fun getBottomItems (): List<BottomItem> {
             Routes.Home.Home,
         ),
         BottomItem(
-            res.getQuantityString(
-                R.plurals.news,
-                2
-            ),
+            res.getString(R.string.news_feed,),
             R.drawable.news_feed__filled,
             Routes.Home.News,
         ),

@@ -15,12 +15,12 @@ plugins {
 
 android {
     namespace = "com.cryptoemergency.cryptoemergency"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.cryptoemergency.cryptoemergency"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -139,7 +139,7 @@ dependencies {
     implementation(libs.slf4j.api) // логирование
     implementation(libs.logback.classic) // логирование
 
-    implementation(libs.compose.qr.code) // QR code
+    implementation(libs.compose.qr.code) // QR код
 
     implementation(libs.core.ktx)
 
@@ -163,6 +163,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material)
+
+    implementation(libs.cloudy) // Blur для <= 31 API
 
     detektPlugins(libs.detekt.formatting)
 
@@ -200,7 +202,7 @@ tasks.detekt {
     }
 }
 
-fun getKeystoreFile(): File {
+private fun getKeystoreFile(): File {
     val keystoreFile = File(rootProject.projectDir, "keystore.jks")
     if (!keystoreFile.exists()) {
         val keystoreContent = System.getenv("KEYSTORE_FILE")?.let {
