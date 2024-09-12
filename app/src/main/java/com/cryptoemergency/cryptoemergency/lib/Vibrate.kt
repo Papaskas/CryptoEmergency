@@ -11,26 +11,23 @@ import androidx.core.content.ContextCompat
  *
  * @param context контекст приложения
  * @param milliseconds длительность вибрации в миллисекундах
+ * @param amplitude Сила вибрации. Это должно быть значение от 1 до 255
  * */
 fun vibrate(
     context: Context,
     milliseconds: Long = 100,
+    amplitude: Int = VibrationEffect.DEFAULT_AMPLITUDE,
 ) {
     val vibrator = ContextCompat.getSystemService(context, Vibrator::class.java)
 
     vibrator?.let {
         if (it.hasVibrator()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val effect =
-                    VibrationEffect.createOneShot(
-                        milliseconds,
-                        VibrationEffect.DEFAULT_AMPLITUDE,
-                    )
-                it.vibrate(effect)
-            } else {
-                // Используем устаревший метод вибрации для API ниже 26
-                it.vibrate(milliseconds)
-            }
+            val effect =
+                VibrationEffect.createOneShot(
+                    milliseconds,
+                    amplitude,
+                )
+            it.vibrate(effect)
         }
     }
 }

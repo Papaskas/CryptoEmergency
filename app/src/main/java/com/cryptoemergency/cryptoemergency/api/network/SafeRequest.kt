@@ -7,6 +7,7 @@ import com.cryptoemergency.cryptoemergency.repository.store.Keys
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
@@ -18,9 +19,11 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 import io.ktor.util.StringValues
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import okio.IOException
 import java.net.UnknownHostException
+import kotlin.jvm.Throws
 
 /**
  * Безопасная и универсальная функция HTTP-запроса, которая обрабатывает различные сценарии,
@@ -47,7 +50,15 @@ import java.net.UnknownHostException
  * @throws ServerResponseException Если в ответе сервера содержится ошибка.
  * @throws UnknownHostException Если нет подключения к Интернету.
  * @throws IOException Если во время сетевого подключения возникают ошибки.
+ * @throws IllegalArgumentException Если передан не data class или не @Serializable
  */
+@Throws(
+    SerializationException::class,
+    ServerResponseException::class,
+    UnknownHostException::class,
+    IOException::class,
+    IllegalArgumentException::class,
+)
 suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.safeRequest(
     path: String,
     context: Context,
@@ -56,7 +67,7 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
     port: Int = BuildConfig.PORT,
     params: StringValues = StringValues.Empty,
     method: HttpMethod = HttpMethod.Get,
-    body: Any? = null,
+    body: @Serializable Any? = null,
     overrideToken: String? = null,
 ) = try {
     val response =
@@ -70,12 +81,8 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
                 parameters.appendAll(params)
             }
             contentType(ContentType.Application.Json)
-            if (overrideToken != null) {
-                header("Authorization", overrideToken)
-            } else {
-                header("Authorization", Store(Keys.TOKEN, context).get())
-            }
-            if (body != null) setBody(body)
+            setHeader(overrideToken, context)
+            body(body)
         }
 
     val responseBody = response.body<String>()
@@ -111,4 +118,28 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
     ApiResponse.Error(
         status = HttpStatusCode(-900, e.message ?: "IO Exception"),
     )
+}
+
+suspend fun HttpRequestBuilder.setHeader(
+    overrideToken: String?,
+    context: Context,
+) {
+    if (overrideToken != null) {
+        header("Authorization", overrideToken)
+    } else {
+        header("Authorization", Store(Keys.TOKEN, context).get())
+    }
+}
+
+@Throws(
+    IllegalArgumentException::class
+)
+fun HttpRequestBuilder.body(body: Any?) {
+    if(body == null) return
+
+    require(body::class.isData && body::class.annotations.any { it is Serializable }) {
+        "Body must be a data class and annotated with @Serializable"
+    }
+
+    setBody(body)
 }

@@ -12,13 +12,11 @@ import kotlinx.serialization.json.Json
 
 val client by lazy {
     HttpClient(OkHttp) {
-        if(BuildConfig.DEBUG) {
-            install(Logging) {
-                level = LogLevel.ALL
-            }
-        } else {
-            install(Logging) {
-                level = LogLevel.NONE
+        install(Logging) {
+            level = if(BuildConfig.DEBUG) {
+                LogLevel.ALL
+            } else {
+                LogLevel.NONE
             }
         }
         install(ContentNegotiation) {

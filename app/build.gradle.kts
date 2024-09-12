@@ -142,6 +142,7 @@ dependencies {
     implementation(libs.compose.qr.code) // QR код
 
     implementation(libs.core.ktx)
+    implementation(libs.kotlin.reflect)
 
     implementation(libs.androidx.navigation.compose)
 
