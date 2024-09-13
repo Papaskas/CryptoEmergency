@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.http
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.api.http.httpClient
@@ -11,18 +10,13 @@ import io.ktor.http.URLProtocol
 import io.ktor.util.StringValues
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
 
-@RunWith(AndroidJUnit4::class)
 class SharedHttpTest {
     @Serializable
     data class LoginSuccess(
         val token: String,
     )
-
-    @Serializable
-    object SuccessPlaceholder
 
     @Serializable
     data class ErrorPlaceholder(

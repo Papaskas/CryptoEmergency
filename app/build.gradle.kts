@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.androidx.junit)
 
     kotlin("kapt")
 }
@@ -169,13 +170,14 @@ dependencies {
 
     detektPlugins(libs.detekt.formatting)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.androidx.ui.test.android) // Compose test framework
+    androidTestImplementation(libs.junit.jupiter.api) // Instrumentation Test Support
+    testImplementation(libs.junit.jupiter.api) // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testRuntimeOnly(libs.junit.jupiter.engine) // (Required) Writing and executing Unit Tests on the JUnit Platform
+}
+
+junitPlatform {
+    instrumentationTests.includeExtensions.set(true)
 }
 
 ksp {
