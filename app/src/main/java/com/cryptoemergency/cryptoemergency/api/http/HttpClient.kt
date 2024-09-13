@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.api.network
+package com.cryptoemergency.cryptoemergency.api.http
 
 import com.cryptoemergency.cryptoemergency.BuildConfig
 import io.ktor.client.HttpClient
@@ -10,7 +10,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-val client by lazy {
+val httpClient by lazy {
     HttpClient(OkHttp) {
         install(Logging) {
             level = if(BuildConfig.DEBUG) {

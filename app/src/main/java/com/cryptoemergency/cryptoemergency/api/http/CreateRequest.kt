@@ -1,6 +1,7 @@
-package com.cryptoemergency.cryptoemergency.api.network
+package com.cryptoemergency.cryptoemergency.api.http
 
 import android.content.Context
+import android.util.Log
 import com.cryptoemergency.cryptoemergency.BuildConfig
 import com.cryptoemergency.cryptoemergency.api.store.Store
 import com.cryptoemergency.cryptoemergency.repository.store.Keys
@@ -50,7 +51,7 @@ import kotlin.jvm.Throws
  * @throws ServerResponseException Если в ответе сервера содержится ошибка.
  * @throws UnknownHostException Если нет подключения к Интернету.
  * @throws IOException Если во время сетевого подключения возникают ошибки.
- * @throws IllegalArgumentException Если передан не data class или не @Serializable
+ * @throws IllegalArgumentException Если body, SuccessResponse или ErrorResponse не data class или не @Serializable
  */
 @Throws(
     SerializationException::class,
@@ -59,17 +60,19 @@ import kotlin.jvm.Throws
     IOException::class,
     IllegalArgumentException::class,
 )
-suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.safeRequest(
-    path: String,
-    context: Context,
+suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.createRequest(
+    method: HttpMethod = HttpMethod.Get,
     protocol: URLProtocol = URLProtocol.byName[BuildConfig.PROTOCOL]!!,
     host: String = BuildConfig.HOST,
     port: Int = BuildConfig.PORT,
+    path: String,
     params: StringValues = StringValues.Empty,
-    method: HttpMethod = HttpMethod.Get,
     body: @Serializable Any? = null,
     overrideToken: String? = null,
-) = try {
+    context: Context,
+): ApiResponse<out SuccessResponse, out ErrorResponse> = try {
+    checkResponseTypes<SuccessResponse, ErrorResponse>()
+
     val response =
         request {
             this.method = method
@@ -81,7 +84,7 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
                 parameters.appendAll(params)
             }
             contentType(ContentType.Application.Json)
-            setHeader(overrideToken, context)
+            setHeaders(overrideToken, context)
             body(body)
         }
 
@@ -101,26 +104,32 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.s
         )
     }
 } catch (e: SerializationException) {
+    ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
+
     ApiResponse.Error(
-        status = HttpStatusCode(-1, e.message ?: "SerializationException"),
+        status = HttpStatusCode.SerializationException,
     )
 } catch (e: ServerResponseException) {
+    ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
+
     ApiResponse.Error(
-        status = HttpStatusCode(500, e.message),
+        status = HttpStatusCode.InternalServerError,
     )
-} catch (e: UnknownHostException) {
-    // Нет интернета
+} catch (e: UnknownHostException) { // Нет интернета
+    ErrorResponse::class.qualifiedName?.let { Log.e("UnknownHostException", it) }
+
     ApiResponse.Error(
-        status = HttpStatusCode(-1000, e.message ?: "No internet connection"),
+        status = HttpStatusCode.UnknownHostException,
     )
-} catch (e: IOException) {
-    // Ошибки соединений
+} catch (e: IOException) { // Ошибки соединений
+    ErrorResponse::class.qualifiedName?.let { Log.e("IOException", it) }
+
     ApiResponse.Error(
-        status = HttpStatusCode(-900, e.message ?: "IO Exception"),
+        status = HttpStatusCode.IOException,
     )
 }
 
-suspend fun HttpRequestBuilder.setHeader(
+suspend fun HttpRequestBuilder.setHeaders(
     overrideToken: String?,
     context: Context,
 ) {
@@ -131,9 +140,7 @@ suspend fun HttpRequestBuilder.setHeader(
     }
 }
 
-@Throws(
-    IllegalArgumentException::class
-)
+@Throws(IllegalArgumentException::class)
 fun HttpRequestBuilder.body(body: Any?) {
     if(body == null) return
 
@@ -142,4 +149,14 @@ fun HttpRequestBuilder.body(body: Any?) {
     }
 
     setBody(body)
+}
+
+inline fun <reified Success, reified Error> checkResponseTypes() {
+    require(Success::class.isData && Success::class.annotations.any { it is Serializable }) {
+        "Success response must be a data class and annotated with @Serializable"
+    }
+
+    require(Error::class.isData && Error::class.annotations.any { it is Serializable }) {
+        "Error response must be a data class and annotated with @Serializable"
+    }
 }
