@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
@@ -19,6 +18,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 @Composable
 fun ScreenTopBar(
     title: String,
+    navigationIcon: (@Composable () -> Unit)? = null,
 ) {
     val navController = LocalNavController.current
 
@@ -35,14 +35,18 @@ fun ScreenTopBar(
                 containerColor = Theme.colors.backgroundMain,
             ),
             navigationIcon = {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Icon(
-                        painter = painterResource(R.drawable.arrow_left),
-                        contentDescription = "Лого",
-                        tint = Theme.colors.text1,
-                    )
+                navigationIcon?.let {
+                    navigationIcon()
+                } ?: run {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.arrow_left),
+                            contentDescription = "Лого",
+                            tint = Theme.colors.text1,
+                        )
+                    }
                 }
             },
         )

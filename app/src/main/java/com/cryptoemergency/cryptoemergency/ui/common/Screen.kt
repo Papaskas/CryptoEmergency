@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -36,11 +37,17 @@ import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
  * отображаемым внутри [SnackbarHost].
  * @param contentColor Цвет содержимого
  * @param containerColor Цвет фона контейнера
+ * @param contentWindowInsets Scaffold будет учитывать вставки top/bottom только в том случае,
+ * если topBar/bottomBar отсутствуют, поскольку scaffold ожидает, что вместо этого topBar/bottomBar
+ * будут обрабатывать вставки. Любые вставки, используемые другими модификаторами заполнения insets
+ * или использующие WindowInsets в родительском макете, будут исключены из contentWindowInsets.
  * @param horizontalPadding Горизонтальное отступы для контента
  * @param bottomSpacing Пустое пространство снизу
  * @param bottomBar Компонент [NavigationBar] для отображения нижней панели
  * @param topBar Компонент [TopAppBar] для отображения верхней панели
- * @param content Компонуемая функция для отображения основного содержимого внутри [BoxScope].
+ * @param floatingActionButton Компонент FAB
+ * @param floatingActionButtonPosition Позиция компонента FAB
+ * @param content Основное содержимое
  */
 @Composable
 fun Screen(
@@ -55,6 +62,8 @@ fun Screen(
     bottomSpacing: Dp = 35.dp,
     bottomBar: @Composable () -> Unit = { BottomBar() },
     topBar: @Composable () -> Unit = { MainTopBar() },
+    floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButtonPosition: FabPosition = FabPosition.End,
     content: @Composable ColumnScope.(PaddingValues) -> Unit,
 ) {
     Scaffold(
@@ -70,6 +79,8 @@ fun Screen(
                 modifier = snackbarModifier.imePadding(),
             )
         },
+        floatingActionButton = floatingActionButton,
+        floatingActionButtonPosition = floatingActionButtonPosition,
         bottomBar = bottomBar,
         topBar = topBar,
     ) { innerPadding ->
@@ -85,5 +96,6 @@ fun Screen(
 
 /**
  * Глобальные стили применяемые к текущей странице, на момент создания нужны только для блюра BottomSheet
+ * !! Крайне не рекомендуется использовать !!
  * */
 val globalModifier: MutableState<Modifier> = mutableStateOf(Modifier)

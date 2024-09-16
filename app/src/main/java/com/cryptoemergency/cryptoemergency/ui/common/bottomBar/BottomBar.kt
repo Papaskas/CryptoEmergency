@@ -114,7 +114,7 @@ private fun RowScope.NavButton(
         },
         selected = isSelected,
         onClick = {
-            navController.navigate(Routes.Home.AddedStory) {
+            navController.navigate(Routes.Home.CreatePost) {
                 popUpTo(navController.graph.startDestinationId) {
                     saveState = true
                 }
@@ -146,7 +146,7 @@ private fun getBottomItems (): List<BottomItem> {
         BottomItem(
             null,
             null,
-            Routes.Home.AddedStory,
+            Routes.Home.CreatePost,
         ),
         BottomItem(
             res.getString(R.string.chat),

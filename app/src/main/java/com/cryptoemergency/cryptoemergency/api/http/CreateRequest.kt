@@ -20,6 +20,8 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 import io.ktor.util.StringValues
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import okio.IOException
@@ -29,6 +31,7 @@ import kotlin.jvm.Throws
 /**
  * Безопасная и универсальная функция HTTP-запроса, которая обрабатывает различные сценарии,
  * такие как исключения при сериализации, исключения при ответе сервера и проблемы с сетевым подключением.
+ * Выполняется в IO потоке
  *
  * @param path Путь к запрашиваемой конечной точке API.
  * @param context Контекст, необходимый для извлечения токена из внутреннего хранилища.
@@ -47,10 +50,10 @@ import kotlin.jvm.Throws
  * @return [ApiResponse.Success] или [ApiResponse.Error] в завсисимости от статуса запроса.
  * Ответ ApiResponse содержит статус HTTP, заголовки и обработанные данные ответа
  *
- * @throws SerializationException Если во время сериализации данных ответа возникает ошибка.
- * @throws ServerResponseException Если в ответе сервера содержится ошибка.
- * @throws UnknownHostException Если нет подключения к Интернету.
- * @throws IOException Если во время сетевого подключения возникают ошибки.
+ * @throws SerializationException Если не правильно указан тип принимаемых данных
+ * @throws ServerResponseException Если в ответе сервера содержится ошибка
+ * @throws UnknownHostException Если нет подключения к Интернету
+ * @throws IOException Если во время сетевого подключения возникают ошибки
  * @throws IllegalArgumentException Если body, SuccessResponse или ErrorResponse не data class или не @Serializable
  */
 @Throws(
@@ -70,63 +73,65 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.c
     body: @Serializable Any? = null,
     overrideToken: String? = null,
     context: Context,
-): ApiResponse<out SuccessResponse, out ErrorResponse> = try {
-    checkResponseTypes<SuccessResponse, ErrorResponse>()
+): ApiResponse<out SuccessResponse, out ErrorResponse> = withContext(Dispatchers.IO) {
+    try {
+        checkResponseTypes<SuccessResponse, ErrorResponse>()
 
-    val response =
-        request {
-            this.method = method
-            url {
-                this.protocol = protocol
-                this.host = host
-                this.port = port
-                path(path)
-                parameters.appendAll(params)
+        val response =
+            request {
+                this.method = method
+                url {
+                    this.protocol = protocol
+                    this.host = host
+                    this.port = port
+                    path(path)
+                    parameters.appendAll(params)
+                }
+                contentType(ContentType.Application.Json)
+                setHeaders(overrideToken, context)
+                body(body)
             }
-            contentType(ContentType.Application.Json)
-            setHeaders(overrideToken, context)
-            body(body)
+
+        val responseBody = response.body<String>()
+
+        if (response.status.isSuccess()) {
+            ApiResponse.Success(
+                status = response.status,
+                headers = response.headers,
+                body = json.decodeFromString<SuccessResponse>(responseBody),
+            )
+        } else {
+            ApiResponse.Error(
+                status = response.status,
+                headers = response.headers,
+                body = json.decodeFromString<ErrorResponse>(responseBody),
+            )
         }
+    } catch (e: SerializationException) {
+        ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
 
-    val responseBody = response.body<String>()
-
-    if (response.status.isSuccess()) {
-        ApiResponse.Success(
-            status = response.status,
-            headers = response.headers,
-            body = json.decodeFromString<SuccessResponse>(responseBody),
-        )
-    } else {
         ApiResponse.Error(
-            status = response.status,
-            headers = response.headers,
-            body = json.decodeFromString<ErrorResponse>(responseBody),
+            status = HttpStatusCode.SerializationException,
+        )
+    } catch (e: ServerResponseException) {
+        ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
+
+        ApiResponse.Error(
+            status = HttpStatusCode.InternalServerError,
+        )
+    } catch (e: UnknownHostException) { // Нет интернета
+        ErrorResponse::class.qualifiedName?.let { Log.e("UnknownHostException", it) }
+
+        ApiResponse.Error(
+            status = HttpStatusCode.UnknownHostException,
+        )
+    } catch (e: IOException) { // Ошибки соединений
+        ErrorResponse::class.qualifiedName?.let { Log.e("IOException", it) }
+
+        ApiResponse.Error(
+            status = HttpStatusCode.IOException,
         )
     }
-} catch (e: SerializationException) {
-    ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
-
-    ApiResponse.Error(
-        status = HttpStatusCode.SerializationException,
-    )
-} catch (e: ServerResponseException) {
-    ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
-
-    ApiResponse.Error(
-        status = HttpStatusCode.InternalServerError,
-    )
-} catch (e: UnknownHostException) { // Нет интернета
-    ErrorResponse::class.qualifiedName?.let { Log.e("UnknownHostException", it) }
-
-    ApiResponse.Error(
-        status = HttpStatusCode.UnknownHostException,
-    )
-} catch (e: IOException) { // Ошибки соединений
-    ErrorResponse::class.qualifiedName?.let { Log.e("IOException", it) }
-
-    ApiResponse.Error(
-        status = HttpStatusCode.IOException,
-    )
 }
 
 suspend fun HttpRequestBuilder.setHeaders(
@@ -151,6 +156,7 @@ fun HttpRequestBuilder.body(body: Any?) {
     setBody(body)
 }
 
+@Throws(IllegalArgumentException::class)
 inline fun <reified Success, reified Error> checkResponseTypes() {
     require(Success::class.isData && Success::class.annotations.any { it is Serializable }) {
         "Success response must be a data class and annotated with @Serializable"
