@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
+package com.cryptoemergency.cryptoemergency.ui.common.posts
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple

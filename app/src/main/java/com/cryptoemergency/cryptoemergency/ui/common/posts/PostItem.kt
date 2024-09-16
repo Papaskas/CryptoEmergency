@@ -1,6 +1,5 @@
-package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
+package com.cryptoemergency.cryptoemergency.ui.common.posts
 
-import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -43,35 +42,37 @@ import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.types.NewsItemType
+import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Media
+import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
+import com.cryptoemergency.cryptoemergency.types.PostViewType
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun NewsFeedItem(
-    props: NewsFeedItemProps
+fun PostItem(
+    post: Post,
+    viewType: PostViewType,
 ) {
-    val state = rememberPagerState { props.media.size }
+    val state = rememberPagerState { post.media.size }
 
     Column {
-        if (props.type == NewsItemType.FULL) {
+        if (viewType == PostViewType.FULL) {
             HeaderNews(
-                props.avatar,
-                props.authorName,
-                props.createDate
+                avatar = post.media[0].url,
+                authorName = "Александр криптовалюта",
+                createdAt = post.createdAt
             )
         }
         Content(
-            props.type,
-            props.media,
+            viewType,
+            post.media,
             state,
         )
-        if (props.type == NewsItemType.FULL) {
+        if (viewType == PostViewType.FULL) {
             Bottom(
-                props.media,
-                props.description,
-                state,
+                size = post.media.size,
+                description = post.description,
+                state = state,
             )
         }
     }
@@ -79,12 +80,12 @@ fun NewsFeedItem(
 
 @Composable
 private fun HeaderNews(
-    avatar: Uri,
+    avatar: String,
     authorName: String,
-    createDate: String,
+    createdAt: String,
 ) {
-    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val date = LocalDate.parse(createDate, format)
+    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val date = LocalDate.parse(createdAt, format)
     val expanded = remember { mutableStateOf(false) }
 
     Row(
@@ -195,19 +196,19 @@ private fun DropMenu(
 
 @Composable
 private fun Content(
-    type: NewsItemType,
-    media: List<Uri>,
+    viewType: PostViewType,
+    media: List<Media>,
     state: PagerState,
 ) {
     Box {
         if (media.size > 1) {
             HorizontalPager(state = state) { page ->
                 AsyncImage(
-                    model = media[page],
+                    model = media[page].url,
                     contentDescription = null,
                     modifier = Modifier
                         .then(
-                            if (type == NewsItemType.SHORT) {
+                            if (viewType == PostViewType.SHORT) {
                                 Modifier.height(124.dp)
                             } else {
                                 Modifier.height(375.dp)
@@ -219,11 +220,11 @@ private fun Content(
             }
         } else {
             AsyncImage(
-                model = media[0],
+                model = media[0].url,
                 contentDescription = null,
                 modifier = Modifier
                     .then(
-                        if (type == NewsItemType.SHORT) {
+                        if (viewType == PostViewType.SHORT) {
                             Modifier.height(124.dp)
                         } else {
                             Modifier.height(375.dp)
@@ -257,7 +258,7 @@ private fun Content(
 
 @Composable
 private fun Bottom(
-    media: List<Uri>,
+    size: Int,
     description: String?,
     state: PagerState,
 ) {
@@ -269,7 +270,7 @@ private fun Bottom(
             )
             .padding(Theme.dimens.padding),
     ) {
-        Pagination(media, state)
+        Pagination(size, state)
         Toolbar()
         Description(description)
     }
@@ -277,24 +278,26 @@ private fun Bottom(
 
 @Composable
 private fun ColumnScope.Pagination(
-    media: List<Uri>,
+    size: Int,
     state: PagerState,
 ) {
-    if (media.size > 1) {
+    if (size > 1) {
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            repeat(media.size) { index ->
-                val size by animateDpAsState(targetValue = if (state.currentPage == index) 6.dp else 4.dp)
+            repeat(size) { index ->
+                val boxSize by animateDpAsState(
+                    targetValue = if (state.currentPage == index) 6.dp else 4.dp
+                )
                 val color by animateColorAsState(
                     targetValue = if (state.currentPage == index) Theme.colors.accent else Color.Gray
                 )
 
                 Box(
                     modifier = Modifier
-                        .size(size)
+                        .size(boxSize)
                         .background(
                             color = color,
                             shape = CircleShape

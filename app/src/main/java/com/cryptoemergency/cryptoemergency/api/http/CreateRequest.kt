@@ -64,19 +64,17 @@ import kotlin.jvm.Throws
     IllegalArgumentException::class,
 )
 suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.createRequest(
-    method: HttpMethod = HttpMethod.Get,
+    context: Context,
+    path: String,
+    method: HttpMethod,
     protocol: URLProtocol = URLProtocol.byName[BuildConfig.PROTOCOL]!!,
     host: String = BuildConfig.HOST,
     port: Int = BuildConfig.PORT,
-    path: String,
     params: StringValues = StringValues.Empty,
     body: @Serializable Any? = null,
     overrideToken: String? = null,
-    context: Context,
 ): ApiResponse<out SuccessResponse, out ErrorResponse> = withContext(Dispatchers.IO) {
     try {
-        checkResponseTypes<SuccessResponse, ErrorResponse>()
-
         val response =
             request {
                 this.method = method
@@ -138,9 +136,9 @@ suspend fun HttpRequestBuilder.setHeaders(
     overrideToken: String?,
     context: Context,
 ) {
-    if (overrideToken != null) {
+    overrideToken?.let {
         header("Authorization", overrideToken)
-    } else {
+    } ?: run {
         header("Authorization", Store(Keys.TOKEN, context).get())
     }
 }
@@ -154,15 +152,4 @@ fun HttpRequestBuilder.body(body: Any?) {
     }
 
     setBody(body)
-}
-
-@Throws(IllegalArgumentException::class)
-inline fun <reified Success, reified Error> checkResponseTypes() {
-    require(Success::class.isData && Success::class.annotations.any { it is Serializable }) {
-        "Success response must be a data class and annotated with @Serializable"
-    }
-
-    require(Error::class.isData && Error::class.annotations.any { it is Serializable }) {
-        "Error response must be a data class and annotated with @Serializable"
-    }
 }

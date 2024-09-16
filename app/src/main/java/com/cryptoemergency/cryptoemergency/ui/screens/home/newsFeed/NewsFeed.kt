@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -23,12 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.NewsItemType
+import com.cryptoemergency.cryptoemergency.types.PostViewType
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.bottomBar.BottomBar
-import com.cryptoemergency.cryptoemergency.ui.common.newsFeed.NewsFeed
-import com.cryptoemergency.cryptoemergency.ui.common.newsFeed.NewsFeedHeader
+import com.cryptoemergency.cryptoemergency.ui.common.posts.ListPost
+import com.cryptoemergency.cryptoemergency.ui.common.posts.PostsHeader
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
 import kotlin.math.roundToInt
 
@@ -48,9 +49,9 @@ fun NewsFeedScreen(
 ) {
     val res = LocalContext.current.resources
     val showFilterMenu = remember { mutableStateOf(false) }
-    val newsItemType = remember { mutableStateOf(NewsItemType.FULL) }
+    val postViewType = remember { mutableStateOf(PostViewType.FULL) }
 
-    val topBarHeight = 110.dp
+    val topBarHeight = 110.dp // TODO: высота должны быть расчетной
     val topBarHeightPx = with(LocalDensity.current) { topBarHeight.roundToPx().toFloat() }
     val topBarOffsetHeightPx = remember { mutableFloatStateOf(0f) }
 
@@ -67,7 +68,7 @@ fun NewsFeedScreen(
 
     val topBarOffset by remember {
         derivedStateOf {
-            (topBarHeight + topBarOffsetHeightPx.floatValue.dp).coerceAtLeast(35.dp) // 35.dp == StatusBar
+            (topBarHeight + topBarOffsetHeightPx.floatValue.dp).coerceAtLeast(35.dp) // TODO: 35.dp == StatusBar
         }
     }
 
@@ -110,16 +111,20 @@ fun NewsFeedScreen(
                 ),
             ) { _ ->
                 Column {
-                    NewsFeedHeader(
-                        newsItemType = newsItemType,
+                    PostsHeader(
+                        postViewType = postViewType,
                         showFilterMenu = showFilterMenu,
                     )
 
-                    NewsFeed(
-                        showFilterMenu = showFilterMenu,
-                        items = viewModel.items,
-                        newsItemType = newsItemType,
-                    )
+                    val posts = viewModel.posts.collectAsState().value
+
+                    posts?.let {
+                        ListPost(
+                            showFilterMenu = showFilterMenu,
+                            posts = posts,
+                            postViewType = postViewType,
+                        )
+                    }
                 }
             }
         }

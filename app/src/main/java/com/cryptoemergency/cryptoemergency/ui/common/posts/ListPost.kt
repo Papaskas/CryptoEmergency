@@ -1,7 +1,6 @@
-package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
+package com.cryptoemergency.cryptoemergency.ui.common.posts
 
 import android.content.Context
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,16 +21,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.NewsFeedItemProps
-import com.cryptoemergency.cryptoemergency.types.NewsItemType
+import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Media
+import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
+import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.PostsResponse
+import com.cryptoemergency.cryptoemergency.types.PostViewType
 
 /**
- * Компонент списка новостей, панелью управления и табами
+ * Компонент списка постов, панелью управления и табами
  **/
 @Composable
-fun NewsFeed(
-    items: Array<NewsFeedItemProps>,
-    newsItemType: MutableState<NewsItemType>,
+fun ListPost(
+    posts: PostsResponse,
+    postViewType: MutableState<PostViewType>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     context: Context = LocalContext.current,
@@ -43,31 +44,25 @@ fun NewsFeed(
         modifier = modifier,
         contentPadding = PaddingValues(0.dp),
         verticalArrangement = Arrangement.spacedBy(
-            if (newsItemType.value == NewsItemType.FULL) {
+            if (postViewType.value == PostViewType.FULL) {
                 Theme.dimens.padding
             } else {
                 0.dp
             },
         ),
     ) {
-        items(1000000000) { index ->
-            if (newsItemType.value == NewsItemType.FULL) {
-                NewsFeedItem(
-                    props = NewsFeedItemProps(
-                        media = items[1].media,
-                        authorName = items[1].authorName,
-                        avatar = items[1].avatar,
-                        createDate = items[1].createDate,
-                        type = items[1].type,
-                        description = items[1].description,
-                    )
+        items(posts.postAll.size) { index ->
+            if (postViewType.value == PostViewType.FULL) {
+                PostItem(
+                    post = posts.postAll[index],
+                    viewType = postViewType.value,
                 )
             } else {
                 val isEven = index % 2 == 0
 
                 when (isEven) {
-                    true -> NewsTemplate(items)
-                    false -> ReverseNewsTemplate(items)
+                    true -> NewsTemplate(posts.postAll)
+                    false -> ReverseNewsTemplate(posts.postAll)
                 }
             }
         }
@@ -81,7 +76,7 @@ fun NewsFeed(
 
 @Composable
 private fun NewsTemplate(
-    items: Array<NewsFeedItemProps>,
+    posts: List<Post>,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -89,27 +84,27 @@ private fun NewsTemplate(
         Row {
             Row {
                 Temp(
-                    media = items[0].media[0],
+                    media = posts[0].media[0],
                     width = screenWidth / 3,
                     height = screenWidth / 1.5f,
                 )
                 Column {
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                 }
                 Column {
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                 }
@@ -119,16 +114,16 @@ private fun NewsTemplate(
         Row {
             Column {
                 Temp(
-                    media = items[0].media[0],
+                    media = posts[0].media[0],
                     width = screenWidth / 3,
                 )
                 Temp(
-                    media = items[0].media[0],
+                    media = posts[0].media[0],
                     width = screenWidth / 3,
                 )
             }
             Temp(
-                media = items[0].media[0],
+                media = posts[0].media[0],
                 width = screenWidth / 1.5f,
             )
         }
@@ -137,7 +132,7 @@ private fun NewsTemplate(
 
 @Composable
 private fun ReverseNewsTemplate(
-    items: Array<NewsFeedItemProps>,
+    posts: List<Post>,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -146,27 +141,27 @@ private fun ReverseNewsTemplate(
             Row {
                 Column {
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                 }
                 Column {
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                     Temp(
-                        media = items[0].media[0],
+                        media = posts[0].media[0],
                         width = screenWidth / 3,
                     )
                 }
             }
             Temp(
-                media = items[0].media[0],
+                media = posts[0].media[0],
                 width = screenWidth / 3,
                 height = screenWidth / 1.5f,
             )
@@ -174,16 +169,16 @@ private fun ReverseNewsTemplate(
 
         Row {
             Temp(
-                media = items[0].media[0],
+                media = posts[0].media[0],
                 width = screenWidth / 1.5f,
             )
             Column {
                 Temp(
-                    media = items[0].media[0],
+                    media = posts[0].media[0],
                     width = screenWidth / 3,
                 )
                 Temp(
-                    media = items[0].media[0],
+                    media = posts[0].media[0],
                     width = screenWidth / 3,
                 )
             }
@@ -193,7 +188,7 @@ private fun ReverseNewsTemplate(
 
 @Composable
 private fun Temp(
-    media: Uri,
+    media: Media,
     width: Dp,
     height: Dp = width,
 ) {

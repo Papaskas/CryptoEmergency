@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common.newsFeed
+package com.cryptoemergency.cryptoemergency.ui.common.posts
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.NewsItemType
+import com.cryptoemergency.cryptoemergency.types.PostViewType
 
 @Composable
-fun NewsFeedHeader(
-    newsItemType: MutableState<NewsItemType>,
+fun PostsHeader(
+    postViewType: MutableState<PostViewType>,
     showFilterMenu: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
@@ -41,12 +41,12 @@ fun NewsFeedHeader(
             )
         }
         IconButton(onClick = {
-            newsItemType.value = NewsItemType.FULL
+            postViewType.value = PostViewType.FULL
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
                 contentDescription = "sort by large",
-                tint = if (newsItemType.value == NewsItemType.FULL) {
+                tint = if (postViewType.value == PostViewType.FULL) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1
@@ -54,12 +54,12 @@ fun NewsFeedHeader(
             )
         }
         IconButton(onClick = {
-            newsItemType.value = NewsItemType.SHORT
+            postViewType.value = PostViewType.SHORT
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
                 contentDescription = "sort by grid",
-                tint = if (newsItemType.value == NewsItemType.SHORT) {
+                tint = if (postViewType.value == PostViewType.SHORT) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1
