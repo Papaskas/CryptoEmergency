@@ -19,7 +19,7 @@ sealed class Routes {
         data object CreatePost : Routes()
 
         @Serializable
-        data object Chat : Routes()
+        data object Cems : Routes()
 
         @Serializable
         data object Menu : Routes()
@@ -28,6 +28,9 @@ sealed class Routes {
     interface Page {
         @Serializable
         data object NewsFeed : Routes()
+
+        @Serializable
+        data object Chat : Routes()
 
         @Serializable
         data object News : Routes()

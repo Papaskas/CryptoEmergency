@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
@@ -52,10 +53,12 @@ import java.time.format.DateTimeFormatter
 fun PostItem(
     post: Post,
     viewType: PostViewType,
+    modifier: Modifier = Modifier,
+    mediaModifier: Modifier = Modifier,
 ) {
     val state = rememberPagerState { post.media.size }
 
-    Column {
+    Column(modifier = modifier) {
         if (viewType == PostViewType.FULL) {
             HeaderNews(
                 avatar = post.media[0].url,
@@ -64,9 +67,9 @@ fun PostItem(
             )
         }
         Content(
-            viewType,
-            post.media,
-            state,
+            media = post.media,
+            state = state,
+            mediaModifier = mediaModifier,
         )
         if (viewType == PostViewType.FULL) {
             Bottom(
@@ -196,25 +199,20 @@ private fun DropMenu(
 
 @Composable
 private fun Content(
-    viewType: PostViewType,
     media: List<Media>,
     state: PagerState,
+    mediaModifier: Modifier,
 ) {
-    Box {
+    Box(mediaModifier) {
         if (media.size > 1) {
-            HorizontalPager(state = state) { page ->
+            HorizontalPager(
+                state = state,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
                 AsyncImage(
                     model = media[page].url,
                     contentDescription = null,
-                    modifier = Modifier
-                        .then(
-                            if (viewType == PostViewType.SHORT) {
-                                Modifier.height(124.dp)
-                            } else {
-                                Modifier.height(375.dp)
-                            }
-                        )
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -222,15 +220,7 @@ private fun Content(
             AsyncImage(
                 model = media[0].url,
                 contentDescription = null,
-                modifier = Modifier
-                    .then(
-                        if (viewType == PostViewType.SHORT) {
-                            Modifier.height(124.dp)
-                        } else {
-                            Modifier.height(375.dp)
-                        }
-                    )
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
         }

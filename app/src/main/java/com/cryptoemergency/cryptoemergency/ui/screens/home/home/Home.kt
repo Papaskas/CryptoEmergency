@@ -249,7 +249,7 @@ private fun getMenuItems(): Array<MenuItemType> {
         MenuItemType(res.getString(R.string.news), Routes.Page.News, R.drawable.news),
         MenuItemType(res.getString(R.string.exchangers), Routes.Page.Exchangers, R.drawable.exchangers),
         MenuItemType(res.getString(R.string.exchanges), Routes.Page.Exchanges, R.drawable.exchanges),
-        MenuItemType(res.getString(R.string.chat), Routes.Home.Chat, R.drawable.chat),
+        MenuItemType(res.getString(R.string.chat), Routes.Page.Chat, R.drawable.chat),
         MenuItemType(res.getQuantityString(R.plurals.user, 9), Routes.Page.Users, R.drawable.users),
         MenuItemType(res.getString(R.string.ico_rating), Routes.Page.ICORating, R.drawable.ico_rating),
         MenuItemType(res.getString(R.string.startups), Routes.Page.Startups, R.drawable.startups),

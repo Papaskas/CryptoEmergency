@@ -36,18 +36,16 @@ fun FilterBottomSheet(
     selectedFilter: MutableState<String>,
     showBottomSheet: MutableState<Boolean>,
 ) {
-    val context = LocalContext.current
+    val res = LocalContext.current.resources
 
-    val items = arrayOf(
-        ItemType(R.drawable.infinity, context.getString(R.string.all)),
-        ItemType(R.drawable.image, context.resources.getQuantityString(R.plurals.photo, 1)),
-        ItemType(R.drawable.video, context.resources.getQuantityString(R.plurals.video, 1)),
-        ItemType(R.drawable.text, context.getString(R.string.text)),
+    val items = listOf(
+        ItemType(R.drawable.infinity, res.getString(R.string.general_feed)),
+        ItemType(R.drawable.image, res.getString(R.string.subscription_feed)),
     )
 
     BottomSheet(
         showBottomSheet = showBottomSheet,
-        title = context.getString(R.string.filter),
+        title = res.getString(R.string.filter),
         contentPadding = 0.dp,
     ) {
         items.forEach {

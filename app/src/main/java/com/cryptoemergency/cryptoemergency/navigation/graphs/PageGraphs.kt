@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.ui.screens.pages.chat.ChatScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.academy.AcademyScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.career.CareerScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.exchangers.ExchangersScreen
@@ -23,6 +24,7 @@ fun NavGraphBuilder.pageGraphs() {
     composable<Routes.Page.Career> { CareerScreen() }
     composable<Routes.Page.Wallet> { WalletScreen() }
     composable<Routes.Page.Users> { UsersScreen() }
+    composable<Routes.Page.Chat> { ChatScreen() }
     composable<Routes.Page.Academy> { AcademyScreen() }
     composable<Routes.Page.Exchangers> { ExchangersScreen() }
     composable<Routes.Page.Exchanges> { ExchangesScreen() }

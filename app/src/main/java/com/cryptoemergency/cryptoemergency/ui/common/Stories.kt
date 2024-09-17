@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.sections
+package com.cryptoemergency.cryptoemergency.ui.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -17,28 +17,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
 
 /**
-* Блок сторизов
-* */
+ * Комопнент stories (cems)
+ **/
 @Composable
-fun Stories(
-    viewModel: ProfileViewModel,
-) {
+fun Stories() {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         item {
             Story(
                 R.drawable.added,
-                "Добавить",
+                "Добавить", // TODO: translate
             )
         }
         items(9) { index ->
             Story(
                 R.drawable.avatar_placeholder,
-                "Актуальное",
+                "Актуальное", // TODO: translate
             )
         }
     }

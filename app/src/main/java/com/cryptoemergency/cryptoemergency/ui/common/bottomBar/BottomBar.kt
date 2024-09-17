@@ -102,7 +102,7 @@ private fun RowScope.NavButton(
             Box {
                 Icon(
                     painter = painterResource(R.drawable.added_btn), // Окрашиваемая часть
-                    contentDescription = "Добавить видео",
+                    contentDescription = "Добавить видео", // TODO: translate
                     tint = if (isSelected) Theme.colors.accent else Theme.colors.text4
                 )
                 Icon(
@@ -149,9 +149,9 @@ private fun getBottomItems (): List<BottomItem> {
             Routes.Home.CreatePost,
         ),
         BottomItem(
-            res.getString(R.string.chat),
-            R.drawable.chat__filled,
-            Routes.Home.Chat
+            res.getString(R.string.cems),
+            R.drawable.cems,
+            Routes.Home.Cems
         ),
         BottomItem(
             res.getString(R.string.more),

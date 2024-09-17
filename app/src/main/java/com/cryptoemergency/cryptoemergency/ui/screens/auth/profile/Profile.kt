@@ -8,16 +8,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.Stories
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.ProfileTopBar
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.sections.AboutUser
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.sections.Content
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.sections.Stories
 
 @Composable
 fun ProfileScreen(
@@ -43,7 +42,7 @@ fun ProfileScreen(
             CommonHorizontalDivider()
 
             Box(Modifier.padding(Theme.dimens.padding)) {
-                Stories(viewModel)
+                Stories()
             }
 
             Content(viewModel)

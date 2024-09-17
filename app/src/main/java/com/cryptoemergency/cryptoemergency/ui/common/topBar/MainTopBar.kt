@@ -42,7 +42,7 @@ fun MainTopBar(
                     Spacer(Modifier.width(Theme.dimens.padding))
                     Icon(
                         painter = painterResource(Theme.icons.logo),
-                        contentDescription = "Лого",
+                        contentDescription = "Лого", // TODO: translate
                         tint = Color.Unspecified,
                         modifier = Modifier.clickable(
                             interactionSource = remember { MutableInteractionSource() },
@@ -54,20 +54,32 @@ fun MainTopBar(
                 }
             },
             actions = {
+                IconButton(onClick = {
+                    navController.navigate(Routes.Page.Chat)
+                }) {
+                    Icon(
+                        painter = painterResource(R.drawable.chat__filled),
+                        contentDescription = "Чат", // TODO: translate
+                        tint = Color.Unspecified,
+                    )
+                }
+
                 IconButton(onClick = { /**/ }) {
                     Icon(
                         painterResource(R.drawable.notification),
-                        contentDescription = "Уведомления",
+                        contentDescription = "Уведомления", // TODO: translate
                         tint = Theme.colors.text6,
                     )
                 }
+
+                Spacer(Modifier.width(5.dp))
                 IconButton(onClick = {
                     navController.navigate(Routes.Auth.Profile)
                 }) {
                     Icon(
                         modifier = Modifier.size(40.dp),
                         painter = painterResource(R.drawable.avatar_placeholder),
-                        contentDescription = "Профиль",
+                        contentDescription = "Профиль", // TODO: translate
                         tint = Color.Unspecified,
                     )
                 }
