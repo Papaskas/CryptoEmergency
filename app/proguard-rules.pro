@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Сохранить все классы и методы, аннотированные @Keep
+-keep @androidx.annotation.Keep class * { *; }
+
 # Требование для release сборки
 -dontwarn javax.servlet.ServletContainerInitializer
 

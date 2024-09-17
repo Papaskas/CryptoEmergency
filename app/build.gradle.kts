@@ -35,17 +35,15 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(getKeystoreFile())
-            storePassword = System.getenv("KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("KEY_ALIAS")
-            keyPassword = System.getenv("KEY_PASSWORD")
+            storeFile = file("C:/Users/pavel/Desktop/ce.jks")
+            storePassword = "1k1aybW1jf2x\$1hp"
+            keyAlias = "main"
+            keyPassword = "1k1aybW1jf2x\$1hp"
         }
     }
     buildTypes {
         release {
             isMinifyEnabled = true
-            enableAndroidTestCoverage = true
-            enableUnitTestCoverage = true
             signingConfig = signingConfigs.getByName("release")
 
             proguardFiles(
@@ -77,7 +75,7 @@ android {
             isDebuggable = true
             isJniDebuggable = true
 
-            ndk { debugSymbolLevel = "SYMBOL_TABLE" }
+            ndk { debugSymbolLevel = "FULL" }
 
             buildConfigField(
                 "String",

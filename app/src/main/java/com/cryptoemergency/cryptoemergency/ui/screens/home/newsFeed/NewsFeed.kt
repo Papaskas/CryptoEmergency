@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.types.PostViewType
 import com.cryptoemergency.cryptoemergency.ui.common.FullScreen
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostList
@@ -17,6 +18,8 @@ fun NewsFeedScreen(
 ) {
     val showFilterMenu = remember { mutableStateOf(false) }
     val postViewType = remember { mutableStateOf(PostViewType.FULL) }
+
+    Listener(viewModel.message)
 
     FullScreen {
         Column {
