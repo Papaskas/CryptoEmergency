@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Требование для release сборки
+-dontwarn javax.servlet.ServletContainerInitializer
+
 # Удаление вызовов методов логирования Android
 -assumenosideeffects class android.util.Log {
     public static int v(...);

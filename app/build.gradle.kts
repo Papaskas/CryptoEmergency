@@ -44,6 +44,8 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
             signingConfig = signingConfigs.getByName("release")
 
             proguardFiles(
