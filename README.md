@@ -16,7 +16,7 @@
 # Логирование
 
 > В `release` сборке логирования - нет.<br/>
-> Log.{} - убирается в конфиге `proguard-rules.pro`<br/>
+> `Log.*`, `print` и `println` - в release сборке убираются в конфиге `proguard-rules.pro`<br/>
 > Логирование сетевых запросов убирается проверкой `BuildConfig.DEBUG` в файле `api/network/HttpClient`
 
 # Locale

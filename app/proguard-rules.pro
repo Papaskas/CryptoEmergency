@@ -35,3 +35,9 @@
     public static int e(...);
     public static int wtf(...);
 }
+
+# Удаление вызовов print и println
+-assumenosideeffects class java.io.PrintStream {
+    public void print(...);
+    public void println(...);
+}

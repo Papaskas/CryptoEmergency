@@ -35,10 +35,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("C:/Users/pavel/Desktop/ce.jks")
-            storePassword = "1k1aybW1jf2x\$1hp"
-            keyAlias = "main"
-            keyPassword = "1k1aybW1jf2x\$1hp"
+            storeFile = file(getKeystoreFile())
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
     buildTypes {
