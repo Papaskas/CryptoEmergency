@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cryptoemergency.cryptoemergency.R
@@ -10,9 +11,13 @@ import javax.inject.Inject
 class CreatePostViewModel @Inject constructor(
 
 ) : ViewModel() {
+    val columnCount = 4
     val currentPhoto = R.drawable.banner1
 
-    var selectedRatioOption = mutableStateOf(PhotoFormat.RATIO_1X1)
+    val selectionMedia = mutableSetOf<Uri>()
+    val multipleSelectionIsActive = mutableStateOf(false)
+
+    val selectedRatioOption = mutableStateOf(PhotoFormat.RATIO_1X1)
 }
 
 enum class PhotoFormat(val title: String) {

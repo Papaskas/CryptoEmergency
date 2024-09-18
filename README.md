@@ -161,7 +161,7 @@ class ThemeViewModel @Inject constructor(
 
 # Сетевые запросы
 
-> Основной конструктор запросов: `api/network/SafeRequest.kt` - его трогать нельзя. От него следует
+> Основной конструктор запросов: `api/network/CreateRequest.kt` - его трогать нельзя. От него следует
   создать другие запросы<br/>
 > Интерфейс полей ответа находится в `api/network/ApiResponse`<br/>
 
@@ -183,20 +183,20 @@ data class ErrorResponse( // Возвращаемый тип в случае о�
 )
 
 @kotlinx.serialization.Serializable
-data class Request(
+data class Request( // Тело запроса
   val _id: String
 )
 
 suspend fun getCurrentNews(context: Context, _id: String) =
-  client.safeRequest<SuccessResponse, ErrorResponse>(
-    path = "api/keine/news/sort",
+  client.createRequest<SuccessResponse, ErrorResponse>(
+    path = "api/news",
     method = HttpMethod.Post,
     body = Request(_id), // Необязательный аргумент
     context = context,
   )
 
 //--- Обращение к этой фукнции ---//
-viewModelScope.launch(Dispatchers.IO) {
+viewModelScope.launch() {
   val res = getCurrentNews(
     context = context,
     _id = "id"
@@ -219,3 +219,7 @@ viewModelScope.launch(Dispatchers.IO) {
   }
 }
 ```
+
+# Разное
+
+> В хранилище Bitrix24 находятся файлы signingConfigs 
