@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost
+package com.cryptoemergency.cryptoemergency.ui.screens.createPost.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,21 +15,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.getMediaFiles
+import com.cryptoemergency.cryptoemergency.navigation.Routes
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.MediaMenu
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.RatioChanger
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.SelectedMedia
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.Toolbar
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.WarningHeader
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components.MediaMenu
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components.RatioChanger
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components.SelectedMedia
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components.Toolbar
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components.WarningHeader
 
 @Composable
-fun CreatePost(
-    viewModel: CreatePostViewModel = hiltViewModel()
-) {
+fun CreatePostScreen(viewModel: CreatePostViewModel) {
     val mediaFiles by getMediaFiles()
 
     Screen(
@@ -38,7 +38,7 @@ fun CreatePost(
             actions = { ActionsTopBar() },
             navigationIcon = {},
         ) },
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(viewModel) },
         horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
     ) {
@@ -74,16 +74,27 @@ private fun ActionsTopBar() {
 }
 
 @Composable
-private fun BottomBar() {
-    Box(Modifier
-        .padding(horizontal = Theme.dimens.padding)
-        .padding(
-            top = Theme.dimens.padding,
-            bottom = Theme.dimens.padding * 2,
-        )
+private fun BottomBar(
+    viewModel: CreatePostViewModel
+) {
+    val navController = LocalNavController.current
+
+    Box(
+        modifier = Modifier
+            .padding(horizontal = Theme.dimens.padding)
+            .padding(
+                top = Theme.dimens.padding,
+                bottom = Theme.dimens.padding * 2,
+            )
     ) {
         CommonButton(
-            onClick = {},
+            onClick = {
+                navController.navigate(Routes.CreatePost.ModifyPost(
+                    viewModel.selectedMedia.toList().map {
+                        it.toString()
+                    }
+                ))
+            },
             text = "Далее", // TODO: перевод
         )
     }

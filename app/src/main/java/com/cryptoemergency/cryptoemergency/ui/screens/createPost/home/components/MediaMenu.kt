@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components
+package com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.CreatePostViewModel
 
 fun LazyStaggeredGridScope.MediaMenu(
     viewModel: CreatePostViewModel,

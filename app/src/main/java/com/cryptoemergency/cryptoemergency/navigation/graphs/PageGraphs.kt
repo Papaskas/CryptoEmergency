@@ -31,6 +31,7 @@ fun NavGraphBuilder.pageGraphs() {
     composable<Routes.Page.ICORating> { ICORatingScreen() }
     composable<Routes.Page.NewsFeed> { NewsFeedScreen() }
     composable<Routes.Page.Startups> { StartupsScreen() }
+
     composable<Routes.Page.QRCode> {
         val params: Routes.Page.QRCode = it.toRoute()
 

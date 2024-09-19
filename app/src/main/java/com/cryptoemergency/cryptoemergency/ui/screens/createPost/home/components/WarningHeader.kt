@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components
+package com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.CreatePostViewModel
 
 fun LazyStaggeredGridScope.WarningHeader(
     viewModel: CreatePostViewModel

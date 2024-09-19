@@ -67,7 +67,7 @@ data class CommonShape(
 
 data class Dimens(
     val padding: Dp,
-    val shape: Dp,
+    val radius: Dp,
 )
 
 data class Icons(

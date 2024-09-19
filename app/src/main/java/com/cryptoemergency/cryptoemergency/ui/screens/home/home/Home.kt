@@ -129,7 +129,7 @@ private fun Swiper() {
                         width = width,
                         height = 142.dp,
                     )
-                    .clip(RoundedCornerShape(Theme.dimens.shape))
+                    .clip(RoundedCornerShape(Theme.dimens.radius))
             )
         }
     }

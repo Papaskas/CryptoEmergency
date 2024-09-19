@@ -44,8 +44,8 @@ fun BottomSheet(
     ModalBottomSheet(
         modifier = modifier.fillMaxHeight(),
         shape = RoundedCornerShape(
-            topStart = Theme.dimens.shape,
-            topEnd = Theme.dimens.shape,
+            topStart = Theme.dimens.radius,
+            topEnd = Theme.dimens.radius,
         ),
         sheetState = sheetState,
         dragHandle = null,

@@ -37,7 +37,10 @@ fun BottomBar(
                 val isSelected = currentRoute == item.route::class.qualifiedName
 
                 if (item.label == null || item.icon == null) {
-                    NavButton(isSelected)
+                    NavButton(
+                        route = item.route,
+                        isSelected = isSelected,
+                    )
                 } else {
                     NavItem(
                         route = item.route,
@@ -93,6 +96,7 @@ private fun RowScope.NavItem(
 
 @Composable
 private fun RowScope.NavButton(
+    route: Routes,
     isSelected: Boolean,
 ) {
     val navController = LocalNavController.current
@@ -114,7 +118,7 @@ private fun RowScope.NavButton(
         },
         selected = isSelected,
         onClick = {
-            navController.navigate(Routes.Home.CreatePost) {
+            navController.navigate(route) {
                 popUpTo(navController.graph.startDestinationId) {
                     saveState = true
                 }
@@ -146,7 +150,7 @@ private fun getBottomItems (): List<BottomItem> {
         BottomItem(
             null,
             null,
-            Routes.Home.CreatePost,
+            Routes.CreatePost.Home,
         ),
         BottomItem(
             res.getString(R.string.cems),

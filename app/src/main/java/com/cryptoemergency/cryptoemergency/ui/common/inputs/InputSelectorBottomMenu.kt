@@ -129,11 +129,11 @@ private fun inputShape(
 ): RoundedCornerShape {
     return if (expanded) {
         RoundedCornerShape(
-            topStart = Theme.dimens.shape,
-            topEnd = Theme.dimens.shape,
+            topStart = Theme.dimens.radius,
+            topEnd = Theme.dimens.radius,
         )
     } else {
-        RoundedCornerShape(Theme.dimens.shape)
+        RoundedCornerShape(Theme.dimens.radius)
     }
 }
 
@@ -185,8 +185,8 @@ private fun DropDown(
         modifier = Modifier
             .commonBorder(
                 shape = RoundedCornerShape(
-                    bottomStart = Theme.dimens.shape,
-                    bottomEnd = Theme.dimens.shape,
+                    bottomStart = Theme.dimens.radius,
+                    bottomEnd = Theme.dimens.radius,
                 ),
                 isError = false,
                 isFocused = false,
@@ -194,8 +194,8 @@ private fun DropDown(
             .background(
                 color = Theme.colors.surface1,
                 shape = RoundedCornerShape(
-                    bottomStart = Theme.dimens.shape,
-                    bottomEnd = Theme.dimens.shape,
+                    bottomStart = Theme.dimens.radius,
+                    bottomEnd = Theme.dimens.radius,
                 )
             )
             .zIndex(-1f),

@@ -160,8 +160,8 @@ private fun BottomNav(
 ) {
     Surface(
         shape = RoundedCornerShape(
-            topStart = Theme.dimens.shape,
-            topEnd = Theme.dimens.shape,
+            topStart = Theme.dimens.radius,
+            topEnd = Theme.dimens.radius,
         ),
         color = Theme.colors.surface3,
         modifier = Modifier
@@ -169,8 +169,8 @@ private fun BottomNav(
                 1.dp,
                 Theme.colors.stroke,
                 RoundedCornerShape(
-                    topStart = Theme.dimens.shape,
-                    topEnd = Theme.dimens.shape,
+                    topStart = Theme.dimens.radius,
+                    topEnd = Theme.dimens.radius,
                 )
             )
     ) {
@@ -238,7 +238,7 @@ private fun SelectableItem(
     viewModel: QRCodeViewModel,
 ) {
     Surface(
-        shape = RoundedCornerShape(Theme.dimens.shape),
+        shape = RoundedCornerShape(Theme.dimens.radius),
         color = Theme.colors.surface2,
         modifier = Modifier
             .then(
@@ -246,7 +246,7 @@ private fun SelectableItem(
                     Modifier.border(
                         1.dp,
                         Theme.colors.accent,
-                        RoundedCornerShape(Theme.dimens.shape)
+                        RoundedCornerShape(Theme.dimens.radius)
                     )
                 } else {
                     Modifier
@@ -264,7 +264,7 @@ private fun SelectableItem(
 
                 .padding(20.dp),
             color = Color.White,
-            shape = RoundedCornerShape(Theme.dimens.shape)
+            shape = RoundedCornerShape(Theme.dimens.radius)
         ) {
             Icon(
                 modifier = Modifier
@@ -272,7 +272,7 @@ private fun SelectableItem(
                     .border(
                         1.dp,
                         Theme.colors.strokeVariant,
-                        RoundedCornerShape(Theme.dimens.shape)
+                        RoundedCornerShape(Theme.dimens.radius)
                     )
                     .padding(10.dp),
                 painter = painterResource(R.drawable.qr_filled),

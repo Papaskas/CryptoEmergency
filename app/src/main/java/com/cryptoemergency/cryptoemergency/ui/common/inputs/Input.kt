@@ -112,7 +112,7 @@ fun Input(
     isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     contentAlignment: Alignment = Alignment.TopStart,
-    shape: Shape = RoundedCornerShape(Theme.dimens.shape),
+    shape: Shape = RoundedCornerShape(Theme.dimens.radius),
     cursorBrush: Brush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
 ) {
     val labelStyle = if (value.value.text.isNotEmpty() || isFocused) {

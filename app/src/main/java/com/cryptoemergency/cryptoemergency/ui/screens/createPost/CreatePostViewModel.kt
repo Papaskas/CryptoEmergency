@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost
+package com.cryptoemergency.cryptoemergency.ui.screens.createPost
 
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf

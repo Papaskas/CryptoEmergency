@@ -14,7 +14,7 @@ import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
 fun Modifier.commonBorder(
     isFocused: Boolean = false,
     isError: Boolean = false,
-    shape: Shape = RoundedCornerShape(Theme.dimens.shape),
+    shape: Shape = RoundedCornerShape(Theme.dimens.radius),
 ) = this.then(
     when {
         isError -> Modifier.border(1.dp, Theme.colors.error, shape)

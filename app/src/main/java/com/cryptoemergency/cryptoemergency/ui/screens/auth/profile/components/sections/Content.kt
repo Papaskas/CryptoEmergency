@@ -25,8 +25,8 @@ fun Content(
     Surface(
         color = Theme.colors.surface1,
         shape = RoundedCornerShape(
-            topStart = Theme.dimens.shape,
-            topEnd = Theme.dimens.shape,
+            topStart = Theme.dimens.radius,
+            topEnd = Theme.dimens.radius,
         ),
         modifier = Modifier
             .fillMaxSize()

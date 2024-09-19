@@ -1,6 +1,8 @@
 package com.cryptoemergency.cryptoemergency.navigation
 
+import android.net.Uri
 import androidx.annotation.Keep
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,15 +28,28 @@ sealed class Routes {
 
         @Keep
         @Serializable
-        data object CreatePost : Routes()
-
-        @Keep
-        @Serializable
         data object Cems : Routes()
 
         @Keep
         @Serializable
         data object Menu : Routes()
+    }
+
+    @Keep
+    interface CreatePost {
+        @Keep
+        @Serializable
+        data object Home : Routes()
+
+        @Keep
+        @Serializable
+        data class ModifyPost(
+            val media: List<String>
+        ) : Routes()
+
+        @Keep
+        @Serializable
+        data object GetGeolocation: Routes()
     }
 
     @Keep

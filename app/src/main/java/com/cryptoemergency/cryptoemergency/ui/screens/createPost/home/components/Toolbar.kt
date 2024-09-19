@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components
+package com.cryptoemergency.cryptoemergency.ui.screens.createPost.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.createPost.CreatePostViewModel
 
 fun LazyStaggeredGridScope.Toolbar(
     viewModel: CreatePostViewModel
