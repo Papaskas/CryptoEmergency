@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
@@ -11,7 +10,6 @@ import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.getPosts
 import com.cryptoemergency.cryptoemergency.repository.requests.getToken.getTokenRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

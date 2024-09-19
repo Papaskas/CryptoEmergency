@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common.topBar
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,7 +19,8 @@ import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 @Composable
 fun ScreenTopBar(
     title: String,
-    navigationIcon: (@Composable () -> Unit)? = null,
+    navigationIcon: @Composable (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     val navController = LocalNavController.current
 
@@ -49,6 +51,7 @@ fun ScreenTopBar(
                     }
                 }
             },
+            actions = actions
         )
 
         CommonHorizontalDivider()

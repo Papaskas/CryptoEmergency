@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.cryptoemergency.cryptoemergency.navigation.Routes
-import com.cryptoemergency.cryptoemergency.ui.screens.pages.chat.ChatScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.academy.AcademyScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.career.CareerScreen
+import com.cryptoemergency.cryptoemergency.ui.screens.pages.chat.ChatScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.exchangers.ExchangersScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.exchanges.ExchangesScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.icoRating.ICORatingScreen

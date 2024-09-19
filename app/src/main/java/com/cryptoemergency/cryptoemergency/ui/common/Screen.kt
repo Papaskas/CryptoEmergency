@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.ui.common
 
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues

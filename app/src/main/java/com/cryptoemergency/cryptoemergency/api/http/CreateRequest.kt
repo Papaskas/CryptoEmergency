@@ -26,7 +26,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import okio.IOException
 import java.net.UnknownHostException
-import kotlin.jvm.Throws
 
 /**
  * Безопасная и универсальная функция HTTP-запроса, которая обрабатывает различные сценарии,

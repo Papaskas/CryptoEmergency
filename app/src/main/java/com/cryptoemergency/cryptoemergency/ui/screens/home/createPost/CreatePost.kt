@@ -2,21 +2,14 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.createPost
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,9 +20,11 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar
-import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.CurrentPhoto
 import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.MediaMenu
 import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.RatioChanger
+import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.SelectedMedia
+import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.Toolbar
+import com.cryptoemergency.cryptoemergency.ui.screens.home.createPost.components.WarningHeader
 
 @Composable
 fun CreatePost(
@@ -40,7 +35,8 @@ fun CreatePost(
     Screen(
         topBar = { ScreenTopBar(
             title = "Создание поста", // TODO: перевод
-            navigationIcon = { NavigationIcon() }
+            actions = { ActionsTopBar() },
+            navigationIcon = {},
         ) },
         bottomBar = { BottomBar() },
         horizontalPadding = 0.dp,
@@ -52,8 +48,10 @@ fun CreatePost(
             verticalItemSpacing = 1.dp,
             horizontalArrangement = Arrangement.spacedBy(1.dp),
         ) {
-            CurrentPhoto(viewModel)
+            SelectedMedia(viewModel)
             RatioChanger(viewModel)
+            Toolbar(viewModel)
+            WarningHeader(viewModel)
             MediaMenu(
                 viewModel = viewModel,
                 mediaFiles = mediaFiles,
@@ -63,7 +61,7 @@ fun CreatePost(
 }
 
 @Composable
-private fun NavigationIcon() {
+private fun ActionsTopBar() {
     val navController = LocalNavController.current
 
     IconButton(onClick = { navController.popBackStack() }) {

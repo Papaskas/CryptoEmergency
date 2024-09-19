@@ -2,7 +2,6 @@ package com.cryptoemergency.cryptoemergency.api.http
 
 import io.ktor.http.Headers
 import io.ktor.http.HttpStatusCode
-import kotlinx.serialization.Serializable
 
 sealed interface ApiResponse<Success, Error> {
     data class Success<Success>(
