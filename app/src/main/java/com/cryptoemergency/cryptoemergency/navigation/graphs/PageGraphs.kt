@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.navigation.graphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.academy.AcademyScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.career.CareerScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.chat.ChatScreen
@@ -19,21 +19,21 @@ import com.cryptoemergency.cryptoemergency.ui.screens.pages.wallet.WalletScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.pages.web3.Web3Screen
 
 fun NavGraphBuilder.pageGraphs() {
-    composable<Routes.Page.News> { NewsScreen() }
-    composable<Routes.Page.Web3> { Web3Screen() }
-    composable<Routes.Page.Career> { CareerScreen() }
-    composable<Routes.Page.Wallet> { WalletScreen() }
-    composable<Routes.Page.Users> { UsersScreen() }
-    composable<Routes.Page.Chat> { ChatScreen() }
-    composable<Routes.Page.Academy> { AcademyScreen() }
-    composable<Routes.Page.Exchangers> { ExchangersScreen() }
-    composable<Routes.Page.Exchanges> { ExchangesScreen() }
-    composable<Routes.Page.ICORating> { ICORatingScreen() }
-    composable<Routes.Page.NewsFeed> { NewsFeedScreen() }
-    composable<Routes.Page.Startups> { StartupsScreen() }
+    composable<Destination.Page.News> { NewsScreen() }
+    composable<Destination.Page.Web3> { Web3Screen() }
+    composable<Destination.Page.Career> { CareerScreen() }
+    composable<Destination.Page.Wallet> { WalletScreen() }
+    composable<Destination.Page.Users> { UsersScreen() }
+    composable<Destination.Page.Chat> { ChatScreen() }
+    composable<Destination.Page.Academy> { AcademyScreen() }
+    composable<Destination.Page.Exchangers> { ExchangersScreen() }
+    composable<Destination.Page.Exchanges> { ExchangesScreen() }
+    composable<Destination.Page.ICORating> { ICORatingScreen() }
+    composable<Destination.Page.NewsFeed> { NewsFeedScreen() }
+    composable<Destination.Page.Startups> { StartupsScreen() }
 
-    composable<Routes.Page.QRCode> {
-        val params: Routes.Page.QRCode = it.toRoute()
+    composable<Destination.Page.QRCode> {
+        val params: Destination.Page.QRCode = it.toRoute()
 
         QRCodeScreen(params.text)
     }

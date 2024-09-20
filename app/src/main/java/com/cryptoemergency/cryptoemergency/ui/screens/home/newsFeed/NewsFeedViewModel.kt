@@ -24,21 +24,14 @@ class NewsFeedViewModel @Inject constructor(
 
     val message = MutableStateFlow<String?>(null)
 
-    init { // TODO: привести получение токена в норму
+    init {
         viewModelScope.launch {
-            val requestToken = getTokenRequest(context)
-            if (requestToken is ApiResponse.Success) {
-                val token = requestToken.headers["authorization"]!!
+            val res = getPostsRequest(context)
 
-                val res = getPostsRequest(context, token)
-
-                if (res is ApiResponse.Success) {
-                    _posts.value = res.body
-                } else if (res is ApiResponse.Error) {
-                    message.value = getDefaultHttpMessage(context, res.status)
-                }
-            } else if (requestToken is ApiResponse.Error) {
-                message.value = getDefaultHttpMessage(context, requestToken.status)
+            if (res is ApiResponse.Success) {
+                _posts.value = res.body
+            } else if (res is ApiResponse.Error) {
+                message.value = getDefaultHttpMessage(context, res.status)
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -120,6 +120,6 @@ private fun ListenerRedirect(
 }
 
 data class Redirect(
-    var route: Routes,
+    var route: Destination,
     var popBackStack: Boolean = false,
 )

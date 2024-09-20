@@ -114,4 +114,10 @@
     <string name="open">Открыть %s</string>
     <string name="back">Назад</string>
     <string name="change_theme">Изменить тему</string>
+    <string name="place">Место</string>
+    <string name="tags">Метки</string>
+    <string name="themes">Темы</string>
+    <string name="mark_people">Отметить людей</string>
+    <string name="image">Изображение</string>
+    <string name="video">Видео</string>
 </resources>

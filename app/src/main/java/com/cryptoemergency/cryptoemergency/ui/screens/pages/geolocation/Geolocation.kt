@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.createPost.getGeolocation
+package com.cryptoemergency.cryptoemergency.ui.screens.pages.geolocation
 
 import androidx.compose.runtime.Composable
 

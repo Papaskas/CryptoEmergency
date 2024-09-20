@@ -107,4 +107,10 @@
     <string name="back">Back</string>
     <string name="change_theme">Change theme</string>
     <string name="cems" translatable="false">Cems</string>
+    <string name="place">Place</string>
+    <string name="tags">Tags</string>
+    <string name="themes">Themes</string>
+    <string name="mark_people">Mark people</string>
+    <string name="image">Image</string>
+    <string name="video">Video</string>
 </resources>

@@ -41,7 +41,7 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
@@ -162,7 +162,7 @@ private fun Menu() {
 @Composable
 private fun MenuItem(
     title: String,
-    route: Routes,
+    route: Destination,
     @DrawableRes icon: Int,
 ) {
     val navController = LocalNavController.current
@@ -245,23 +245,23 @@ private fun getMenuItems(): Array<MenuItemType> {
     val res = LocalContext.current.resources
 
     return arrayOf(
-        MenuItemType(res.getString(R.string.news_feed), Routes.Page.NewsFeed, R.drawable.newsfeed),
-        MenuItemType(res.getString(R.string.news), Routes.Page.News, R.drawable.news),
-        MenuItemType(res.getString(R.string.exchangers), Routes.Page.Exchangers, R.drawable.exchangers),
-        MenuItemType(res.getString(R.string.exchanges), Routes.Page.Exchanges, R.drawable.exchanges),
-        MenuItemType(res.getString(R.string.chat), Routes.Page.Chat, R.drawable.chat),
-        MenuItemType(res.getQuantityString(R.plurals.user, 9), Routes.Page.Users, R.drawable.users),
-        MenuItemType(res.getString(R.string.ico_rating), Routes.Page.ICORating, R.drawable.ico_rating),
-        MenuItemType(res.getString(R.string.startups), Routes.Page.Startups, R.drawable.startups),
-        MenuItemType(res.getString(R.string.work_web3), Routes.Page.Web3, R.drawable.web3),
-        MenuItemType(res.getString(R.string.career), Routes.Page.Career, R.drawable.career),
-        MenuItemType(res.getString(R.string.academy), Routes.Page.Academy, R.drawable.academy),
-        MenuItemType(res.getString(R.string.wallet), Routes.Page.Wallet, R.drawable.wallet),
+        MenuItemType(res.getString(R.string.news_feed), Destination.Page.NewsFeed, R.drawable.newsfeed),
+        MenuItemType(res.getString(R.string.news), Destination.Page.News, R.drawable.news),
+        MenuItemType(res.getString(R.string.exchangers), Destination.Page.Exchangers, R.drawable.exchangers),
+        MenuItemType(res.getString(R.string.exchanges), Destination.Page.Exchanges, R.drawable.exchanges),
+        MenuItemType(res.getString(R.string.chat), Destination.Page.Chat, R.drawable.chat),
+        MenuItemType(res.getQuantityString(R.plurals.user, 9), Destination.Page.Users, R.drawable.users),
+        MenuItemType(res.getString(R.string.ico_rating), Destination.Page.ICORating, R.drawable.ico_rating),
+        MenuItemType(res.getString(R.string.startups), Destination.Page.Startups, R.drawable.startups),
+        MenuItemType(res.getString(R.string.work_web3), Destination.Page.Web3, R.drawable.web3),
+        MenuItemType(res.getString(R.string.career), Destination.Page.Career, R.drawable.career),
+        MenuItemType(res.getString(R.string.academy), Destination.Page.Academy, R.drawable.academy),
+        MenuItemType(res.getString(R.string.wallet), Destination.Page.Wallet, R.drawable.wallet),
     )
 }
 
 private data class MenuItemType(
     val title: String,
-    val route: Routes,
+    val route: Destination,
     @DrawableRes val icon: Int,
 )

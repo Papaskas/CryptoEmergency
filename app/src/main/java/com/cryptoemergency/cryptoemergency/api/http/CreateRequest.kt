@@ -20,8 +20,6 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 import io.ktor.util.StringValues
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import okio.IOException
@@ -53,7 +51,7 @@ import java.net.UnknownHostException
  * @throws ServerResponseException Если в ответе сервера содержится ошибка
  * @throws UnknownHostException Если нет подключения к Интернету
  * @throws IOException Если во время сетевого подключения возникают ошибки
- * @throws IllegalArgumentException Если body, SuccessResponse или ErrorResponse не data class или не @Serializable
+ * @throws IllegalArgumentException Если body не data class или не @Serializable
  */
 @Throws(
     SerializationException::class,
@@ -72,63 +70,61 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.c
     params: StringValues = StringValues.Empty,
     body: @Serializable Any? = null,
     overrideToken: String? = null,
-): ApiResponse<out SuccessResponse, out ErrorResponse> = withContext(Dispatchers.IO) {
-    try {
-        val response =
-            request {
-                this.method = method
-                url {
-                    this.protocol = protocol
-                    this.host = host
-                    this.port = port
-                    path(path)
-                    parameters.appendAll(params)
-                }
-                contentType(ContentType.Application.Json)
-                setHeaders(overrideToken, context)
-                body(body)
+): ApiResponse<out SuccessResponse, out ErrorResponse> = try {
+    val response =
+        request {
+            this.method = method
+            url {
+                this.protocol = protocol
+                this.host = host
+                this.port = port
+                path(path)
+                parameters.appendAll(params)
             }
-
-        val responseBody = response.body<String>()
-
-        if (response.status.isSuccess()) {
-            ApiResponse.Success(
-                status = response.status,
-                headers = response.headers,
-                body = json.decodeFromString<SuccessResponse>(responseBody),
-            )
-        } else {
-            ApiResponse.Error(
-                status = response.status,
-                headers = response.headers,
-                body = json.decodeFromString<ErrorResponse>(responseBody),
-            )
+            contentType(ContentType.Application.Json)
+            setHeaders(overrideToken, context)
+            body(body)
         }
-    } catch (e: SerializationException) {
-        ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
 
-        ApiResponse.Error(
-            status = HttpStatusCode.SerializationException,
+    val responseBody = response.body<String>()
+
+    if (response.status.isSuccess()) {
+        ApiResponse.Success(
+            status = response.status,
+            headers = response.headers,
+            body = json.decodeFromString<SuccessResponse>(responseBody),
         )
-    } catch (e: ServerResponseException) {
-        ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
-
+    } else {
         ApiResponse.Error(
-            status = HttpStatusCode.InternalServerError,
-        )
-    } catch (e: UnknownHostException) { // Нет интернета
-        ErrorResponse::class.qualifiedName?.let { Log.e("UnknownHostException", it) }
-
-        ApiResponse.Error(
-            status = HttpStatusCode.UnknownHostException,
-        )
-    } catch (e: IOException) { // Ошибки соединений
-        ErrorResponse::class.qualifiedName?.let { Log.e("IOException", it) }
-
-        ApiResponse.Error(
-            status = HttpStatusCode.IOException,
+            status = response.status,
+            headers = response.headers,
+            body = json.decodeFromString<ErrorResponse>(responseBody),
         )
     }
+} catch (e: SerializationException) {
+    ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
+
+    ApiResponse.Error(
+        status = HttpStatusCode.SerializationException,
+    )
+} catch (e: ServerResponseException) {
+    ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
+
+    ApiResponse.Error(
+        status = HttpStatusCode.InternalServerError,
+    )
+} catch (e: UnknownHostException) { // Нет интернета
+    ErrorResponse::class.qualifiedName?.let { Log.e("UnknownHostException", it) }
+
+    ApiResponse.Error(
+        status = HttpStatusCode.UnknownHostException,
+    )
+} catch (e: IOException) { // Ошибки соединений
+    ErrorResponse::class.qualifiedName?.let { Log.e("IOException", it) }
+
+    ApiResponse.Error(
+        status = HttpStatusCode.IOException,
+    )
 }
 
 suspend fun HttpRequestBuilder.setHeaders(

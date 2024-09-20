@@ -9,44 +9,33 @@ data class PostsResponse(
 
 @Serializable
 data class Post(
-    val comments: List<Comment>,
     val _id: String,
     val userId: User,
     val description: String,
     val media: List<Media>,
+    val likes: List<User>,
+    val comments: List<Comment>,
     val createdAt: String,
     val updatedAt: String,
-    val likes: List<Like>
+    val __v: Int,
 )
 
 @Serializable
 data class User(
     val _id: String,
-    val access: List<Access>,
+    val access: List<String>,
     val roles: List<String>,
     val createdAt: String,
     val updatedAt: String,
-    val __v: Int
-)
-
-@Serializable
-data class Access(
-    val access: String,
+    val __v: Int,
 )
 
 @Serializable
 data class Media(
-    val enum: List<String>,
     val _id: String,
     val type: String,
-    val url: String
-)
-
-@Serializable
-data class Like(
-    val _id: String,
-    val userId: String,
-    val createAt: String,
+    val originalUrl: String,
+    val resizedUrl: String? = null,
 )
 
 @Serializable

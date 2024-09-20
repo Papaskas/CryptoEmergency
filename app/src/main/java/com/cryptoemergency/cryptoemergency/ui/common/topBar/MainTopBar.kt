@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -48,14 +48,14 @@ fun MainTopBar(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
                         ) {
-                            navController.navigate(Routes.Home.Home)
+                            navController.navigate(Destination.Home.Home)
                         }
                     )
                 }
             },
             actions = {
                 IconButton(onClick = {
-                    navController.navigate(Routes.Page.Chat)
+                    navController.navigate(Destination.Page.Chat)
                 }) {
                     Icon(
                         painter = painterResource(R.drawable.chat__filled),
@@ -74,7 +74,7 @@ fun MainTopBar(
 
                 Spacer(Modifier.width(5.dp))
                 IconButton(onClick = {
-                    navController.navigate(Routes.Auth.Profile)
+                    navController.navigate(Destination.Auth.Profile)
                 }) {
                     Icon(
                         modifier = Modifier.size(40.dp),

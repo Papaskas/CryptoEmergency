@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
@@ -53,7 +53,7 @@ fun MoreDetailsBottomSheet(
         actionIcon = {
             IconButton(
                 onClick = {
-                    navController.navigate(Routes.Auth.ChangeProfileData)
+                    navController.navigate(Destination.Auth.ChangeProfileData)
                     it()
                 }
             ) {
@@ -106,7 +106,7 @@ private fun BioInfo(
 
             IconButton(onClick = {
                 globalModifier.value = Modifier
-                navController.navigate(Routes.Page.QRCode(
+                navController.navigate(Destination.Page.QRCode(
                     text = title,
                 ))
             }) {

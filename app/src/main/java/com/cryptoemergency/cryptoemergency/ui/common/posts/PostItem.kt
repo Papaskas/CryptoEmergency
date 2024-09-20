@@ -60,7 +60,7 @@ fun PostItem(
     Column(modifier = modifier) {
         if (viewType == PostViewType.FULL) {
             HeaderNews(
-                avatar = post.media[0].url,
+                avatar = post.media[0].originalUrl,
                 authorName = "Александр криптовалюта",
                 createdAt = post.createdAt
             )
@@ -68,7 +68,7 @@ fun PostItem(
         Content(
             media = post.media,
             state = state,
-            mediaModifier = mediaModifier,
+            modifier = mediaModifier,
         )
         if (viewType == PostViewType.FULL) {
             Bottom(
@@ -200,16 +200,16 @@ private fun DropMenu(
 private fun Content(
     media: List<Media>,
     state: PagerState,
-    mediaModifier: Modifier,
+    modifier: Modifier,
 ) {
-    Box(mediaModifier) {
+    Box(modifier) {
         if (media.size > 1) {
             HorizontalPager(
                 state = state,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
                 AsyncImage(
-                    model = media[page].url,
+                    model = media[page].originalUrl,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
@@ -217,7 +217,7 @@ private fun Content(
             }
         } else {
             AsyncImage(
-                model = media[0].url,
+                model = media[0].originalUrl,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,

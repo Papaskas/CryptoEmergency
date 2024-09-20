@@ -1,8 +1,6 @@
 package com.cryptoemergency.cryptoemergency.navigation
 
-import android.net.Uri
 import androidx.annotation.Keep
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 /**
@@ -14,109 +12,96 @@ import kotlinx.serialization.Serializable
  **/
 @Keep
 @Serializable
-sealed class Routes {
+sealed class Destination {
 
     @Keep
     interface Home {
         @Keep
         @Serializable
-        data object Home : Routes()
+        data object Home : Destination()
 
         @Keep
         @Serializable
-        data object News : Routes()
+        data object News : Destination()
 
         @Keep
         @Serializable
-        data object Cems : Routes()
+        data object CreatePost : Destination()
 
         @Keep
         @Serializable
-        data object Menu : Routes()
-    }
-
-    @Keep
-    interface CreatePost {
-        @Keep
-        @Serializable
-        data object Home : Routes()
+        data object Cems : Destination()
 
         @Keep
         @Serializable
-        data class ModifyPost(
-            val media: List<String>
-        ) : Routes()
-
-        @Keep
-        @Serializable
-        data object GetGeolocation: Routes()
+        data object Menu : Destination()
     }
 
     @Keep
     interface Page {
         @Keep
         @Serializable
-        data object NewsFeed : Routes()
+        data object NewsFeed : Destination()
 
         @Keep
         @Serializable
-        data object Chat : Routes()
+        data object Chat : Destination()
 
         @Keep
         @Serializable
-        data object News : Routes()
+        data object News : Destination()
 
         @Keep
         @Serializable
-        data object Exchangers : Routes()
+        data object Exchangers : Destination()
 
         @Keep
         @Serializable
-        data object Exchanges : Routes()
+        data object Exchanges : Destination()
 
         @Keep
         @Serializable
-        data object Users : Routes()
+        data object Users : Destination()
 
         @Keep
         @Serializable
-        data object ICORating : Routes()
+        data object ICORating : Destination()
 
         @Keep
         @Serializable
-        data object Startups : Routes()
+        data object Startups : Destination()
 
         @Keep
         @Serializable
-        data object Web3 : Routes()
+        data object Web3 : Destination()
 
         @Keep
         @Serializable
-        data object Career : Routes()
+        data object Career : Destination()
 
         @Keep
         @Serializable
-        data object Academy : Routes()
+        data object Academy : Destination()
 
         @Keep
         @Serializable
-        data object Wallet : Routes()
+        data object Wallet : Destination()
 
         @Keep
         @Serializable
         data class QRCode(
             val text: String
-        ) : Routes()
+        ) : Destination()
     }
 
     @Keep
     interface Auth {
         @Keep
         @Serializable
-        data object Profile : Routes()
+        data object Profile : Destination()
 
         @Keep
         @Serializable
-        data object ChangeProfileData : Routes()
+        data object ChangeProfileData : Destination()
     }
 }

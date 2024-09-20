@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
@@ -60,7 +60,7 @@ fun ProfileTopBar(
                     )
                 }
                 IconButton(onClick = {
-                    navController.navigate(Routes.Auth.ChangeProfileData)
+                    navController.navigate(Destination.Auth.ChangeProfileData)
                 }) {
                     Icon(
                         painter = painterResource(R.drawable.edit),

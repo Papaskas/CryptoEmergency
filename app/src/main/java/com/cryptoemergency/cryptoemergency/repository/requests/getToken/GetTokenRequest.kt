@@ -7,8 +7,9 @@ import com.cryptoemergency.cryptoemergency.repository.requests.common.ErrorRespo
 import com.cryptoemergency.cryptoemergency.repository.requests.common.PATH
 import io.ktor.http.HttpMethod
 
-suspend fun getTokenRequest(context: Context) = httpClient.createRequest<SuccessResponse, ErrorResponse>(
-    path = "$PATH/guest",
-    method = HttpMethod.Post,
-    context = context,
-)
+suspend fun getTokenRequest(context: Context) =
+    httpClient.createRequest<SuccessResponse, ErrorResponse>(
+        path = "$PATH/guest",
+        method = HttpMethod.Post,
+        context = context,
+    )

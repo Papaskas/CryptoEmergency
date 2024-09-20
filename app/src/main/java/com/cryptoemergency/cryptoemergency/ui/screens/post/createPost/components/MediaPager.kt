@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.createPost.modifyPost.components
+package com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components
 
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize

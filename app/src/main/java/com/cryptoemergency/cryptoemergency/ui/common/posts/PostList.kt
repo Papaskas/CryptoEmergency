@@ -62,10 +62,7 @@ fun PostList(
                 )
             }
         } else {
-            // TODO: delete this, it's a temp
-            val deleteThisVar = posts.postAll + posts.postAll + posts.postAll + posts.postAll + posts.postAll + posts.postAll + posts.postAll + posts.postAll
-
-            itemsIndexed(deleteThisVar.chunked(8)) { index, chunk ->
+            itemsIndexed(posts.postAll.chunked(8)) { index, chunk ->
                 val isEven = index % 2 == 0
 
                 when (isEven) {
@@ -100,11 +97,13 @@ private fun PostCommonTemplate(
                     ),
                 )
                 Column {
+                    if(posts.size < 2) return
                     PostItem(
                         post = posts[1],
                         viewType = PostViewType.SHORT,
                         mediaModifier = Modifier.size(screenWidth / 3),
                     )
+                    if(posts.size < 3) return
                     PostItem(
                         post = posts[2],
                         viewType = PostViewType.SHORT,
@@ -112,11 +111,14 @@ private fun PostCommonTemplate(
                     )
                 }
                 Column {
+                    if(posts.size < 4) return
                     PostItem(
                         post = posts[3],
                         viewType = PostViewType.SHORT,
                         mediaModifier = Modifier.size(screenWidth / 3),
                     )
+
+                    if(posts.size < 5) return
                     PostItem(
                         post = posts[4],
                         viewType = PostViewType.SHORT,
@@ -126,6 +128,7 @@ private fun PostCommonTemplate(
             }
         }
 
+        if(posts.size < 6) return
         Row {
             Column {
                 PostItem(
@@ -133,12 +136,14 @@ private fun PostCommonTemplate(
                     viewType = PostViewType.SHORT,
                     mediaModifier = Modifier.size(screenWidth / 3),
                 )
+                if(posts.size < 7) return
                 PostItem(
                     post = posts[6],
                     viewType = PostViewType.SHORT,
                     mediaModifier = Modifier.size(screenWidth / 3),
                 )
             }
+            if(posts.size < 8) return
             PostItem(
                 post = posts[7],
                 viewType = PostViewType.SHORT,
@@ -163,18 +168,21 @@ private fun PostReverseTemplate(
                         viewType = PostViewType.SHORT,
                         mediaModifier = Modifier.size(screenWidth / 3),
                     )
+                    if(posts.size < 2) return
                     PostItem(
                         post = posts[1],
                         viewType = PostViewType.SHORT,
                         mediaModifier = Modifier.size(screenWidth / 3),
                     )
                 }
+                if(posts.size < 3) return
                 Column {
                     PostItem(
                         post = posts[2],
                         viewType = PostViewType.SHORT,
                         mediaModifier = Modifier.size(screenWidth / 3),
                     )
+                    if(posts.size < 4) return
                     PostItem(
                         post = posts[3],
                         viewType = PostViewType.SHORT,
@@ -182,6 +190,7 @@ private fun PostReverseTemplate(
                     )
                 }
             }
+            if(posts.size < 5) return
             PostItem(
                 post = posts[4],
                 viewType = PostViewType.SHORT,
@@ -192,18 +201,22 @@ private fun PostReverseTemplate(
             )
         }
 
+        if(posts.size < 6) return
         Row {
             PostItem(
                 post = posts[5],
                 viewType = PostViewType.SHORT,
                 mediaModifier = Modifier.size(screenWidth / 1.5f),
             )
+            if(posts.size < 7) return
             Column {
                 PostItem(
                     post = posts[6],
                     viewType = PostViewType.SHORT,
                     mediaModifier = Modifier.size(screenWidth / 3),
                 )
+
+                if(posts.size < 8) return
                 PostItem(
                     post = posts[7],
                     viewType = PostViewType.SHORT,

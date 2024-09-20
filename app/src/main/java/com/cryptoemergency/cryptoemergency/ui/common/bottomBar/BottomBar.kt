@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.navigation.Routes
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localNavController.getCurrentRoute
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
@@ -58,7 +58,7 @@ fun BottomBar(
 private fun RowScope.NavItem(
     label: String,
     @DrawableRes icon: Int,
-    route: Routes,
+    route: Destination,
     selected: Boolean,
 ) {
     val navController = LocalNavController.current
@@ -96,7 +96,7 @@ private fun RowScope.NavItem(
 
 @Composable
 private fun RowScope.NavButton(
-    route: Routes,
+    route: Destination,
     isSelected: Boolean,
 ) {
     val navController = LocalNavController.current
@@ -140,27 +140,27 @@ private fun getBottomItems (): List<BottomItem> {
         BottomItem(
             res.getString(R.string.home),
             R.drawable.home__filled,
-            Routes.Home.Home,
+            Destination.Home.Home,
         ),
         BottomItem(
             res.getString(R.string.news_feed,),
             R.drawable.news_feed__filled,
-            Routes.Home.News,
+            Destination.Home.News,
         ),
         BottomItem(
             null,
             null,
-            Routes.CreatePost.Home,
+            Destination.Home.CreatePost,
         ),
         BottomItem(
             res.getString(R.string.cems),
             R.drawable.cems,
-            Routes.Home.Cems
+            Destination.Home.Cems
         ),
         BottomItem(
             res.getString(R.string.more),
             R.drawable.more__filled,
-            Routes.Home.Menu,
+            Destination.Home.Menu,
         )
     )
 }
@@ -168,5 +168,5 @@ private fun getBottomItems (): List<BottomItem> {
 private data class BottomItem(
     val label: String?,
     @DrawableRes val icon: Int?,
-    val route: Routes,
+    val route: Destination,
 )
