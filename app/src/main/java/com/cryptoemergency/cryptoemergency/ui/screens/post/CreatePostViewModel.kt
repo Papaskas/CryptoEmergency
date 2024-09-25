@@ -5,8 +5,10 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
 import androidx.compose.runtime.MutableFloatState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +18,7 @@ import com.cryptoemergency.cryptoemergency.lib.getDefaultHttpMessage
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Media
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Request
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.createPostRequest
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,13 +29,16 @@ import javax.inject.Inject
 class CreatePostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
+    val message = MutableStateFlow<String?>(null)
+
+    val columnCount = 4
+    val currentStep = mutableIntStateOf(0)
+    val isError = mutableStateOf(false)
+
     val descriptionInput = mutableStateOf(TextFieldValue())
+
     val selectedRatioOption = mutableStateOf(PhotoFormat.RATIO_1X1)
     val multipleIsActive = mutableStateOf(false)
-    val isError = mutableStateOf(false)
-    val columnCount = 4
-
-    val message = MutableStateFlow<String?>(null)
 
     val selectedMedia = mutableStateListOf<Uri>()
 
@@ -46,18 +52,25 @@ class CreatePostViewModel @Inject constructor(
 
     fun toggleMultipleMedia(media: Uri) {
         if (selectedMedia.contains(media)) {
+            isError.value = false
             selectedMedia.remove(media)
         } else {
-            selectedMedia.add(media)
-            multipleIsActive.value = true
+            if(selectedMedia.size > 4) {
+                isError.value = true
+            } else {
+                isError.value = false
+                multipleIsActive.value = true
+                selectedMedia.add(media)
+            }
         }
     }
 
     fun toggleMedia(media: Uri) {
         if (multipleIsActive.value) {
-           toggleMultipleMedia(media)
+            isError.value = false
+            toggleMultipleMedia(media)
         } else {
-           toggleSoloMedia(media)
+            toggleSoloMedia(media)
         }
     }
 
@@ -82,8 +95,4 @@ class CreatePostViewModel @Inject constructor(
     }
 }
 
-enum class PhotoFormat(val title: String) {
-    RATIO_1X1("1x1"),
-    RATIO_3X4("3x4"),
-    RATIO_16X9("16x9"),
-}
+

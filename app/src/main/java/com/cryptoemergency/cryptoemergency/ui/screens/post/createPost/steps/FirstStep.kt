@@ -25,14 +25,13 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components
 
 @Composable
 fun FirstStep(
-    currentStep: MutableIntState,
     viewModel: CreatePostViewModel,
 ) {
     val mediaFiles by getMediaFiles()
 
     Screen(
         topBar = { TopBar() },
-        bottomBar = { BottomBar(currentStep) },
+        bottomBar = { BottomBar(viewModel) },
         horizontalPadding = 0.dp,
         bottomSpacing = 0.dp,
     ) {
@@ -56,7 +55,7 @@ fun FirstStep(
 
 @Composable
 private fun BottomBar(
-    currentStep: MutableIntState,
+    viewModel: CreatePostViewModel,
 ) {
     Box(
         modifier = Modifier
@@ -67,8 +66,9 @@ private fun BottomBar(
             )
     ) {
         CommonButton(
-            onClick = { currentStep.intValue = 1 },
+            onClick = { viewModel.currentStep.intValue = 1 },
             text = "Далее", // TODO: перевод
+            isEnabled = viewModel.selectedMedia.isNotEmpty(),
         )
     }
 }

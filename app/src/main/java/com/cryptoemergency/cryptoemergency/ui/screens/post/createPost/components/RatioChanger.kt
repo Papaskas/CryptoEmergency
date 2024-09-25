@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.post.PhotoFormat
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
 
 fun LazyStaggeredGridScope.RatioChanger(viewModel: CreatePostViewModel) {
     val ratioOptions = listOf(PhotoFormat.RATIO_1X1, PhotoFormat.RATIO_3X4, PhotoFormat.RATIO_16X9)

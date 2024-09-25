@@ -16,15 +16,13 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.steps.Seco
 fun CreatePostScreen(
     viewModel: CreatePostViewModel = hiltViewModel()
 ) {
-    val currentStep = remember { mutableIntStateOf(0) }
-
     val screens = listOf<@Composable () -> Unit>(
-        { FirstStep(currentStep, viewModel) },
-        { SecondStep(currentStep, viewModel) },
+        { FirstStep(viewModel) },
+        { SecondStep(viewModel) },
     )
 
     SteppedScreen(
         screens = screens,
-        currentStep = currentStep,
+        currentStep = viewModel.currentStep,
     )
 }
