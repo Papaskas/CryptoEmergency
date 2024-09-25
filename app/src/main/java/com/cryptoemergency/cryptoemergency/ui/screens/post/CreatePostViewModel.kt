@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Convert
 import com.cryptoemergency.cryptoemergency.lib.Http
+import com.cryptoemergency.cryptoemergency.lib.vibrate
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Media
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Request
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.createPostRequest
@@ -55,6 +56,7 @@ class CreatePostViewModel @Inject constructor(
         } else {
             if(selectedMedia.size > 4) {
                 isError.value = true
+                vibrate(context)
             } else {
                 isError.value = false
                 multipleIsActive.value = true

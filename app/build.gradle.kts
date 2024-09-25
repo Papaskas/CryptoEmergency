@@ -49,6 +49,7 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
+                "proguard-rules-without-logs.pro",
             )
 
             ndk { debugSymbolLevel = "NONE" }
@@ -91,6 +92,32 @@ android {
                 "int",
                 "PORT",
                 project.properties["dev.server.port"].toString(),
+            )
+        }
+
+        create("releaseWithLogs") {
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+
+            buildConfigField(
+                "String",
+                "PROTOCOL",
+                "\"${project.properties["prod.server.protocol"]}\"",
+            )
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["prod.server.host"]}\"",
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["prod.server.port"].toString(),
             )
         }
     }

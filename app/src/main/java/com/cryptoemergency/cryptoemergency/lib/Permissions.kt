@@ -7,29 +7,30 @@ import androidx.compose.runtime.SideEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 
 object Permissions {
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
-    fun media(
-        onPermissionResult: (Boolean) -> Unit
+    fun media( // TODO: refactor
+        onPermissionsResultApiLower: (Boolean) -> Unit = {},
+        onPermissionsResultApi33: (Map<String, Boolean>) -> Unit = {},
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val imageState = rememberPermissionState(
-                Manifest.permission.READ_MEDIA_IMAGES,
-                onPermissionResult,
-            )
-            val videoState = rememberPermissionState(
-                Manifest.permission.READ_MEDIA_VIDEO,
-                onPermissionResult,
+            val states = rememberMultiplePermissionsState(
+                listOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
+                ),
+                onPermissionsResultApi33,
             )
 
-            check(listOf(imageState, videoState))
+            check(states.permissions)
         } else {
             val storageState = rememberPermissionState(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                onPermissionResult,
+                onPermissionsResultApiLower,
             )
 
             check(listOf(storageState))
@@ -92,15 +93,29 @@ object Permissions {
 
         check(listOf(state))
     }
-}
 
-@Composable
-@OptIn(ExperimentalPermissionsApi::class)
-private fun check(states: List<PermissionState>) {
-    SideEffect {
-        states.forEach {
-            if(!it.status.isGranted) {
-                it.launchPermissionRequest()
+    @Composable
+    @OptIn(ExperimentalPermissionsApi::class)
+    fun request(
+        permissions: List<String>,
+        onPermissionsResult: (Map<String, Boolean>) -> Unit = {}
+    ) {
+        val states = rememberMultiplePermissionsState(
+            permissions,
+            onPermissionsResult,
+        )
+
+        check(states.permissions)
+    }
+
+    @Composable
+    @OptIn(ExperimentalPermissionsApi::class)
+    fun check(states: List<PermissionState>) {
+        SideEffect {
+            states.forEach {
+                if (!it.status.isGranted) {
+                    it.launchPermissionRequest()
+                }
             }
         }
     }
