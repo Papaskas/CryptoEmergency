@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.copyTextToClipboard
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.ButtonType
-import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.ScreenTopBar

@@ -1,20 +1,17 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.post
 
 import android.content.Context
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Base64
-import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Convert
-import com.cryptoemergency.cryptoemergency.lib.getDefaultHttpMessage
+import com.cryptoemergency.cryptoemergency.lib.Http
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Media
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Request
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.createPostRequest
@@ -40,6 +37,7 @@ class CreatePostViewModel @Inject constructor(
     val selectedRatioOption = mutableStateOf(PhotoFormat.RATIO_1X1)
     val multipleIsActive = mutableStateOf(false)
 
+    val mediaFiles = mutableStateListOf<Uri>()
     val selectedMedia = mutableStateListOf<Uri>()
 
     private fun toggleSoloMedia(media: Uri) {
@@ -81,15 +79,15 @@ class CreatePostViewModel @Inject constructor(
                 media = selectedMedia.map {
                     Media(
                         type = "photo",
-                        originalUrl = Convert.uriToBase64(it, context),
+                        originalUrl = Convert.uriToBase64(it, context, Bitmap.CompressFormat.JPEG),
                     )
                 }
             ))
 
-            if(res is ApiResponse.Success) {
+            if (res is ApiResponse.Success) {
                 message.value = "Пост успешно создан!"
             } else if(res is ApiResponse.Error) {
-                message.value = getDefaultHttpMessage(context, res.status)
+                message.value = Http.getDefaultMessages(context, res.status)
             }
         }
     }

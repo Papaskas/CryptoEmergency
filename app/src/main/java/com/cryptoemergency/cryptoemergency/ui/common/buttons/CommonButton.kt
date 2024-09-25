@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.ui.common
+package com.cryptoemergency.cryptoemergency.ui.common.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -4,10 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.lib.getDefaultHttpMessage
+import com.cryptoemergency.cryptoemergency.lib.Http
 import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.PostsResponse
 import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.getPostsRequest
-import com.cryptoemergency.cryptoemergency.repository.requests.getToken.getTokenRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +30,7 @@ class NewsFeedViewModel @Inject constructor(
             if (res is ApiResponse.Success) {
                 _posts.value = res.body
             } else if (res is ApiResponse.Error) {
-                message.value = getDefaultHttpMessage(context, res.status)
+                message.value = Http.getDefaultMessages(context, res.status)
             }
         }
     }

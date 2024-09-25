@@ -26,8 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.ButtonType
-import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.CommonSwitch
 import com.cryptoemergency.cryptoemergency.ui.common.Screen

@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.cryptoemergency.cryptoemergency.lib.getMediaFiles
+import com.cryptoemergency.cryptoemergency.lib.Media
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.MediaMenu
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.RatioChanger
@@ -27,7 +24,7 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components
 fun FirstStep(
     viewModel: CreatePostViewModel,
 ) {
-    val mediaFiles by getMediaFiles()
+    viewModel.mediaFiles.addAll(Media.getImages().value)
 
     Screen(
         topBar = { TopBar() },
@@ -45,10 +42,7 @@ fun FirstStep(
             RatioChanger(viewModel)
             Toolbar(viewModel)
             WarningHeader(viewModel)
-            MediaMenu(
-                viewModel = viewModel,
-                mediaFiles = mediaFiles,
-            )
+            MediaMenu(viewModel)
         }
     }
 }

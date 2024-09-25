@@ -32,11 +32,10 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 
 fun LazyStaggeredGridScope.MediaMenu(
     viewModel: CreatePostViewModel,
-    mediaFiles: List<Uri>,
 ) {
-    items(mediaFiles.size) {
+    items(viewModel.mediaFiles.size) {
         MediaItem(
-            file = mediaFiles[it],
+            file = viewModel.mediaFiles[it],
             viewModel = viewModel,
         )
     }

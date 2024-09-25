@@ -31,7 +31,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
-import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage

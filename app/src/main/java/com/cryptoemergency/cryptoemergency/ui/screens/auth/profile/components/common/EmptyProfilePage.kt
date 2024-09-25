@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.CommonButton
-import com.cryptoemergency.cryptoemergency.ui.common.LayoutWidth
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.LayoutWidth
 
 /**
  * Заглушка для блоков Content
