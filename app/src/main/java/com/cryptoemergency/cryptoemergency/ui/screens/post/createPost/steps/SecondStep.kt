@@ -50,7 +50,7 @@ fun SecondStep(
             .padding(it)
             .verticalScroll(rememberScrollState())
         ) {
-            MediaPager(viewModel.selectedMedia)
+            MediaPager(viewModel)
             Field(viewModel)
             Spacer(Modifier.height(35.dp))
             Toolbar()

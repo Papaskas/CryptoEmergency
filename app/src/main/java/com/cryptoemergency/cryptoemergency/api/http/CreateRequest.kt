@@ -51,14 +51,12 @@ import java.net.UnknownHostException
  * @throws ServerResponseException Если в ответе сервера содержится ошибка
  * @throws UnknownHostException Если нет подключения к Интернету
  * @throws IOException Если во время сетевого подключения возникают ошибки
- * @throws IllegalArgumentException Если body не data class или не @Serializable
  */
 @Throws(
     SerializationException::class,
     ServerResponseException::class,
     UnknownHostException::class,
     IOException::class,
-    IllegalArgumentException::class,
 )
 suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.createRequest(
     context: Context,
@@ -138,13 +136,8 @@ suspend fun HttpRequestBuilder.setHeaders(
     }
 }
 
-@Throws(IllegalArgumentException::class)
 fun HttpRequestBuilder.body(body: Any?) {
     if(body == null) return
-
-    require(body::class.isData && body::class.annotations.any { it is Serializable }) {
-        "Body must be a data class and annotated with @Serializable"
-    }
 
     setBody(body)
 }

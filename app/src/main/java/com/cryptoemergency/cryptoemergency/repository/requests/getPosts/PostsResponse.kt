@@ -14,7 +14,7 @@ data class Post(
     val description: String,
     val media: List<Media>,
     val likes: List<User>,
-    val comments: List<Comment>,
+    val userComments: List<Comment>,
     val createdAt: String,
     val updatedAt: String,
     val __v: Int,
@@ -23,7 +23,6 @@ data class Post(
 @Serializable
 data class User(
     val _id: String,
-    val access: List<String>,
     val roles: List<String>,
     val createdAt: String,
     val updatedAt: String,
@@ -35,7 +34,7 @@ data class Media(
     val _id: String,
     val type: String,
     val originalUrl: String,
-    val resizedUrl: String? = null,
+    val resizedUrl: String,
 )
 
 @Serializable

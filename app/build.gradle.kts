@@ -72,7 +72,6 @@ android {
         }
 
         debug {
-            isMinifyEnabled = false
             isDebuggable = true
             isJniDebuggable = true
 
@@ -96,13 +95,8 @@ android {
         }
 
         create("releaseWithLogs") {
-            isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("release")
-
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+            isDebuggable = true
 
             buildConfigField(
                 "String",
