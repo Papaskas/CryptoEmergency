@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
- * Компонент горизонтальной пагинации в виде точек
+ * Компонент горизонтальной пагинации в виде точек. Не работает если countDot <= 1
  *
  * @param countDot Количество точек пагинации
  * @param current Текущый выбраный индекс. Должен быть < [countDot]
@@ -46,8 +48,11 @@ fun DottedPagination(
     selectedColor: Color = Theme.colors.accent,
     unselectedColor: Color = Theme.colors.text3,
 ) {
+    if (countDot <= 1) return
+
     Row(
         modifier = modifier
+            .fillMaxWidth()
             .height(selectDotSize), // Предотвращение скачков при анимации
         horizontalArrangement = Arrangement.spacedBy(spacedBy, alignment),
         verticalAlignment = Alignment.CenterVertically,
@@ -65,7 +70,7 @@ fun DottedPagination(
 }
 
 /**
- * Компонент вертикальной пагинации в виде точек
+ * Компонент вертикальной пагинации в виде точек. Не работает если countDot <= 1
  *
  * @param countDot Количество точек пагинации
  * @param current Текущый выбраный индекс. Должен быть < [countDot]
@@ -89,8 +94,11 @@ fun DottedPagination(
     selectedColor: Color = Theme.colors.accent,
     unselectedColor: Color = Theme.colors.text3,
 ) {
+    if (countDot <= 1) return
+
     Column (
         modifier = modifier
+            .fillMaxHeight()
             .width(selectDotSize), // Предотвращение скачков при анимации
         verticalArrangement = Arrangement.spacedBy(spacedBy, alignment),
         horizontalAlignment = Alignment.CenterHorizontally,

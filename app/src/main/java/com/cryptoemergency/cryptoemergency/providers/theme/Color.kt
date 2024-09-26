@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 val darkPalette = Colors(
     accent = DarkColors.accent,
+    logoPink = DarkColors.logoPink,
+    logoBlue = DarkColors.logoBlue,
 
     text1 = DarkColors.W90,
     text2 = DarkColors.G40,
@@ -31,6 +33,9 @@ val darkPalette = Colors(
 val lightPalette = Colors(
     accent = LightColors.accent,
 
+    logoPink = LightColors.logoPink,
+    logoBlue = LightColors.logoBlue,
+
     text1 = LightColors.B100,
     text2 = LightColors.G,
     text3 = LightColors.G,
@@ -57,6 +62,9 @@ val lightPalette = Colors(
 object DarkColors {
     val accent = Color(0xFFAB55FF)
 
+    val logoPink = Color(0xFFC126CE)
+    val logoBlue = Color(0xFF284CCB)
+
     val W100 = Color(0xFFFFFFFF)
     val W90 = Color(0xFFF8F8FA)
     val G100 = Color(0xFF5B5D5D)
@@ -76,6 +84,9 @@ object DarkColors {
 
 object LightColors {
     val accent = Color(0xFF8E4BFF)
+
+    val logoPink = Color(0xFFC126CE)
+    val logoBlue = Color(0xFF284CCB)
 
     val W100 = Color(0xFFFFFFFF)
     val B100 = Color(0xFF343434)

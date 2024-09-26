@@ -52,7 +52,7 @@ android {
                 "proguard-rules-without-logs.pro",
             )
 
-            ndk { debugSymbolLevel = "NONE" }
+            ndk { debugSymbolLevel = null }
 
             buildConfigField(
                 "String",

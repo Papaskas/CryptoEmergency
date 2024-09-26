@@ -1,16 +1,14 @@
 package com.cryptoemergency.cryptoemergency.ui.common.posts
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -28,12 +26,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,6 +41,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Media
 import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
 import com.cryptoemergency.cryptoemergency.types.PostViewType
+import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -53,14 +50,14 @@ fun PostItem(
     post: Post,
     viewType: PostViewType,
     modifier: Modifier = Modifier,
-    mediaModifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
 ) {
     val state = rememberPagerState { post.media.size }
 
     Column(modifier = modifier) {
         if (viewType == PostViewType.FULL) {
             HeaderNews(
-                avatar = post.media[0].originalUrl,
+                avatar = post.media[0].resizedUrl,
                 authorName = "Александр криптовалюта",
                 createdAt = post.createdAt
             )
@@ -68,11 +65,11 @@ fun PostItem(
         Content(
             media = post.media,
             state = state,
-            modifier = mediaModifier,
+            viewType = viewType,
+            modifier = contentModifier,
         )
         if (viewType == PostViewType.FULL) {
             Bottom(
-                size = post.media.size,
                 description = post.description,
                 state = state,
             )
@@ -200,6 +197,7 @@ private fun DropMenu(
 private fun Content(
     media: List<Media>,
     state: PagerState,
+    viewType: PostViewType,
     modifier: Modifier,
 ) {
     Box(modifier) {
@@ -208,92 +206,77 @@ private fun Content(
                 state = state,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
-                AsyncImage(
-                    model = media[page].originalUrl,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
+                ContentImage(media[page], viewType)
             }
         } else {
-            AsyncImage(
-                model = media[0].originalUrl,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-            )
+            if (media.isNotEmpty()) {
+                ContentImage(media[0], viewType)
+            }
         }
 
-        if (media.size > 1) {
-            Row(
-                Modifier
-                    .offset(x = -(Theme.dimens.padding), y = Theme.dimens.padding)
-                    .align(Alignment.TopEnd)
-                    .background(
-                        color = Theme.colors.background2.copy(alpha = .5f),
-                        shape = CircleShape,
-                    )
-                    .padding(9.dp, 4.dp),
-            ) {
-                Text(
-                    text = "${ state.currentPage + 1 }/${ media.size }",
-                    style = Theme.typography.caption2,
-                    color = Theme.colors.text1,
+        MediaCounter(media, state)
+    }
+}
+
+@Composable
+private fun ContentImage(
+    media: Media,
+    viewType: PostViewType,
+) {
+    AsyncImage(
+        model = if (viewType == PostViewType.FULL) media.originalUrl else media.resizedUrl,
+        contentDescription = null,
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop,
+    )
+}
+
+@Composable
+private fun BoxScope.MediaCounter(
+    media: List<Media>,
+    state: PagerState,
+) {
+    if (media.size > 1) {
+        Row(
+            Modifier
+                .offset(x = -(Theme.dimens.padding), y = Theme.dimens.padding)
+                .align(Alignment.TopEnd)
+                .background(
+                    color = Theme.colors.background2.copy(alpha = .5f),
+                    shape = CircleShape,
                 )
-            }
+                .padding(9.dp, 4.dp),
+        ) {
+            Text(
+                text = "${ state.currentPage + 1 }/${ media.size }",
+                style = Theme.typography.caption2,
+                color = Theme.colors.text1,
+            )
         }
     }
 }
 
 @Composable
 private fun Bottom(
-    size: Int,
-    description: String?,
+    description: String,
     state: PagerState,
 ) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .background(
                 color = Theme.colors.surface2,
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
             )
             .padding(Theme.dimens.padding),
     ) {
-        Pagination(size, state)
+        DottedPagination(
+            state.pageCount,
+            state.currentPage,
+            Alignment.CenterHorizontally,
+        )
         Toolbar()
         Description(description)
-    }
-}
-
-@Composable
-private fun ColumnScope.Pagination(
-    size: Int,
-    state: PagerState,
-) {
-    if (size > 1) {
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            repeat(size) { index ->
-                val boxSize by animateDpAsState(
-                    targetValue = if (state.currentPage == index) 6.dp else 4.dp
-                )
-                val color by animateColorAsState(
-                    targetValue = if (state.currentPage == index) Theme.colors.accent else Color.Gray
-                )
-
-                Box(
-                    modifier = Modifier
-                        .size(boxSize)
-                        .background(
-                            color = color,
-                            shape = CircleShape
-                        )
-                )
-            }
-        }
     }
 }
 
@@ -339,11 +322,13 @@ private fun Toolbar() {
 
 @Composable
 private fun Description(
-    description: String?,
+    description: String,
 ) {
     val res = LocalContext.current.resources
 
-    description?.let {
+    if (description.isEmpty()) return
+
+    Column {
         Text(
             text = description,
             style = Theme.typography.body1,

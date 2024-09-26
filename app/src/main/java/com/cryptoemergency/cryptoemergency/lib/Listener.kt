@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
@@ -83,20 +85,19 @@ private fun ListenerMessage(
 private fun ListenerMessageFlow(
     message: MutableStateFlow<String?>,
 ) {
-    val scope = rememberCoroutineScope()
     val snackbar = LocalSnackbar.current
-    val messageState = message.collectAsState()
+    val currentMessage by rememberUpdatedState(message)
 
-    LaunchedEffect(messageState.value != null) {
-        scope.launch {
-            message.collect { value ->
+    LaunchedEffect(Unit) {
+        launch {
+            currentMessage.collect { value ->
                 value?.let { msg ->
                     snackbar.showSnackbar(
                         message = msg,
                         withDismissAction = true,
                     )
 
-                    message.value = null
+                    currentMessage.value = null
                 }
             }
         }

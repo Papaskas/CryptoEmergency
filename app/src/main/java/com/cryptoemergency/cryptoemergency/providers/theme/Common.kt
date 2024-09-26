@@ -13,14 +13,8 @@ import androidx.compose.ui.unit.Dp
 
 data class Colors(
     val accent: Color,
-    val gradient: Brush = Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF0059F7),
-            Color(0xFFF103CF)
-        ),
-        start = Offset(0f, 0f),
-        end = Offset(500f, 300f) // Угол 45 градусов
-    ),
+    val logoPink: Color,
+    val logoBlue: Color,
 
     val buttonText: Color = Color(0xFFFFFFFF),
 

@@ -12,7 +12,9 @@ import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Convert
 import com.cryptoemergency.cryptoemergency.lib.Http
+import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.vibrate
+import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Media
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.Request
 import com.cryptoemergency.cryptoemergency.repository.requests.createPost.createPostRequest
@@ -28,6 +30,7 @@ class CreatePostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
     val message = MutableStateFlow<String?>(null)
+    val redirect = MutableStateFlow<Redirect?>(null)
 
     val columnCount = 4
     val currentStep = mutableIntStateOf(0)
@@ -43,6 +46,8 @@ class CreatePostViewModel @Inject constructor(
 
     val commentsEnabled = mutableStateOf(true)
     val visualOnlySubs = mutableStateOf(false)
+
+    val awaitServer = mutableStateOf(false)
 
     private fun toggleSoloMedia(media: Uri) {
         if (selectedMedia.isNotEmpty()) {
@@ -77,8 +82,10 @@ class CreatePostViewModel @Inject constructor(
         }
     }
 
-    fun fetch() {
+    fun createPost() {
         viewModelScope.launch {
+            awaitServer.value = true
+
             val res = createPostRequest(context, Request(
                 description = descriptionInput.value.text,
                 media = selectedMedia.map {
@@ -90,12 +97,15 @@ class CreatePostViewModel @Inject constructor(
             ))
 
             if (res is ApiResponse.Success) {
-                message.value = "Пост успешно создан!"
+                awaitServer.value = false
+
+                message.value = "Пост успешно создан!" // TODO: translate
+                redirect.value = Redirect(Destination.Home.Home)
             } else if(res is ApiResponse.Error) {
+                awaitServer.value = false
+
                 message.value = Http.getDefaultMessages(context, res.status)
             }
         }
     }
 }
-
-
