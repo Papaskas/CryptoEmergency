@@ -26,11 +26,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
-import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.CommonSwitch
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.MediaPager
@@ -55,7 +55,7 @@ fun SecondStep(
             Spacer(Modifier.height(35.dp))
             Toolbar()
             Spacer(Modifier.height(15.dp))
-            Settings()
+            Settings(viewModel)
             Spacer(Modifier.height(15.dp))
             Bottom(viewModel)
         }
@@ -87,8 +87,6 @@ private fun Toolbar() {
     )
 
     val items = listOf(
-        Item(R.drawable.image, R.string.image) {},
-        Item(R.drawable.video, R.string.video) {},
         Item(R.drawable.geo, R.string.place) {},
         Item(R.drawable.people, R.string.mark_people) {},
         Item(R.drawable.themes, R.string.themes) {},
@@ -116,26 +114,28 @@ private fun Toolbar() {
 }
 
 @Composable
-private fun Settings() {
-    val checkedState = remember { mutableStateOf(true) }
-
+private fun Settings(
+    viewModel: CreatePostViewModel
+) {
     CommonHorizontalDivider()
     CommonSwitch(
         modifier = Modifier.padding(horizontal = Theme.dimens.padding),
-        state = checkedState,
+        state = viewModel.commentsEnabled,
         text = "Комментарии к посту" // TODO: translate
     )
     CommonHorizontalDivider()
     CommonSwitch(
         modifier = Modifier.padding(horizontal = Theme.dimens.padding),
-        state = checkedState,
+        state = viewModel.visualOnlySubs,
         text = "Видны только подписчикам" // TODO: translate
     )
     CommonHorizontalDivider()
 }
 
 @Composable
-private fun Bottom(viewModel: CreatePostViewModel) {
+private fun Bottom(
+    viewModel: CreatePostViewModel
+) {
     Column(
         Modifier
             .padding(horizontal = Theme.dimens.padding)

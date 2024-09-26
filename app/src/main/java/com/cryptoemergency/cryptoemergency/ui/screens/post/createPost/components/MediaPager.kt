@@ -3,6 +3,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.component
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -40,14 +41,19 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 fun MediaPager(
     viewModel: CreatePostViewModel,
 ) {
-    val size = LocalConfiguration.current.screenWidthDp.dp
-    val state = rememberPagerState(
-        initialPageOffsetFraction = .5f,
-    ) { viewModel.selectedMedia.size }
+    val size = if(viewModel.selectedMedia.size > 1) {
+        LocalConfiguration.current.screenWidthDp.dp - Theme.dimens.padding * 2 - 34.dp
+    } else {
+        LocalConfiguration.current.screenWidthDp.dp
+    }
+
+    val state = rememberPagerState { viewModel.selectedMedia.size }
 
     Column {
         HorizontalPager(
             state = state,
+            beyondViewportPageCount = 1,
+            pageSpacing = -(33.dp + Theme.dimens.padding * 2),
             modifier = Modifier
                 .then(
                     if(viewModel.selectedMedia.size > 1) {
@@ -56,15 +62,17 @@ fun MediaPager(
                         Modifier.padding(Theme.dimens.padding)
                     }
                 )
-                .size(size)
+                .height(size)
                 .clip(RoundedCornerShape(Theme.dimens.radius))
         ) {
-            Box {
+            Box(
+                Modifier.size(size)
+            ) {
                 AsyncImage(
                     model = viewModel.selectedMedia[it],
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 )
 
                 DeleteMediaButton(
@@ -100,11 +108,10 @@ private fun BoxScope.DeleteMediaButton(
         },
         modifier = Modifier
             .offset(
-                y = 20.dp,
-                x = -(20).dp,
+                y = 5.dp,
+                x = -(5).dp,
             )
             .align(Alignment.TopEnd)
-            .size(28.dp)
             .clip(CircleShape)
             .background(Theme.colors.error)
     ) {
@@ -112,7 +119,7 @@ private fun BoxScope.DeleteMediaButton(
             painter = painterResource(R.drawable.close),
             contentDescription = "Удалить медиа", // TODO: translate
             tint = Theme.colors.text6,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.size(50.dp)
         )
     }
 }

@@ -41,6 +41,9 @@ class CreatePostViewModel @Inject constructor(
     val mediaFiles = mutableStateListOf<Uri>()
     val selectedMedia = mutableStateListOf<Uri>()
 
+    val commentsEnabled = mutableStateOf(true)
+    val visualOnlySubs = mutableStateOf(false)
+
     private fun toggleSoloMedia(media: Uri) {
         if (selectedMedia.isNotEmpty()) {
             selectedMedia[0] = media
