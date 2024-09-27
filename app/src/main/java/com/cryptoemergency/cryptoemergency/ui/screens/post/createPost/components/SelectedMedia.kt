@@ -3,20 +3,20 @@ package com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import com.cryptoemergency.cryptoemergency.lib.Convert.toBitmap
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.ui.common.ImageCropper
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 
 fun LazyStaggeredGridScope.SelectedMedia(
@@ -24,11 +24,12 @@ fun LazyStaggeredGridScope.SelectedMedia(
 ) {
     item(span = StaggeredGridItemSpan.FullLine) {
         val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+        val context = LocalContext.current
 
         Box(
             modifier = Modifier.size(screenWidth)
         ) {
-            if(viewModel.selectedMedia.isEmpty()) {
+            if (viewModel.selectedMedia.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -36,21 +37,28 @@ fun LazyStaggeredGridScope.SelectedMedia(
                     Image(
                         painter = painterResource(Theme.icons.logo),
                         contentDescription = null,
-                        modifier = Modifier.size(170.dp).alpha(.6f)
+                        modifier = Modifier
+                            .size(170.dp)
+                            .alpha(.6f)
                     )
                 }
             } else {
-                HorizontalPager(
-                    state = rememberPagerState(pageCount = { viewModel.selectedMedia.size }),
-                ) { index ->
-                    AsyncImage(
-                        model = viewModel.selectedMedia[index],
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                    )
+                ImageCropper(
+                    viewModel.selectedMedia[0].toBitmap(context),
+                    modifier = Modifier.padding(Theme.dimens.padding),
+                    settings = {
+
+                    }
+                ) {
+
                 }
+//                HorizontalPager(
+//                    state = rememberPagerState(pageCount = { viewModel.selectedMedia.size }),
+//                ) { index ->
+//                    ImageCropper(viewModel.selectedMedia[index])
+//                }
             }
         }
     }
 }
+

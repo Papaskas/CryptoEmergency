@@ -137,6 +137,8 @@ android {
 
 dependencies {
 
+    implementation(libs.android.image.cropper) // Image editor
+
     implementation(libs.androidx.graphics.shapes) // Либа для рисования shapes
 
     implementation(libs.androidx.room.runtime)

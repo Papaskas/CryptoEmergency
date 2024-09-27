@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Convert
+import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
 import com.cryptoemergency.cryptoemergency.lib.Http
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.vibrate
@@ -91,7 +92,7 @@ class CreatePostViewModel @Inject constructor(
                 media = selectedMedia.map {
                     Media(
                         type = "photo",
-                        originalUrl = Convert.uriToBase64(it, context, Bitmap.CompressFormat.JPEG),
+                        originalUrl = it.toBase64(context, Bitmap.CompressFormat.JPEG),
                     )
                 }
             ))

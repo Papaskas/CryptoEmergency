@@ -1,6 +1,7 @@
 [versions]
 accompanist = "0.36.0"
 agp = "8.5.2"
+androidImageCropper = "4.6.0"
 cloudy = "0.2.3"
 coilCompose = "2.7.0"
 composeQrCode = "1.0.1"
@@ -34,6 +35,7 @@ uiTestAndroid = "1.7.2"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "androidImageCropper" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePreferences" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }

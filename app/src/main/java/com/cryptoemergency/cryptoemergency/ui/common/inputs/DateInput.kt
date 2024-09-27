@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.Convert
+import com.cryptoemergency.cryptoemergency.lib.Convert.millisToDate
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
@@ -46,9 +47,7 @@ fun DateInput(
 ) {
     val datePickerState = rememberDatePickerState()
     val showDatePicker = remember { mutableStateOf(false) }
-    val selectedDate = datePickerState.selectedDateMillis?.let {
-        Convert.millisToDate(it)
-    } ?: ""
+    val selectedDate = datePickerState.selectedDateMillis?.millisToDate() ?: ""
 
     LaunchedEffect(selectedDate) {
         value.value = TextFieldValue(selectedDate)
