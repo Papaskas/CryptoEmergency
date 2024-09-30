@@ -11,8 +11,10 @@ import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.repository.requests.login.loginRequest
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Отправляет запрос API и обрабатывает ответ.
@@ -38,18 +40,22 @@ suspend fun <Success, Error> makeRequest(
     errors: Map<HttpStatusCode, String> = emptyMap(),
     onRequest: suspend () -> ApiResponse<out Success, out Error>,
     onSuccess: suspend (ApiResponse.Success<Success>) -> Unit,
-) {
+) = withContext(Dispatchers.IO) {
     isLoading.value = true
+
     val res = onRequest()
 
-    if(res is ApiResponse.Success) {
-        isLoading.value = false
+    when(res) {
+        is ApiResponse.Success -> {
+            isLoading.value = false
 
-        onSuccess(res as ApiResponse.Success<Success>)
-    } else if(res is ApiResponse.Error) {
-        isLoading.value = false
+            onSuccess(res as ApiResponse.Success<Success>)
+        }
+        is ApiResponse.Error -> {
+            isLoading.value = false
 
-        message.value = errors[res.status] ?: Http.getDefaultMessages(context, res.status)
+            message.value = errors[res.status] ?: Http.getDefaultMessages(context, res.status)
+        }
     }
 }
 
