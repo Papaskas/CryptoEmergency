@@ -51,9 +51,6 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * @param isError Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
  * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
  * @param visualTransformation Преобразует визуальное представление входных данных [value]
- * Например, вы можете использовать
- * [PasswordVisualTransformation][androidx.compose.ui.text.input.Преобразование пароля] в
- * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
  * @param keyboardOptions Определяет параметры программной клавиатуры
  * @param keyboardActions Когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
  *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
@@ -99,7 +96,6 @@ fun ValidateInput(
     colors: TextFieldColors = TextFieldDefaults.colors(),
     contentAlignment: Alignment = Alignment.TopStart,
 ) {
-    // TODO: реализовать проверку раз в секунду, если афк
     val errorMessage = remember { mutableStateOf<String?>(null) }
     val successMessage = remember { mutableStateOf<String?>(null) }
 
@@ -116,6 +112,17 @@ fun ValidateInput(
                     )
                 }
             },
+            onValueChange = {
+                onValueChange(it)
+
+                validate(
+                    text = it.text,
+                    errorMessage = errorMessage,
+                    successMessage = successMessage,
+                    isError = isError,
+                    validators,
+                )
+            },
             contentAlignment = contentAlignment,
             aboveIcon = aboveIcon,
             value = value,
@@ -124,7 +131,6 @@ fun ValidateInput(
             postLabel = postLabel,
             isError = isError.value,
             isRequired = isRequired,
-            onValueChange = onValueChange,
             prefix = prefix,
             suffix = suffix,
             isEnabled = isEnabled,

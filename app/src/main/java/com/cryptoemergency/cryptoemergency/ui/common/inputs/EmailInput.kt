@@ -37,6 +37,7 @@ fun EmailInput(
         readOnly = readOnly,
         value = value,
         label = "Email",
+        isRequired = true,
         isError = isError,
         isEnabled = isEnabled,
         singleLine = true,

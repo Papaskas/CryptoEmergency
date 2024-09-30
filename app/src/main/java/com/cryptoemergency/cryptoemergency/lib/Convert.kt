@@ -31,6 +31,7 @@ object Convert {
      * @param format Формат данных - jpeg, png
      * @param quality Качество сжатия изображение
      * */
+    @Deprecated("Don't use it")
     fun Uri.toBase64(
         context: Context,
         format: Bitmap.CompressFormat,
@@ -52,6 +53,9 @@ object Convert {
         return prefix + Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
+    /**
+     * Функция ИЗОБРАЖЕНИЕ Uri в bitmap
+     * */
     fun Uri.toBitmap(context: Context): Bitmap {
         return if (Build.VERSION.SDK_INT < 28) {
             MediaStore.Images

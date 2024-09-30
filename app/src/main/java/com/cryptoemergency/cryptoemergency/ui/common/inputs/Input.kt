@@ -138,6 +138,7 @@ fun Input(
             textStyle = Theme.typography.body1.copy(
                 color = Theme.colors.text1
             ),
+            visualTransformation = visualTransformation,
             singleLine = singleLine,
             modifier = Modifier.commonBorder(
                 shape = shape,

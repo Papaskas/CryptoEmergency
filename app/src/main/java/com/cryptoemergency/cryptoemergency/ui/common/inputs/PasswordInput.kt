@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -52,24 +54,23 @@ fun PasswordInput(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    passwordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
+    passwordVisible: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
 ) {
-    val context = LocalContext.current
+    val res = LocalContext.current.resources
     val image = if (passwordVisible.value) R.drawable.visibility else R.drawable.visibility_off
     val description = if (passwordVisible.value) {
-        context.getString(R.string.hide, R.string.password)
+        res.getString(R.string.hide, res.getString(R.string.password))
     } else {
-        context.getString(R.string.show, R.string.password)
+        res.getString(R.string.show, res.getString(R.string.password))
     }
 
     ValidateInput(
         modifier = modifier,
         value = value,
         readOnly = readOnly,
-        label = context.getString(R.string.password),
+        label = res.getString(R.string.password),
         isError = isError,
-        // prefix = "prefix",
-        // suffix = "suffix",
+        isRequired = true,
         trailingIcon = {
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                 Icon(
@@ -83,7 +84,9 @@ fun PasswordInput(
         minLines = 1,
         interactionSource = interactionSource,
         keyboardActions = keyboardActions,
-        keyboardOptions = keyboardOptions,
+        keyboardOptions = keyboardOptions.copy(
+            keyboardType = KeyboardType.Password,
+        ),
         singleLine = true,
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         validators = passwordPatterns

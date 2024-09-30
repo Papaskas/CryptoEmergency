@@ -4,6 +4,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.cryptoemergency.cryptoemergency.R
 
@@ -14,7 +15,13 @@ val sfUiTextFontFamily = FontFamily(
 )
 
 val manropeFontFamily = FontFamily(
+    Font(R.font.manrope__extra_light, FontWeight.ExtraLight),
+    Font(R.font.manrope__light, FontWeight.Light),
+    Font(R.font.manrope__regular, FontWeight.Normal),
+    Font(R.font.manrope__medium, FontWeight.Medium),
+    Font(R.font.manrope__semi_bold, FontWeight.SemiBold),
     Font(R.font.manrope__bold, FontWeight.Bold),
+    Font(R.font.manrope__extra_bold, FontWeight.ExtraBold),
 )
 
 val typography = Typography(
@@ -71,5 +78,12 @@ val typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 17.sp,
         lineHeight = 24.sp,
+    ),
+    helloText = TextStyle(
+        fontFamily = manropeFontFamily,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 24.sp,
+        letterSpacing = 24.sp * (-2 / 100f),
+        lineHeight =  32.78.sp,
     ),
 )

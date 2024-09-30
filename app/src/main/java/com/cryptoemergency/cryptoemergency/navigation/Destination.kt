@@ -103,5 +103,9 @@ sealed class Destination {
         @Keep
         @Serializable
         data object ChangeProfileData : Destination()
+
+        @Keep
+        @Serializable
+        data object Login : Destination()
     }
 }

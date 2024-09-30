@@ -120,4 +120,5 @@
     <string name="mark_people">Отметить людей</string>
     <string name="image">Изображение</string>
     <string name="video">Видео</string>
+    <string name="login_terms">Нажимая на кнопку «Войти» или «Продолжить как гость», вы соглашаетесь с <annotation tag="clickable">обработкой персональных данных и политикой конфиденциальности</annotation>.</string>
 </resources>

@@ -171,7 +171,7 @@ object ValidatePattern {
     fun inRange(
         min: Int,
         max: Int,
-        errorMessage: String = "Превышен диапазон возможных символов, разрешенно от $min до $max"
+        errorMessage: String = "Некорректный диапазон символов, необходимо минимум $min до $max"
     ) = Validate(
         Regex("^.{$min,$max}$"),
         errorMessage,

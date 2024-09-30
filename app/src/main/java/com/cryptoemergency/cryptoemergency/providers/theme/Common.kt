@@ -50,6 +50,7 @@ data class Typography(
     val caption1: TextStyle,
     val caption2: TextStyle,
     val subscribesCount: TextStyle,
+    val helloText: TextStyle,
 )
 
 data class CommonShape(
