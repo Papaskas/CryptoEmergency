@@ -73,7 +73,7 @@ fun CommonButton(
         enabled = isEnabled && !isLoading,
     ) {
         Box {
-            LoadingAnimate(isLoading)
+            LoadingAnimate(isLoading, buttonType)
 
             Text(
                 modifier = Modifier
@@ -181,12 +181,23 @@ private fun getTextStyle(
 
 @Composable
 private fun LoadingAnimate(
-    isLoading: Boolean
+    isLoading: Boolean,
+    buttonType: ButtonType,
 ) {
-    val colors = listOf(
-        Theme.colors.logoPink,
-        Theme.colors.logoBlue,
-    )
+    val colors = when (buttonType) {
+        ButtonType.Primary -> {
+            listOf(
+                Theme.colors.logoPink,
+                Theme.colors.logoBlue,
+            )
+        }
+        ButtonType.Secondary -> {
+            listOf(
+                Theme.colors.text5,
+                Theme.colors.background4,
+            )
+        }
+    }
     val angle = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {

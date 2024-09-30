@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.lib.Listener
+import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
@@ -22,6 +25,8 @@ import com.cryptoemergency.cryptoemergency.ui.screens.pages.login.LoginViewModel
 
 @Composable
 fun SecondStep(viewModel: LoginViewModel) {
+    Listener(viewModel.message, viewModel.redirect.collectAsState().value)
+
     Screen(
         topBar = {},
         bottomBar = { BottomBar(viewModel) },
@@ -81,6 +86,8 @@ private fun ColumnScope.ForgotPassword(viewModel: LoginViewModel) {
 
 @Composable
 private fun BottomBar(viewModel: LoginViewModel) {
+    val navController = LocalNavController.current
+
     Box(Modifier
         .padding(horizontal = Theme.dimens.padding)
         .padding(bottom = Theme.dimens.padding * 2)
@@ -94,7 +101,7 @@ private fun BottomBar(viewModel: LoginViewModel) {
             viewModel.passwordInput.value.text.isNotEmpty(),
             text = "Войти",
         ) {
-            viewModel.login()
+            viewModel.login(navController)
         }
     }
 }

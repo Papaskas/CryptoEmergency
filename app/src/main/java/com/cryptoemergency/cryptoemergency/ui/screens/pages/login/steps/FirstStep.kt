@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
@@ -28,6 +30,8 @@ import com.cryptoemergency.cryptoemergency.ui.screens.pages.login.LoginViewModel
 
 @Composable
 fun FirstStep(viewModel: LoginViewModel) {
+    Listener(viewModel.message, viewModel.redirect.collectAsState().value)
+
     Screen(
         topBar = {},
         bottomBar = {},
@@ -73,11 +77,18 @@ private fun Buttons(viewModel: LoginViewModel) {
     Column(
         Modifier.padding(horizontal = Theme.dimens.padding)
     ) {
-        CommonButton("Войти") {
+        CommonButton(
+            text = "Войти",
+            isLoading = viewModel.isLoading.collectAsState().value,
+        ) {
             viewModel.currentStep.intValue = 2
         }
         Spacer(Modifier.height(10.dp))
-        CommonButton("Продолжить как гость", buttonType = ButtonType.Secondary) {
+        CommonButton(
+            text = "Продолжить как гость",
+            buttonType = ButtonType.Secondary,
+            isLoading = viewModel.isLoading.collectAsState().value,
+        ) {
             viewModel.continueAsGuest()
         }
     }
