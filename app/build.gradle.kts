@@ -19,7 +19,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.cryptoemergency.cryptoemergency"
+        applicationId = "com.testwork.geoapp"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

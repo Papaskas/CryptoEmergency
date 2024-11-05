@@ -141,26 +141,6 @@ private fun getBottomItems (): List<BottomItem> {
             res.getString(R.string.home),
             R.drawable.home__filled,
             Destination.Home.Home,
-        ),
-        BottomItem(
-            res.getString(R.string.news_feed,),
-            R.drawable.news_feed__filled,
-            Destination.Home.News,
-        ),
-        BottomItem(
-            null,
-            null,
-            Destination.Home.CreatePost,
-        ),
-        BottomItem(
-            res.getString(R.string.cems),
-            R.drawable.cems,
-            Destination.Home.Cems
-        ),
-        BottomItem(
-            res.getString(R.string.more),
-            R.drawable.more__filled,
-            Destination.Home.Menu,
         )
     )
 }
