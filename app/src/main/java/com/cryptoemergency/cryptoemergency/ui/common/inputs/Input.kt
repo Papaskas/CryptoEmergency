@@ -30,6 +30,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
+import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
@@ -139,7 +140,11 @@ fun Input(
             ),
             visualTransformation = visualTransformation,
             singleLine = singleLine,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.commonBorder(
+                shape = shape,
+                isError = isError,
+                isFocused = isFocused,
+            ).fillMaxWidth(),
             decorationBox = {
                 TextFieldDefaults.DecorationBox(
                     value = value.value.text,

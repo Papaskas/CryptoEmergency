@@ -7,8 +7,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -19,11 +17,8 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  *
  * @param screens Экраны появляющиеся по этапно. Принимают переменную изменение которой приводит к
  * другому экрану
- * @param currentStep Перменная изменение которой приводит к переходу к нужному этапу
+ * @param currentStep Перменная изменение которой приводит к переходу к следующему этапу
  * @param pageSpacing Промежуток между экранами. Не влияет на верстку
- * @param content Необязательная обертка над всеми страницами
- *
- * @sample Sample
  **/
 @Composable
 fun SteppedScreen(
@@ -31,7 +26,6 @@ fun SteppedScreen(
     screens: List<@Composable () -> Unit>,
     modifier: Modifier = Modifier,
     pageSpacing: Dp = 15.dp,
-    content: @Composable ((content: @Composable () -> Unit) -> Unit)? = null,
 ) {
     val state = rememberPagerState(
         initialPage = currentStep.intValue,
@@ -49,41 +43,6 @@ fun SteppedScreen(
         userScrollEnabled = false,
         pageSpacing = pageSpacing,
     ) { page ->
-        content?.let {
-            it {
-                screens[page]()
-            }
-        } ?: run {
-            screens[page]()
-        }
+        screens[page]()
     }
 }
-
-@Composable
-private fun Sample() {
-    val currentStep = remember { mutableIntStateOf(0) }
-
-    val screens = listOf<@Composable () -> Unit>(
-        { FirstStep(currentStep) },
-        { SecondStep(currentStep) },
-        { ThirdStep(currentStep) },
-    )
-
-    SteppedScreen(currentStep, screens) {
-        Screen(
-            bottomBar = {},
-            topBar = {},
-        ) {
-            it()
-        }
-    }
-}
-
-@Composable
-private fun FirstStep(currentStep: MutableIntState) {}
-
-@Composable
-private fun SecondStep(currentStep: MutableIntState) {}
-
-@Composable
-private fun ThirdStep(currentStep: MutableIntState) {}

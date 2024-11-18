@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.modifiers.commonBorder
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
@@ -182,6 +183,14 @@ private fun DropDown(
 
     AnimatedVisibility(
         modifier = Modifier
+            .commonBorder(
+                shape = RoundedCornerShape(
+                    bottomStart = Theme.dimens.radius,
+                    bottomEnd = Theme.dimens.radius,
+                ),
+                isError = false,
+                isFocused = false,
+            )
             .background(
                 color = Theme.colors.surface1,
                 shape = RoundedCornerShape(
