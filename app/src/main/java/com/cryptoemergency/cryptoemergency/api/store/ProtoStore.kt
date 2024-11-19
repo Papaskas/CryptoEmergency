@@ -23,11 +23,9 @@ class ProtoStore<T>(
         serializer = key.serializer,
     )
 
-    /*
-    *
+    /**
     * Прямой доступ к базе
-    *
-    * */
+    */
     val dataStore: DataStore<T> = context.dataStore
 
     /**

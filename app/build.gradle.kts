@@ -137,31 +137,31 @@ android {
 
 dependencies {
 
-    implementation(libs.android.image.cropper) // Image editor
+    implementation(libs.android.image.cropper)
 
-    implementation(libs.androidx.graphics.shapes) // Либа для рисования shapes
+    implementation(libs.androidx.graphics.shapes)
 
-    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
     annotationProcessor(libs.androidx.room.compiler)
-    ksp(libs.androidx.room.compiler) // Компилятор аннотаций Room
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx) // Room - Дополнительно для Coroutines, Flows
 
-    implementation(libs.androidx.datastore.preferences) // datastore preferences
-    implementation(libs.androidx.datastore) // datastore-proto preferences
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.proto.datastore)
 
+    kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
+    implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android) // hilt common
-    kapt(libs.hilt.compiler) // Компилятор аннотация hilt. 2024 - Hilt не поддерживает ksp
 
-    implementation(libs.ktor.client.core) // Ktor Client core dependency
-    implementation(libs.ktor.client.okhttp) // Ktor Client engine dependency
-    implementation(libs.ktor.client.serialization) // Ktor Client JSON feature
-    implementation(libs.ktor.client.content.negotiation) // Ktor serialization to JSON
-    implementation(libs.ktor.serialization.kotlinx.json) // Ktor serialization to JSON
-    implementation(libs.ktor.client.logging) // Ktor Client logging
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
 
-    implementation(libs.slf4j.api) // логирование
-    implementation(libs.logback.classic) // логирование
+    implementation(libs.slf4j.api)
+    implementation(libs.logback.classic)
 
     implementation(libs.accompanist.permissions)
 
@@ -177,7 +177,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
-    implementation(libs.coil.compose) // для асинхронной загрузки изображений
+    implementation(libs.coil.compose)
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -185,6 +185,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -195,10 +196,10 @@ dependencies {
 
     detektPlugins(libs.detekt.formatting)
 
-    androidTestImplementation(libs.androidx.ui.test.android) // Compose test framework
-    androidTestImplementation(libs.junit.jupiter.api) // Instrumentation Test Support
-    testImplementation(libs.junit.jupiter.api) // (Required) Writing and executing Unit Tests on the JUnit Platform
-    testRuntimeOnly(libs.junit.jupiter.engine) // (Required) Writing and executing Unit Tests on the JUnit Platform
+    androidTestImplementation(libs.androidx.ui.test.android)
+    androidTestImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 junitPlatform {

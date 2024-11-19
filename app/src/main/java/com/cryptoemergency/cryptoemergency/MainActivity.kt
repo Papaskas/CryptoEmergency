@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.cryptoemergency.cryptoemergency.navigation.Navigation
 import com.cryptoemergency.cryptoemergency.providers.localNavController.NavControllerProvider
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.SnackBarProvider
-import com.cryptoemergency.cryptoemergency.providers.theme.MainThemeProvider
+import com.cryptoemergency.cryptoemergency.providers.theme.ThemeProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            MainThemeProvider {
+            ThemeProvider {
                 NavControllerProvider {
                     SnackBarProvider {
                         Navigation()

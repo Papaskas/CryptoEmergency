@@ -22,10 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.lib.Convert
 import com.cryptoemergency.cryptoemergency.lib.Convert.millisToDate
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
+import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.ui.common.CommonPreview
 
 /**
  * Комопнент Input с логикой Date. Наследуется от Input
@@ -33,9 +36,12 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * @param value Значение текста, которое будет отображаться в текстовом поле
  * @param label метка, которая будет отображаться внутри контейнера текстового поля.
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
+ * @param showDatePicker Состояние показа экрана выбора даты
  * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
+ *
+ * @sample DateInputSample
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,10 +49,10 @@ fun DateInput(
     value: MutableState<TextFieldValue>,
     label: String,
     modifier: Modifier = Modifier,
+    showDatePicker: MutableState<Boolean> = remember { mutableStateOf(false) },
     isEnabled: Boolean = true,
 ) {
     val datePickerState = rememberDatePickerState()
-    val showDatePicker = remember { mutableStateOf(false) }
     val selectedDate = datePickerState.selectedDateMillis?.millisToDate() ?: ""
 
     LaunchedEffect(selectedDate) {
@@ -147,3 +153,53 @@ private fun DatePickerModal(
         )
     }
 }
+
+@Composable
+private fun DateInputSample(
+    showDatePicker: MutableState<Boolean> = mutableStateOf(false)
+) {
+    val value = remember { mutableStateOf(TextFieldValue()) }
+
+    DateInput(
+        value = value,
+        label = "Дата рождения",
+        showDatePicker = showDatePicker,
+    )
+}
+
+@Preview
+@Composable
+private fun DateInputPreviewDark() {
+    CommonPreview(CurrentTheme.DARK) {
+        DateInputSample()
+    }
+}
+
+@Preview
+@Composable
+private fun DateInputPreviewLight() {
+    CommonPreview(CurrentTheme.LIGHT) {
+        DateInputSample()
+    }
+}
+
+@Preview
+@Composable
+private fun DateInputPreviewOpenDark() {
+    val showDatePicker = remember { mutableStateOf(true) }
+
+    CommonPreview(CurrentTheme.DARK) {
+        DateInputSample(showDatePicker)
+    }
+}
+
+@Preview
+@Composable
+private fun DateInputPreviewOpenLight() {
+    val showDatePicker = remember { mutableStateOf(true) }
+
+    CommonPreview(CurrentTheme.LIGHT) {
+        DateInputSample(showDatePicker)
+    }
+}
+

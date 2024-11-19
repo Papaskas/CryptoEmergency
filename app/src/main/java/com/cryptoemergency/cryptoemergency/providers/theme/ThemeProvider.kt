@@ -14,26 +14,22 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
-import com.cryptoemergency.cryptoemergency.viewModels.ThemeViewModel
 
 var currentTheme by mutableStateOf(CurrentTheme.NULL)
 
 @Composable
-fun MainThemeProvider(
-    viewModel: ThemeViewModel = hiltViewModel(),
+fun ThemeProvider(
+    vm: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val colors = remember { mutableStateOf(darkPalette) }
     val icons = remember { mutableStateOf(darkIcons) }
 
-    ThemeStorageOrSystem(viewModel)
+    ThemeStorageOrSystem(vm)
 
-    RecomposeSystemBarsColors()
+    RecomposeSystemBarsColors(vm)
 
-    RecomposeColorAndIcons(
-        colors,
-        icons,
-    )
+    RecomposeColorAndIcons(colors, icons)
 
     CompositionLocalProvider(
         LocalColors provides colors.value,
@@ -46,7 +42,7 @@ fun MainThemeProvider(
 
 // Поменять цветовую гамму у StatusBar, NavigationBar при рекомпозиции
 @Composable
-private fun RecomposeSystemBarsColors() {
+private fun RecomposeSystemBarsColors(vm: ThemeViewModel) {
     val view = LocalView.current
 
     LaunchedEffect(currentTheme) {
@@ -88,12 +84,13 @@ private fun RecomposeColorAndIcons(
 // Тема из хранилища если есть или системная
 @Composable
 private fun ThemeStorageOrSystem(
-    viewModel: ThemeViewModel,
+    vm: ThemeViewModel,
     isSystemInDarkTheme: Boolean = isSystemInDarkTheme()
 ) {
     LaunchedEffect(Unit) {
         // Достать из хранилища
-        val themeInStorage = viewModel.getThemeFromStorage()
+
+        val themeInStorage = vm.getThemeFromStorage()
 
         currentTheme = if (themeInStorage == CurrentTheme.NULL) {
             if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT

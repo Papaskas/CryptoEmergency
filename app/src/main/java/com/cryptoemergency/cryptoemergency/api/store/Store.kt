@@ -21,7 +21,10 @@ class Store<T>(
     private val key: Keys<T>,
     private val context: Context,
 ) {
-    private val dataStore = context.dataStore
+    /**
+     * Прямой доступ к базе
+     */
+    val dataStore = context.dataStore
 
     /**
      * Извлекает значение, связанное с данным ключом, из хранилища данных.
