@@ -29,7 +29,7 @@ object Media {
 
         var hasPermission by remember { mutableStateOf(false) }
 
-        Permissions.images { granted ->
+        Permissions.Images { granted ->
             hasPermission = granted
             onPermissionResult(granted)
         }

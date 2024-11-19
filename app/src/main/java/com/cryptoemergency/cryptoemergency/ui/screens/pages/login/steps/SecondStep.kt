@@ -86,8 +86,6 @@ private fun ColumnScope.ForgotPassword(viewModel: LoginViewModel) {
 
 @Composable
 private fun BottomBar(viewModel: LoginViewModel) {
-    val navController = LocalNavController.current
-
     Box(Modifier
         .padding(horizontal = Theme.dimens.padding)
         .padding(bottom = Theme.dimens.padding * 2)
@@ -101,7 +99,7 @@ private fun BottomBar(viewModel: LoginViewModel) {
             viewModel.passwordInput.value.text.isNotEmpty(),
             text = "Войти",
         ) {
-            viewModel.login(navController)
+            viewModel.login()
         }
     }
 }
