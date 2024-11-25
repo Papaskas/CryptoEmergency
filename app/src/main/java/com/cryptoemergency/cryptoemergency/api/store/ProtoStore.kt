@@ -24,9 +24,9 @@ class ProtoStore<T>(
     )
 
     /**
-    * Прямой доступ к базе
+    * Экземляр базы
     */
-    val dataStore: DataStore<T> = context.dataStore
+    private val dataStore: DataStore<T> = context.dataStore
 
     /**
      * Извлекает сохраненные данные, связанные с данным ключом

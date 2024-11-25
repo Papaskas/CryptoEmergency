@@ -26,9 +26,7 @@ fun ThemeProvider(
     val icons = remember { mutableStateOf(darkIcons) }
 
     ThemeStorageOrSystem(vm)
-
-    RecomposeSystemBarsColors(vm)
-
+    RecomposeSystemBarsColors()
     RecomposeColorAndIcons(colors, icons)
 
     CompositionLocalProvider(
@@ -42,7 +40,7 @@ fun ThemeProvider(
 
 // Поменять цветовую гамму у StatusBar, NavigationBar при рекомпозиции
 @Composable
-private fun RecomposeSystemBarsColors(vm: ThemeViewModel) {
+private fun RecomposeSystemBarsColors() {
     val view = LocalView.current
 
     LaunchedEffect(currentTheme) {
