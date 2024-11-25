@@ -40,20 +40,27 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             makeRequest(
                 context = context,
-                isLoading = isLoading,
-                message = message,
-                onRequest = {
-                    loginRequest(context, emailInput.value.text, passwordInput.value.text)
+                onError = { _, errorMessage ->
+                    isLoading.value = false
+                    message.value = errorMessage
+                },
+                onSuccess = {
+                    isLoading.value = false
+
+                    viewModelScope.launch {
+                        try {
+                            tokenStore.put(
+                                it.headers["authorization"] ?:
+                                error(context.resources.getString(R.string.error__internal_server))
+                            )
+                        } catch (e: IllegalStateException) {
+                            message.value = e.message
+                        }
+                    }
                 },
             ) {
-                try {
-                    tokenStore.put(
-                        it.headers["authorization"] ?:
-                        error(context.resources.getString(R.string.error__internal_server))
-                    )
-                } catch (e: IllegalStateException) {
-                    message.value = e.message
-                }
+                isLoading.value = true
+                loginRequest(context, emailInput.value.text, passwordInput.value.text)
             }
         }
     }
@@ -62,17 +69,17 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             makeRequest(
                 context = context,
-                isLoading = isLoading,
-                message = message,
-                onRequest = {
-                    loginRequest(context, emailInput.value.text, passwordInput.value.text)
+                onError = { _, _ ->
+                    isLoading.value = false
                 },
-                errors = mapOf(
-                    HttpStatusCode.OK to ""
-                )
+                onSuccess = {
+                    isLoading.value = false
+                    message.value = "Успешная авторизация!"
+                    redirect.value = Redirect(Destination.Home.Home)
+                },
             ) {
-                message.value = "Успешная авторизация!"
-                redirect.value = Redirect(Destination.Home.Home)
+                isLoading.value = true
+                loginRequest(context, emailInput.value.text, passwordInput.value.text)
             }
         }
     }
