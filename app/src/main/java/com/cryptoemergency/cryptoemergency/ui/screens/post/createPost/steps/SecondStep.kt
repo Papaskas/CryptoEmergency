@@ -74,6 +74,7 @@ private fun Field(viewModel: CreatePostViewModel) {
         label = "Текст", // TODO: translate
         minLines = 1,
         maxLines = 15,
+        minSymbol = 0,
         maxSymbols = 10000,
         modifier = Modifier.padding(horizontal = Theme.dimens.padding)
     )

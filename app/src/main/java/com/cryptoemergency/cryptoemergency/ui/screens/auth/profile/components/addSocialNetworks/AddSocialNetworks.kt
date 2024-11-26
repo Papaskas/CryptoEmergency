@@ -163,6 +163,7 @@ private fun AddSocialNetwork(
                 label = res.getString(R.string.description),
                 isError = mutableStateOf(false),
                 maxSymbols = 100,
+                minSymbol = 0,
                 maxLines = 3,
                 minLines = 1,
             )

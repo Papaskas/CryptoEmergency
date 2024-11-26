@@ -105,17 +105,17 @@ fun PhoneInput(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        ValidateInput(
-            modifier = Modifier.weight(2f),
-            label = "",
-            value = value,
-            keyboardOptions = keyboardOptions.copy(
-                keyboardType = KeyboardType.Phone
-            ),
-            keyboardActions = keyboardActions,
-            visualTransformation = visualTransformation,
-            singleLine = true,
-            validators = emptyArray()
-        )
+//        ValidatorInput(
+//            modifier = Modifier.weight(2f),
+//            label = "",
+//            value = value,
+//            keyboardOptions = keyboardOptions.copy(
+//                keyboardType = KeyboardType.Phone
+//            ),
+//            keyboardActions = keyboardActions,
+//            visualTransformation = visualTransformation,
+//            singleLine = true,
+//            validators = emptyArray()
+//        )
     }
 }

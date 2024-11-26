@@ -99,12 +99,12 @@ fun Input(
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
-    postLabel: @Composable ((TextStyle) -> Unit)? = null,
-    aboveIcon: @Composable (() -> Unit)? = null,
+    postLabel: @Composable (TextStyle) -> Unit = {},
+    aboveIcon: @Composable () -> Unit = {},
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    prefix: @Composable (() -> Unit)? = null,
-    suffix: @Composable (() -> Unit)? = null,
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -140,11 +140,13 @@ fun Input(
             ),
             visualTransformation = visualTransformation,
             singleLine = singleLine,
-            modifier = Modifier.commonBorder(
-                shape = shape,
-                isError = isError,
-                isFocused = isFocused,
-            ).fillMaxWidth(),
+            modifier = Modifier
+                .commonBorder(
+                    shape = shape,
+                    isError = isError,
+                    isFocused = isFocused,
+                )
+                .fillMaxWidth(),
             decorationBox = {
                 TextFieldDefaults.DecorationBox(
                     value = value.value.text,
@@ -160,7 +162,7 @@ fun Input(
                         Row {
                             Label(label, isRequired, labelStyle)
 
-                            postLabel?.let {
+                            postLabel.let {
                                 Spacer(Modifier.weight(1f))
                                 postLabel(labelStyle)
                             }
@@ -195,9 +197,7 @@ fun Input(
             }
         )
 
-        aboveIcon?.let {
-            it()
-        }
+        aboveIcon()
     }
 }
 

@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
+import android.util.Log
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -16,18 +17,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.lib.Validate
-import com.cryptoemergency.cryptoemergency.lib.ValidatePattern
-import com.cryptoemergency.cryptoemergency.lib.validation
+import com.cryptoemergency.cryptoemergency.lib.validation.Validator
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
+import com.cryptoemergency.cryptoemergency.lib.validation.validation
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
- * Компонент Input с логикой обработки валидации. Наследуется от Input
+ * Компонент Input с логикой валидации. Наследуется от Input
  *
  * @param value Значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier Модификатор который должен быть применен к этому текстовому полю.
@@ -48,7 +48,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * контейнер
  * @param prefix Необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
  * @param suffix Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
- * @param isError Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
+ * @param hasError Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
  * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
  * @param visualTransformation Преобразует визуальное представление входных данных [value]
  * @param keyboardOptions Определяет параметры программной клавиатуры
@@ -67,25 +67,25 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param contentAlignment Отношение позиционирования [aboveIcon] к [Input]
- * @param validators Параметры валидации, есть готовые в [ValidatePattern]
+ * @param validators Параметры валидации, есть готовые в [ValidatorPatterns]
  */
 @Composable
-fun ValidateInput(
+fun ValidatorInput(
     value: MutableState<TextFieldValue>,
     label: String,
-    validators: Array<Validate>,
+    validators: List<Validator>,
     modifier: Modifier = Modifier,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
     isEnabled: Boolean = true,
     isRequired: Boolean = false,
     readOnly: Boolean = false,
-    aboveIcon: @Composable (() -> Unit)? = null,
+    aboveIcon: @Composable () -> Unit = {},
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    prefix: @Composable (() -> Unit)? = null,
-    suffix: @Composable (() -> Unit)? = null,
-    postLabel: @Composable ((TextStyle) -> Unit)? = null,
-    isError: MutableState<Boolean> = mutableStateOf(false),
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
+    postLabel: @Composable (TextStyle) -> Unit = {},
+    hasError: MutableState<Boolean> = mutableStateOf(false),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -101,17 +101,7 @@ fun ValidateInput(
 
     Column {
         Input(
-            modifier = modifier.onFocusChanged { focusState ->
-                if (!focusState.isFocused && value.value.text.isNotEmpty()) {
-                    validate(
-                        text = value.value.text,
-                        errorMessage = errorMessage,
-                        successMessage = successMessage,
-                        isError = isError,
-                        validators,
-                    )
-                }
-            },
+            modifier = modifier,
             onValueChange = {
                 onValueChange(it)
 
@@ -119,7 +109,7 @@ fun ValidateInput(
                     text = it.text,
                     errorMessage = errorMessage,
                     successMessage = successMessage,
-                    isError = isError,
+                    hasError = hasError,
                     validators,
                 )
             },
@@ -129,7 +119,7 @@ fun ValidateInput(
             readOnly = readOnly,
             label = label,
             postLabel = postLabel,
-            isError = isError.value,
+            isError = hasError.value,
             isRequired = isRequired,
             prefix = prefix,
             suffix = suffix,
@@ -168,23 +158,26 @@ fun ValidateInput(
     }
 }
 
+/**
+ * Внутренний метод валидации параметров текстового поля
+ * */
 private fun validate(
     text: String,
     errorMessage: MutableState<String?>,
     successMessage: MutableState<String?>,
-    isError: MutableState<Boolean>,
-    validators: Array<Validate>,
+    hasError: MutableState<Boolean>,
+    validators: List<Validator>,
 ) {
-    val res = validation(text, "", validators)
-
-    if (res.errorMessage != null) {
-        errorMessage.value = res.errorMessage
-        successMessage.value = null
-        isError.value = res.isError
-
-    } else if (res.successMessage != null) {
-        errorMessage.value = null
-        successMessage.value = res.successMessage
-        isError.value = res.isError
+    validation(text, validators) { hasErr, errMsg ->
+        Log.d("hasErr", hasErr.toString())
+        if (hasErr) {
+            errorMessage.value = errMsg
+            successMessage.value = null
+            hasError.value = true
+        } else {
+            errorMessage.value = null
+            successMessage.value = "Успешно!"
+            hasError.value = false
+        }
     }
 }

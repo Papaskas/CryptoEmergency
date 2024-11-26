@@ -19,11 +19,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.lib.Validate
-import com.cryptoemergency.cryptoemergency.lib.ValidatePattern
+import com.cryptoemergency.cryptoemergency.lib.validation.Validator
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
 
 /**
- * Комопнент Input с логикой многостраничного ввода. Наследуется от ValidateInput
+ * Комопнент Input с логикой многостраничного ввода. Наследуется от ValidateInput со встроенным
+ * паттерном максимальных и минимальных символов
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param label метка, которая будет отображаться внутри контейнера текстового поля.
@@ -57,7 +58,7 @@ import com.cryptoemergency.cryptoemergency.lib.ValidatePattern
  * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param colors Палитра цветов для Input
- * @param validators Параметры валидации, есть готовые в [ValidatePattern]
+ * @param validators Параметры валидации, есть готовые в [ValidatorPatterns]
  * @param maxSymbols Максимальное количество символов
  * @param isRequired является ли поле обязательным
  */
@@ -67,6 +68,7 @@ fun MultiLineInput(
     label: String,
     maxLines: Int,
     minLines: Int,
+    minSymbol: Int,
     maxSymbols: Int,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
@@ -74,19 +76,19 @@ fun MultiLineInput(
     readOnly: Boolean = false,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
     isRequired: Boolean = false,
-    prefix: @Composable (() -> Unit)? = null,
-    suffix: @Composable (() -> Unit)? = null,
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     colors: TextFieldColors = TextFieldDefaults.colors(),
-    validators: Array<Validate> = arrayOf(),
+    validators: List<Validator> = emptyList(),
 ) {
     val validatorsList = validators.toMutableList()
-    validatorsList.add(ValidatePattern.inRange(0, maxSymbols))
+    validatorsList.add(ValidatorPatterns.inRange(minSymbol, maxSymbols))
 
-    ValidateInput(
+    ValidatorInput(
         modifier = modifier,
         readOnly = readOnly,
         value = value,
@@ -100,7 +102,7 @@ fun MultiLineInput(
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
         colors = colors,
-        isError = isError,
+        hasError = isError,
         isRequired = isRequired,
         isEnabled = isEnabled,
         maxLines = maxLines,
@@ -119,6 +121,6 @@ fun MultiLineInput(
             )
         },
         contentAlignment = Alignment.BottomEnd,
-        validators = validatorsList.toTypedArray()
+        validators = validators
     )
 }

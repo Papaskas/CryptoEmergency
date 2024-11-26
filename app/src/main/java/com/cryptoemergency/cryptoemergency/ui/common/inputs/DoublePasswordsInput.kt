@@ -2,93 +2,91 @@ package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns
 
 /**
- * Компонент Input с логикой двойного пароля. Наследуется от ValidateInput
+ * Группа компонентов [PasswordInput] с логикой двойного пароля. Наследуется от [PasswordInput]
  *
- * @param value значение вводимого текста, которое будет отображаться в текстовом поле
- * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
- * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
- * для доступа к сервисам.
- * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
- * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
- * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
- * отображения предварительно заполненных форм, которые пользователь не может редактировать.
- * @param isError указывает, является ли текущее значение текстового поля ошибочным. Если установлено
- * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
- * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки, как
- * [keyboardType] и [ImeAction].
- * @param keyboardActions когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
- *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
- * [KeyboardOptions.imeAction].
- * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
- * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
+ * @param values [Pair] Значения вводимого текста, которые будут отображаться в текстовых полях
+ * @param modifier [Modifier] применяемый к разметке текстовых полей
+ * @param spacedBy [Dp] расстояние между полями ввода
+ * @param isEnabled [Pair] управляет включенным состоянием этого текстового поля. При значении
+ * "false" этот компонент не будет реагировать на ввод данных пользователем, и оно будет выглядеть
+ * визуально отключенным и недоступным
+ * @param readOnly [Pair] управляет состоянием текстового поля для редактирования. При значении
+ * true текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
+ * скопировать текст из него.
+ * @param hasErrors [Pair] указывает, является ли текущее значение текстового поля ошибочным
+ * @param keyboardOptions [KeyboardOptions] параметры клавиатуры
+ * @param keyboardActions [Pair] коллбэки событий. Эти действия могут отличаться от того,
+ * что вы указано в [KeyboardOptions.imeAction]
+ * @param interactionSource [Pair] указывает, представляющий поток [Interaction] для каждого текстового поля.
+ * Можно создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
+ *
+ * @sample InputSamples.DoublePasswordSample
  */
 @Composable
 fun DoublePasswordsInput(
-    value: MutableState<String>,
+    values: Pair<MutableState<TextFieldValue>, MutableState<TextFieldValue>>,
     modifier: Modifier = Modifier,
-    isEnabled: Boolean = true,
-    readOnly: Boolean = false,
-    isError: Boolean = false,
+    spacedBy: Dp = 15.dp,
+    isEnabled: Pair<Boolean, Boolean> = Pair(true, true),
+    readOnly: Pair<Boolean, Boolean> = Pair(false, false),
+    hasErrors: Pair<MutableState<Boolean>, MutableState<Boolean>> = Pair(
+        mutableStateOf(false),
+        mutableStateOf(false),
+    ),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    errorMessage: String? = null,
-    successMessage: String? = null,
+    keyboardActions: Pair<KeyboardActions, KeyboardActions> = Pair(
+        KeyboardActions.Default,
+        KeyboardActions.Default,
+    ),
+    interactionSource: Pair<MutableInteractionSource, MutableInteractionSource> = Pair(
+        remember { MutableInteractionSource() },
+        remember { MutableInteractionSource() },
+    ),
 ) {
-    /* val image = if (passwordVisible.value) R.drawable.visibility else R.drawable.visibility_off
-     val description = if (passwordVisible.value) "Скрыть пароль" else "Показать пароль"
+    val passwordVisible = remember { mutableStateOf(false) }
 
-     ValidateInput(
-         modifier = modifier,
-         value = value,
-         readOnly = readOnly,
-         label = "label",
-         isError = isError,
-         prefix = "prefix",
-         suffix = "suffix",
-         trailingIcon = {
-             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                 Icon(
-                     painter = painterResource(image),
-                     contentDescription = description,
-                 )
-             }
-         },
-         supportingText = "Supporting text",
-         enabled = enabled,
-         maxLines = 1,
-         minLines = 1,
-         interactionSource = interactionSource,
-         placeholder = "placeholder",
-         keyboardActions = keyboardActions,
-         keyboardOptions = keyboardOptions,
-         singleLine = true,
-
-         onValidate = {
-             if (onValidate == null) {
- //                validatePassword(
- //                    textState.value,
- //                    textState.value,
- //                    errorMessage,
- //                    successMessage,
- //                    isError
- //                )
-             } else {
-                 onValidate()
-             }
-         },
-         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-         errorMessage = errorMessage,
-         successMessage = successMessage,
-     )*/
+    Column(modifier) {
+        PasswordInput(
+            value = values.first,
+            hasError = hasErrors.first,
+            isEnabled = isEnabled.first,
+            readOnly = readOnly.first,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions.first,
+            interactionSource = interactionSource.first,
+            passwordVisible = passwordVisible,
+            showIconVisible = false,
+            validators = emptyList(),
+        )
+        Spacer(Modifier.height(spacedBy))
+        PasswordInput(
+            value = values.second,
+            hasError = hasErrors.second,
+            isEnabled = isEnabled.second,
+            readOnly = readOnly.second,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions.second,
+            interactionSource = interactionSource.second,
+            passwordVisible = passwordVisible,
+            validators = InputValidatorPatterns.doublePasswordPatterns(values.first.value.text)
+        )
+    }
 }
+
