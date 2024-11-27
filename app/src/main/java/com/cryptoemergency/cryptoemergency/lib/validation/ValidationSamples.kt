@@ -16,11 +16,10 @@ private object ValidationSamples {
                     errorMessage = "Не совпадают!",
                 )
             )
-        ) { hasError, errorMessage: String? ->
+        ) { hasError: Boolean, errorMessage: String? ->
             //...
         }
     }
-
 
     /**
      * Пример использования валидатора для проверки длины строки в диапазоне.
@@ -29,7 +28,7 @@ private object ValidationSamples {
         validation(
             "Пример текста",
             listOf(ValidatorPatterns.inRange(min = 5, max = 10)),
-        ) { hasError, errorMessage: String? ->
+        ) { hasError: Boolean, errorMessage: String? ->
             //...
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns.emailPatterns
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
  * Комопнент [ValidatorInput] с валидаторами [emailPatterns]. Наследуется от [ValidatorInput]

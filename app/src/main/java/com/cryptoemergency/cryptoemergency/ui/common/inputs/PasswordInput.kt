@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
  * Поле ввода с логикой пароля. Наследуется от [ValidatorInput]

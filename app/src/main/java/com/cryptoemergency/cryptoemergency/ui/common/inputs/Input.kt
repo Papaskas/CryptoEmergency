@@ -4,6 +4,7 @@ import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -81,9 +82,10 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param colors Палитра цветов для Input
  * @param isFocused Выделено ли поле
- * @param contentAlignment Отношение позиционирования [aboveIcon] к [Input]
  * @param shape определяет форму контейнера этого текстового поля
  * @param cursorBrush Кисть для рисования курсора
+ *
+ * @sample InputSamples.InputSample
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -100,7 +102,7 @@ fun Input(
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
     postLabel: @Composable (TextStyle) -> Unit = {},
-    aboveIcon: @Composable () -> Unit = {},
+    aboveIcon: @Composable BoxScope.() -> Unit = {},
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable () -> Unit = {},
@@ -111,7 +113,6 @@ fun Input(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
     colors: TextFieldColors = TextFieldDefaults.colors(),
-    contentAlignment: Alignment = Alignment.TopStart,
     shape: Shape = RoundedCornerShape(Theme.dimens.radius),
     cursorBrush: Brush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
 ) {
@@ -121,10 +122,7 @@ fun Input(
         Theme.typography.body1
     }
 
-    Box(
-        modifier = modifier,
-        contentAlignment = contentAlignment,
-    ) {
+    Box(modifier = modifier) {
         BasicTextField(
             value = value.value,
             onValueChange = onValueChange,

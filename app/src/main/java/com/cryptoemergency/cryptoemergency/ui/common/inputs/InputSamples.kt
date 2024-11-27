@@ -4,11 +4,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
  * Обьект примеров текстовых полей. Используются в JavaDoc
  * */
 private object InputSamples {
+
+    @Composable
+    private fun InputSample() {
+        val value = remember { mutableStateOf(TextFieldValue()) }
+
+        Input(
+            value = value,
+            label = "Sample"
+        )
+    }
 
     @Composable
     private fun EmailInputSample() {
@@ -36,6 +48,23 @@ private object InputSamples {
         DoublePasswordsInput(
             values = values,
             hasErrors = hasErrors,
+        )
+    }
+
+    @Composable
+    private fun ValidatorInputSample() {
+        val value = remember { mutableStateOf(TextFieldValue()) }
+        val validators = listOf(
+            ValidatorPatterns.notEmpty, // Не пустое
+            ValidatorPatterns.withoutSpaces, // Без пробелов
+            ValidatorPatterns.onlyNumber, // Только цифры
+            ValidatorPatterns.inRange(6, 12), // В размере от 6 до 12
+        )
+
+        ValidatorInput(
+            value = value,
+            label = "Sample",
+            validators = validators,
         )
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
  * Комопнент Input с логикой многостраничного ввода. Наследуется от ValidateInput со встроенным
@@ -117,10 +118,11 @@ fun MultiLineInput(
             Icon(
                 painter = painterResource(R.drawable.stretch),
                 contentDescription = null,
-                modifier = Modifier.padding(bottom = 5.dp)
+                modifier = Modifier
+                    .padding(bottom = 5.dp)
+                    .align(Alignment.BottomEnd)
             )
         },
-        contentAlignment = Alignment.BottomEnd,
         validators = validators
     )
 }

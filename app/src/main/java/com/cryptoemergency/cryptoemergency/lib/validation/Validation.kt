@@ -15,9 +15,9 @@ fun validation(
 ) {
     for (validator in validators) {
         if (!text.contains(validator.first)) {
-            onResult(true, validator.second)
+            return onResult(true, validator.second)
         }
     }
 
-    onResult(false, null)
+    return onResult(false, null)
 }
