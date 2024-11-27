@@ -38,6 +38,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
  * @param label [String] Метка, которая будет отображаться внутри контейнера текстового поля
  * @param validators [Validator] Список валидаторов, используете готовые [ValidatorPatterns]
  * @param modifier [Modifier] Модификатор применяемый к к разметке текстового поля
+ * @param showValidatorMessage [Boolean] Показывать ли сообщения об ошибках
  * @param successMessage [StringRes] Необязательное сообщение об успешной валидации
  * @param onValueChange Коллбэк, когда служба ввода обновляет значения в текстовом поле [value]
  * @param isEnabled [Boolean] Управляет включенным состоянием этого текстового поля. При значении "false" этот
@@ -85,6 +86,7 @@ fun ValidatorInput(
     label: String,
     validators: List<Validator>,
     modifier: Modifier = Modifier,
+    showValidatorMessage: Boolean = true,
     @StringRes successMessage: Int? = null,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
     isEnabled: Boolean = true,
@@ -143,14 +145,17 @@ fun ValidatorInput(
             colors = colors,
         )
 
-        ValidatorMessageBlock(vm)
+        ValidatorMessageBlock(vm, showValidatorMessage)
     }
 }
 
 @Composable
 private fun ValidatorMessageBlock(
     vm: ValidatorInputViewModel,
+    showValidatorMessage: Boolean,
 ) {
+    if (!showValidatorMessage) return
+
     Column {
         Spacer(Modifier.height(4.dp))
 

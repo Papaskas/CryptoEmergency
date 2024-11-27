@@ -12,10 +12,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
 
 /**
  * Группа компонентов [PasswordInput] с логикой двойного пароля. Наследуется от [PasswordInput]
@@ -46,10 +48,7 @@ fun DoublePasswordsInput(
     spacedBy: Dp = 15.dp,
     isEnabled: Pair<Boolean, Boolean> = Pair(true, true),
     readOnly: Pair<Boolean, Boolean> = Pair(false, false),
-    hasErrors: Pair<MutableState<Boolean>, MutableState<Boolean>> = Pair(
-        mutableStateOf(false),
-        mutableStateOf(false),
-    ),
+    hasErrors: MutableState<Boolean> = mutableStateOf(false),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: Pair<KeyboardActions, KeyboardActions> = Pair(
         KeyboardActions.Default,
@@ -65,20 +64,23 @@ fun DoublePasswordsInput(
     Column(modifier) {
         PasswordInput(
             value = values.first,
-            hasError = hasErrors.first,
+            showValidatorMessage = false,
+            hasError = hasErrors,
             isEnabled = isEnabled.first,
             readOnly = readOnly.first,
-            keyboardOptions = keyboardOptions,
+            keyboardOptions = keyboardOptions.copy(
+                imeAction = ImeAction.Next
+            ),
             keyboardActions = keyboardActions.first,
             interactionSource = interactionSource.first,
             passwordVisible = passwordVisible,
             showIconVisible = false,
-            validators = emptyList(),
+            validators = InputValidatorPatterns.doublePasswordPatterns(values.second.value.text),
         )
         Spacer(Modifier.height(spacedBy))
         PasswordInput(
             value = values.second,
-            hasError = hasErrors.second,
+            hasError = hasErrors,
             isEnabled = isEnabled.second,
             readOnly = readOnly.second,
             keyboardOptions = keyboardOptions,

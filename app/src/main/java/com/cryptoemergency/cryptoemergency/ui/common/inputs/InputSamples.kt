@@ -40,15 +40,7 @@ private object InputSamples {
             remember { mutableStateOf(TextFieldValue()) },
         )
 
-        val hasErrors = Pair(
-            remember { mutableStateOf(false) },
-            remember { mutableStateOf(false) },
-        )
-
-        DoublePasswordsInput(
-            values = values,
-            hasErrors = hasErrors,
-        )
+        DoublePasswordsInput(values = values)
     }
 
     @Composable

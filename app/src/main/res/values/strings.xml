@@ -114,4 +114,5 @@
     <string name="image">Image</string>
     <string name="video">Video</string>
     <string name="login_terms">By clicking on the "Log in" or "Continue as a guest" button, you agree to the <annotation tag="clickable">processing of personal data and privacy policy</annotation>.</string>
+    <string name="strong_password">A strong password</string>
 </resources>

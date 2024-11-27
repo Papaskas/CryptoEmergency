@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.DoublePasswordsInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.EmailInput
 
 @Composable
@@ -45,10 +46,6 @@ private fun TempPage() {
         remember { mutableStateOf(TextFieldValue()) },
     )
 
-    val errors = Pair(
-        remember { mutableStateOf(false) },
-        remember { mutableStateOf(false) },
-    )
     val a = remember { mutableStateOf(TextFieldValue()) }
     val b = remember { mutableStateOf(false) }
 
@@ -56,8 +53,8 @@ private fun TempPage() {
         Column(
             Modifier.padding(it)
         ) {
-            EmailInput(value = a, hasError = b)
-            //DoublePasswordsInput(values)
+            //EmailInput(value = a, hasError = b)
+            DoublePasswordsInput(values)
         }
     }
 }

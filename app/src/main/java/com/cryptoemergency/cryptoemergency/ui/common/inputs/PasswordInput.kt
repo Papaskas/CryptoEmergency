@@ -28,6 +28,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
+ * @param showValidatorMessage [Boolean] Показывать ли сообщения об ошибках
  * @param isEnabled управляет включенным состоянием этого текстового поля. При значении "false" этот компонент будет
  * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
  * для доступа к сервисам.
@@ -52,6 +53,7 @@ fun PasswordInput(
     value: MutableState<TextFieldValue>,
     hasError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
+    showValidatorMessage: Boolean = true,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -73,6 +75,7 @@ fun PasswordInput(
     ValidatorInput(
         modifier = modifier,
         value = value,
+        showValidatorMessage = showValidatorMessage,
         readOnly = readOnly,
         label = res.getString(R.string.password),
         hasError = hasError,

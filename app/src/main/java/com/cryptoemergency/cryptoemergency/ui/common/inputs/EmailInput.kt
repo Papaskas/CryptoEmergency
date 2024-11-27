@@ -24,6 +24,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
  * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
  * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
  * отображения предварительно заполненных форм, которые пользователь не может редактировать.
+ * @param label [String] Метка, которая будет отображаться внутри контейнера текстового поля
  *
  * @sample InputSamples.EmailInputSample
  */
@@ -34,12 +35,13 @@ fun EmailInput(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
+    label: String = "Email",
 ) {
     ValidatorInput(
         modifier = modifier,
         readOnly = readOnly,
         value = value,
-        label = "Email",
+        label = label,
         isRequired = true,
         hasError = hasError,
         isEnabled = isEnabled,
