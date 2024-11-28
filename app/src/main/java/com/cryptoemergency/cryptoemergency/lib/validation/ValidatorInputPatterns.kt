@@ -3,15 +3,16 @@ package com.cryptoemergency.cryptoemergency.lib.validation
 /**
  * Обьект с готовыми валидаторами для текстовых полей
  * */
-object InputValidatorPatterns {
+object ValidatorInputPatterns {
     /**
      * Набор валидаторов для проверки пароля
      */
     val passwordPatterns = arrayListOf(
         ValidatorPatterns.notEmpty,
+        ValidatorPatterns.onlyLatin,
         ValidatorPatterns.withoutSpaces,
-        ValidatorPatterns.hasUppercase,
         ValidatorPatterns.hasLowercase,
+        ValidatorPatterns.hasUppercase,
         ValidatorPatterns.hasDigit,
         ValidatorPatterns.hasSpecialChar,
         ValidatorPatterns.inRange(min = 8, max = 25),
@@ -27,7 +28,7 @@ object InputValidatorPatterns {
         equivalentTo: String,
         errorMessage: String = "Пароли не совпадают",
     ): List<Validator> {
-        passwordPatterns.add(ValidatorPatterns.isEquals(equivalentTo, errorMessage))
+        passwordPatterns.add(ValidatorPatterns.IsEquals(equivalentTo, errorMessage))
 
         return passwordPatterns
     }

@@ -12,6 +12,7 @@ import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNav
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.DoublePasswordsInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.EmailInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.PasswordInput
 
 @Composable
 fun Navigation() {
@@ -55,6 +56,7 @@ private fun TempPage() {
         ) {
             //EmailInput(value = a, hasError = b)
             DoublePasswordsInput(values)
+            //PasswordInput(a, b)
         }
     }
 }

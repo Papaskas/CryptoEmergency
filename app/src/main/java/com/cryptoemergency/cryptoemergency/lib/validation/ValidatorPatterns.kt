@@ -1,31 +1,42 @@
 package com.cryptoemergency.cryptoemergency.lib.validation
 
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
+
 /**
- * Объект, содержащий предопределенные валидаторы
+ * Объект, содержащий предопределенные валидаторы. По своей сути является набором метаданных для
+ * функции [validation]
+ *
+ * Сравнимаемый текст сам передается в функцию [validation] в [ValidatorInput]
  */
 object ValidatorPatterns {
+    private const val SPECIAL_CHARACTERS = "!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?"
+    private const val DIGITS = "\\d"
+    private const val LATIN_UPPER = "A-Z"
+    private const val LATIN_LOWER = "a-z"
+    private const val LATIN_ALPHABET = "$LATIN_UPPER$LATIN_LOWER"
+
     val isEmail = Validator(
-        Regex("^[A-Za-z](.*)(@)(.+)(\\.)(.+)"),
+        Regex("^[$LATIN_ALPHABET](.*)(@)(.+)(\\.)(.+)"),
         "Некорректная почта",
     )
 
     val hasUppercase = Validator(
-        Regex("[A-Z]"),
+        Regex("[$LATIN_UPPER]"),
         "Необходима хотя бы одна заглавная буква"
     )
 
     val hasLowercase = Validator(
-        Regex("[a-z]"),
+        Regex("[$LATIN_LOWER]"),
         "Необходима хотя бы одна строчная буква"
     )
 
     val hasDigit = Validator(
-        Regex("\\d"),
+        Regex(DIGITS),
         "Необходима хотя бы одна цифра"
     )
 
     val hasSpecialChar = Validator(
-        Regex("[!@#\$%^&+=]"),
+        Regex("[$SPECIAL_CHARACTERS]"),
         "Необходим хотя бы один спец символ"
     )
 
@@ -90,21 +101,34 @@ object ValidatorPatterns {
     )
 
     /**
+     * Не пропускает все кроме цифр, спец символов и английского алфавита
+     * */
+    val onlyLatin = Validator(
+        Regex("^[$LATIN_ALPHABET$DIGITS$SPECIAL_CHARACTERS]+$"),
+        "Только латинские буквы"
+    )
+
+    /**
      * Валидатор для проверки равенства строк.
      *
-     * @param toText Текст, с которым нужно сравнить.
-     * @param errorMessage Сообщение об ошибке, если строки не совпадают.
+     * @param toText [String] Текст, с которым нужно сравнить.
+     * @param errorMessage [String] Сообщение об ошибке, если строки не совпадают.
      * @return [Validator] для проверки равенства строк.
      *
-     * @sample [ValidationSamples.isEquals]
+     * @sample [ValidatorSamples.isEquals]
      */
-    fun isEquals(
-        toText: String,
-        errorMessage: String = "Строки не совпадают!"
-    ) = Validator(
-        Regex.escape(toText).toRegex(),
-        errorMessage,
-    )
+    class IsEquals(
+        private val toText: String,
+        private val errorMessage: String = "Строки не совпадают!"
+    ) : Validator(Regex(""), errorMessage) {
+        override fun execute(text: String): String? {
+            return if (text != toText) {
+                errorMessage
+            } else {
+                null
+            }
+        }
+    }
 
     /**
      * Валидатор для проверки длины строки в заданном диапазоне
@@ -115,7 +139,7 @@ object ValidatorPatterns {
      *
      * @return [Validator] для проверки длины строки.
      *
-     * @sample [ValidationSamples.inRange]
+     * @sample [ValidatorSamples.inRange]
      */
     fun inRange(
         min: Int,

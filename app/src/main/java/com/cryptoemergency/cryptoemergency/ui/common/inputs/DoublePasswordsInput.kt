@@ -16,7 +16,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
 
 /**
@@ -74,8 +73,8 @@ fun DoublePasswordsInput(
             keyboardActions = keyboardActions.first,
             interactionSource = interactionSource.first,
             passwordVisible = passwordVisible,
-            showIconVisible = false,
-            validators = InputValidatorPatterns.doublePasswordPatterns(values.second.value.text),
+            showIconToggleVisibility = false,
+            validators = listOf(ValidatorPatterns.IsEquals(values.second.value.text, "BBBBB")), // InputValidatorPatterns.doublePasswordPatterns(values.second.value.text),
         )
         Spacer(Modifier.height(spacedBy))
         PasswordInput(
@@ -87,7 +86,8 @@ fun DoublePasswordsInput(
             keyboardActions = keyboardActions.second,
             interactionSource = interactionSource.second,
             passwordVisible = passwordVisible,
-            validators = InputValidatorPatterns.doublePasswordPatterns(values.first.value.text)
+            validators = listOf(ValidatorPatterns.IsEquals(values.first.value.text, "AAAAA")),
+            //validators = InputValidatorPatterns.doublePasswordPatterns(values.first.value.text)
         )
     }
 }

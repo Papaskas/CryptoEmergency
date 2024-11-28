@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import com.cryptoemergency.cryptoemergency.lib.validation.InputValidatorPatterns.emailPatterns
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorInputPatterns.emailPatterns
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**

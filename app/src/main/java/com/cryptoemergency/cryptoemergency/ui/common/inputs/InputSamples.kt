@@ -10,7 +10,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
 /**
  * Обьект примеров текстовых полей. Используются в JavaDoc
  * */
-private object InputSamples {
+object InputSamples {
 
     @Composable
     private fun InputSample() {
@@ -28,6 +28,17 @@ private object InputSamples {
         val hasError = remember { mutableStateOf(false) }
 
         EmailInput(
+            value = value,
+            hasError = hasError,
+        )
+    }
+
+    @Composable
+    private fun PasswordSample() {
+        val value = remember { mutableStateOf(TextFieldValue()) }
+        val hasError = remember { mutableStateOf(false) }
+
+        PasswordInput(
             value = value,
             hasError = hasError,
         )

@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
@@ -27,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
-import com.cryptoemergency.cryptoemergency.lib.validation.validation
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSamples
 
 /**
  * Компонент Input с логикой валидации. Наследуется от Input
@@ -78,7 +77,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
  * @param colors [TextFieldDefaults.colors] Цветовое оформление в разных состояниях
  *
- * @sample com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSamples.ValidatorInputSample
+ * @sample InputSamples.ValidatorInputSample
  */
 @Composable
 fun ValidatorInput(

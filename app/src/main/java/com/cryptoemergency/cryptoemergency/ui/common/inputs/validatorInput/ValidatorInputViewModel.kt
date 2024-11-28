@@ -6,14 +6,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
-import com.cryptoemergency.cryptoemergency.lib.validation.validation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
 class ValidatorInputViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
     val errorMessage = mutableStateOf<String?>(null)
     val successMessage = mutableStateOf<String?>(null)
@@ -29,9 +28,11 @@ class ValidatorInputViewModel @Inject constructor(
     ) {
         val res = context.resources
 
-        validation(text, validators) { hasErr, errMsg ->
-            if (hasErr) {
-                this.errorMessage.value = errMsg
+        validators.forEach {
+            val errorMessage = it.execute(text)
+
+            if (errorMessage != null) {
+                this.errorMessage.value = errorMessage
                 this.successMessage.value = null
                 hasError.value = true
             } else {
