@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.KeyboardActions
@@ -30,6 +31,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
  * @param hasError [MutableState] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
  * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
  * @param modifier [Modifier] Применяемый к разметке текстового поля
+ * @param successMessage [StringRes] Текст при успешной валидации
  * @param showValidatorMessage [Boolean] Показывать ли сообщения об ошибках
  * @param passwordVisible [MutableState] Состояние видимости пароля. "true" - символы отображены,
  * "false" - символы заменены звездочками
@@ -56,6 +58,7 @@ fun PasswordInput(
     value: MutableState<TextFieldValue>,
     hasError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
+    @StringRes successMessage: Int = R.string.strong_password,
     showValidatorMessage: Boolean = true,
     passwordVisible: MutableState<Boolean> = remember { mutableStateOf(false) },
     showIconToggleVisibility: Boolean = true,
@@ -80,6 +83,7 @@ fun PasswordInput(
         value = value,
         showValidatorMessage = showValidatorMessage,
         readOnly = readOnly,
+        successMessage = successMessage,
         label = res.getString(R.string.password),
         hasError = hasError,
         isRequired = true,

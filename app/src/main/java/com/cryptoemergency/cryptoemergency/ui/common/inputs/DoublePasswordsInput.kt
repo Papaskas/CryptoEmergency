@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorInputPatterns
 
 /**
  * Группа компонентов [PasswordInput] с логикой двойного пароля. Наследуется от [PasswordInput]
@@ -30,7 +30,7 @@ import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
  * @param readOnly [Pair] управляет состоянием текстового поля для редактирования. При значении
  * true текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
  * скопировать текст из него.
- * @param hasErrors [Pair] указывает, является ли текущее значение текстового поля ошибочным
+ * @param hasError [Boolean] указывает, является ли текущее значение текстового поля ошибочным
  * @param keyboardOptions [KeyboardOptions] параметры клавиатуры
  * @param keyboardActions [Pair] коллбэки событий. Эти действия могут отличаться от того,
  * что вы указано в [KeyboardOptions.imeAction]
@@ -47,7 +47,7 @@ fun DoublePasswordsInput(
     spacedBy: Dp = 15.dp,
     isEnabled: Pair<Boolean, Boolean> = Pair(true, true),
     readOnly: Pair<Boolean, Boolean> = Pair(false, false),
-    hasErrors: MutableState<Boolean> = mutableStateOf(false),
+    hasError: MutableState<Boolean> = remember { mutableStateOf(false) },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: Pair<KeyboardActions, KeyboardActions> = Pair(
         KeyboardActions.Default,
@@ -64,7 +64,7 @@ fun DoublePasswordsInput(
         PasswordInput(
             value = values.first,
             showValidatorMessage = false,
-            hasError = hasErrors,
+            hasError = hasError,
             isEnabled = isEnabled.first,
             readOnly = readOnly.first,
             keyboardOptions = keyboardOptions.copy(
@@ -74,20 +74,19 @@ fun DoublePasswordsInput(
             interactionSource = interactionSource.first,
             passwordVisible = passwordVisible,
             showIconToggleVisibility = false,
-            validators = listOf(ValidatorPatterns.IsEquals(values.second.value.text, "BBBBB")), // InputValidatorPatterns.doublePasswordPatterns(values.second.value.text),
+            validators = ValidatorInputPatterns.doublePasswordPatterns(values.second.value.text),
         )
         Spacer(Modifier.height(spacedBy))
         PasswordInput(
             value = values.second,
-            hasError = hasErrors,
+            hasError = hasError,
             isEnabled = isEnabled.second,
             readOnly = readOnly.second,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions.second,
             interactionSource = interactionSource.second,
             passwordVisible = passwordVisible,
-            validators = listOf(ValidatorPatterns.IsEquals(values.first.value.text, "AAAAA")),
-            //validators = InputValidatorPatterns.doublePasswordPatterns(values.first.value.text)
+            validators = ValidatorInputPatterns.doublePasswordPatterns(values.first.value.text),
         )
     }
 }

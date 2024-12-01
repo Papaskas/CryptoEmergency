@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput
 
 import android.content.Context
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +36,8 @@ class ValidatorInputViewModel @Inject constructor(
                 this.errorMessage.value = errorMessage
                 this.successMessage.value = null
                 hasError.value = true
+
+                return
             } else {
                 this.errorMessage.value = null
                 this.successMessage.value = if(successMessage != null) res.getString(successMessage) else null

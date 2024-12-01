@@ -22,7 +22,7 @@ object ValidatorSamples {
      * Пример использования валидатора для проверки равенства строк.
      */
     private fun isEquals() {
-        val errorMessage: String? = ValidatorPatterns.IsEquals(
+        val errorMessage: String? = ValidatorPatterns.isEquals(
             "С чем сравнить",
             "Строки не равны!"
         ).execute("Что сравнить")

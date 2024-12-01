@@ -1,12 +1,12 @@
 package com.cryptoemergency.cryptoemergency.lib.validation
 
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
+import android.util.Log
 
 /**
  * Объект, содержащий предопределенные валидаторы. По своей сути является набором метаданных для
- * функции [validation]
+ * класса [Validator]
  *
- * Сравнимаемый текст сам передается в функцию [validation] в [ValidatorInput]
+ * @sample ValidatorSamples
  */
 object ValidatorPatterns {
     private const val SPECIAL_CHARACTERS = "!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?"
@@ -117,18 +117,13 @@ object ValidatorPatterns {
      *
      * @sample [ValidatorSamples.isEquals]
      */
-    class IsEquals(
-        private val toText: String,
-        private val errorMessage: String = "Строки не совпадают!"
-    ) : Validator(Regex(""), errorMessage) {
-        override fun execute(text: String): String? {
-            return if (text != toText) {
-                errorMessage
-            } else {
-                null
-            }
-        }
-    }
+    fun isEquals(
+        toText: String,
+        errorMessage: String = "Строки не совпадают!"
+    ) = Validator(
+        Regex("^${Regex.escape(toText)}$"),
+        errorMessage,
+    )
 
     /**
      * Валидатор для проверки длины строки в заданном диапазоне

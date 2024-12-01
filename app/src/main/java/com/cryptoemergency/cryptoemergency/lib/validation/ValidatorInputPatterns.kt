@@ -2,12 +2,14 @@ package com.cryptoemergency.cryptoemergency.lib.validation
 
 /**
  * Обьект с готовыми валидаторами для текстовых полей
+ *
+ * @sample ValidatorSamples
  * */
 object ValidatorInputPatterns {
     /**
      * Набор валидаторов для проверки пароля
      */
-    val passwordPatterns = arrayListOf(
+    val passwordPatterns = listOf(
         ValidatorPatterns.notEmpty,
         ValidatorPatterns.onlyLatin,
         ValidatorPatterns.withoutSpaces,
@@ -21,17 +23,28 @@ object ValidatorInputPatterns {
     /**
      * Валидатор двойного пароля
      *
-     * @param equivalentTo Значение другого поля с паролем
+     * @param confirmPassword Значение другого пароля
      * @param errorMessage Сообщение в случае ошибки
      */
-    fun doublePasswordPatterns(
-        equivalentTo: String,
-        errorMessage: String = "Пароли не совпадают",
-    ): List<Validator> {
-        passwordPatterns.add(ValidatorPatterns.IsEquals(equivalentTo, errorMessage))
+//    fun doublePasswordPatterns(
+//        confirmPassword: String,
+//        errorMessage: String = "Пароли не совпадают",
+//    ) = listOf(
+//        ValidatorPatterns.notEmpty,
+//        ValidatorPatterns.onlyLatin,
+//        ValidatorPatterns.withoutSpaces,
+//        ValidatorPatterns.hasLowercase,
+//        ValidatorPatterns.hasUppercase,
+//        ValidatorPatterns.hasDigit,
+//        ValidatorPatterns.hasSpecialChar,
+//        ValidatorPatterns.inRange(min = 8, max = 25),
+//        ValidatorPatterns.isEquals(confirmPassword, errorMessage)
+//    )
 
-        return passwordPatterns
-    }
+    fun doublePasswordPatterns(
+        confirmPassword: String,
+        errorMessage: String = "Пароли не совпадают",
+    ) = passwordPatterns.plus(ValidatorPatterns.isEquals(confirmPassword, errorMessage))
 
     /**
      * Набор валидаторов для проверки email
