@@ -70,4 +70,34 @@ object InputSamples {
             validators = validators,
         )
     }
+
+    @Composable
+    private fun MultilineSample() {
+        val value = remember { mutableStateOf(TextFieldValue()) }
+        val hasError = remember { mutableStateOf(false) }
+
+        MultiLineInput(
+            value = value,
+            hasError = hasError,
+            minSymbols = 0,
+            maxSymbols = 120,
+            minLines = 1,
+            maxLines = 2,
+            label = "Sample",
+        )
+    }
+
+    @Composable
+    private fun MultilineWithoutValidSymbolSample() {
+        val value = remember { mutableStateOf(TextFieldValue()) }
+        val hasError = remember { mutableStateOf(false) }
+
+        MultiLineInput(
+            value = value,
+            hasError = hasError,
+            minLines = 1,
+            maxLines = 2,
+            label = "Sample",
+        )
+    }
 }

@@ -28,8 +28,8 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
  * Текстовое поле ввода с логикой пароля. Наследуется от [ValidatorInput]
  *
  * @param value [MutableState] Значение вводимого текста, которое будет отображаться в текстовом поле
- * @param hasError [MutableState] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
- * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
+ * значение true, то текстовое поле будет окрашено цветом ошибки
  * @param modifier [Modifier] Применяемый к разметке текстового поля
  * @param successMessage [StringRes] Текст при успешной валидации
  * @param showValidatorMessage [Boolean] Показывать ли сообщения об ошибках

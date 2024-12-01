@@ -161,9 +161,9 @@ private fun AddSocialNetwork(
             MultiLineInput(
                 value = network.description,
                 label = res.getString(R.string.description),
-                isError = mutableStateOf(false),
+                hasError = mutableStateOf(false),
                 maxSymbols = 100,
-                minSymbol = 0,
+                minSymbols = 0,
                 maxLines = 3,
                 minLines = 1,
             )

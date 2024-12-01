@@ -96,7 +96,7 @@ fun InputSelectorBottomMenu(
             isFocused = false,
             readOnly = true,
             label = label,
-            isError = isError.value,
+            hasError = isError.value,
             isRequired = isRequired,
             prefix = prefix,
             suffix = suffix,

@@ -57,9 +57,8 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSamples
  * @param prefix [Composable] Необязательный префикс, который будет отображаться перед вводимым текстом
  * в текстовом поле
  * @param suffix [Composable] Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
- * @param postLabel [Composable] Метка отображаемая в правом вверхнем углу, или же напротив label
  * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
- * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
+ * значение true, то текстовое поле будет окрашено цветом ошибки
  * @param visualTransformation [VisualTransformation] Преобразует визуальное представление входных данных [value]
  * @param keyboardOptions [KeyboardOptions] Определяет параметры программной клавиатуры
  * @param keyboardActions [KeyboardActions] коллбэки событий. Эти действия могут отличаться от того,
@@ -75,7 +74,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSamples
  * @param interactionSource [MutableInteractionSource], представляет поток [Interaction] для этого
  * текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
- * @param colors [TextFieldDefaults.colors] Цветовое оформление в разных состояниях
+ * @param colors [TextFieldColors] Цветовое оформление в разных состояниях
  *
  * @sample InputSamples.ValidatorInputSample
  */
@@ -96,7 +95,6 @@ fun ValidatorInput(
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable () -> Unit = {},
     suffix: @Composable () -> Unit = {},
-    postLabel: @Composable (TextStyle) -> Unit = {},
     hasError: MutableState<Boolean> = mutableStateOf(false),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -126,8 +124,7 @@ fun ValidatorInput(
             value = value,
             readOnly = readOnly,
             label = label,
-            postLabel = postLabel,
-            isError = hasError.value,
+            hasError = hasError.value,
             isRequired = isRequired,
             prefix = prefix,
             suffix = suffix,

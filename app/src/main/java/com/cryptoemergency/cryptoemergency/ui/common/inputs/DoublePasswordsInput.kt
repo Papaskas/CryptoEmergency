@@ -30,7 +30,8 @@ import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorInputPatterns
  * @param readOnly [Pair] управляет состоянием текстового поля для редактирования. При значении
  * true текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
  * скопировать текст из него.
- * @param hasError [Boolean] указывает, является ли текущее значение текстового поля ошибочным
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
+ * значение true, то текстовое поле будет окрашено цветом ошибки
  * @param keyboardOptions [KeyboardOptions] параметры клавиатуры
  * @param keyboardActions [Pair] коллбэки событий. Эти действия могут отличаться от того,
  * что вы указано в [KeyboardOptions.imeAction]

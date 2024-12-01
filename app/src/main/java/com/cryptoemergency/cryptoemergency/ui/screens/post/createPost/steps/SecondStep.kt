@@ -70,11 +70,11 @@ fun SecondStep(
 private fun Field(viewModel: CreatePostViewModel) {
     MultiLineInput(
         value = viewModel.descriptionInput,
-        isError = remember { mutableStateOf(false) },
+        hasError = remember { mutableStateOf(false) },
         label = "Текст", // TODO: translate
         minLines = 1,
         maxLines = 15,
-        minSymbol = 0,
+        minSymbols = 0,
         maxSymbols = 10000,
         modifier = Modifier.padding(horizontal = Theme.dimens.padding)
     )

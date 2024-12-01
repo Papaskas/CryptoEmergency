@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
  * Комопнент номера телефона. Наследуется от TODO: дописать
  *
  * @param value значение вводимого текста, которое будет отображаться в текстовом поле
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если установлено
+ * значение true, то текстовое поле будет окрашено цветом ошибки
  * @param onValueChange обратный вызов, который запускается, когда служба ввода обновляет текст.
  * Обновленный текст является параметром обратного вызова
  * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
@@ -68,54 +70,16 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun PhoneInput(
-    modifier: Modifier = Modifier,
     value: MutableState<TextFieldValue>,
     prefixState: MutableState<String>,
     phoneState: MutableState<String>,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom,
-    ) {
-        /* InputWithSelectorOnModalBottomSheet(
-             modifier = Modifier.weight(1.5f),
-             placeholder = "+7",
-             label = "Номер телефона",
-             textState = prefixState,
-             leadingIcon = {
-                 Image(
-                     painterResource(R.drawable.ru),
-                     contentDescription = null,
-                     modifier = Modifier.size(height = 18.dp, width = 25.dp),
-                     contentScale = ContentScale.Crop
-                 )
-             },
-             trailingIcon = {
-                 Icon(
-                     painterResource(R.drawable.arrow_down),
-                     contentDescription = null,
-                     tint = Theme.colors.primary
-                 )
-             }
-         )*/
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-//        ValidatorInput(
-//            modifier = Modifier.weight(2f),
-//            label = "",
-//            value = value,
-//            keyboardOptions = keyboardOptions.copy(
-//                keyboardType = KeyboardType.Phone
-//            ),
-//            keyboardActions = keyboardActions,
-//            visualTransformation = visualTransformation,
-//            singleLine = true,
-//            validators = emptyArray()
-//        )
-    }
+//    Input(
+//        //value
+//    )
 }

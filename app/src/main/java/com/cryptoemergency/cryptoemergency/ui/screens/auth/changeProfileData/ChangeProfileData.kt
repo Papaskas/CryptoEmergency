@@ -61,11 +61,11 @@ fun ChangeProfileDataScreen(
             MultiLineInput(
                 label = res.getString(R.string.about_me),
                 value = viewModel.aboutMe,
-                minSymbol = 0,
+                minSymbols = 0,
                 minLines = 1,
                 maxLines = 5,
                 maxSymbols = 100,
-                isError = remember { mutableStateOf(false) },
+                hasError = remember { mutableStateOf(false) },
             )
             Spacer(Modifier.height(10.dp))
             Input(

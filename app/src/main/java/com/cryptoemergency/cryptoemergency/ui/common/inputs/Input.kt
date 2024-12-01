@@ -5,8 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -26,8 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
@@ -37,53 +35,47 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 /**
  * Базовый компонент Input с базовыми стилями, но без логики
  *
- * @param value значение вводимого текста, которое будет отображаться в текстовом поле
+ * @param value [TextFieldValue] Значение вводимого текста, которое будет отображаться в текстовом поле
+ * @param label [String] Метка, которая будет отображаться внутри контейнера текстового поля
+ * @param modifier [Modifier] Модификатор применяемый к к разметке текстового поля
  * @param onValueChange Функция меняющая состояние вводимого текста
- * @param isEnabled управляет включенным состоянием этого текстового поля. При значении false этот компонент будет
- * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
- * для доступа к сервисам.
- * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
- * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
- * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
- * отображения предварительно заполненных форм, которые пользователь не может редактировать.
- * @param disableActiveBorder Отключить обводку при фокусе
- * @param label метка, которая будет отображаться внутри контейнера текстового поля.
- * @param postLabel метка отображаемая в правом вверхнем углу, или же напротив label
- * @param placeholder необязательный заполнитель, который отображается, когда текстовое поле находится в фокусе, а
- * вводимый текст пуст
- * @param leadingIcon необязательный начальный значок, который будет отображаться в начале текстового поля
- * контейнер
- * @param trailingIcon необязательный завершающий значок, который будет отображаться в конце текстового поля
- * контейнер
- * @param prefix необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
- * @param suffix необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
- * @param supportingText необязательный вспомогательный текст, который будет отображаться под текстовым полем
- * @param isError указывает, является ли текущее значение текстового поля ошибочным. Если установлено
- * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
- * @param visualTransformation преобразует визуальное представление входных данных [value]
- * Например, вы можете использовать
- * [PasswordVisualTransformation][androidx.compose.ui.text.input.Преобразование пароля] в
- * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
- * @param aboveIcon Иконка имеющая абсолютное позиционирование над Input
- * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки
- * @param keyboardActions когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
- *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
- * [KeyboardOptions.imeAction].
- * @param singleLine при значении "true" это текстовое поле становится одним текстовым полем с горизонтальной прокруткой
- * вместо того, чтобы растягиваться на несколько строк. Клавиатуре будет сообщено, что клавиша возврата не отображается
- * в качестве [ImeAction]. Обратите внимание, что параметр [maxLines] будет проигнорирован, так как атрибуту
- * maxLines будет автоматически присвоено значение 1.
- * @param maxLines максимальная высота, выраженная в максимальном количестве видимых линий. Это обязательно
- * что 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
- * @param minLines минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если
+ * установлено значение true, то текстовое поле будет окрашено цветом ошибки
+ * @param isEnabled [Boolean] Управляет включенным состоянием этого текстового поля. При значении false
+ * этот компонент не будет реагировать на ввод данных пользователем, и оно будет выглядеть визуально
+ * отключенным и недоступным.
+ * @param readOnly [Boolean] Управляет состоянием текстового поля, доступного для редактирования. При
+ * значении "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
+ * скопировать текст из него.
+ * @param isRequired [Boolean] Добавляет значок обязательного текстового поля. Обратите внимание что
+ * это определяет только визуальный стиль, программно это никак не запрещает не вводить значение
+ * @param singleLine [Boolean] При значении "true" это текстовое поле становится одним текстовым полем
+ * с горизонтальной прокруткой вместо того, чтобы растягиваться на несколько строк. Клавиатуре будет сообщено,
+ * что клавиша возврата не отображается в качестве [ImeAction]. Обратите внимание, что параметр [maxLines]
+ * будет проигнорирован, так как атрибуту [maxLines] будет автоматически присвоено значение 1.
+ * @param minLines [Int] Минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
  *, чтобы 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
- * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
- * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
+ * @param maxLines [Int] Максимальная высота, выраженная в максимальном количестве видимых линий. Это обязательно
+ * что 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
+ * @param aboveIcon [Composable] Метка с абсолютным позиционированием над текстовым полем. Позицию
+ * задавать с помощью [Alignment] на самого себя
+ * @param leadingIcon [Composable] Необязательный начальный значок, который будет отображаться в начале
+ * текстового поля контейнер
+ * @param trailingIcon [Composable] Необязательный завершающий значок, который будет отображаться в
+ * конце текстового поля контейнер
+ * @param prefix [Composable] Необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
+ * @param suffix [Composable] Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
+ * @param visualTransformation [VisualTransformation] Преобразует визуальное представление входных данных [value]
+ * @param keyboardOptions [KeyboardOptions] Определяет параметры программной клавиатуры
+ * @param keyboardActions [KeyboardActions] Коллбэки событий. Эти действия могут отличаться от того,
+ * что вы указано в [KeyboardOptions.imeAction]
+ * @param interactionSource [MutableInteractionSource], представляет поток [Interaction] для этого
+ * текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
- * @param colors Палитра цветов для Input
- * @param isFocused Выделено ли поле
- * @param shape определяет форму контейнера этого текстового поля
- * @param cursorBrush Кисть для рисования курсора
+ * @param isFocused [Boolean] Выделено ли поле
+ * @param colors [TextFieldColors] Палитра цветов для Input
+ * @param shape [Shape] Для контейнера текстового поля
+ * @param cursorBrush [Brush] Обводка текстового поля
  *
  * @sample InputSamples.InputSample
  */
@@ -94,14 +86,13 @@ fun Input(
     label: String,
     modifier: Modifier = Modifier,
     onValueChange: (TextFieldValue) -> Unit = { value.value = it },
+    hasError: Boolean = false,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
-    isError: Boolean = false,
     isRequired: Boolean = false,
     singleLine: Boolean = true,
-    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
-    postLabel: @Composable (TextStyle) -> Unit = {},
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     aboveIcon: @Composable BoxScope.() -> Unit = {},
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -114,14 +105,8 @@ fun Input(
     isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     shape: Shape = RoundedCornerShape(Theme.dimens.radius),
-    cursorBrush: Brush = SolidColor(if (isError) Theme.colors.error else Theme.colors.text1),
+    cursorBrush: Brush = SolidColor(if (hasError) Theme.colors.error else Theme.colors.text1),
 ) {
-    val labelStyle = if (value.value.text.isNotEmpty() || isFocused) {
-        Theme.typography.caption2
-    } else {
-        Theme.typography.body1
-    }
-
     Box(modifier = modifier) {
         BasicTextField(
             value = value.value,
@@ -141,7 +126,7 @@ fun Input(
             modifier = Modifier
                 .commonBorder(
                     shape = shape,
-                    isError = isError,
+                    isError = hasError,
                     isFocused = isFocused,
                 )
                 .fillMaxWidth(),
@@ -153,18 +138,16 @@ fun Input(
                     enabled = isEnabled,
                     leadingIcon = leadingIcon,
                     trailingIcon = trailingIcon,
-                    isError = isError,
+                    isError = hasError,
                     prefix = prefix,
                     suffix = suffix,
                     label = {
-                        Row {
-                            Label(label, isRequired, labelStyle)
-
-                            postLabel.let {
-                                Spacer(Modifier.weight(1f))
-                                postLabel(labelStyle)
-                            }
-                        }
+                        Label(
+                            label,
+                            isRequired,
+                            value.value.text.isNotEmpty(),
+                            isFocused,
+                        )
                     },
                     visualTransformation = visualTransformation,
                     interactionSource = interactionSource,
@@ -199,12 +182,27 @@ fun Input(
     }
 }
 
+/**
+ * Заголовок текстового поля
+ *
+ * @param label [String] Сам заголовок
+ * @param isRequired [Boolean] Добавляет индикацию обязательного текстового поля
+ * @param textIsNotEmpty [Boolean] Нужен для логики стилизации
+ * @param isFocused [Boolean] Нужен для логики стилизации
+ * */
 @Composable
 private fun Label(
     label: String,
     isRequired: Boolean,
-    labelStyle: TextStyle,
+    textIsNotEmpty: Boolean,
+    isFocused: Boolean,
 ) {
+    val labelStyle = if (textIsNotEmpty || isFocused) {
+        Theme.typography.caption2
+    } else {
+        Theme.typography.body1
+    }
+
     val annotatedString = buildAnnotatedString {
         append(label)
         if (isRequired) {

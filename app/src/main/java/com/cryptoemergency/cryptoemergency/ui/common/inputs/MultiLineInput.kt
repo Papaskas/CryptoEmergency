@@ -11,6 +11,7 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,47 +22,46 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
- * Комопнент Input с логикой многостраничного ввода. Наследуется от ValidateInput со встроенным
- * паттерном максимальных и минимальных символов
+ * Комопнент Input с логикой многостраничного ввода с паттерном минимальных и максимальных символов.
+ * Наследуется от [ValidatorInput]
  *
- * @param value значение вводимого текста, которое будет отображаться в текстовом поле
- * @param label метка, которая будет отображаться внутри контейнера текстового поля.
- * @param modifier [Modifier], который должен быть применен к этому текстовому полю.
- * @param isEnabled управляет включенным состоянием этого текстового поля. При значении false этот компонент будет
- * не реагирует на ввод данных пользователем, и оно будет выглядеть визуально отключенным и недоступным
- * для доступа к сервисам.
- * @param readOnly управляет состоянием текстового поля, доступного для редактирования. При значении
+ * @param value [TextFieldValue] Значение вводимого текста, которое будет отображаться в текстовом поле
+ * @param label [String] Метка, которая будет отображаться внутри контейнера текстового поля.
+ * @param maxLines [Int] Максимальная высота, выраженная в максимальном количестве видимых линий. Это
+ * обязательно что 1 <= [minLines] <= [maxLines].
+ * @param minLines минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
+ *, чтобы 1 <= [minLines] <= [maxLines].
+ * @param minSymbols [Int] Минимальное количество символов
+ * @param maxSymbols [Int] Максимальное количество символов
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если
+ * установлено значение true, то текстовое поле будет окрашено цветом ошибки
+ * @param modifier [Modifier] Который должен быть применен к этому текстовому полю
+ * @param isEnabled [Boolean] Управляет включенным состоянием этого текстового поля. При значении
+ * false этот компонент будет не реагирует на ввод данных пользователем, и оно будет выглядеть
+ * визуально отключенным и недоступным для доступа к сервисам.
+ * @param readOnly [Boolean] Управляет состоянием текстового поля, доступного для редактирования. При значении
  * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
  * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
  * отображения предварительно заполненных форм, которые пользователь не может редактировать.
- * @param isError указывает, является ли текущее значение текстового поля ошибочным. Если установлено
- * значение true, меткаб нижний индикатор и завершающий значок по умолчанию будут отображаться цветом ошибки
- * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
- * @param onValueChange Функция меняющая состояние вводимого текста
- * @param prefix необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
- * @param suffix необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
- * @param visualTransformation преобразует визуальное представление входных данных [value]
- * Например, вы можете использовать
- * [PasswordVisualTransformation][androidx.compose.ui.text.input.Преобразование пароля] в
- * создайте текстовое поле для ввода пароля. По умолчанию визуальное преобразование не применяется.
- * @param keyboardOptions определяет параметры программной клавиатуры, которые содержат такие настройки
- * @param keyboardActions когда служба ввода выполняет действие IME, вызывается соответствующий обратный вызов
- *. Обратите внимание, что это действие IME может отличаться от того, что вы указали в
- * [KeyboardOptions.imeAction].
- * @param maxLines максимальная высота, выраженная в максимальном количестве видимых линий. Это обязательно
- * что 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
- * @param minLines минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
- *, чтобы 1 <= [minLines] <= [maxLines]. Этот параметр игнорируется, если значение [singleLine] равно true.
- * @param interactionSource указывает [MutableInteractionSource], представляющий поток [Interaction] с
- * для этого текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
+ * @param onValueChange Коллбэк, когда служба ввода обновляет значения в текстовом поле [value]
+ * @param isRequired [Boolean] Является данное ли поле обязательным
+ * @param prefix [Composable] Необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
+ * @param suffix [Composable] Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
+ * @param visualTransformation [VisualTransformation] Преобразует визуальное представление входных данных [value]
+ * @param keyboardOptions [KeyboardOptions] Определяет параметры программной клавиатуры
+ * @param keyboardActions [KeyboardActions] коллбэки событий. Эти действия могут отличаться от того,
+ * что вы указано в [KeyboardOptions.imeAction]
+ * @param interactionSource [MutableInteractionSource], представляет поток [Interaction] для этого
+ * текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
  * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
- * @param colors Палитра цветов для Input
- * @param validators Параметры валидации, есть готовые в [ValidatorPatterns]
- * @param maxSymbols Максимальное количество символов
- * @param isRequired является ли поле обязательным
+ * @param colors [TextFieldColors] Цветовое оформление в разных состояниях
+ * @param validators [Validator] Параметры валидации, есть готовые в [ValidatorPatterns]
+ *
+ * @sample InputSamples.MultilineSample
  */
 @Composable
 fun MultiLineInput(
@@ -69,9 +69,9 @@ fun MultiLineInput(
     label: String,
     maxLines: Int,
     minLines: Int,
-    minSymbol: Int,
+    minSymbols: Int,
     maxSymbols: Int,
-    isError: MutableState<Boolean>,
+    hasError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
@@ -86,9 +86,6 @@ fun MultiLineInput(
     colors: TextFieldColors = TextFieldDefaults.colors(),
     validators: List<Validator> = emptyList(),
 ) {
-    val validatorsList = validators.toMutableList()
-    validatorsList.add(ValidatorPatterns.inRange(minSymbol, maxSymbols))
-
     ValidatorInput(
         modifier = modifier,
         readOnly = readOnly,
@@ -103,17 +100,108 @@ fun MultiLineInput(
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
         colors = colors,
-        hasError = isError,
+        hasError = hasError,
         isRequired = isRequired,
         isEnabled = isEnabled,
         maxLines = maxLines,
         minLines = minLines,
-        postLabel = {
+        aboveIcon = {
             Text(
                 text = "${value.value.text.length}/$maxSymbols",
-                style = it,
+                style = Theme.typography.caption2,
+                modifier = Modifier
+                    .padding(top = 7.dp)
+                    .padding(end = 15.dp)
+                    .align(Alignment.TopEnd)
+            )
+            Icon(
+                painter = painterResource(R.drawable.stretch),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 5.dp)
+                    .align(Alignment.BottomEnd)
             )
         },
+        validators = validators.plus(ValidatorPatterns.inRange(minSymbols, maxSymbols))
+    )
+}
+
+/**
+ * Комопнент Input с логикой многостраничного ввода без валидатора максимальных символов.
+ * Наследуется от [ValidatorInput]
+ *
+ * @param value [TextFieldValue] Значение вводимого текста, которое будет отображаться в текстовом поле
+ * @param label [String] Метка, которая будет отображаться внутри контейнера текстового поля.
+ * @param maxLines [Int] Максимальная высота, выраженная в максимальном количестве видимых линий. Это
+ * обязательно что 1 <= [minLines] <= [maxLines].
+ * @param minLines минимальная высота, выраженная в минимальном количестве видимых линий. Требуется
+ *, чтобы 1 <= [minLines] <= [maxLines].
+ * @param hasError [Boolean] Указывает, является ли текущее значение текстового поля ошибочным. Если
+ * установлено значение true, то текстовое поле будет окрашено цветом ошибки
+ * @param modifier [Modifier] Который должен быть применен к этому текстовому полю
+ * @param isEnabled [Boolean] Управляет включенным состоянием этого текстового поля. При значении
+ * false этот компонент будет не реагирует на ввод данных пользователем, и оно будет выглядеть
+ * визуально отключенным и недоступным для доступа к сервисам.
+ * @param readOnly [Boolean] Управляет состоянием текстового поля, доступного для редактирования. При значении
+ * "true" текстовое поле не может быть изменено. Однако пользователь может сфокусировать его и
+ * скопировать текст из него. Текстовые поля, доступные только для чтения, обычно используются для
+ * отображения предварительно заполненных форм, которые пользователь не может редактировать.
+ * @param onValueChange Коллбэк, когда служба ввода обновляет значения в текстовом поле [value]
+ * @param isRequired [Boolean] Является данное ли поле обязательным
+ * @param prefix [Composable] Необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
+ * @param suffix [Composable] Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
+ * @param visualTransformation [VisualTransformation] Преобразует визуальное представление входных данных [value]
+ * @param keyboardOptions [KeyboardOptions] Определяет параметры программной клавиатуры
+ * @param keyboardActions [KeyboardActions] коллбэки событий. Эти действия могут отличаться от того,
+ * что вы указано в [KeyboardOptions.imeAction]
+ * @param interactionSource [MutableInteractionSource], представляет поток [Interaction] для этого
+ * текстового поля. Вы можете создать и передать свой собственный "запоминаемый" экземпляр для наблюдения
+ * [Interaction] и настраивать внешний вид / поведение этого текстового поля в различных состояниях.
+ * @param colors [TextFieldColors] Цветовое оформление в разных состояниях
+ * @param validators [Validator] Параметры валидации, есть готовые в [ValidatorPatterns]
+ *
+ * @sample InputSamples.MultilineWithoutValidSymbolSample
+ */
+@Composable
+fun MultiLineInput(
+    value: MutableState<TextFieldValue>,
+    label: String,
+    maxLines: Int,
+    minLines: Int,
+    modifier: Modifier = Modifier,
+    hasError: MutableState<Boolean> = remember { mutableStateOf(false) },
+    isEnabled: Boolean = true,
+    readOnly: Boolean = false,
+    onValueChange: (TextFieldValue) -> Unit = { value.value = it },
+    isRequired: Boolean = false,
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    colors: TextFieldColors = TextFieldDefaults.colors(),
+    validators: List<Validator> = emptyList(),
+) {
+    ValidatorInput(
+        modifier = modifier,
+        readOnly = readOnly,
+        value = value,
+        onValueChange = onValueChange,
+        singleLine = false,
+        prefix = prefix,
+        suffix = suffix,
+        label = label,
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        interactionSource = interactionSource,
+        colors = colors,
+        hasError = hasError,
+        isRequired = isRequired,
+        isEnabled = isEnabled,
+        maxLines = maxLines,
+        minLines = minLines,
         aboveIcon = {
             Icon(
                 painter = painterResource(R.drawable.stretch),

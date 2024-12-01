@@ -10,9 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.DoublePasswordsInput
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.EmailInput
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.PasswordInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 
 @Composable
 fun Navigation() {
@@ -54,8 +52,17 @@ private fun TempPage() {
         Column(
             Modifier.padding(it)
         ) {
+            MultiLineInput(
+                value = a,
+                hasError = b,
+                minSymbols = 0,
+                maxLines = 2,
+                label = "asdsad",
+                maxSymbols = 123,
+                minLines = 1,
+            )
             //EmailInput(value = a, hasError = b)
-            DoublePasswordsInput(values)
+                //DoublePasswordsInput(values)
             //PasswordInput(a, b)
         }
     }
