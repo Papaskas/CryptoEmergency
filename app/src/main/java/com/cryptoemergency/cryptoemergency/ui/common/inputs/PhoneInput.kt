@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
@@ -10,12 +11,16 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.R
 
 /**
  * Комопнент номера телефона. Наследуется от TODO: дописать
@@ -72,14 +77,39 @@ import androidx.compose.ui.unit.dp
 fun PhoneInput(
     value: MutableState<TextFieldValue>,
     prefixState: MutableState<String>,
-    phoneState: MutableState<String>,
     modifier: Modifier = Modifier,
+    onValueChange: (TextFieldValue) -> Unit = {
+        value.value = formatPhoneNumber(it)
+    },
+    @StringRes label: Int = R.string.phone_number,
     isEnabled: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-//    Input(
-//        //value
-//    )
+    Input(
+        value = value,
+        modifier = modifier,
+        onValueChange = onValueChange,
+        label = LocalContext.current.getString(label),
+        hasError = false,
+        keyboardActions = keyboardActions,
+        keyboardOptions = keyboardOptions.copy(
+            keyboardType = KeyboardType.Phone
+        ),
+        isEnabled = isEnabled,
+        visualTransformation = visualTransformation,
+    )
+}
+
+fun formatPhoneNumber(phone: String): String {
+    val digits = phone.replace(Regex("[^\\d]"), "")
+    val length = digits.length
+
+    return when {
+        length <= 3 -> digits
+        length <= 6 -> "${ digits.substring(0, 3) }-${ digits.substring(3) }"
+        length <= 10 -> "${ digits.substring(0, 3) }-${ digits.substring(3, 6) }-${ digits.substring(6) }"
+        else -> "${ digits.substring(0, 3) }-${ digits.substring(3, 6) }-${ digits.substring(6, 10) }"
+    }
 }
