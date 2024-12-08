@@ -2,16 +2,19 @@ package com.cryptoemergency.cryptoemergency.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.phoneInput.PhoneInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.OTPInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput.MaskInput
 
 @Composable
 fun Navigation() {
@@ -53,19 +56,13 @@ private fun TempPage() {
         Column(
             Modifier.padding(it)
         ) {
-            PhoneInput(value = a)
-//            MultiLineInput(
-//                value = a,
-//                hasError = b,
-//                minSymbols = 0,
-//                maxLines = 2,
-//                label = "asdsad",
-//                maxSymbols = 123,
-//                minLines = 1,
-//            )
-            //EmailInput(value = a, hasError = b)
-                //DoublePasswordsInput(values)
-            //PasswordInput(a, b)
+            var otpValue by remember { mutableStateOf("") }
+
+            OTPInput(
+                a
+            ) { value, otpInputFilled ->
+                a.value = value
+            }
         }
     }
 }

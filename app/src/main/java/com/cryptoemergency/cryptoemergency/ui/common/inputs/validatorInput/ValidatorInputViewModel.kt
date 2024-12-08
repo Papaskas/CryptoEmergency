@@ -30,7 +30,7 @@ class ValidatorInputViewModel @Inject constructor(
         val res = context.resources
 
         validators.forEach {
-            val errorMessage = it.execute(text)
+            val errorMessage = it.execute(text, context)
 
             if (errorMessage != null) {
                 this.errorMessage.value = errorMessage

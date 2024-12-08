@@ -1,6 +1,5 @@
-package com.cryptoemergency.cryptoemergency.ui.common.inputs.phoneInput
+package com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput
 
-import androidx.compose.material3.TextField
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TransformedText
@@ -12,7 +11,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
  *
  * @see <a href="https://stackoverflow.com/questions/71274129/phone-number-visual-transformation-in-jetpack-compose">Исходный код</a>
  * */
-class PhoneVisualTransformation(
+class MaskVisualTransformation(
     private val mask: String,
     private val maskNumber: Char,
 ) : VisualTransformation {
@@ -38,12 +37,12 @@ class PhoneVisualTransformation(
             }
         }
 
-        return TransformedText(annotatedString, PhoneOffsetMapper(mask, maskNumber))
+        return TransformedText(annotatedString, MaskOffsetMapper(mask, maskNumber))
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is PhoneVisualTransformation) return false
+        if (other !is MaskVisualTransformation) return false
         if (mask != other.mask) return false
         if (maskNumber != other.maskNumber) return false
         return true

@@ -1,6 +1,7 @@
 package com.cryptoemergency.cryptoemergency.lib.validation
 
-import android.util.Log
+import androidx.annotation.StringRes
+import com.cryptoemergency.cryptoemergency.R
 
 /**
  * Объект, содержащий предопределенные валидаторы. По своей сути является набором метаданных для
@@ -17,87 +18,52 @@ object ValidatorPatterns {
 
     val isEmail = Validator(
         Regex("^[$LATIN_ALPHABET](.*)(@)(.+)(\\.)(.+)"),
-        "Некорректная почта",
+        R.string.error_validation__is_email,
     )
 
     val hasUppercase = Validator(
         Regex("[$LATIN_UPPER]"),
-        "Необходима хотя бы одна заглавная буква"
+        R.string.error_validation__has_uppercase,
     )
 
     val hasLowercase = Validator(
         Regex("[$LATIN_LOWER]"),
-        "Необходима хотя бы одна строчная буква"
+        R.string.error_validation__has_lowercase,
     )
 
     val hasDigit = Validator(
         Regex(DIGITS),
-        "Необходима хотя бы одна цифра"
+        R.string.error_validation__has_digit,
     )
 
     val hasSpecialChar = Validator(
         Regex("[$SPECIAL_CHARACTERS]"),
-        "Необходим хотя бы один спец символ"
+        R.string.error_validation__has_special_char,
     )
 
     val onlyLetter = Validator(
         Regex("^[a-zA-Zа-яА-Я]*\$"),
-        ""
+        R.string.error_validation__only_letter,
     )
 
     val onlyNumber = Validator(
         Regex("^[0-9]+[0-9]*\$"),
-        "Допустимы только цифры"
-    )
-
-    val isPhoneNumber = Validator(
-        Regex("^+?((d{2,3}) ?d|d)(([ -]?d)|( ?(d{2,3}) ?)){5,12}d$"),
-        ""
-    )
-
-    val isFullName = Validator(
-        Regex("^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$"),
-        ""
-    )
-
-    val isDomainName = Validator(
-        Regex("^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?.)+[a-zA-Z]{2,6}$"),
-        ""
-    )
-
-    val isURL = Validator(
-        Regex("(https?):((//)|(\\\\))+[wd:#@%/;$()~_?+-=.&]*"),
-        ""
+        R.string.error_validation__only_number,
     )
 
     val withoutSpaces = Validator(
         Regex("^\\S*\$"),
-        "Пробелы недопустимы"
+        R.string.error_validation__without_spaces,
     )
 
-    val notSpecialSymbol = Validator(
-        Regex("^[a-zA-Z0-9]*\$"),
-        "Спец символы недопустимы"
-    )
-
-    val isIPv4 = Validator(
-        Regex("((25[0-5]|2[0-4]d|[01]?dd?).){3}(25[0-5]|2[0-4]d|[01]?dd?)"),
-        ""
-    )
-
-    val isIPv6 = Validator(
-        Regex("((^|:)([0-9a-fA-F]{0,4})){1,8}$"),
-        ""
-    )
-
-    val isUUID = Validator(
-        Regex("^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$"),
-        ""
+    val withoutSpecialSymbol = Validator(
+        Regex("^[^$SPECIAL_CHARACTERS]+$"),
+        R.string.error_validation__without_special_symbol,
     )
 
     val notEmpty = Validator(
         Regex(".+"),
-        "Не должно быть пустым"
+        R.string.error_validation__not_empty,
     )
 
     /**
@@ -105,7 +71,7 @@ object ValidatorPatterns {
      * */
     val onlyLatin = Validator(
         Regex("^[$LATIN_ALPHABET$DIGITS$SPECIAL_CHARACTERS]+$"),
-        "Только латинские буквы"
+        R.string.error_validation__only_latin,
     )
 
     /**
@@ -119,7 +85,7 @@ object ValidatorPatterns {
      */
     fun isEquals(
         toText: String,
-        errorMessage: String = "Строки не совпадают!"
+        @StringRes errorMessage: Int = R.string.error_validation__is_equals,
     ) = Validator(
         Regex("^${Regex.escape(toText)}$"),
         errorMessage,
@@ -139,7 +105,7 @@ object ValidatorPatterns {
     fun inRange(
         min: Int,
         max: Int,
-        errorMessage: String = "Некорректный диапазон символов, необходимо минимум $min до $max"
+        @StringRes errorMessage: Int = R.string.error_validation__in_range
     ) = Validator(
         Regex("^.{$min,$max}$"),
         errorMessage,

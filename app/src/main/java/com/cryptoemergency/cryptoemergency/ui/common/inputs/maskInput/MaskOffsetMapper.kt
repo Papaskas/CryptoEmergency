@@ -1,11 +1,11 @@
-package com.cryptoemergency.cryptoemergency.ui.common.inputs.phoneInput
+package com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput
 
 import androidx.compose.ui.text.input.OffsetMapping
 
 /**
  * @see <a href="https://stackoverflow.com/questions/71274129/phone-number-visual-transformation-in-jetpack-compose">Исходный код</a>
  * */
-class PhoneOffsetMapper(
+class MaskOffsetMapper(
     private val mask: String,
     private val numberChar: Char,
 ) : OffsetMapping {

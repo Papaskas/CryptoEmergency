@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_validation__is_email">Некорректная почта</string>
+    <string name="error_validation__has_uppercase">Необходима хотя бы одна заглавная буква</string>
+    <string name="error_validation__has_lowercase">Необходима хотя бы одна строчная буква</string>
+    <string name="error_validation__has_digit">Необходима хотя бы одна цифра</string>
+    <string name="error_validation__has_special_char">Необходим хотя бы один спец символ</string>
+    <string name="error_validation__only_letter">Допустимы только буквы</string>
+    <string name="error_validation__only_number">Допустимы только цифры</string>
+    <string name="error_validation__without_spaces">Пробелы недопустимы</string>
+    <string name="error_validation__without_special_symbol">Спец символы недопустимы</string>
+    <string name="error_validation__not_empty">Не должно быть пустым</string>
+    <string name="error_validation__only_latin">Только латинские буквы</string>
+    <string name="error_validation__is_equals">Строки не совпадают!</string>
+    <string name="error_validation__password_not_equals">Пароли не совпадают!</string>
+    <string name="error_validation__in_range">Некорректный диапазон символов, необходимо минимум $min до $max</string>
+</resources>

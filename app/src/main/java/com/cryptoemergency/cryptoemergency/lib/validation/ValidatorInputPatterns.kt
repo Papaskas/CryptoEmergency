@@ -1,5 +1,8 @@
 package com.cryptoemergency.cryptoemergency.lib.validation
 
+import androidx.annotation.StringRes
+import com.cryptoemergency.cryptoemergency.R
+
 /**
  * Обьект с готовыми валидаторами для текстовых полей
  *
@@ -26,24 +29,9 @@ object ValidatorInputPatterns {
      * @param confirmPassword Значение другого пароля
      * @param errorMessage Сообщение в случае ошибки
      */
-//    fun doublePasswordPatterns(
-//        confirmPassword: String,
-//        errorMessage: String = "Пароли не совпадают",
-//    ) = listOf(
-//        ValidatorPatterns.notEmpty,
-//        ValidatorPatterns.onlyLatin,
-//        ValidatorPatterns.withoutSpaces,
-//        ValidatorPatterns.hasLowercase,
-//        ValidatorPatterns.hasUppercase,
-//        ValidatorPatterns.hasDigit,
-//        ValidatorPatterns.hasSpecialChar,
-//        ValidatorPatterns.inRange(min = 8, max = 25),
-//        ValidatorPatterns.isEquals(confirmPassword, errorMessage)
-//    )
-
     fun doublePasswordPatterns(
         confirmPassword: String,
-        errorMessage: String = "Пароли не совпадают",
+        @StringRes errorMessage: Int = R.string.error_validation__password_not_equals,
     ) = passwordPatterns.plus(ValidatorPatterns.isEquals(confirmPassword, errorMessage))
 
     /**

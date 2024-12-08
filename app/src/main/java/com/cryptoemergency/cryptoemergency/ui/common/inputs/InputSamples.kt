@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.phoneInput.PhoneInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput.MaskInput
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
@@ -103,13 +103,16 @@ object InputSamples {
     }
 
     @Composable
-    private fun PhoneInputSample() {
+    private fun MaskInputSample() {
         val value = remember { mutableStateOf(TextFieldValue()) }
         val hasError = remember { mutableStateOf(false) }
 
-        PhoneInput(
+        MaskInput(
             value = value,
             hasError = hasError,
+            label = "Sample",
+            mask = "+7 (xxx) xxx-xx-xx",
+            maskChar = 'x',
         )
     }
 }
