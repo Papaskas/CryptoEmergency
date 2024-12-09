@@ -2,19 +2,18 @@ package com.cryptoemergency.cryptoemergency.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.OTPInput
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput.MaskInput
+import com.cryptoemergency.cryptoemergency.ui.common.inputs.otp.OTPInputTextFields
+import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeCreateViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeScreen
+import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeViewModel
 
 @Composable
 fun Navigation() {
@@ -44,25 +43,21 @@ fun Navigation() {
 
 @Composable
 private fun TempPage() {
-    val values = Pair(
-        remember { mutableStateOf(TextFieldValue()) },
-        remember { mutableStateOf(TextFieldValue()) },
-    )
+    PinCodeScreen(PinCodeCreateViewModel())
 
-    val a = remember { mutableStateOf(TextFieldValue()) }
-    val b = remember { mutableStateOf(false) }
-
-    Screen {
-        Column(
-            Modifier.padding(it)
-        ) {
-            var otpValue by remember { mutableStateOf("") }
-
-            OTPInput(
-                a
-            ) { value, otpInputFilled ->
-                a.value = value
-            }
-        }
-    }
+//    Screen {
+//        Column(
+//            Modifier.padding(it)
+//        ) {
+//            val otpValues = remember { List(6) { mutableStateOf(TextFieldValue()) } }
+//
+//            OTPInputTextFields(
+//                otpLength = 6,
+//                otpValues = otpValues,
+//                onUpdateValuesByIndex = { index, value ->
+//                    otpValues[index].value = value
+//                }
+//            )
+//        }
+//    }
 }

@@ -65,6 +65,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
  * конце текстового поля контейнер
  * @param prefix [Composable] Необязательный префикс, который будет отображаться перед вводимым текстом в текстовом поле
  * @param suffix [Composable] Необязательный суффикс, который будет отображаться после вводимого текста в текстовом поле
+ * @param container [Composable] Контейнер, который будет отображаться за текстовым полем
  * @param visualTransformation [VisualTransformation] Преобразует визуальное представление входных данных [value]
  * @param keyboardOptions [KeyboardOptions] Определяет параметры программной клавиатуры
  * @param keyboardActions [KeyboardActions] Коллбэки событий. Эти действия могут отличаться от того,
@@ -98,6 +99,7 @@ fun Input(
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable () -> Unit = {},
     suffix: @Composable () -> Unit = {},
+    container: @Composable () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -173,7 +175,8 @@ fun Input(
                         unfocusedLabelColor = Theme.colors.text2,
                         disabledLabelColor = Theme.colors.text2,
                         errorLabelColor = Theme.colors.text2,
-                    )
+                    ),
+                    container = container,
                 )
             }
         )
