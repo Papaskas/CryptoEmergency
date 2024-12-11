@@ -2,8 +2,8 @@ package com.cryptoemergency.cryptoemergency.providers.theme
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.store.ProtoStore
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.api.data.store.ProtoDataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    private val themeProtoStore: ProtoStore<CurrentTheme>,
+    private val themeProtoStore: ProtoDataStoreImpl<CurrentTheme>,
 ) : ViewModel() {
 
     /**

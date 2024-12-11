@@ -38,8 +38,8 @@ import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Media
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Media
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Post
 import com.cryptoemergency.cryptoemergency.types.PostViewType
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
 import java.time.LocalDate

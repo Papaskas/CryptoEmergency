@@ -3,10 +3,10 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
+import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Http
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.PostsResponse
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.getPostsRequest
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.PostsResponse
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.getPostsRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow

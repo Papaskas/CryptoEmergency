@@ -1,10 +1,10 @@
 package com.cryptoemergency.cryptoemergency.module
 
 import android.content.Context
-import com.cryptoemergency.cryptoemergency.api.store.ProtoStore
-import com.cryptoemergency.cryptoemergency.repository.store.ProtoKeys
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.User
+import com.cryptoemergency.cryptoemergency.api.data.store.ProtoDataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.ProtoKeys
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.User
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,11 +19,11 @@ object ProtoStoreModule {
     @Singleton
     fun provideUserProtoStore(
         @ApplicationContext context: Context,
-    ): ProtoStore<User> = ProtoStore(ProtoKeys.USER, context)
+    ): ProtoDataStoreImpl<User> = ProtoDataStoreImpl(ProtoKeys.USER, context)
 
     @Provides
     @Singleton
     fun provideThemeProtoStore(
         @ApplicationContext context: Context,
-    ): ProtoStore<CurrentTheme> = ProtoStore(ProtoKeys.THEME, context)
+    ): ProtoDataStoreImpl<CurrentTheme> = ProtoDataStoreImpl(ProtoKeys.THEME, context)
 }

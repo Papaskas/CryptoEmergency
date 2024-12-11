@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.PostsResponse
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Post
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.PostsResponse
 import com.cryptoemergency.cryptoemergency.types.PostViewType
 
 /**

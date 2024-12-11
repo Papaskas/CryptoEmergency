@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.repository.requests.getPosts.Post
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Post
 import com.cryptoemergency.cryptoemergency.types.PostViewType
 
 @Composable

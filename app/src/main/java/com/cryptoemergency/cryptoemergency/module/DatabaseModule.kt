@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.module
 
 import android.content.Context
 import androidx.room.Room
-import com.cryptoemergency.cryptoemergency.api.database.AppDatabase
+import com.cryptoemergency.cryptoemergency.api.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

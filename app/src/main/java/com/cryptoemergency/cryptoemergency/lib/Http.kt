@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.cryptoemergency.cryptoemergency.BuildConfig
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.http.IOException
-import com.cryptoemergency.cryptoemergency.api.http.SerializationException
-import com.cryptoemergency.cryptoemergency.api.http.UnknownHostException
+import com.cryptoemergency.cryptoemergency.api.data.http.IOException
+import com.cryptoemergency.cryptoemergency.api.data.http.SerializationException
+import com.cryptoemergency.cryptoemergency.api.data.http.UnknownHostException
 import io.ktor.http.HttpStatusCode
 
 object Http {

@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 
 var currentTheme by mutableStateOf(CurrentTheme.NULL)
 

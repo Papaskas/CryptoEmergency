@@ -1,9 +1,9 @@
 package com.cryptoemergency.cryptoemergency.http
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.api.http.httpClient
-import com.cryptoemergency.cryptoemergency.api.http.createRequest
+import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
+import com.cryptoemergency.cryptoemergency.api.data.http.httpClient
+import com.cryptoemergency.cryptoemergency.api.data.http.createRequest
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLProtocol

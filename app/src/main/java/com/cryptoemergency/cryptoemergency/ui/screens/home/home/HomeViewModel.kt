@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.home
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
@@ -16,11 +15,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.api.store.Store
+import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
+import com.cryptoemergency.cryptoemergency.api.data.store.DataStoreImpl
 import com.cryptoemergency.cryptoemergency.module.TokenStore
 import com.cryptoemergency.cryptoemergency.providers.theme.Colors
-import com.cryptoemergency.cryptoemergency.repository.requests.getToken.getTokenRequest
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getToken.getTokenRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @TokenStore private val tokenStore: Store<String>,
+    @TokenStore private val tokenDataStore: DataStoreImpl<String>,
 ) : ViewModel() {
     private val ethereum = "ethereum"
     private val cemCoin = "cemCoin"
@@ -38,14 +37,14 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (tokenStore.get().isNotEmpty()) return@launch
+            if (tokenDataStore.get().isNotEmpty()) return@launch
 
             val res = getTokenRequest(context)
 
             if (res is ApiResponse.Success) {
                 val token = res.headers["authorization"]!!
 
-                tokenStore.put(token)
+                tokenDataStore.put(token)
             }
         }
     }

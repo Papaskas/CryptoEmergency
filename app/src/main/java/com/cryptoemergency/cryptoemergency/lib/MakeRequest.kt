@@ -8,9 +8,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.http.ApiResponse
+import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.navigation.Destination
-import com.cryptoemergency.cryptoemergency.repository.requests.login.loginRequest
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

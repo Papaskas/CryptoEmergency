@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.providers.theme.ThemeViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.repository.store.data.CurrentTheme
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 
 @Composable
 fun Modifier.commonBorder(

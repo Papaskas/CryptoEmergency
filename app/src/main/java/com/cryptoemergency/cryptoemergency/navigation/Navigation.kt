@@ -2,18 +2,20 @@ package com.cryptoemergency.cryptoemergency.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.compose.material.Text
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.otp.OTPInputTextFields
-import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeCreateViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeScreen
-import com.cryptoemergency.cryptoemergency.ui.screens.common.pinCode.PinCodeViewModel
+import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeCreateViewModel
+import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeEnterViewModel
+import com.cryptoemergency.cryptoemergency.ui.common.pinCode.ui.PinCodeTemplate
 
 @Composable
 fun Navigation() {
@@ -43,7 +45,29 @@ fun Navigation() {
 
 @Composable
 private fun TempPage() {
-    PinCodeScreen(PinCodeCreateViewModel())
+    val vm: PinCodeCreateViewModel = hiltViewModel()
+
+    Screen { it ->
+        Column(Modifier.padding(it)) {
+            PinCodeTemplate(
+                viewModel = vm,
+                rightSpecialButton = {
+                    IconButton({ vm.onDeleteLastCode() }) {
+                        Icon(
+                            painter = painterResource(R.drawable.close),
+                            contentDescription = null,
+                        )
+                    }
+                }
+            )
+
+            Text(vm.pinCode.joinToString(""))
+            vm.message.value?.let { message ->
+                Text(message)
+            }
+        }
+    }
+
 
 //    Screen {
 //        Column(
