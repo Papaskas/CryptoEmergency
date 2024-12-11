@@ -1,16 +1,42 @@
 package com.cryptoemergency.cryptoemergency.ui.common.pinCode.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.ui.common.Screen
+import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeCreateViewModel
+import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeEnterViewModel
 import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeViewModel
 
 /**
- * UI ввода пин-кодсм
+ * Панель пин-кода
+ *
+ * @param viewModel [PinCodeViewModel] Бизнес-логика панели пин-кода. Передать наследника [PinCodeViewModel].
+ * [PinCodeEnterViewModel], если нужна логика ввода пин-кода. [PinCodeCreateViewModel],
+ * если нужна логика создания пин-кода.
+ * @param modifier [Modifier] Применяемый к разметке
+ * @param maxItemsInEachRow [Int] Колличество цифр в строке
+ * @param pinCodeLength [Int] Длина пин-кода
+ * @param items [List] Порядок расстановки цифр. Последний размещается все слева от [leftSpecialButton]
+ * и справа от [rightSpecialButton], даже если они не заданы
+ * @param horizontalArrangement [Arrangement.Horizontal] The horizontal arrangement of the layout's children
+ * @param verticalArrangement [Arrangement.Vertical] The vertical arrangement of the layout's virtual rows
+ * @param button [Composable] Основная кнопка. Обязательно должна иметь вызов метода [viewModel.onClickIntButton]
+ * @param leftSpecialButton [Composable] Левая кнопка специального действия. По умолчанию пустая
+ * @param rightSpecialButton [Composable] Правая кнопка специального действия. По умолчанию пустая
+ *
+ * @sample SampleCreatePinCode
+ * @sample SampleEnterPinCode
  *
  * */
 @OptIn(ExperimentalLayoutApi::class)
@@ -20,6 +46,14 @@ fun PinCodeTemplate(
     modifier: Modifier = Modifier,
     maxItemsInEachRow: Int = 3,
     pinCodeLength: Int = 4,
+    items: List<Int> = listOf(
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9,
+        0
+    ),
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Center,
     button: @Composable (
         number: Int,
         vm: PinCodeViewModel,
@@ -28,14 +62,6 @@ fun PinCodeTemplate(
     },
     leftSpecialButton: @Composable () -> Unit = { EmptyButton()  },
     rightSpecialButton: @Composable () -> Unit = { EmptyButton() },
-    items: List<Int> = listOf(
-        1, 2, 3,
-        4, 5, 6,
-        7, 8, 9,
-           0
-    ),
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Center,
 ) {
     FlowRow(
         modifier = modifier,
@@ -72,4 +98,38 @@ private fun EmptyButton() {
         enabled = false,
         onClick = {},
     ) {}
+}
+
+@Composable
+private fun SampleCreatePinCode() {
+    val vm: PinCodeCreateViewModel = hiltViewModel()
+
+    PinCodeTemplate(
+        viewModel = vm,
+        rightSpecialButton = {
+            IconButton({ vm.onDeleteLastCode() }) {
+                Icon(
+                    painter = painterResource(R.drawable.close),
+                    contentDescription = null,
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun SampleEnterPinCode() {
+    val vm: PinCodeEnterViewModel = hiltViewModel()
+
+    PinCodeTemplate(
+        viewModel = vm,
+        rightSpecialButton = {
+            IconButton({ vm.onDeleteLastCode() }) {
+                Icon(
+                    painter = painterResource(R.drawable.close),
+                    contentDescription = null,
+                )
+            }
+        }
+    )
 }

@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -45,9 +46,9 @@ fun Navigation() {
 
 @Composable
 private fun TempPage() {
-    val vm: PinCodeCreateViewModel = hiltViewModel()
+    val vm: PinCodeEnterViewModel = hiltViewModel()
 
-    Screen { it ->
+    Screen {
         Column(Modifier.padding(it)) {
             PinCodeTemplate(
                 viewModel = vm,
@@ -60,28 +61,6 @@ private fun TempPage() {
                     }
                 }
             )
-
-            Text(vm.pinCode.joinToString(""))
-            vm.message.value?.let { message ->
-                Text(message)
-            }
         }
     }
-
-
-//    Screen {
-//        Column(
-//            Modifier.padding(it)
-//        ) {
-//            val otpValues = remember { List(6) { mutableStateOf(TextFieldValue()) } }
-//
-//            OTPInputTextFields(
-//                otpLength = 6,
-//                otpValues = otpValues,
-//                onUpdateValuesByIndex = { index, value ->
-//                    otpValues[index].value = value
-//                }
-//            )
-//        }
-//    }
 }
