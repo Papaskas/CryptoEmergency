@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.api.data.store.DataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getToken.getTokenRequest
+import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.module.TokenStore
 import com.cryptoemergency.cryptoemergency.providers.theme.Colors
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getToken.getTokenRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @TokenStore private val tokenDataStore: DataStoreImpl<String>,
+    @TokenStore private val tokenStore: StorageRepository<String>,
 ) : ViewModel() {
     private val ethereum = "ethereum"
     private val cemCoin = "cemCoin"
@@ -37,14 +37,14 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (tokenDataStore.get().isNotEmpty()) return@launch
+            if (tokenStore.get().isNotEmpty()) return@launch
 
             val res = getTokenRequest(context)
 
             if (res is ApiResponse.Success) {
                 val token = res.headers["authorization"]!!
 
-                tokenDataStore.put(token)
+                tokenStore.put(token)
             }
         }
     }

@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.api.data.http
 import android.content.Context
 import android.util.Log
 import com.cryptoemergency.cryptoemergency.BuildConfig
-import com.cryptoemergency.cryptoemergency.api.data.store.DataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.data.store.DataStore
 import com.cryptoemergency.cryptoemergency.api.domain.model.store.Keys
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -132,7 +132,7 @@ suspend fun HttpRequestBuilder.setHeaders(
     overrideToken?.let {
         header("Authorization", overrideToken)
     } ?: run {
-        header("Authorization", DataStoreImpl(Keys.TOKEN, context).get())
+        header("Authorization", DataStore(Keys.TOKEN, context).get())
     }
 }
 

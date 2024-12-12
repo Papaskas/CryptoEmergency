@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.api.domain.model.store
 
-import android.util.Log
 import androidx.datastore.core.Serializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,7 +20,6 @@ class GenericSerializer<T>(
                 string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
-            Log.e("GenericSerializer", e.message ?: "GenericSerializer")
             defaultValue
         }
 

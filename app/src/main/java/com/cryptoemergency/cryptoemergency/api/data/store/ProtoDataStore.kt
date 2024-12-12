@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.api.data.store
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.cryptoemergency.cryptoemergency.api.domain.repository.StoreRepository
+import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.api.domain.model.store.ProtoKeys
 import kotlinx.coroutines.flow.first
 
@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.first
  *
  * @constructor Создает новый экземпляр хранилища
  */
-class ProtoDataStoreImpl<T>(
+class ProtoDataStore<T>(
     private val key: ProtoKeys<T>,
     private val context: Context,
-) : StoreRepository<T> {
+) : StorageRepository<T>() {
     private val Context.dataStore: DataStore<T> by dataStore(
         fileName = key.toString(),
         serializer = key.serializer,

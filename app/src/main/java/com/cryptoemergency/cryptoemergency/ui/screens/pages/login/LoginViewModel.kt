@@ -7,12 +7,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.data.store.DataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
+import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.cryptoemergency.cryptoemergency.module.TokenStore
 import com.cryptoemergency.cryptoemergency.navigation.Destination
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @TokenStore private val tokenDataStore: DataStoreImpl<String>,
+    @TokenStore private val tokenDataStore: StorageRepository<String>,
 ) : ViewModel() {
     val currentStep = mutableIntStateOf(0)
 

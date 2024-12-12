@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.api.data.store
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.cryptoemergency.cryptoemergency.api.domain.repository.StoreRepository
+import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.api.domain.model.store.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -18,10 +18,10 @@ import kotlinx.coroutines.withContext
  *
  * @constructor Создает новый экземпляр хранилища
  */
-class DataStoreImpl<T>(
+class DataStore<T>(
     private val key: Keys<T>,
     private val context: Context,
-) : StoreRepository<T> {
+) : StorageRepository<T>() {
     /**
      * Экземляр базы
      */

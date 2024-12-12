@@ -1,8 +1,9 @@
 package com.cryptoemergency.cryptoemergency.module
 
 import android.content.Context
-import com.cryptoemergency.cryptoemergency.api.data.store.DataStoreImpl
+import com.cryptoemergency.cryptoemergency.api.data.store.DataStore
 import com.cryptoemergency.cryptoemergency.api.domain.model.store.Keys
+import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,14 +20,14 @@ object StoreModule {
     @Singleton
     fun provideStoreToken(
         @ApplicationContext context: Context,
-    ): DataStoreImpl<String> = DataStoreImpl(Keys.TOKEN, context)
+    ): StorageRepository<String> = DataStore(Keys.TOKEN, context)
 
     @PinCodeStore
     @Provides
     @Singleton
     fun providePinCode(
         @ApplicationContext context: Context,
-    ): DataStoreImpl<String> = DataStoreImpl(Keys.PinCode, context)
+    ): StorageRepository<String> = DataStore(Keys.PinCode, context)
 }
 
 @Qualifier
