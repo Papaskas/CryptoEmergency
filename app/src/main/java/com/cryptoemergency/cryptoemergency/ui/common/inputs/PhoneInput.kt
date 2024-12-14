@@ -46,7 +46,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.Valid
  *
  * @see <a href="https://stackoverflow.com/questions/71274129/phone-number-visual-transformation-in-jetpack-compose">Исходный код</a>
  *
- * @sample InputSamples.PhoneInputSample
+ * @sample InputSamples.MaskInputSample
  */
 @Composable
 fun PhoneInput(

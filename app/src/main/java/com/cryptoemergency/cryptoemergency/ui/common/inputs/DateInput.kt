@@ -27,7 +27,7 @@ import com.cryptoemergency.cryptoemergency.lib.Convert.millisToDate
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
- * Комопнент Input с логикой даты. Наследуется от [Input]
+ * Комопнент [Input] с логикой даты. Наследуется от [Input]
  *
  * @param value [TextFieldValue] Значение текста, которое будет отображаться в текстовом поле
  * @param label [String] Vетка, которая будет отображаться внутри контейнера текстового поля.

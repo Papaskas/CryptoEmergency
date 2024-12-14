@@ -26,7 +26,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
- * Комопнент Input с логикой многостраничного ввода с паттерном минимальных и максимальных символов.
+ * Комопнент [Input] с логикой многостраничного ввода с паттерном минимальных и максимальных символов.
  * Наследуется от [ValidatorInput]
  *
  * @param value [TextFieldValue] Значение вводимого текста, которое будет отображаться в текстовом поле

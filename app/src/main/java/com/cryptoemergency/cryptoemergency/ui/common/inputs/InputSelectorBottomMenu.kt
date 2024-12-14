@@ -39,7 +39,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 /**
- * Компонент Input с выбором элементов
+ * Компонент [Input] с логикой селектора элементов
  *
  * @param selectedItem Выбранный элемент
  * @param items Множество значений для выбора селектором
