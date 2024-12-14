@@ -1,0 +1,32 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Checkout keystore
+        uses: actions/checkout@v3
+        with:
+          path: keystore
+          repository: papaskas/CryptoEmergency
+          ref: keystore
+      - name: Build and sign APK
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleRelease
+      - name: Deploy to Play Store
+        uses: google-github-actions/upload-apk@v0
+        with:
+          serviceAccount: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          apk: app/build/outputs/apk/release/app-release.apk
+          track: beta-closed
