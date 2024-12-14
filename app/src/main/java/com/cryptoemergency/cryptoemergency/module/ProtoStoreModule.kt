@@ -13,15 +13,32 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Модуль для предоставления зависимостей, связанных с хранилищем данных.
+ *
+ * Этот модуль используется Hilt для внедрения зависимостей в компоненты приложения.
+ **/
 @Module
 @InstallIn(SingletonComponent::class)
 object ProtoStoreModule {
+    /**
+     * Предоставляет экземпляр [StorageRepository] для хранения данных о пользователе.
+     *
+     * @param context [Context] Контекст приложения.
+     * @return [StorageRepository] Экземпляр хранилища для данных пользователя.
+     */
     @Provides
     @Singleton
     fun provideUserProtoStore(
         @ApplicationContext context: Context,
     ): StorageRepository<User> = ProtoDataStore(ProtoKeys.USER, context)
 
+    /**
+     * Предоставляет экземпляр [StorageRepository] для хранения текущей темы.
+     *
+     * @param context [Context] Контекст приложения.
+     * @return [StorageRepository] Экземпляр хранилища для текущей темы.
+     */
     @Provides
     @Singleton
     fun provideThemeProtoStore(

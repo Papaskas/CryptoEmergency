@@ -3,6 +3,7 @@ package com.cryptoemergency.cryptoemergency.api.data.store
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.Keys
 import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.api.domain.model.store.ProtoKeys
 import kotlinx.coroutines.flow.first
@@ -10,8 +11,8 @@ import kotlinx.coroutines.flow.first
 /**
  * Класс для хранения и извлечения данных с использованием хранилища данных
  *
- * @param key Ключ для идентификации данных в хранилище данных
- * @param context контекст приложения
+ * @param key [ProtoKeys] Ключ для идентификации данных в хранилище данных
+ * @param context [Context] Контекст для доступу к хранилишу
  *
  * @constructor Создает новый экземпляр хранилища
  */

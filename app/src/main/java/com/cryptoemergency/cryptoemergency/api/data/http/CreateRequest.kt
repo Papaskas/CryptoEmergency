@@ -26,31 +26,38 @@ import okio.IOException
 import java.net.UnknownHostException
 
 /**
- * Безопасная и универсальная функция HTTP-запроса, которая обрабатывает различные сценарии,
- * такие как исключения при сериализации, исключения при ответе сервера и проблемы с сетевым подключением.
- * Выполняется в IO потоке
+ * Выполняет HTTP-запрос к указанному URL и возвращает результат в виде [ApiResponse].
  *
- * @param path Путь к запрашиваемой конечной точке API.
- * @param context Контекст, необходимый для извлечения токена из внутреннего хранилища.
- * @param host Хост сервера API. Значение по умолчанию получено из BuildConfig.HOST.
- * @param protocol Протокол, который будет использоваться для подключения по URL. По умолчанию берется из BuildConfig.
- * @param port Номер порта, который будет использоваться для подключения по URL. По умолчанию берется из BuildConfig.
- * Если нужно использовать обычный Http Https, то порт ставить 80 443 соответсвенно
- * @param params Определяет параметры, которые будут добавлены к URL-адресу. Значением по
+ * Этот метод абстрагирует детали выполнения HTTP-запросов, включая:
+ *  - Сериализацию и десериализацию данных
+ *  - Обработку ошибок (сетевые ошибки, ошибки сервера, ошибки сериализации)
+ *  - Установку заголовков, включая токен авторизации
+ *  - Логирование запросов и ответов
+ *
+ * @param context [Context] Контекст, необходимый для извлечения токена из внутреннего хранилища.
+ * @param path [String] Путь к запрашиваемой конечной точке API.
+ * @param method [HttpMethod] HTTP-метод, который будет использоваться для запроса. Значение
+ * по умолчанию - [HttpMethod.Get].
+ * @param protocol [URLProtocol] Протокол, который будет использоваться для подключения по URL.
+ * По умолчанию берется из [BuildConfig.PROTOCOL].*
+ * @param host [String] Хост сервера API. Значение по умолчанию получено из [BuildConfig.HOST].
+ * @param port [Int] Номер порта, который будет использоваться для подключения по URL.
+ * По умолчанию берется из [BuildConfig.PORT]. Если нужно использовать обычный [URLProtocol.HTTP] или
+ * [URLProtocol.HTTPS], то порт ставить 80 443 соответсвенно
+ * @param params [StringValues] Определяет параметры, которые будут добавлены к URL-адресу. Значением по
  * умолчанию является пустая строка значений.
- * @param method HTTP-метод, который будет использоваться для запроса. Значение по умолчанию - HttpMethod.Get.
- * @param body Тело запроса в формате JSON. Принимаемый ти - @Serializable data class.
+ * @param body Тело запроса в формате JSON. Принимаемый тип - @Serializable data class.
  * Значение по умолчанию - null.
- * @param overrideToken Токен, который должен быть включен в заголовок запроса. Если значение равно null,
+ * @param overrideToken [String] Токен, который должен быть включен в заголовок запроса. Если значение равно null,
  * функция извлечет токен из контекста.
  *
  * @return [ApiResponse.Success] или [ApiResponse.Error] в завсисимости от статуса запроса.
- * Ответ ApiResponse содержит статус HTTP, заголовки и обработанные данные ответа
+ * Ответ [ApiResponse] содержит статус HTTP, заголовки и обработанные данные ответа
  *
- * @throws SerializationException Если не правильно указан тип принимаемых данных
- * @throws ServerResponseException Если в ответе сервера содержится ошибка
- * @throws UnknownHostException Если нет подключения к Интернету
- * @throws IOException Если во время сетевого подключения возникают ошибки
+ * @throws SerializationException В случае ошибки сериализации/десериализации данных.
+ * @throws ServerResponseException В случае ошибки сервера.
+ * @throws UnknownHostException В случае ошибки разрешения имени хоста.
+ * @throws IOException В случае сетевых ошибок.
  */
 @Throws(
     SerializationException::class,
@@ -99,13 +106,13 @@ suspend inline fun <reified SuccessResponse, reified ErrorResponse> HttpClient.c
             body = json.decodeFromString<ErrorResponse>(responseBody),
         )
     }
-} catch (e: SerializationException) {
+} catch (e: SerializationException) { // Ошибка сериализации данных
     ErrorResponse::class.qualifiedName?.let { Log.e("SerializationException", it) }
 
     ApiResponse.Error(
         status = HttpStatusCode.SerializationException,
     )
-} catch (e: ServerResponseException) {
+} catch (e: ServerResponseException) { // 500 ошибка сервера
     ErrorResponse::class.qualifiedName?.let { Log.e("ServerResponseException", it) }
 
     ApiResponse.Error(

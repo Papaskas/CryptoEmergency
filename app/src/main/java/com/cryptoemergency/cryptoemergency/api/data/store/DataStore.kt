@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 /**
  * Класс для хранения и извлечения данных с использованием хранилища данных
  *
- * @param key Ключ для идентификации данных в хранилище данных
- * @param context контекст приложения
+ * @param key [Keys] Ключ для идентификации данных в хранилище данных
+ * @param context [Context] Контекст для доступу к хранилишу
  *
  * @constructor Создает новый экземпляр хранилища
  */
@@ -55,4 +55,10 @@ class DataStore<T>(
     }
 }
 
+/**
+ * Расширение для создания экземпляра DataStore с использованием Preferences API.
+ *
+ * @receiver [Context] Контекст приложения.
+ * @return [DataStore] Экземпляр DataStore для работы с настройками.
+ */
 private val Context.dataStore by preferencesDataStore("store")

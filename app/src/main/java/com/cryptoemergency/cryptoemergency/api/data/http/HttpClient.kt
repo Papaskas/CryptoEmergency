@@ -10,6 +10,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+/**
+ * Клиент HTTP, настроенный для работы с JSON, логированием и таймаутами.
+ */
 val httpClient by lazy {
     HttpClient(OkHttp) {
         install(Logging) {
@@ -30,6 +33,10 @@ val httpClient by lazy {
     }
 }
 
+/**
+ * Сериализатор/десериализатор JSON с гибкой конфигурацией.
+ * Позволяет игнорировать неизвестные ключи и использовать нестрогую проверку JSON.
+ */
 val json by lazy {
     Json {
         isLenient = true

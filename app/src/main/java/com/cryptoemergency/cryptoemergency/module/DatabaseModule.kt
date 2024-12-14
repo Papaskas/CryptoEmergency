@@ -10,6 +10,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Модуль для предоставления зависимостей, связанных с хранилищем данных.
+ *
+ * Этот модуль используется Hilt для внедрения зависимостей в компоненты приложения.
+ **/
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
