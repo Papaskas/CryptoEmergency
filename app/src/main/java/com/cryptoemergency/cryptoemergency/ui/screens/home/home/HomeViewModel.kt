@@ -18,7 +18,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getToken.getTokenRequest
 import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
-import com.cryptoemergency.cryptoemergency.module.TokenStore
+import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.providers.theme.Colors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

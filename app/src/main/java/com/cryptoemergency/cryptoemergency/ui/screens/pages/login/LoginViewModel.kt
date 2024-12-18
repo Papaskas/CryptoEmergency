@@ -11,7 +11,7 @@ import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.login
 import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
-import com.cryptoemergency.cryptoemergency.module.TokenStore
+import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

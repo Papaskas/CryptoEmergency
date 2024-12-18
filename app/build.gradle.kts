@@ -3,7 +3,6 @@ import java.util.Base64
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
@@ -137,31 +136,16 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     implementation(libs.android.image.cropper)
 
     implementation(libs.androidx.graphics.shapes)
 
-    ksp(libs.androidx.room.compiler)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx) // Room - Дополнительно для Coroutines, Flows
-
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.proto.datastore)
-
     kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.logging)
-
-    implementation(libs.slf4j.api)
-    implementation(libs.logback.classic)
 
     implementation(libs.accompanist.permissions)
 

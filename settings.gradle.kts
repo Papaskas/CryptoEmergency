@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "cryptoemergency"
 include(":app")
- 
+include(":data")
+include(":domain")
