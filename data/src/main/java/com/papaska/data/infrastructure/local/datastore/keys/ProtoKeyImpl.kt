@@ -1,11 +1,10 @@
-package com.papaska.data.old.store
+package com.papaska.data.infrastructure.local.datastore.keys
 
 import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.papaska.domain.entity.local.ThemeEntity
-import com.papaska.domain.entity.local.TokenEntity
-import kotlinx.serialization.serializer
+import com.papaska.domain.entity.local.UserEntity
 
 /**
  * Представление в виде ключей, используемые для хранения и извлечения данных в хранилище настроек.
@@ -23,20 +22,20 @@ import kotlinx.serialization.serializer
  *
  * @param serializer Сериализатор, используемый для сериализации и десериализации данных.
  */
-sealed class ProtoKeys<T>(
-    val key: Preferences.Key<String>,
-    val defaultValue: T,
-    val serializer: Serializer<T>,
-) {
-    data object USER : ProtoKeys<TokenEntity>(
+sealed class ProtoKeyImpl<T>(
+    override val key: Preferences.Key<String>,
+    override val defaultValue: T,
+    override val serializer: Serializer<T>,
+): ProtoKey<T> {
+    data object USER : ProtoKeyImpl<UserEntity>(
         key = stringPreferencesKey("user"),
-        defaultValue = TokenEntity(),
-        serializer = GenericSerializer(serializer<TokenEntity>(), TokenEntity()),
+        defaultValue = UserEntity(),
+        serializer = protoDataStoreSerializer(UserEntity()),
     )
 
-    data object THEME : ProtoKeys<ThemeEntity>(
+    data object THEME : ProtoKeyImpl<ThemeEntity>(
         key = stringPreferencesKey("theme"),
         defaultValue = ThemeEntity.NULL,
-        serializer = GenericSerializer(serializer<ThemeEntity>(), ThemeEntity.NULL),
+        serializer = protoDataStoreSerializer(ThemeEntity.NULL),
     )
 }

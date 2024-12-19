@@ -1,25 +1,27 @@
-package com.papaska.data.Infrastructure.local.datastore
+package com.papaska.data.infrastructure.local.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.papaska.data.old.store.ProtoKeys
+import com.papaska.data.infrastructure.local.datastore.keys.ProtoKey
+import com.papaska.data.infrastructure.local.datastore.keys.ProtoKeyImpl
 import kotlinx.coroutines.flow.first
 
 /**
  * Класс для хранения и извлечения данных с использованием хранилища данных
  *
- * @param key [ProtoKeys] Ключ для идентификации данных в хранилище данных
+ * @param key [ProtoKeyImpl] Ключ для идентификации данных в хранилище данных
  * @param context [Context] Контекст для доступу к хранилишу
  *
  * @constructor Создает новый экземпляр хранилища
  */
 class ProtoDataStore<T>(
-    private val key: ProtoKeys<T>,
+    private val key: ProtoKey<T>,
     private val context: Context,
 ) {
+
     private val Context.dataStore: DataStore<T> by dataStore(
-        fileName = key.toString(),
+        fileName = key.key.name,
         serializer = key.serializer,
     )
 
@@ -33,14 +35,14 @@ class ProtoDataStore<T>(
      *
      * @return Возвращает сохраненные данные типа T.
      */
-    suspend fun get(): T = dataStore.data.first()
+    suspend fun read(): T = dataStore.data.first()
 
     /**
      * Сохраняет заданные данные, связанные с заданным ключом.
      *
-     * @param value Значение данных, которые будут сохранены.
+     * @param entity Значение данных, которые будут сохранены.
      */
-    suspend fun put(value: T) {
-        dataStore.updateData { value }
+    suspend fun createOrUpdate(entity: T) {
+        dataStore.updateData { entity }
     }
 }

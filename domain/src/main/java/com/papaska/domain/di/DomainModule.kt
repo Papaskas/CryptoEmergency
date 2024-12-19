@@ -22,49 +22,41 @@ import javax.inject.Singleton
 class DomainModule {
 
     @Provides
-    @Singleton
     fun provideGetUserUseCase(
         userRepository: UserRepository
     ): GetUserUseCase = GetUserUseCase(userRepository = userRepository)
 
     @Provides
-    @Singleton
     fun provideSaveUserUseCase(
         userRepository: UserRepository
     ): SaveUserUseCase = SaveUserUseCase(userRepository = userRepository)
 
     @Provides
-    @Singleton
     fun provideGetThemeUseCase(
         themeRepository: ThemeRepository
     ): GetThemeUseCase = GetThemeUseCase(themeRepository = themeRepository)
 
     @Provides
-    @Singleton
     fun provideSaveThemeUseCase(
         themeRepository: ThemeRepository
     ): GetThemeUseCase = GetThemeUseCase(themeRepository = themeRepository)
 
     @Provides
-    @Singleton
     fun provideGetTokenUseCase(
         tokenRepository: TokenRepository
     ): GetTokenUseCase = GetTokenUseCase(tokenRepository = tokenRepository)
 
     @Provides
-    @Singleton
     fun provideSaveTokenUseCase(
         tokenRepository: TokenRepository
     ): SaveTokenUseCase = SaveTokenUseCase(tokenRepository = tokenRepository)
 
     @Provides
-    @Singleton
     fun provideGetPinCodeUseCase(
         pinCodeRepository: PinCodeRepository
     ): GetPinCodeUseCase = GetPinCodeUseCase(pinCodeRepository = pinCodeRepository)
 
     @Provides
-    @Singleton
     fun provideSavePinCodeUseCase(
         pinCodeRepository: PinCodeRepository
     ): SavePinCodeUseCase = SavePinCodeUseCase(pinCodeRepository = pinCodeRepository)

@@ -1,18 +1,10 @@
 package com.papaska.data.di
 
 import android.content.Context
-import com.papaska.data.Infrastructure.local.datastore.DataStore
-import com.papaska.data.Infrastructure.local.datastore.ProtoDataStore
-import com.papaska.data.dataSources.local.pinCode.PinCodeDataSource
-import com.papaska.data.dataSources.local.pinCode.PinCodeDataSourceImpl
-import com.papaska.data.dataSources.local.theme.ThemeDataSource
-import com.papaska.data.dataSources.local.theme.ThemeDataSourceImpl
-import com.papaska.data.dataSources.local.token.TokenDataSource
-import com.papaska.data.dataSources.local.token.TokenDataSourceImpl
-import com.papaska.data.dataSources.local.user.UserDataSource
-import com.papaska.data.dataSources.local.user.UserDataSourceImpl
-import com.papaska.data.old.store.Keys
-import com.papaska.data.old.store.ProtoKeys
+import com.papaska.data.dataSources.local.localStorage.LocalStorageDataSourceImpl
+import com.papaska.data.dataSources.local.localStorage.ProtoLocalStorageDataSourceImpl
+import com.papaska.data.infrastructure.local.datastore.keys.KeyImpl
+import com.papaska.data.infrastructure.local.datastore.keys.ProtoKeyImpl
 import com.papaska.data.repositories.local.PinCodeRepositoryImpl
 import com.papaska.data.repositories.local.ThemeRepositoryImpl
 import com.papaska.data.repositories.local.TokenRepositoryImpl
@@ -34,52 +26,33 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideUserStorage(
-        @ApplicationContext context: Context,
-    ): UserDataSource = UserDataSourceImpl(ProtoDataStore(key = ProtoKeys.USER, context = context))
-
-    @Provides
-    @Singleton
     fun provideUserRepository(
-        userDataSource: UserDataSource
-    ): UserRepository = UserRepositoryImpl(userDataSource = userDataSource)
-
-
-    @Provides
-    @Singleton
-    fun provideTokenStorage(
         @ApplicationContext context: Context,
-    ): TokenDataSource = TokenDataSourceImpl(DataStore(key = Keys.TOKEN, context = context))
-
-    @Provides
-    @Singleton
-    fun provideTokenRepository(
-        tokenDataSource: TokenDataSource
-    ): TokenRepository = TokenRepositoryImpl(tokenDataSource = tokenDataSource)
-
-
-    @Provides
-    @Singleton
-    fun providePinCodeStorage(
-        @ApplicationContext context: Context,
-    ): PinCodeDataSource = PinCodeDataSourceImpl(DataStore(key = Keys.PIN_CODE, context = context))
-
-    @Provides
-    @Singleton
-    fun providePinCodeRepository(
-        pinCodeDataSource: PinCodeDataSource
-    ): PinCodeRepository = PinCodeRepositoryImpl(pinCodeDataSource = pinCodeDataSource)
-
-
-    @Provides
-    @Singleton
-    fun provideThemeStorage(
-        @ApplicationContext context: Context,
-    ): ThemeDataSource = ThemeDataSourceImpl(ProtoDataStore(key = ProtoKeys.THEME, context = context))
+    ): UserRepository = UserRepositoryImpl(userDataSource = ProtoLocalStorageDataSourceImpl(
+        key = ProtoKeyImpl.USER, context = context
+    ))
 
     @Provides
     @Singleton
     fun provideThemeRepository(
-        themeDataSource: ThemeDataSource
-    ): ThemeRepository = ThemeRepositoryImpl(themeDataSource = themeDataSource)
+        @ApplicationContext context: Context,
+    ): ThemeRepository = ThemeRepositoryImpl(themeDataSource = ProtoLocalStorageDataSourceImpl(
+        key = ProtoKeyImpl.THEME, context = context
+    ))
+
+    @Provides
+    @Singleton
+    fun provideTokenRepository(
+        @ApplicationContext context: Context,
+    ): TokenRepository = TokenRepositoryImpl(tokenDataSource = LocalStorageDataSourceImpl(
+        key = KeyImpl.TOKEN, context = context
+    ))
+
+    @Provides
+    @Singleton
+    fun providePinCodeRepository(
+        @ApplicationContext context: Context,
+    ): PinCodeRepository = PinCodeRepositoryImpl(pinCodeDataSource = LocalStorageDataSourceImpl(
+        key = KeyImpl.PIN_CODE, context = context
+    ))
 }
