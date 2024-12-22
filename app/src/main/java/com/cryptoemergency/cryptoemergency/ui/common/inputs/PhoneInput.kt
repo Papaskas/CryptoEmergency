@@ -16,7 +16,6 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.maskInput.MaskInput
-import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**
  * Комопнент [Input] с логикой ввода номера телефона с помощью маски. Наследуется от [MaskInput]

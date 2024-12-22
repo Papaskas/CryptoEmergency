@@ -1,6 +1,5 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.home.home
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
@@ -15,20 +14,20 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getToken.getTokenRequest
-import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
-import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.providers.theme.Colors
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.useCases.local.token.GetTokenUseCase
+import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.remote.token.InitTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
-    @TokenStore private val tokenStore: StorageRepository<String>,
+    private val initTokenUseCase: InitTokenUseCase,
+    private val saveTokenUseCase: SaveTokenUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : ViewModel() {
     private val ethereum = "ethereum"
     private val cemCoin = "cemCoin"
@@ -37,14 +36,14 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (tokenStore.get().isNotEmpty()) return@launch
+            if (getTokenUseCase().isNotEmpty()) return@launch
 
-            val res = getTokenRequest(context)
+            val res = initTokenUseCase()
 
             if (res is ApiResponse.Success) {
                 val token = res.headers["authorization"]!!
 
-                tokenStore.put(token)
+                saveTokenUseCase(token as String)
             }
         }
     }

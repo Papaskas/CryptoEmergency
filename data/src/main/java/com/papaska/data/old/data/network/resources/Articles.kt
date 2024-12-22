@@ -1,9 +1,9 @@
 package com.papaska.data.old.data.network.resources
 
 import com.papaska.data.old.data.network.httpClient
-import com.papaska.domain.useCases.remote.ApiResponse
-import com.papaska.domain.useCases.remote.HttpHeaders
-import com.papaska.domain.useCases.remote.HttpStatusCode
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.http.DomainHttpHeaders
+import com.papaska.domain.http.DomainHttpStatusCode
 import io.ktor.client.call.body
 import io.ktor.client.plugins.onDownload
 import io.ktor.client.plugins.onUpload
@@ -46,15 +46,15 @@ suspend fun<Success> test(
 
     if (res.status.isSuccess()) {
        return ApiResponse.Success(
-           status = HttpStatusCode(12, "ASD"),
+           status = DomainHttpStatusCode(12, "ASD"),
            body = res.body(),
-           headers = HttpHeaders(mapOf())
+           headers = DomainHttpHeaders(mapOf())
        )
     } else {
         return ApiResponse.Error(
-            status = HttpStatusCode(12, "ASD"),
+            status = DomainHttpStatusCode(12, "ASD"),
             body = res.body(),
-            headers = HttpHeaders(mapOf())
+            headers = DomainHttpHeaders(mapOf())
         )
     }
 }

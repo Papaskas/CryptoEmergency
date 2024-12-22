@@ -20,8 +20,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorInputPatterns
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
+import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorInputPatterns
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**

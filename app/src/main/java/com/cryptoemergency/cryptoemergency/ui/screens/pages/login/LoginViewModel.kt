@@ -9,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
 import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
+import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
-import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

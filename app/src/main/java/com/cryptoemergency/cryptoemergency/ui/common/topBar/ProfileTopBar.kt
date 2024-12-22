@@ -15,8 +15,8 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.providers.theme.ThemeViewModel
+import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

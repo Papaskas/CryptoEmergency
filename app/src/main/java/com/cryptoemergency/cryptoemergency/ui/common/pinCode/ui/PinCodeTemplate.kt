@@ -1,10 +1,8 @@
 package com.cryptoemergency.cryptoemergency.ui.common.pinCode.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -13,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeCreateViewModel
 import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeEnterViewModel
 import com.cryptoemergency.cryptoemergency.ui.common.pinCode.domain.PinCodeViewModel

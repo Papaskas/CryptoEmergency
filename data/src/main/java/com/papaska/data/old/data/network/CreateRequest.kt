@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.papaska.data.infrastructure.local.datastore.DataStore
 import com.papaska.data.infrastructure.local.datastore.keys.KeyImpl
-import com.papaska.domain.useCases.remote.ApiResponse
+import com.papaska.domain.http.ApiResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ServerResponseException

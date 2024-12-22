@@ -9,17 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.lib.Convert
 import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
 import com.cryptoemergency.cryptoemergency.lib.Http
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.vibrate
 import com.cryptoemergency.cryptoemergency.navigation.Destination
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.createPost.Media
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.createPost.Request
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.createPost.createPostRequest
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.useCases.remote.post.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreatePostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val createPostUseCase: CreatePostUseCase,
 ) : ViewModel() {
     val message = MutableStateFlow<String?>(null)
     val redirect = MutableStateFlow<Redirect?>(null)
@@ -87,10 +85,10 @@ class CreatePostViewModel @Inject constructor(
         viewModelScope.launch {
             awaitServer.value = true
 
-            val res = createPostRequest(context, Request(
+            val res = createPostUseCase(CreatePostUseCase.Post(
                 description = descriptionInput.value.text,
                 media = selectedMedia.map {
-                    Media(
+                    CreatePostUseCase.Media(
                         type = "photo",
                         originalUrl = it.toBase64(context, Bitmap.CompressFormat.JPEG),
                     )

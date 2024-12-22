@@ -26,10 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 import com.cryptoemergency.cryptoemergency.modifiers.linearGradientBackground
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
-import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 import kotlinx.coroutines.launch
 
 /**

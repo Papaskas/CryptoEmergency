@@ -9,7 +9,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

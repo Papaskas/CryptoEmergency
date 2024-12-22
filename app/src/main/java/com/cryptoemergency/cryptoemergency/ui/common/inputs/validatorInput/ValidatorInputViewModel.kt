@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

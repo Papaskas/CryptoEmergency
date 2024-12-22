@@ -15,7 +15,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,40 +23,40 @@ class DomainModule {
     @Provides
     fun provideGetUserUseCase(
         userRepository: UserRepository
-    ): GetUserUseCase = GetUserUseCase(userRepository = userRepository)
+    ) = GetUserUseCase(userRepository = userRepository)
 
     @Provides
     fun provideSaveUserUseCase(
         userRepository: UserRepository
-    ): SaveUserUseCase = SaveUserUseCase(userRepository = userRepository)
+    ) = SaveUserUseCase(userRepository = userRepository)
 
     @Provides
     fun provideGetThemeUseCase(
         themeRepository: ThemeRepository
-    ): GetThemeUseCase = GetThemeUseCase(themeRepository = themeRepository)
+    ) = GetThemeUseCase(themeRepository = themeRepository)
 
     @Provides
     fun provideSaveThemeUseCase(
         themeRepository: ThemeRepository
-    ): GetThemeUseCase = GetThemeUseCase(themeRepository = themeRepository)
+    ) = GetThemeUseCase(themeRepository = themeRepository)
 
     @Provides
     fun provideGetTokenUseCase(
         tokenRepository: TokenRepository
-    ): GetTokenUseCase = GetTokenUseCase(tokenRepository = tokenRepository)
+    ) = GetTokenUseCase(tokenRepository = tokenRepository)
 
     @Provides
     fun provideSaveTokenUseCase(
         tokenRepository: TokenRepository
-    ): SaveTokenUseCase = SaveTokenUseCase(tokenRepository = tokenRepository)
+    ) = SaveTokenUseCase(tokenRepository = tokenRepository)
 
     @Provides
     fun provideGetPinCodeUseCase(
         pinCodeRepository: PinCodeRepository
-    ): GetPinCodeUseCase = GetPinCodeUseCase(pinCodeRepository = pinCodeRepository)
+    ) = GetPinCodeUseCase(pinCodeRepository = pinCodeRepository)
 
     @Provides
     fun provideSavePinCodeUseCase(
         pinCodeRepository: PinCodeRepository
-    ): SavePinCodeUseCase = SavePinCodeUseCase(pinCodeRepository = pinCodeRepository)
+    ) = SavePinCodeUseCase(pinCodeRepository = pinCodeRepository)
 }

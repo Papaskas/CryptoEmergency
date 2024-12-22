@@ -3,10 +3,10 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
 import com.cryptoemergency.cryptoemergency.lib.Http
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.PostsResponse
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.getPostsRequest
+import com.papaska.domain.entity.remote.post.PostsEntity
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.useCases.remote.post.GetPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,15 +17,16 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsFeedViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val getPostUseCase: GetPostUseCase,
 ) : ViewModel() {
-    private val _posts = MutableStateFlow<PostsResponse?>(null)
+    private val _posts = MutableStateFlow<PostsEntity?>(null)
     val posts = _posts.asStateFlow()
 
     val message = MutableStateFlow<String?>(null)
 
     init {
         viewModelScope.launch {
-            val res = getPostsRequest(context)
+            val res = getPostUseCase()
 
             if (res is ApiResponse.Success) {
                 _posts.value = res.body

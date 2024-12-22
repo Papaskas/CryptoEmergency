@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.navigation
 
 import androidx.annotation.Keep
-import kotlinx.serialization.Serializable
 
 /**
  * Закрытый класс, представляющий различные маршруты в приложении. Этот класс гарантирует,
