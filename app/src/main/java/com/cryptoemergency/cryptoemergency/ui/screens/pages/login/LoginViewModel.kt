@@ -6,13 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
-import com.cryptoemergency.cryptoemergency.api.domain.repository.StorageRepository
-import com.cryptoemergency.cryptoemergency.di.old.TokenStore
 import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.cryptoemergency.cryptoemergency.navigation.Destination
+import com.papaska.domain.entity.local.TokenEntity
+import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @TokenStore private val tokenDataStore: StorageRepository<String>,
+    private val saveTokenUseCase: SaveTokenUseCase,
+    private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
     val currentStep = mutableIntStateOf(0)
 
@@ -48,10 +48,8 @@ class LoginViewModel @Inject constructor(
 
                     viewModelScope.launch {
                         try {
-                            tokenDataStore.put(
-                                it.headers["authorization"] ?:
-                                error(context.resources.getString(R.string.error__internal_server))
-                            )
+                            val token = (it.headers["authorization"] ?: error("")) as TokenEntity
+                            saveTokenUseCase.invoke(token)
                         } catch (e: IllegalStateException) {
                             message.value = e.message
                         }
@@ -59,7 +57,7 @@ class LoginViewModel @Inject constructor(
                 },
             ) {
                 isLoading.value = true
-                loginRequest(context, emailInput.value.text, passwordInput.value.text)
+                loginUseCase(emailInput.value.text, passwordInput.value.text)
             }
         }
     }
@@ -78,7 +76,7 @@ class LoginViewModel @Inject constructor(
                 },
             ) {
                 isLoading.value = true
-                loginRequest(context, emailInput.value.text, passwordInput.value.text)
+                loginUseCase(emailInput.value.text, passwordInput.value.text)
             }
         }
     }

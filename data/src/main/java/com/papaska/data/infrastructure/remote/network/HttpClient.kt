@@ -1,4 +1,4 @@
-package com.papaska.data.old.data.network
+package com.papaska.data.infrastructure.remote.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp

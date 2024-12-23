@@ -14,11 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.PostViewType
+import com.cryptoemergency.cryptoemergency.models.PostViewModel
 
 @Composable
 fun PostsHeader(
-    postViewType: MutableState<PostViewType>,
+    postViewModel: MutableState<PostViewModel>,
     showFilterMenu: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
@@ -41,12 +41,12 @@ fun PostsHeader(
             )
         }
         IconButton(onClick = {
-            postViewType.value = PostViewType.FULL
+            postViewModel.value = PostViewModel.FULL
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
                 contentDescription = "sort by large",
-                tint = if (postViewType.value == PostViewType.FULL) {
+                tint = if (postViewModel.value == PostViewModel.FULL) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1
@@ -54,12 +54,12 @@ fun PostsHeader(
             )
         }
         IconButton(onClick = {
-            postViewType.value = PostViewType.SHORT
+            postViewModel.value = PostViewModel.SHORT
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
                 contentDescription = "sort by grid",
-                tint = if (postViewType.value == PostViewType.SHORT) {
+                tint = if (postViewModel.value == PostViewModel.SHORT) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1

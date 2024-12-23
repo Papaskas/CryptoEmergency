@@ -10,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Post
-import com.cryptoemergency.cryptoemergency.types.PostViewType
+import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostEntity
 
 @Composable
 fun PostGrid(
-    posts: List<Post>,
+    posts: List<PostEntity>,
 ) {
     Column {
         Row {
@@ -64,7 +64,7 @@ fun PostGrid(
 
 @Composable
 fun PostGridReverse(
-    posts: List<Post>,
+    posts: List<PostEntity>,
 ) {
     Column {
         Spacer(Modifier.height(1.dp))
@@ -115,7 +115,7 @@ fun PostGridReverse(
 
 @Composable
 private fun PostGridItem(
-    posts: List<Post>,
+    posts: List<PostEntity>,
     index: Int,
     width: Float = 3f,
     height: Float = width,
@@ -126,7 +126,7 @@ private fun PostGridItem(
 
     PostItem(
         post = posts[index],
-        viewType = PostViewType.SHORT,
+        viewType = PostViewModel.SHORT,
         contentModifier = Modifier.size(
             width = screenWidth / width,
             height = screenWidth / height,

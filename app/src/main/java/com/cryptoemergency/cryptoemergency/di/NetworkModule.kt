@@ -1,4 +1,4 @@
-package com.papaska.domain.di
+package com.cryptoemergency.cryptoemergency.di
 
 import com.papaska.domain.entity.config.ServerConfiguration
 import com.papaska.domain.repositories.remote.NetworkRepository
@@ -11,43 +11,50 @@ import com.papaska.domain.useCases.remote.token.InitTokenUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 class NetworkModule {
 
     @Provides
+    @ViewModelScoped
     fun provideInitTokenUseCase(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,
     ) = InitTokenUseCase(networkRepository, serverConfiguration)
 
     @Provides
+    @ViewModelScoped
     fun provideLoginUseCase(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,
     ) = LoginUseCase(networkRepository, serverConfiguration)
 
     @Provides
+    @ViewModelScoped
     fun provideRecoveryPassword(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,
     ) = RecoveryPasswordUseCase(networkRepository, serverConfiguration)
 
     @Provides
+    @ViewModelScoped
     fun provideRegisterUseCase(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,
     ) = RegisterUseCase(networkRepository, serverConfiguration)
 
     @Provides
+    @ViewModelScoped
     fun provideCreatePostUseCase(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,
     ) = CreatePostUseCase(networkRepository, serverConfiguration)
 
     @Provides
+    @ViewModelScoped
     fun provideGetPostsUseCase(
         networkRepository: NetworkRepository,
         serverConfiguration: ServerConfiguration,

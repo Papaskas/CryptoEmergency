@@ -26,10 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
 import com.cryptoemergency.cryptoemergency.modifiers.linearGradientBackground
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.providers.theme.currentTheme
+import com.papaska.domain.entity.local.ThemeEntity
 import kotlinx.coroutines.launch
 
 /**
@@ -98,15 +98,9 @@ private fun getTextColor(
         }
         ButtonType.Secondary -> {
             when (currentTheme) {
-                CurrentTheme.DARK -> {
-                    Color.White
-                }
-                CurrentTheme.LIGHT -> {
-                    Theme.colors.text6
-                }
-                CurrentTheme.NULL -> {
-                    Theme.colors.text6
-                }
+                ThemeEntity.DARK -> Color.White
+                ThemeEntity.LIGHT -> Theme.colors.text6
+                ThemeEntity.NULL -> Theme.colors.text6
             }
         }
     }

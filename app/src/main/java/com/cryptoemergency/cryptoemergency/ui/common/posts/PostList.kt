@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,22 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.PostsResponse
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.PostViewType
+import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostsEntity
 
 /**
  * Компонент списка постов, панелью управления и табами
  *
  * @param posts Список постов
- * @param postViewType Тип вывода постов
+ * @param postViewModel Тип вывода постов
  * @param selectedFilter Выбранный фильтр вывода новостей
  * @param showFilterMenu Состояние показа экрана фильтра
  **/
 @Composable
 fun PostList(
-    posts: PostsResponse,
-    postViewType: MutableState<PostViewType>,
+    posts: PostsEntity,
+    postViewModel: MutableState<PostViewModel>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     context: Context = LocalContext.current,
@@ -43,18 +42,18 @@ fun PostList(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp),
         verticalArrangement = Arrangement.spacedBy(
-            if (postViewType.value == PostViewType.FULL) {
+            if (postViewModel.value == PostViewModel.FULL) {
                 Theme.dimens.padding
             } else {
                 0.dp
             },
         ),
     ) {
-        if (postViewType.value == PostViewType.FULL) {
+        if (postViewModel.value == PostViewModel.FULL) {
             items(posts.postAll.size) { index ->
                 PostItem(
                     post = posts.postAll[index],
-                    viewType = postViewType.value,
+                    viewType = postViewModel.value,
                 )
             }
         } else {

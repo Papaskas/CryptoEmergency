@@ -3,12 +3,12 @@ package com.cryptoemergency.cryptoemergency.lib
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.api.data.http.ApiResponse
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.login.loginRequest
 import com.cryptoemergency.cryptoemergency.navigation.Destination
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.http.DomainHttpStatusCode
+import com.papaska.domain.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ import javax.inject.Inject
  */
 suspend fun <Success, Error> makeRequest(
     context: Context,
-    errors: Map<HttpStatusCode, String> = emptyMap(),
+    errors: Map<DomainHttpStatusCode, String> = emptyMap(),
     onSuccess: (ApiResponse.Success<Success>) -> Unit,
     onError: (ApiResponse.Error<Error>, String?) -> Unit,
     onRequest: suspend () -> ApiResponse<out Success, out Error>,
@@ -53,7 +53,8 @@ suspend fun <Success, Error> makeRequest(
 
 @HiltViewModel
 private class SampleViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val loginUseCase: LoginUseCase,
 ): ViewModel() {
     val redirect = MutableStateFlow<Redirect?>(null)
     val message = MutableStateFlow<String?>(null)
@@ -63,9 +64,9 @@ private class SampleViewModel @Inject constructor(
             makeRequest(
                 context = context,
                 errors = mapOf(
-                    HttpStatusCode.Conflict to "Conflict message",
-                    HttpStatusCode.BadRequest to "Bad request",
-                    HttpStatusCode.NoContent to "No content",
+                    DomainHttpStatusCode.Conflict to "Conflict message",
+                    DomainHttpStatusCode.BadRequest to "Bad request",
+                    DomainHttpStatusCode.NoContent to "No content",
                 ),
                 onSuccess = {
                     redirect.value = Redirect(Destination.Home.Home)
@@ -74,7 +75,7 @@ private class SampleViewModel @Inject constructor(
                     message.value = errorMessage
                 },
             ) {
-                loginRequest(context, "mail@mail.ru", "password!@A4")
+                loginUseCase("mail@mail.ru", "password!@A4")
             }
         }
     }

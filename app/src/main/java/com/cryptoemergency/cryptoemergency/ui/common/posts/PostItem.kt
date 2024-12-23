@@ -36,26 +36,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Media
-import com.cryptoemergency.cryptoemergency.api.domain.model.requests.getPosts.Post
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.types.PostViewType
+import com.cryptoemergency.cryptoemergency.models.PostViewModel
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
+import com.papaska.domain.entity.remote.post.PostEntity
+import com.papaska.domain.entity.remote.post.PostMediaEntity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun PostItem(
-    post: Post,
-    viewType: PostViewType,
+    post: PostEntity,
+    viewType: PostViewModel,
     modifier: Modifier = Modifier,
     contentModifier: Modifier = Modifier,
 ) {
     val state = rememberPagerState { post.media.size }
 
     Column(modifier = modifier) {
-        if (viewType == PostViewType.FULL) {
+        if (viewType == PostViewModel.FULL) {
             HeaderNews(
                 avatar = post.media[0].resizedUrl,
                 authorName = "Александр криптовалюта",
@@ -68,7 +68,7 @@ fun PostItem(
             viewType = viewType,
             modifier = contentModifier,
         )
-        if (viewType == PostViewType.FULL) {
+        if (viewType == PostViewModel.FULL) {
             Bottom(
                 description = post.description,
                 state = state,
@@ -195,9 +195,9 @@ private fun DropMenu(
 
 @Composable
 private fun Content(
-    media: List<Media>,
+    media: List<PostMediaEntity>,
     state: PagerState,
-    viewType: PostViewType,
+    viewType: PostViewModel,
     modifier: Modifier,
 ) {
     Box(modifier) {
@@ -220,11 +220,11 @@ private fun Content(
 
 @Composable
 private fun ContentImage(
-    media: Media,
-    viewType: PostViewType,
+    media: PostMediaEntity,
+    viewType: PostViewModel,
 ) {
     AsyncImage(
-        model = if (viewType == PostViewType.FULL) media.originalUrl else media.resizedUrl,
+        model = if (viewType == PostViewModel.FULL) media.originalUrl else media.resizedUrl,
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop,
@@ -233,7 +233,7 @@ private fun ContentImage(
 
 @Composable
 private fun BoxScope.MediaCounter(
-    media: List<Media>,
+    media: List<PostMediaEntity>,
     state: PagerState,
 ) {
     if (media.size > 1) {

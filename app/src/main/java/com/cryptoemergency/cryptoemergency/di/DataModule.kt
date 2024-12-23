@@ -1,4 +1,4 @@
-package com.papaska.data.di
+package com.cryptoemergency.cryptoemergency.di
 
 import android.content.Context
 import com.papaska.data.dataSources.local.localStorage.LocalStorageDataSourceImpl

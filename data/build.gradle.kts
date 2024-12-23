@@ -1,11 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.google.ksp)
-
-    kotlin("kapt")
 }
 
 android {
@@ -48,9 +45,6 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.proto.datastore)
 
-    kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
-    implementation(libs.hilt.android)
-
     implementation(libs.kotlinx.serialization)
 
     implementation(libs.ktor.client.core)
@@ -67,4 +61,8 @@ dependencies {
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/repository/database/schemas")
 }

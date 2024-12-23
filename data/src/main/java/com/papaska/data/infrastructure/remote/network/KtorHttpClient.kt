@@ -1,6 +1,5 @@
 package com.papaska.data.infrastructure.remote.network
 
-import com.papaska.data.old.data.network.json
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.http.DomainHttpHeaders
 import com.papaska.domain.http.DomainHttpMethod

@@ -13,9 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.cryptoemergency.cryptoemergency.api.domain.model.store.data.CurrentTheme
+import com.papaska.domain.entity.local.ThemeEntity
 
-var currentTheme by mutableStateOf(CurrentTheme.NULL)
+var currentTheme by mutableStateOf(ThemeEntity.NULL)
 
 @Composable
 fun ThemeProvider(
@@ -46,9 +46,9 @@ private fun RecomposeSystemBarsColors() {
     LaunchedEffect(currentTheme) {
         val window = (view.context as Activity).window
         val isLightTheme = when (currentTheme) {
-            CurrentTheme.DARK -> false
-            CurrentTheme.LIGHT -> true
-            CurrentTheme.NULL -> false
+            ThemeEntity.DARK -> false
+            ThemeEntity.LIGHT -> true
+            ThemeEntity.NULL -> false
         }
 
         WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isLightTheme
@@ -66,15 +66,15 @@ private fun RecomposeColorAndIcons(
     LaunchedEffect(currentTheme) {
         colors.value =
             when (currentTheme) {
-                CurrentTheme.DARK -> darkPalette
-                CurrentTheme.LIGHT -> lightPalette
-                CurrentTheme.NULL -> darkPalette
+                ThemeEntity.DARK -> darkPalette
+                ThemeEntity.LIGHT -> lightPalette
+                ThemeEntity.NULL -> darkPalette
             }
         icons.value =
             when (currentTheme) {
-                CurrentTheme.DARK -> darkIcons
-                CurrentTheme.LIGHT -> lightIcons
-                CurrentTheme.NULL -> darkIcons
+                ThemeEntity.DARK -> darkIcons
+                ThemeEntity.LIGHT -> lightIcons
+                ThemeEntity.NULL -> darkIcons
             }
     }
 }
@@ -90,8 +90,8 @@ private fun ThemeStorageOrSystem(
 
         val themeInStorage = vm.getThemeFromStorage()
 
-        currentTheme = if (themeInStorage == CurrentTheme.NULL) {
-            if (isSystemInDarkTheme) CurrentTheme.DARK else CurrentTheme.LIGHT
+        currentTheme = if (themeInStorage == ThemeEntity.NULL) {
+            if (isSystemInDarkTheme) ThemeEntity.DARK else ThemeEntity.LIGHT
         } else {
             themeInStorage
         }

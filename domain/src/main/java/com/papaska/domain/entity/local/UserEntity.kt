@@ -16,7 +16,7 @@ data class UserEntity(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as TokenEntity
+        other as UserEntity
 
         if (_id != other._id) return false
         if (username != other.username) return false

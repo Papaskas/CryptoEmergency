@@ -2,12 +2,12 @@ import java.util.Base64
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.ksp)
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.androidx.junit)
+    alias(libs.plugins.google.dagger.hilt)
 
     kotlin("kapt")
 }
@@ -142,6 +142,8 @@ dependencies {
 
     implementation(libs.androidx.graphics.shapes)
 
+    implementation(libs.kotlinx.serialization)
+
     kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
@@ -187,10 +189,6 @@ dependencies {
 
 junitPlatform {
     instrumentationTests.includeExtensions.set(true)
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/repository/database/schemas")
 }
 
 kapt {

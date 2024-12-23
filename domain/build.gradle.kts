@@ -1,8 +1,6 @@
 plugins {
-    alias(libs.plugins.jetbrains.kotlin.jvm)
     alias(libs.plugins.jetbrains.kotlin.serialization)
-
-    kotlin("kapt")
+    alias(libs.plugins.jetbrains.kotlin.jvm)
 }
 
 java {
@@ -12,7 +10,4 @@ java {
 
 dependencies {
     implementation(libs.kotlinx.serialization)
-
-    kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
-    implementation(libs.hilt.android)
 }
