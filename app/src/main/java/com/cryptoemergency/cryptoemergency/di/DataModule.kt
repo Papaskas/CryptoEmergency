@@ -1,10 +1,10 @@
 package com.cryptoemergency.cryptoemergency.di
 
 import android.content.Context
-import com.papaska.data.dataSources.local.localStorage.LocalStorageDataSourceImpl
-import com.papaska.data.dataSources.local.localStorage.ProtoLocalStorageDataSourceImpl
-import com.papaska.data.infrastructure.local.datastore.keys.KeyImpl
-import com.papaska.data.infrastructure.local.datastore.keys.ProtoKeyImpl
+import com.papaska.data.dataSources.localStorage.LocalStorageDataSourceImpl
+import com.papaska.data.dataSources.localStorage.ProtoLocalStorageDataSourceImpl
+import com.papaska.domain.entity.keys.KeyImpl
+import com.papaska.domain.entity.keys.ProtoKeyImpl
 import com.papaska.data.repositories.local.PinCodeRepositoryImpl
 import com.papaska.data.repositories.local.ThemeRepositoryImpl
 import com.papaska.data.repositories.local.TokenRepositoryImpl
@@ -30,7 +30,8 @@ class DataModule {
         @ApplicationContext context: Context,
     ): UserRepository = UserRepositoryImpl(userDataSource = ProtoLocalStorageDataSourceImpl(
         key = ProtoKeyImpl.USER, context = context
-    ))
+    )
+    )
 
     @Provides
     @Singleton
@@ -38,7 +39,8 @@ class DataModule {
         @ApplicationContext context: Context,
     ): ThemeRepository = ThemeRepositoryImpl(themeDataSource = ProtoLocalStorageDataSourceImpl(
         key = ProtoKeyImpl.THEME, context = context
-    ))
+    )
+    )
 
     @Provides
     @Singleton
@@ -46,7 +48,8 @@ class DataModule {
         @ApplicationContext context: Context,
     ): TokenRepository = TokenRepositoryImpl(tokenDataSource = LocalStorageDataSourceImpl(
         key = KeyImpl.TOKEN, context = context
-    ))
+    )
+    )
 
     @Provides
     @Singleton
@@ -54,5 +57,6 @@ class DataModule {
         @ApplicationContext context: Context,
     ): PinCodeRepository = PinCodeRepositoryImpl(pinCodeDataSource = LocalStorageDataSourceImpl(
         key = KeyImpl.PIN_CODE, context = context
-    ))
+    )
+    )
 }

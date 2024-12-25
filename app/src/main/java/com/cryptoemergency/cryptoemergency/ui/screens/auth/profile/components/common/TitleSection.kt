@@ -7,7 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 /**
@@ -20,7 +20,7 @@ fun TitleSection(
     onClick: (() -> Unit)? = null
 ) {
     Row(
-        modifier = Modifier.padding(Theme.dimens.padding)
+        modifier = Modifier.padding(Theme.dimens.horizontalPadding)
     ) {
         Row {
             Text(

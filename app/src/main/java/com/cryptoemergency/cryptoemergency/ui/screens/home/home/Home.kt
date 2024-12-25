@@ -43,7 +43,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.swiperAnimation
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 
 @Composable
@@ -62,7 +62,7 @@ fun HomeScreen(
             Swiper()
             Spacer(Modifier.height(30.dp))
             Box(
-                Modifier.padding(horizontal = Theme.dimens.padding)
+                Modifier.padding(horizontal = Theme.dimens.horizontalPadding)
             ) {
                 Menu()
             }
@@ -106,11 +106,11 @@ private fun Swiper() {
     ) { Int.MAX_VALUE }
 
     val configuration = LocalConfiguration.current
-    val width = configuration.screenWidthDp.dp - Theme.dimens.padding * 2
+    val width = configuration.screenWidthDp.dp - Theme.dimens.horizontalPadding * 2
 
     HorizontalPager(
         contentPadding = PaddingValues(
-            horizontal = Theme.dimens.padding
+            horizontal = Theme.dimens.horizontalPadding
         ),
         state = state,
         beyondViewportPageCount = 1,

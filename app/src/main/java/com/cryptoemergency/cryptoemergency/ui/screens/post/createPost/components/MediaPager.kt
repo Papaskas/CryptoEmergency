@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
 
@@ -38,7 +38,7 @@ fun MediaPager(
     viewModel: CreatePostViewModel,
 ) {
     val size = if(viewModel.selectedMedia.size > 1) {
-        LocalConfiguration.current.screenWidthDp.dp - Theme.dimens.padding * 2 - 34.dp
+        LocalConfiguration.current.screenWidthDp.dp - Theme.dimens.horizontalPadding * 2 - 34.dp
     } else {
         LocalConfiguration.current.screenWidthDp.dp
     }
@@ -49,13 +49,13 @@ fun MediaPager(
         HorizontalPager(
             state = state,
             beyondViewportPageCount = 1,
-            pageSpacing = -(33.dp + Theme.dimens.padding * 2),
+            pageSpacing = -(33.dp + Theme.dimens.horizontalPadding * 2),
             modifier = Modifier
                 .then(
                     if(viewModel.selectedMedia.size > 1) {
-                        Modifier.padding(vertical = Theme.dimens.padding)
+                        Modifier.padding(vertical = Theme.dimens.horizontalPadding)
                     } else {
-                        Modifier.padding(Theme.dimens.padding)
+                        Modifier.padding(Theme.dimens.horizontalPadding)
                     }
                 )
                 .height(size)

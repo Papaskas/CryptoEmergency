@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.bottomBar.BottomBar
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
 
@@ -57,7 +57,7 @@ fun Screen(
     contentColor: Color = Theme.colors.text2,
     containerColor: Color = Theme.colors.backgroundMain,
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    horizontalPadding: Dp = Theme.dimens.padding,
+    horizontalPadding: Dp = Theme.dimens.horizontalPadding,
     bottomSpacing: Dp = 35.dp,
     bottomBar: @Composable () -> Unit = { BottomBar() },
     topBar: @Composable () -> Unit = { MainTopBar() },

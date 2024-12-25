@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.skydoves.cloudy.cloudy
 import kotlinx.coroutines.launch
 
@@ -33,7 +33,7 @@ fun BottomSheet(
     title: String,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(),
-    contentPadding: Dp = Theme.dimens.padding,
+    contentPadding: Dp = Theme.dimens.horizontalPadding,
     actionIcon: @Composable ((onClick: () -> Unit) -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -78,7 +78,7 @@ private fun Header(
     val scope = rememberCoroutineScope()
 
     Row(
-        modifier = Modifier.padding(Theme.dimens.padding),
+        modifier = Modifier.padding(Theme.dimens.horizontalPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(

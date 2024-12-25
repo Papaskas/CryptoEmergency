@@ -30,7 +30,7 @@ import io.ktor.http.HttpMethod as KtorHttpMethod
 import io.ktor.http.HttpStatusCode as KtorHttpStatusCode
 import io.ktor.http.URLProtocol as KtorUrlProtocol
 
-class KtorHttpClient(
+internal class KtorHttpClient(
     private val client: HttpClient,
     private val tokenRepository: TokenRepository,
 ) {

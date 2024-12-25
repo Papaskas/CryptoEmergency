@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.navigation.Destination
+import com.cryptoemergency.cryptoemergency.navigation.Redirect
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.http.DomainHttpStatusCode
 import com.papaska.domain.useCases.remote.auth.LoginUseCase
@@ -67,6 +68,7 @@ private class SampleViewModel @Inject constructor(
                     DomainHttpStatusCode.Conflict to "Conflict message",
                     DomainHttpStatusCode.BadRequest to "Bad request",
                     DomainHttpStatusCode.NoContent to "No content",
+                    DomainHttpStatusCode(380, "Custom code") to "",
                 ),
                 onSuccess = {
                     redirect.value = Redirect(Destination.Home.Home)

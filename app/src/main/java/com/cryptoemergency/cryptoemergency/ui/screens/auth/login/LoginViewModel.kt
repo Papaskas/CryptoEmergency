@@ -1,0 +1,95 @@
+package com.cryptoemergency.cryptoemergency.ui.screens.auth.login
+
+import android.content.Context
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cryptoemergency.cryptoemergency.UiState
+import com.cryptoemergency.cryptoemergency.lib.makeRequest
+import com.cryptoemergency.cryptoemergency.navigation.Destination
+import com.cryptoemergency.cryptoemergency.navigation.Redirect
+import com.papaska.domain.entity.local.TokenEntity
+import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.remote.auth.LoginUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val saveTokenUseCase: SaveTokenUseCase,
+    private val loginUseCase: LoginUseCase,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle())
+    val uiState: StateFlow<UiState> = _uiState
+
+    val currentStep = mutableIntStateOf(0)
+
+    val emailInput = mutableStateOf(TextFieldValue())
+    val emailError = mutableStateOf(false)
+    val passwordInput = mutableStateOf(TextFieldValue())
+    val passwordError = mutableStateOf(false)
+
+    fun continueAsGuest() {
+        viewModelScope.launch {
+            makeRequest(
+                context = context,
+                onError = { _, errorMessage ->
+                    //_uiState.value = UiState(false).isLoading
+                    
+                    _uiState.value = UiState.Error(
+                        isLoading = false,
+                        message = errorMessage,
+                    )
+                },
+                onSuccess = {
+                    _uiState.value = UiState.Idle(isLoading = false)
+
+                    viewModelScope.launch {
+                        try {
+                            val token = (it.headers["authorization"] ?: error("")) as TokenEntity
+                            saveTokenUseCase.invoke(token)
+                        } catch (e: IllegalStateException) {
+
+//                            _uiState.value = UiState.Error(
+//                                isLoading = false,
+//                                message = errorMessage,
+//                            )
+//                            message.value = e.message
+                        }
+                    }
+                },
+            ) {
+                //isLoading.value = true
+                loginUseCase(emailInput.value.text, passwordInput.value.text)
+            }
+        }
+    }
+
+    fun login() {
+        viewModelScope.launch {
+            makeRequest(
+                context = context,
+                onError = { _, _ ->
+                    //isLoading.value = false
+                },
+                onSuccess = {
+//                    isLoading.value = false
+//                    message.value = "Успешная авторизация!"
+//                    redirect.value = Redirect(Destination.Home.Home)
+                },
+            ) {
+                //isLoading.value = true
+                loginUseCase(emailInput.value.text, passwordInput.value.text)
+            }
+        }
+    }
+}

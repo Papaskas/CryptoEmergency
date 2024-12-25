@@ -15,22 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostViewEntity
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.papaska.domain.entity.remote.post.PostsEntity
 
 /**
  * Компонент списка постов, панелью управления и табами
  *
  * @param posts Список постов
- * @param postViewModel Тип вывода постов
+ * @param postViewEntity Тип вывода постов
  * @param selectedFilter Выбранный фильтр вывода новостей
  * @param showFilterMenu Состояние показа экрана фильтра
  **/
 @Composable
 fun PostList(
     posts: PostsEntity,
-    postViewModel: MutableState<PostViewModel>,
+    postViewEntity: MutableState<PostViewEntity>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     context: Context = LocalContext.current,
@@ -42,18 +42,18 @@ fun PostList(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp),
         verticalArrangement = Arrangement.spacedBy(
-            if (postViewModel.value == PostViewModel.FULL) {
-                Theme.dimens.padding
+            if (postViewEntity.value == PostViewEntity.FULL) {
+                Theme.dimens.horizontalPadding
             } else {
                 0.dp
             },
         ),
     ) {
-        if (postViewModel.value == PostViewModel.FULL) {
+        if (postViewEntity.value == PostViewEntity.FULL) {
             items(posts.postAll.size) { index ->
                 PostItem(
                     post = posts.postAll[index],
-                    viewType = postViewModel.value,
+                    viewType = postViewEntity.value,
                 )
             }
         } else {

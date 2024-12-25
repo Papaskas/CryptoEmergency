@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.globalModifier
@@ -86,7 +86,7 @@ private fun BioInfo(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
-            Modifier.padding(Theme.dimens.padding)
+            Modifier.padding(Theme.dimens.horizontalPadding)
         ) {
             Text(
                 text = title,

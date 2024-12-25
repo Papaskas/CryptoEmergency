@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
@@ -75,7 +75,7 @@ private fun Item(
         Row(
             modifier = Modifier
                 .height(50.dp)
-                .padding(horizontal = Theme.dimens.padding),
+                .padding(horizontal = Theme.dimens.horizontalPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(

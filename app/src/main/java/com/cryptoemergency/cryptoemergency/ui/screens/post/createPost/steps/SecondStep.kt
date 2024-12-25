@@ -17,7 +17,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,8 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.lib.Listener
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.CommonSwitch
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
@@ -42,7 +40,7 @@ import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components
 fun SecondStep(
     viewModel: CreatePostViewModel,
 ) {
-    Listener(viewModel.message, viewModel.redirect.collectAsState().value)
+    //Listener(viewModel.message, viewModel.redirect.collectAsState().value)
 
     Screen(
         topBar = { TopBar() },
@@ -76,7 +74,7 @@ private fun Field(viewModel: CreatePostViewModel) {
         maxLines = 15,
         minSymbols = 0,
         maxSymbols = 10000,
-        modifier = Modifier.padding(horizontal = Theme.dimens.padding)
+        modifier = Modifier.padding(horizontal = Theme.dimens.horizontalPadding)
     )
 }
 
@@ -98,7 +96,7 @@ private fun Toolbar() {
     )
 
     FlowRow(
-        Modifier.padding(horizontal = Theme.dimens.padding)
+        Modifier.padding(horizontal = Theme.dimens.horizontalPadding)
     ) {
         repeat(items.size) {
             IconButton(
@@ -124,13 +122,13 @@ private fun Settings(
 ) {
     CommonHorizontalDivider()
     CommonSwitch(
-        modifier = Modifier.padding(horizontal = Theme.dimens.padding),
+        modifier = Modifier.padding(horizontal = Theme.dimens.horizontalPadding),
         state = viewModel.commentsEnabled,
         text = "Комментарии к посту" // TODO: translate
     )
     CommonHorizontalDivider()
     CommonSwitch(
-        modifier = Modifier.padding(horizontal = Theme.dimens.padding),
+        modifier = Modifier.padding(horizontal = Theme.dimens.horizontalPadding),
         state = viewModel.visualOnlySubs,
         text = "Видны только подписчикам" // TODO: translate
     )
@@ -143,7 +141,7 @@ private fun Bottom(
 ) {
     Column(
         Modifier
-            .padding(horizontal = Theme.dimens.padding)
+            .padding(horizontal = Theme.dimens.horizontalPadding)
             .padding(bottom = 35.dp)
     ) {
         CommonButton(

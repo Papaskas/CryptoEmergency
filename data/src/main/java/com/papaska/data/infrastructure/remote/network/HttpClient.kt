@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
 /**
  * Клиент HTTP, настроенный для работы с JSON, логированием и таймаутами.
  */
-val httpClient by lazy {
+internal val httpClient by lazy {
     HttpClient(OkHttp) {
         install(Resources)
 
@@ -51,7 +51,7 @@ val httpClient by lazy {
  * Сериализатор/десериализатор JSON с гибкой конфигурацией.
  * Позволяет игнорировать неизвестные ключи и использовать нестрогую проверку JSON.
  */
-val json by lazy {
+internal val json by lazy {
     Json {
         isLenient = true
         ignoreUnknownKeys = true

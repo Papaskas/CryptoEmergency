@@ -3,8 +3,8 @@ package com.papaska.data.infrastructure.local.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.papaska.data.infrastructure.local.datastore.keys.ProtoKey
-import com.papaska.data.infrastructure.local.datastore.keys.ProtoKeyImpl
+import com.papaska.domain.entity.keys.ProtoKey
+import com.papaska.domain.entity.keys.ProtoKeyImpl
 import kotlinx.coroutines.flow.first
 
 /**
@@ -15,14 +15,17 @@ import kotlinx.coroutines.flow.first
  *
  * @constructor Создает новый экземпляр хранилища
  */
-class ProtoDataStore<T>(
+internal class ProtoDataStore<T>(
     private val key: ProtoKey<T>,
     private val context: Context,
 ) {
 
     private val Context.dataStore: DataStore<T> by dataStore(
-        fileName = key.key.name,
-        serializer = key.serializer,
+        fileName = key.name,
+        serializer = ProtoDataStoreSerializer(
+            serializer = key.serializer,
+            defaultValue = key.value,
+        ),
     )
 
     /**

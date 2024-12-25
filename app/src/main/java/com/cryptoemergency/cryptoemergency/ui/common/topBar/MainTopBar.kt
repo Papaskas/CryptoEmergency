@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +39,7 @@ fun MainTopBar(
             ),
             navigationIcon = {
                 Row {
-                    Spacer(Modifier.width(Theme.dimens.padding))
+                    Spacer(Modifier.width(Theme.dimens.horizontalPadding))
                     Icon(
                         painter = painterResource(Theme.icons.logo),
                         contentDescription = "Лого", // TODO: translate

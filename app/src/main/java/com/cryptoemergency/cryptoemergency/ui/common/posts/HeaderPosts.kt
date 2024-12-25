@@ -13,19 +13,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostViewEntity
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 
 @Composable
 fun PostsHeader(
-    postViewModel: MutableState<PostViewModel>,
+    postViewEntity: MutableState<PostViewEntity>,
     showFilterMenu: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
     Row(
-        modifier = modifier.padding(horizontal = Theme.dimens.padding),
+        modifier = modifier.padding(horizontal = Theme.dimens.horizontalPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -41,12 +41,12 @@ fun PostsHeader(
             )
         }
         IconButton(onClick = {
-            postViewModel.value = PostViewModel.FULL
+            postViewEntity.value = PostViewEntity.FULL
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_large),
                 contentDescription = "sort by large",
-                tint = if (postViewModel.value == PostViewModel.FULL) {
+                tint = if (postViewEntity.value == PostViewEntity.FULL) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1
@@ -54,12 +54,12 @@ fun PostsHeader(
             )
         }
         IconButton(onClick = {
-            postViewModel.value = PostViewModel.SHORT
+            postViewEntity.value = PostViewEntity.SHORT
         }) {
             Icon(
                 painter = painterResource(R.drawable.sort_by_grid),
                 contentDescription = "sort by grid",
-                tint = if (postViewModel.value == PostViewModel.SHORT) {
+                tint = if (postViewEntity.value == PostViewEntity.SHORT) {
                     Theme.colors.accent
                 } else {
                     Theme.colors.text1

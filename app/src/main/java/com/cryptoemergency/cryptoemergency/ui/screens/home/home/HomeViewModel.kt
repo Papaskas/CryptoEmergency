@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.Colors
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.useCases.local.token.GetTokenUseCase
 import com.papaska.domain.useCases.local.token.SaveTokenUseCase
@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getString(
-        colors: Colors
+        colors: ColorsEntity
     ): AnnotatedString {
         return buildAnnotatedString {
             appendInlineContent(ethereum, ethereum)

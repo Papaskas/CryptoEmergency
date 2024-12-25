@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.lib.Media
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
@@ -53,10 +53,10 @@ private fun BottomBar(
 ) {
     Box(
         modifier = Modifier
-            .padding(horizontal = Theme.dimens.padding)
+            .padding(horizontal = Theme.dimens.horizontalPadding)
             .padding(
-                top = Theme.dimens.padding,
-                bottom = Theme.dimens.padding * 2,
+                top = Theme.dimens.horizontalPadding,
+                bottom = Theme.dimens.horizontalPadding * 2,
             )
     ) {
         CommonButton(

@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
 import com.cryptoemergency.cryptoemergency.lib.Http
-import com.cryptoemergency.cryptoemergency.lib.Redirect
+//import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.vibrate
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
@@ -29,7 +29,7 @@ class CreatePostViewModel @Inject constructor(
     private val createPostUseCase: CreatePostUseCase,
 ) : ViewModel() {
     val message = MutableStateFlow<String?>(null)
-    val redirect = MutableStateFlow<Redirect?>(null)
+    //val redirect = MutableStateFlow<Redirect?>(null)
 
     val columnCount = 4
     val currentStep = mutableIntStateOf(0)
@@ -99,7 +99,7 @@ class CreatePostViewModel @Inject constructor(
                 awaitServer.value = false
 
                 message.value = "Пост успешно создан!" // TODO: translate
-                redirect.value = Redirect(Destination.Home.Home)
+                //redirect.value = Redirect(Destination.Home.Home)
             } else if(res is ApiResponse.Error) {
                 awaitServer.value = false
 

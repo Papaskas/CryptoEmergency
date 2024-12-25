@@ -53,9 +53,9 @@ object Convert {
     }
 
     /**
-     * Функция ИЗОБРАЖЕНИЕ Uri в bitmap
+     * Функция преобразования [Uri] изображения в bitmap
      * */
-    fun Uri.toBitmap(context: Context): Bitmap {
+    fun Uri.imageToBitmap(context: Context): Bitmap {
         return if (Build.VERSION.SDK_INT < 28) {
             MediaStore.Images
                 .Media.getBitmap(context.contentResolver, this)

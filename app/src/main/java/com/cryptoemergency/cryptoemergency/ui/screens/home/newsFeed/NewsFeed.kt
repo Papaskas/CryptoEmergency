@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.lib.Listener
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostViewEntity
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.FullScreen
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostList
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostsHeader
@@ -25,14 +25,14 @@ fun NewsFeedScreen(
     viewModel: NewsFeedViewModel = hiltViewModel()
 ) {
     val showFilterMenu = remember { mutableStateOf(false) }
-    val postViewModel = remember { mutableStateOf(PostViewModel.FULL) }
+    val postViewEntity = remember { mutableStateOf(PostViewEntity.FULL) }
 
     Listener(viewModel.message)
 
     FullScreen {
         Column {
             PostsHeader(
-                postViewModel = postViewModel,
+                postViewEntity = postViewEntity,
                 showFilterMenu = showFilterMenu,
             )
 
@@ -42,7 +42,7 @@ fun NewsFeedScreen(
                 PostList(
                     showFilterMenu = showFilterMenu,
                     posts = posts,
-                    postViewModel = postViewModel,
+                    postViewEntity = postViewEntity,
                 )
             } ?:run {
                 Box(

@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.papaska.domain.entity.remote.post.PostViewEntity
 import com.papaska.domain.entity.remote.post.PostEntity
 
 @Composable
@@ -126,7 +126,7 @@ private fun PostGridItem(
 
     PostItem(
         post = posts[index],
-        viewType = PostViewModel.SHORT,
+        viewType = PostViewEntity.SHORT,
         contentModifier = Modifier.size(
             width = screenWidth / width,
             height = screenWidth / height,

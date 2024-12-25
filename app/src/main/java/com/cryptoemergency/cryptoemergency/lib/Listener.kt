@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
-import com.cryptoemergency.cryptoemergency.navigation.Destination
+import com.cryptoemergency.cryptoemergency.navigation.Redirect
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -108,6 +108,7 @@ private fun ListenerRedirect(
     redirect: Redirect?,
 ) {
     val navController = LocalNavController.current
+
     LaunchedEffect(redirect?.route) {
         redirect?.route?.let { url ->
             if (redirect.popBackStack) {
@@ -118,8 +119,3 @@ private fun ListenerRedirect(
         }
     }
 }
-
-data class Redirect(
-    var route: Destination,
-    var popBackStack: Boolean = false,
-)

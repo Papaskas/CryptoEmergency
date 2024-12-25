@@ -29,8 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.modifiers.copyTextToClipboard
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.lib.copyTextToClipboard
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
@@ -114,7 +114,7 @@ private fun Title(
     text: String,
     color: Color,
 ) {
-    Spacer(Modifier.height(Theme.dimens.padding))
+    Spacer(Modifier.height(Theme.dimens.horizontalPadding))
 
     Text(
         text = text,
@@ -188,7 +188,7 @@ private fun Heading() {
             text = "QR-code",
             style = Theme.typography.h2,
             color = Theme.colors.text1,
-            modifier = Modifier.padding(Theme.dimens.padding)
+            modifier = Modifier.padding(Theme.dimens.horizontalPadding)
         )
 
         CommonHorizontalDivider()
@@ -203,7 +203,7 @@ private fun Body(
     val context = LocalContext.current
 
     Column(
-        Modifier.padding(Theme.dimens.padding)
+        Modifier.padding(Theme.dimens.horizontalPadding)
     ) {
         Row {
             viewModel.options.forEach {
@@ -211,11 +211,11 @@ private fun Body(
                     tint = it,
                     viewModel = viewModel,
                 )
-                Spacer(Modifier.width(Theme.dimens.padding))
+                Spacer(Modifier.width(Theme.dimens.horizontalPadding))
             }
         }
 
-        Spacer(Modifier.height(Theme.dimens.padding))
+        Spacer(Modifier.height(Theme.dimens.horizontalPadding))
 
         CommonButton(
             onClick = { /*TODO*/ },

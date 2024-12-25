@@ -36,9 +36,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
+import com.papaska.domain.entity.remote.post.PostViewEntity
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.models.PostViewModel
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
 import com.papaska.domain.entity.remote.post.PostEntity
 import com.papaska.domain.entity.remote.post.PostMediaEntity
@@ -48,14 +48,14 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun PostItem(
     post: PostEntity,
-    viewType: PostViewModel,
+    viewType: PostViewEntity,
     modifier: Modifier = Modifier,
     contentModifier: Modifier = Modifier,
 ) {
     val state = rememberPagerState { post.media.size }
 
     Column(modifier = modifier) {
-        if (viewType == PostViewModel.FULL) {
+        if (viewType == PostViewEntity.FULL) {
             HeaderNews(
                 avatar = post.media[0].resizedUrl,
                 authorName = "Александр криптовалюта",
@@ -68,7 +68,7 @@ fun PostItem(
             viewType = viewType,
             modifier = contentModifier,
         )
-        if (viewType == PostViewModel.FULL) {
+        if (viewType == PostViewEntity.FULL) {
             Bottom(
                 description = post.description,
                 state = state,
@@ -94,7 +94,7 @@ private fun HeaderNews(
                 color = Theme.colors.surface2,
                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
             )
-            .padding(Theme.dimens.padding),
+            .padding(Theme.dimens.horizontalPadding),
     ) {
         AsyncImage(
             model = avatar,
@@ -197,7 +197,7 @@ private fun DropMenu(
 private fun Content(
     media: List<PostMediaEntity>,
     state: PagerState,
-    viewType: PostViewModel,
+    viewType: PostViewEntity,
     modifier: Modifier,
 ) {
     Box(modifier) {
@@ -221,10 +221,10 @@ private fun Content(
 @Composable
 private fun ContentImage(
     media: PostMediaEntity,
-    viewType: PostViewModel,
+    viewType: PostViewEntity,
 ) {
     AsyncImage(
-        model = if (viewType == PostViewModel.FULL) media.originalUrl else media.resizedUrl,
+        model = if (viewType == PostViewEntity.FULL) media.originalUrl else media.resizedUrl,
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop,
@@ -239,7 +239,7 @@ private fun BoxScope.MediaCounter(
     if (media.size > 1) {
         Row(
             Modifier
-                .offset(x = -(Theme.dimens.padding), y = Theme.dimens.padding)
+                .offset(x = -(Theme.dimens.horizontalPadding), y = Theme.dimens.horizontalPadding)
                 .align(Alignment.TopEnd)
                 .background(
                     color = Theme.colors.background2.copy(alpha = .5f),
@@ -268,7 +268,7 @@ private fun Bottom(
                 color = Theme.colors.surface2,
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
             )
-            .padding(Theme.dimens.padding),
+            .padding(Theme.dimens.horizontalPadding),
     ) {
         DottedPagination(
             state.pageCount,
@@ -285,7 +285,7 @@ private fun Toolbar() {
     val context = LocalContext.current
 
     Row(
-        Modifier.padding(bottom = Theme.dimens.padding)
+        Modifier.padding(bottom = Theme.dimens.horizontalPadding)
     ) {
         IconButton(onClick = { /*TODO*/ }) {
             Icon(

@@ -4,48 +4,75 @@ import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalColors
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalDimens
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalIcons
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalShape
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTypography
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.dimens
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.darkIcons
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.lightIcons
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.darkPalette
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.lightPalette
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.shapes
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.typography
+import com.cryptoemergency.cryptoemergency.providers.theme.viewModels.ThemeViewModel
 import com.papaska.domain.entity.local.ThemeEntity
-
-var currentTheme by mutableStateOf(ThemeEntity.NULL)
 
 @Composable
 fun ThemeProvider(
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
     vm: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
-    val colors = remember { mutableStateOf(darkPalette) }
-    val icons = remember { mutableStateOf(darkIcons) }
+    val theme by produceState<ThemeEntity?>(null) {
+        value = vm.initTheme(isSystemInDarkTheme = useDarkTheme)
+    }
 
-    ThemeStorageOrSystem(vm)
-    RecomposeSystemBarsColors()
-    RecomposeColorAndIcons(colors, icons)
+    theme?.let {
+        val (colors, icons) = when (it) {
+            ThemeEntity.DARK -> {
+                Pair(darkPalette, darkIcons)
+            }
+            ThemeEntity.LIGHT -> {
+                Pair(lightPalette, lightIcons)
+            }
+            else -> {
+                Pair(lightPalette, lightIcons)
+            }
+        }
 
-    CompositionLocalProvider(
-        LocalColors provides colors.value,
-        LocalTypography provides typography,
-        LocalShape provides shapes,
-        LocalDimens provides dimens,
-        LocalIcons provides icons.value,
-    ) { content() }
+        CompositionLocalProvider(
+            LocalTheme provides it,
+            LocalColors provides colors,
+            LocalIcons provides icons,
+            LocalTypography provides typography,
+            LocalShape provides shapes,
+            LocalDimens provides dimens,
+        ) {
+            RecomposeSystemBarsColors()
+
+            content()
+        }
+    }
 }
 
-// Поменять цветовую гамму у StatusBar, NavigationBar при рекомпозиции
+// Рекомпозиция цветовой гаммы у StatusBar, NavigationBar
 @Composable
 private fun RecomposeSystemBarsColors() {
     val view = LocalView.current
+    val theme = LocalTheme.current
 
-    LaunchedEffect(currentTheme) {
+    SideEffect {
         val window = (view.context as Activity).window
-        val isLightTheme = when (currentTheme) {
+        val isLightTheme = when (theme) {
             ThemeEntity.DARK -> false
             ThemeEntity.LIGHT -> true
             ThemeEntity.NULL -> false
@@ -53,47 +80,5 @@ private fun RecomposeSystemBarsColors() {
 
         WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isLightTheme
         WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isLightTheme
-    }
-}
-
-// Поменять иконки и цвета при рекомпозиции
-@Composable
-private fun RecomposeColorAndIcons(
-    colors: MutableState<Colors>,
-    icons: MutableState<Icons>,
-) {
-    // Рекомпозиция при изменение переменной
-    LaunchedEffect(currentTheme) {
-        colors.value =
-            when (currentTheme) {
-                ThemeEntity.DARK -> darkPalette
-                ThemeEntity.LIGHT -> lightPalette
-                ThemeEntity.NULL -> darkPalette
-            }
-        icons.value =
-            when (currentTheme) {
-                ThemeEntity.DARK -> darkIcons
-                ThemeEntity.LIGHT -> lightIcons
-                ThemeEntity.NULL -> darkIcons
-            }
-    }
-}
-
-// Тема из хранилища если есть или системная
-@Composable
-private fun ThemeStorageOrSystem(
-    vm: ThemeViewModel,
-    isSystemInDarkTheme: Boolean = isSystemInDarkTheme()
-) {
-    LaunchedEffect(Unit) {
-        // Достать из хранилища
-
-        val themeInStorage = vm.getThemeFromStorage()
-
-        currentTheme = if (themeInStorage == ThemeEntity.NULL) {
-            if (isSystemInDarkTheme) ThemeEntity.DARK else ThemeEntity.LIGHT
-        } else {
-            themeInStorage
-        }
     }
 }

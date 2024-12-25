@@ -1,6 +1,6 @@
 package com.papaska.data.repositories.local
 
-import com.papaska.data.dataSources.local.localStorage.LocalStorageDataSource
+import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
 import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.repositories.local.TokenRepository
 

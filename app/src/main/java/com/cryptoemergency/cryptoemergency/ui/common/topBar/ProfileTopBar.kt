@@ -10,21 +10,21 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.Theme
-import com.cryptoemergency.cryptoemergency.providers.theme.ThemeViewModel
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
+import com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme.SwitchThemeButton
+import com.papaska.domain.entity.local.ThemeEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileTopBar(
-    themeViewModel: ThemeViewModel = hiltViewModel()
-) {
+fun ProfileTopBar() {
     val navController = LocalNavController.current
     val res = LocalContext.current.resources
+    val localTheme = LocalTheme.current
 
     Column {
         TopAppBar(
@@ -50,14 +50,22 @@ fun ProfileTopBar(
                 }
             },
             actions = {
-                IconButton(onClick = {
-                    themeViewModel.toggleTheme()
-                }) {
-                    Icon(
-                        painterResource(Theme.icons.theme),
-                        contentDescription = res.getString(R.string.change_theme),
-                        tint = Theme.colors.text6,
-                    )
+                SwitchThemeButton { setTheme ->
+                    IconButton(onClick = {
+                        val theme = when(localTheme) {
+                            ThemeEntity.DARK -> ThemeEntity.LIGHT
+                            ThemeEntity.LIGHT -> ThemeEntity.DARK
+                            ThemeEntity.NULL -> ThemeEntity.LIGHT
+                        }
+
+                        setTheme(theme)
+                    }) {
+                        Icon(
+                            painterResource(Theme.icons.theme),
+                            contentDescription = res.getString(R.string.change_theme),
+                            tint = Theme.colors.text6,
+                        )
+                    }
                 }
                 IconButton(onClick = {
                     navController.navigate(Destination.Auth.ChangeProfileData)
