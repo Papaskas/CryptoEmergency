@@ -3,8 +3,8 @@ package com.papaska.data.infrastructure.local.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.papaska.domain.entity.keys.ProtoKey
-import com.papaska.domain.entity.keys.ProtoKeyImpl
+import com.papaska.core.entity.keys.ProtoKey
+import com.papaska.core.entity.keys.ProtoKeyImpl
 import kotlinx.coroutines.flow.first
 
 /**

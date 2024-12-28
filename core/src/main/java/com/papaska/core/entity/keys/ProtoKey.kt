@@ -1,0 +1,21 @@
+package com.papaska.core.entity.keys
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+
+interface ProtoKey<T> {
+    /**
+     * Имя в хранилише, должно быть уникальным
+     * */
+    val name: String
+
+    /**
+     * Хранимое значение
+     * */
+    @Serializable val value: T
+
+    /**
+     * Сериализатор значения
+     * */
+    val serializer: KSerializer<T>
+}

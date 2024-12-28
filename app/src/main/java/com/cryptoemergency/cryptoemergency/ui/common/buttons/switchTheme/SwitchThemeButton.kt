@@ -8,7 +8,7 @@ import androidx.wear.compose.material.Button
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalColors
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalIcons
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
-import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.core.entity.local.ThemeEntity
 
 /**
  * Компонент для переключения темы приложения.

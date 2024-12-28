@@ -13,8 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Text
 import com.cryptoemergency.cryptoemergency.R
-import com.papaska.domain.entity.remote.post.PostViewEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.papaska.core.entity.remote.post.PostViewEntity
 
 @Composable
 fun PostsHeader(

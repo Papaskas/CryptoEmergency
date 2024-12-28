@@ -36,12 +36,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
-import com.papaska.domain.entity.remote.post.PostViewEntity
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
-import com.papaska.domain.entity.remote.post.PostEntity
-import com.papaska.domain.entity.remote.post.PostMediaEntity
+import com.papaska.core.entity.remote.post.PostEntity
+import com.papaska.core.entity.remote.post.PostMediaEntity
+import com.papaska.core.entity.remote.post.PostViewEntity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

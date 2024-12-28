@@ -17,7 +17,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionL
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme.SwitchThemeButton
-import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.core.entity.local.ThemeEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

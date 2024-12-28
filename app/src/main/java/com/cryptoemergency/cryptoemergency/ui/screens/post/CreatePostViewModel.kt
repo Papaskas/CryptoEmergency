@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.post
 
+//import com.cryptoemergency.cryptoemergency.lib.Redirect
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -11,12 +12,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
 import com.cryptoemergency.cryptoemergency.lib.Http
-//import com.cryptoemergency.cryptoemergency.lib.Redirect
 import com.cryptoemergency.cryptoemergency.lib.vibrate
-import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
-import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.useCases.remote.post.CreatePostUseCase
+import com.papaska.core.http.ApiResponse
+import com.papaska.core.useCases.remote.post.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow

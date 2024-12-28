@@ -1,8 +1,9 @@
 package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
-import com.papaska.domain.entity.local.ThemeEntity
+import androidx.lifecycle.ViewModel
+import com.papaska.core.entity.local.ThemeEntity
 
-class FakeThemeViewModel : ThemeViewModel() {
+class FakeThemeViewModel : ViewModel(), ThemeViewModel {
 
     override suspend fun initTheme(isSystemInDarkTheme: Boolean): ThemeEntity {
         return when (isSystemInDarkTheme) {

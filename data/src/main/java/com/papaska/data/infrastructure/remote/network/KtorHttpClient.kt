@@ -1,13 +1,13 @@
 package com.papaska.data.infrastructure.remote.network
 
-import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.http.DomainHttpHeaders
-import com.papaska.domain.http.DomainHttpMethod
-import com.papaska.domain.http.DomainHttpParams
-import com.papaska.domain.http.DomainHttpStatusCode
-import com.papaska.domain.http.DomainUrlProtocol
-import com.papaska.domain.http.isSuccess
-import com.papaska.domain.repositories.local.TokenRepository
+import com.papaska.core.http.ApiResponse
+import com.papaska.core.http.DomainHttpHeaders
+import com.papaska.core.http.DomainHttpMethod
+import com.papaska.core.http.DomainHttpParams
+import com.papaska.core.http.DomainHttpStatusCode
+import com.papaska.core.http.DomainUrlProtocol
+import com.papaska.core.http.isSuccess
+import com.papaska.core.repositories.local.TokenRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.onDownload

@@ -13,9 +13,9 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.papaska.domain.entity.keys.Key
-import com.papaska.domain.entity.keys.KeyImpl
-import com.papaska.domain.entity.keys.KeyType
+import com.papaska.core.entity.keys.Key
+import com.papaska.core.entity.keys.KeyImpl
+import com.papaska.core.entity.keys.KeyType
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 

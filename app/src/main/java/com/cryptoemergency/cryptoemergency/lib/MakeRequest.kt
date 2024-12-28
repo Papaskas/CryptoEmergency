@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.navigation.Redirect
-import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.http.DomainHttpStatusCode
-import com.papaska.domain.useCases.remote.auth.LoginUseCase
+import com.papaska.core.http.ApiResponse
+import com.papaska.core.http.DomainHttpStatusCode
+import com.papaska.core.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers

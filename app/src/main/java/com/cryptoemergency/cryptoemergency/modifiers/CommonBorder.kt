@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
-import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.core.entity.local.ThemeEntity
 
 @Composable
 fun Modifier.commonBorder(

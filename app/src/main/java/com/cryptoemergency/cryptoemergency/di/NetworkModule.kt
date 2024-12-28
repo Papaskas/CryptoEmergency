@@ -1,13 +1,13 @@
 package com.cryptoemergency.cryptoemergency.di
 
-import com.papaska.domain.entity.config.ServerConfiguration
-import com.papaska.domain.repositories.remote.NetworkRepository
-import com.papaska.domain.useCases.remote.auth.LoginUseCase
-import com.papaska.domain.useCases.remote.auth.RecoveryPasswordUseCase
-import com.papaska.domain.useCases.remote.auth.RegisterUseCase
-import com.papaska.domain.useCases.remote.post.CreatePostUseCase
-import com.papaska.domain.useCases.remote.post.GetPostUseCase
-import com.papaska.domain.useCases.remote.token.InitTokenUseCase
+import com.papaska.core.entity.config.ServerConfiguration
+import com.papaska.core.repositories.remote.NetworkRepository
+import com.papaska.core.useCases.remote.auth.LoginUseCase
+import com.papaska.core.useCases.remote.auth.RecoveryPasswordUseCase
+import com.papaska.core.useCases.remote.auth.RegisterUseCase
+import com.papaska.core.useCases.remote.post.CreatePostUseCase
+import com.papaska.core.useCases.remote.post.GetPostUseCase
+import com.papaska.core.useCases.remote.token.InitTokenUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

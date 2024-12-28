@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.local
 
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
-import com.papaska.domain.entity.local.UserEntity
-import com.papaska.domain.repositories.local.UserRepository
+import com.papaska.core.entity.local.UserEntity
+import com.papaska.core.repositories.local.UserRepository
 
 class UserRepositoryImpl(private val userDataSource: LocalStorageDataSource<UserEntity>) : UserRepository {
     override suspend fun get(): UserEntity = userDataSource.read()

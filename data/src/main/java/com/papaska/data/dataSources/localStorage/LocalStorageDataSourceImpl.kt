@@ -2,7 +2,7 @@ package com.papaska.data.dataSources.localStorage
 
 import android.content.Context
 import com.papaska.data.infrastructure.local.datastore.DataStore
-import com.papaska.domain.entity.keys.KeyImpl
+import com.papaska.core.entity.keys.KeyImpl
 
 class LocalStorageDataSourceImpl<T>(
     private val key: KeyImpl<T>,

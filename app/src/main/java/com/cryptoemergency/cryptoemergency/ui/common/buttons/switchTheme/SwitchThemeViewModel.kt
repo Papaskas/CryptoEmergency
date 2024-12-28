@@ -9,8 +9,8 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.darkIc
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.lightIcons
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.darkPalette
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.lightPalette
-import com.papaska.domain.entity.local.ThemeEntity
-import com.papaska.domain.useCases.local.theme.SaveThemeUseCase
+import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.core.useCases.local.theme.SaveThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

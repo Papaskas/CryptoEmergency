@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
-import com.papaska.domain.entity.remote.post.PostViewEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
-import com.papaska.domain.entity.remote.post.PostsEntity
+import com.papaska.core.entity.remote.post.PostViewEntity
+import com.papaska.core.entity.remote.post.PostsEntity
 
 /**
  * Компонент списка постов, панелью управления и табами

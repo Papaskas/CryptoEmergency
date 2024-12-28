@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.modifiers.linearGradientBackground
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
-import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.core.entity.local.ThemeEntity
 import kotlinx.coroutines.launch
 
 /**

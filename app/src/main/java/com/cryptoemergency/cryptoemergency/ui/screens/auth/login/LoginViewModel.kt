@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.screens.auth.login
 
 import android.content.Context
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
@@ -9,14 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.UiState
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
-import com.cryptoemergency.cryptoemergency.navigation.Destination
-import com.cryptoemergency.cryptoemergency.navigation.Redirect
-import com.papaska.domain.entity.local.TokenEntity
-import com.papaska.domain.useCases.local.token.SaveTokenUseCase
-import com.papaska.domain.useCases.remote.auth.LoginUseCase
+import com.papaska.core.entity.local.TokenEntity
+import com.papaska.core.useCases.local.token.SaveTokenUseCase
+import com.papaska.core.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

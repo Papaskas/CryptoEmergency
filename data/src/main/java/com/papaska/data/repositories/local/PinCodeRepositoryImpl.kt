@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.local
 
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
-import com.papaska.domain.entity.local.PinCodeEntity
-import com.papaska.domain.repositories.local.PinCodeRepository
+import com.papaska.core.entity.local.PinCodeEntity
+import com.papaska.core.repositories.local.PinCodeRepository
 
 class PinCodeRepositoryImpl(private val pinCodeDataSource: LocalStorageDataSource<PinCodeEntity>) : PinCodeRepository {
     override suspend fun get(): PinCodeEntity = pinCodeDataSource.read()

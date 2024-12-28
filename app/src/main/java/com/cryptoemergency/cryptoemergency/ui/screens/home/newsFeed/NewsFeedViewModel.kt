@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.lib.Http
-import com.papaska.domain.entity.remote.post.PostsEntity
-import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.useCases.remote.post.GetPostUseCase
+import com.papaska.core.entity.remote.post.PostsEntity
+import com.papaska.core.http.ApiResponse
+import com.papaska.core.useCases.remote.post.GetPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow

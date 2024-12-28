@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.papaska.domain.entity.remote.post.PostViewEntity
-import com.papaska.domain.entity.remote.post.PostEntity
+import com.papaska.core.entity.remote.post.PostEntity
+import com.papaska.core.entity.remote.post.PostViewEntity
 
 @Composable
 fun PostGrid(

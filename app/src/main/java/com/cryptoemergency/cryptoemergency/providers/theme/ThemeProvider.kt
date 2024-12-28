@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalColors
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalDimens
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalIcons
@@ -24,12 +23,12 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.lig
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.shapes
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.typography
 import com.cryptoemergency.cryptoemergency.providers.theme.viewModels.ThemeViewModel
-import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.core.entity.local.ThemeEntity
 
 @Composable
 fun ThemeProvider(
+    vm: ThemeViewModel,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    vm: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val theme by produceState<ThemeEntity?>(null) {
