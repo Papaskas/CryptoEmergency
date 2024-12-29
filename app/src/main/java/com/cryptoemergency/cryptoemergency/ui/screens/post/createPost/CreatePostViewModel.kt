@@ -1,6 +1,5 @@
-package com.cryptoemergency.cryptoemergency.ui.screens.post
+package com.cryptoemergency.cryptoemergency.ui.screens.post.createPost
 
-//import com.cryptoemergency.cryptoemergency.lib.Redirect
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -10,15 +9,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
 import com.cryptoemergency.cryptoemergency.lib.Http
+import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.cryptoemergency.cryptoemergency.lib.vibrate
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.UiState
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
 import com.papaska.core.http.ApiResponse
 import com.papaska.core.useCases.remote.post.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,8 +30,8 @@ class CreatePostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val createPostUseCase: CreatePostUseCase,
 ) : ViewModel() {
-    val message = MutableStateFlow<String?>(null)
-    //val redirect = MutableStateFlow<Redirect?>(null)
+    private val _uiState = MutableStateFlow<BaseUiState>(BaseUiState.Idle)
+    val uiState = _uiState.asStateFlow()
 
     val columnCount = 4
     val currentStep = mutableIntStateOf(0)
@@ -44,8 +47,6 @@ class CreatePostViewModel @Inject constructor(
 
     val commentsEnabled = mutableStateOf(true)
     val visualOnlySubs = mutableStateOf(false)
-
-    val awaitServer = mutableStateOf(false)
 
     private fun toggleSoloMedia(media: Uri) {
         if (selectedMedia.isNotEmpty()) {
@@ -82,27 +83,26 @@ class CreatePostViewModel @Inject constructor(
 
     fun createPost() {
         viewModelScope.launch {
-            awaitServer.value = true
-
-            val res = createPostUseCase(CreatePostUseCase.Post(
-                description = descriptionInput.value.text,
-                media = selectedMedia.map {
-                    CreatePostUseCase.Media(
-                        type = "photo",
-                        originalUrl = it.toBase64(context, Bitmap.CompressFormat.JPEG),
-                    )
+            makeRequest(
+                context = context,
+                onSuccess = {
+                    _uiState.value = BaseUiState.Success("Пост успешно создан!")
+                },
+                onError = { _, message ->
+                    _uiState.value = BaseUiState.Error(message)
                 }
-            ))
+            ) {
+                _uiState.value = BaseUiState.Loading
 
-            if (res is ApiResponse.Success) {
-                awaitServer.value = false
-
-                message.value = "Пост успешно создан!" // TODO: translate
-                //redirect.value = Redirect(Destination.Home.Home)
-            } else if(res is ApiResponse.Error) {
-                awaitServer.value = false
-
-                message.value = Http.getDefaultMessages(context, res.status)
+                createPostUseCase(CreatePostUseCase.Post(
+                    description = descriptionInput.value.text,
+                    media = selectedMedia.map {
+                        CreatePostUseCase.Media(
+                            type = "photo",
+                            originalUrl = it.toBase64(context, Bitmap.CompressFormat.JPEG),
+                        )
+                    }
+                ))
             }
         }
     }

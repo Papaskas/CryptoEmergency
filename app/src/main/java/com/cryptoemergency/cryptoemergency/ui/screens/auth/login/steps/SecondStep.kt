@@ -22,8 +22,6 @@ import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.LoginViewModel
 
 @Composable
 fun SecondStep(viewModel: LoginViewModel) {
-    //Listener(viewModel.message, viewModel.redirect.collectAsState().value)
-
     Screen(
         topBar = {},
         bottomBar = { BottomBar(viewModel) },

@@ -12,6 +12,12 @@ sealed class BaseUiState {
     data object Idle : BaseUiState()
 
     /**
+     * Represents the loading state of the UI.
+     * Indicates that an operation is currently in progress.
+     */
+    data object Loading : BaseUiState()
+
+    /**
      * Represents a successful operation, optionally with a success message.
      *
      * @param message Optional success message.
@@ -23,5 +29,5 @@ sealed class BaseUiState {
      *
      * @param message Error message.
      */
-    data class Error(val message: String) : BaseUiState()
+    data class Error(val message: String? = null) : BaseUiState()
 }

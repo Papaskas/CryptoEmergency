@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,11 +27,10 @@ import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.LoginViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.UiState
 
 @Composable
 fun FirstStep(viewModel: LoginViewModel) {
-    //Listener(viewModel.message, viewModel.redirect.collectAsState().value)
-
     Screen(
         topBar = {},
         bottomBar = {},
@@ -72,23 +73,21 @@ private fun Header() {
 
 @Composable
 private fun Buttons(viewModel: LoginViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Column(
         Modifier.padding(horizontal = Theme.dimens.horizontalPadding)
     ) {
         CommonButton(
             text = "Войти",
-            //isLoading = viewModel.isLoading.collectAsState().value,
-        ) {
-            viewModel.currentStep.intValue = 2
-        }
+            isLoading = uiState is UiState.Loading,
+        ) { viewModel.currentStep.intValue = 2 }
         Spacer(Modifier.height(10.dp))
         CommonButton(
             text = "Продолжить как гость",
             buttonType = ButtonType.Secondary,
-            //isLoading = viewModel.isLoading.collectAsState().value,
-        ) {
-            viewModel.continueAsGuest()
-        }
+            isLoading = uiState is UiState.Loading,
+        ) { viewModel.continueAsGuest() }
     }
 }
 

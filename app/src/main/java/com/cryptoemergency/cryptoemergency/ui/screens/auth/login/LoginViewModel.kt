@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.UiState
+import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.papaska.core.entity.local.TokenEntity
 import com.papaska.core.useCases.local.token.SaveTokenUseCase
@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +25,8 @@ class LoginViewModel @Inject constructor(
     private val saveTokenUseCase: SaveTokenUseCase,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState>(UiState.Idle())
-    val uiState: StateFlow<UiState> = _uiState
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+    val uiState = _uiState.asStateFlow()
 
     val currentStep = mutableIntStateOf(0)
 
@@ -39,32 +40,26 @@ class LoginViewModel @Inject constructor(
             makeRequest(
                 context = context,
                 onError = { _, errorMessage ->
-                    //_uiState.value = UiState(false).isLoading
-                    
-                    _uiState.value = UiState.Error(
-                        isLoading = false,
-                        message = errorMessage,
-                    )
+                    _uiState.value = UiState.ContinueAsGuestError(errorMessage)
                 },
                 onSuccess = {
-                    _uiState.value = UiState.Idle(isLoading = false)
-
                     viewModelScope.launch {
                         try {
-                            val token = (it.headers["authorization"] ?: error("")) as TokenEntity
-                            saveTokenUseCase.invoke(token)
+                            val token = (
+                                it.headers["authorization"] ?:
+                                error(context.resources.getString(R.string.error__internal_server))
+                            ) as TokenEntity
+                            saveTokenUseCase(token)
+
+                            _uiState.value = UiState.ContinueAsGuestSuccess
                         } catch (e: IllegalStateException) {
 
-//                            _uiState.value = UiState.Error(
-//                                isLoading = false,
-//                                message = errorMessage,
-//                            )
-//                            message.value = e.message
+                            _uiState.value = UiState.ContinueAsGuestError(e.message)
                         }
                     }
                 },
             ) {
-                //isLoading.value = true
+                _uiState.value = UiState.Loading
                 loginUseCase(emailInput.value.text, passwordInput.value.text)
             }
         }
@@ -74,16 +69,14 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             makeRequest(
                 context = context,
-                onError = { _, _ ->
-                    //isLoading.value = false
+                onError = { _, message ->
+                    _uiState.value = UiState.LoginError(message)
                 },
                 onSuccess = {
-//                    isLoading.value = false
-//                    message.value = "Успешная авторизация!"
-//                    redirect.value = Redirect(Destination.Home.Home)
+                    _uiState.value = UiState.LoginSuccess
                 },
             ) {
-                //isLoading.value = true
+                _uiState.value = UiState.Loading
                 loginUseCase(emailInput.value.text, passwordInput.value.text)
             }
         }

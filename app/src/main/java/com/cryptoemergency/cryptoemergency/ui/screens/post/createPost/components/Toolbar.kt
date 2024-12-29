@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CameraButton
-import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 
 fun LazyStaggeredGridScope.Toolbar(
     viewModel: CreatePostViewModel

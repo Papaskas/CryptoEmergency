@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackbar
+import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackBar
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.bottomBar.BottomBar
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
@@ -53,7 +53,7 @@ fun Screen(
     modifier: Modifier = Modifier,
     scaffoldModifier: Modifier = Modifier,
     snackbarModifier: Modifier = Modifier,
-    snackbar: SnackbarHostState = LocalSnackbar.current,
+    snackbar: SnackbarHostState = LocalSnackBar.current,
     contentColor: Color = Theme.colors.text2,
     containerColor: Color = Theme.colors.backgroundMain,
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,

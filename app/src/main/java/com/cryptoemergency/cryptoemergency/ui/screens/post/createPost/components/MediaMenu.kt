@@ -28,7 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
-import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 
 fun LazyStaggeredGridScope.MediaMenu(
     viewModel: CreatePostViewModel,

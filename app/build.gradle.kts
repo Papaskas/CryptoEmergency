@@ -33,10 +33,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(getKeystoreFile("STORE_FILE_BS64"))
-            storePassword = System.getenv("STORE_PASSWORD")
-            keyAlias = System.getenv("KET_ALIAS")
-            keyPassword = System.getenv("KEY_PASSWORD")
+//            storeFile = file(getKeystoreFile("STORE_FILE_BS64"))
+//            storePassword = System.getenv("STORE_PASSWORD")
+//            keyAlias = System.getenv("KET_ALIAS")
+//            keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
     buildTypes {
@@ -212,15 +212,15 @@ tasks.detekt {
     }
 }
 
-private fun getKeystoreFile(envName: String): File {
-    val keystoreFile = File(rootProject.projectDir, "keystore.jks")
-    if (!keystoreFile.exists()) {
-        val keystoreContent = Base64.getDecoder().decode(System.getenv(envName))
-
-        keystoreContent?.let {
-            keystoreFile.writeBytes(it)
-        }
-    }
-
-    return keystoreFile
-}
+//private fun getKeystoreFile(envName: String): File {
+//    val keystoreFile = File(rootProject.projectDir, "keystore.jks")
+//    if (!keystoreFile.exists()) {
+//        val keystoreContent = Base64.getDecoder().decode(System.getenv(envName))
+//
+//        keystoreContent?.let {
+//            keystoreFile.writeBytes(it)
+//        }
+//    }
+//
+//    return keystoreFile
+//}

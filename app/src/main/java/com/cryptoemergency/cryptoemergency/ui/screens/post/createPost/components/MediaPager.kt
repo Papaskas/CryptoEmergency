@@ -31,7 +31,7 @@ import coil.compose.AsyncImage
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
-import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 
 @Composable
 fun MediaPager(

@@ -32,7 +32,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.ButtonType
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
-import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.MediaPager
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.TopBar
 

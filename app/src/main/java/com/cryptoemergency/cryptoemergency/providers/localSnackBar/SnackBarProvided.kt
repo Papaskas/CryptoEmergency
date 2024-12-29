@@ -7,9 +7,9 @@ import androidx.compose.runtime.remember
 
 @Composable
 fun SnackBarProvider(content: @Composable () -> Unit) {
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
-    CompositionLocalProvider(LocalSnackbar provides snackbarHostState) {
+    CompositionLocalProvider(LocalSnackBar provides snackBarHostState) {
         content()
     }
 }

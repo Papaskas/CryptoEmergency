@@ -3,6 +3,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.home.newsFeed
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.cryptoemergency.cryptoemergency.lib.Http
 import com.papaska.core.entity.remote.post.PostsEntity
 import com.papaska.core.http.ApiResponse
@@ -22,7 +23,8 @@ class NewsFeedViewModel @Inject constructor(
     private val _posts = MutableStateFlow<PostsEntity?>(null)
     val posts = _posts.asStateFlow()
 
-    val message = MutableStateFlow<String?>(null)
+    private val _uiState = MutableStateFlow<BaseUiState>(BaseUiState.Idle)
+    val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -31,7 +33,7 @@ class NewsFeedViewModel @Inject constructor(
             if (res is ApiResponse.Success) {
                 _posts.value = res.body
             } else if (res is ApiResponse.Error) {
-                message.value = Http.getDefaultMessages(context, res.status)
+                _uiState.value = BaseUiState.Error(Http.getDefaultMessages(context, res.status))
             }
         }
     }

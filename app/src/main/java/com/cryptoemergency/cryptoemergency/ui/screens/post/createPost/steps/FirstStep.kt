@@ -12,7 +12,7 @@ import com.cryptoemergency.cryptoemergency.lib.Media
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.Screen
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
-import com.cryptoemergency.cryptoemergency.ui.screens.post.CreatePostViewModel
+import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.MediaMenu
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.RatioChanger
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.components.SelectedMedia
