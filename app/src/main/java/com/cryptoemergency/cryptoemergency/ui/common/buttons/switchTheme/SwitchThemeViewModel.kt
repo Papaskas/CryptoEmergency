@@ -1,5 +1,7 @@
 package com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,24 +21,37 @@ import javax.inject.Inject
 class SwitchThemeViewModel @Inject constructor(
     private val saveThemeUseCase: SaveThemeUseCase
 ) : ViewModel() {
-    val theme = mutableStateOf<ThemeEntity?>(null)
+    val theme = mutableStateOf(ThemeEntity.NULL)
     val colors = mutableStateOf<ColorsEntity?>(null)
     val icons = mutableStateOf<IconsEntity?>(null)
 
-    fun setTheme(
-        newTheme: ThemeEntity
+    fun init(
+        theme: ThemeEntity,
+        colors: ColorsEntity,
+        icons: IconsEntity,
     ) {
+        this.theme.value = theme
+        this.colors.value = colors
+        this.icons.value = icons
+    }
+
+    fun setTheme(newTheme: ThemeEntity) {
         require(newTheme != ThemeEntity.NULL) { "${ThemeEntity.NULL} forbidden" }
 
-        theme.value = newTheme
+        Log.d("newTheme", newTheme.name)
 
-        if (newTheme == ThemeEntity.LIGHT) {
-            icons.value = lightIcons
-            colors.value = lightPalette
-        }
-        else if(newTheme == ThemeEntity.DARK) {
-            icons.value = darkIcons
-            colors.value = darkPalette
+        when (newTheme) {
+            ThemeEntity.LIGHT -> {
+                theme.value = newTheme
+                icons.value = lightIcons
+                colors.value = lightPalette
+            }
+            ThemeEntity.DARK -> {
+                theme.value = newTheme
+                icons.value = darkIcons
+                colors.value = darkPalette
+            }
+            ThemeEntity.NULL -> Unit
         }
 
         viewModelScope.launch {

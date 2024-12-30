@@ -11,10 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SocialNetworksViewModel @Inject constructor(
-//    private val database: AppDatabase,
-) : ViewModel() {
-    val message = MutableStateFlow<String?>(null)
 
+) : ViewModel() {
     var socialNetworks = MutableStateFlow<List<SocialNetworkType>>(emptyList())
 
     init {

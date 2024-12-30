@@ -1,5 +1,6 @@
 package com.cryptoemergency.cryptoemergency.ui.common.topBar
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,7 +25,6 @@ import com.papaska.core.entity.local.ThemeEntity
 fun ProfileTopBar() {
     val navController = LocalNavController.current
     val res = LocalContext.current.resources
-    val localTheme = LocalTheme.current
 
     Column {
         TopAppBar(
@@ -50,23 +50,7 @@ fun ProfileTopBar() {
                 }
             },
             actions = {
-                SwitchThemeButton { setTheme ->
-                    IconButton(onClick = {
-                        val theme = when(localTheme) {
-                            ThemeEntity.DARK -> ThemeEntity.LIGHT
-                            ThemeEntity.LIGHT -> ThemeEntity.DARK
-                            ThemeEntity.NULL -> ThemeEntity.LIGHT
-                        }
-
-                        setTheme(theme)
-                    }) {
-                        Icon(
-                            painterResource(Theme.icons.theme),
-                            contentDescription = res.getString(R.string.change_theme),
-                            tint = Theme.colors.text6,
-                        )
-                    }
-                }
+                ActionSwitchTheme()
                 IconButton(onClick = {
                     navController.navigate(Destination.Auth.ChangeProfileData)
                 }) {
@@ -87,5 +71,31 @@ fun ProfileTopBar() {
         )
 
         CommonHorizontalDivider()
+    }
+}
+
+@Composable
+private fun ActionSwitchTheme() {
+    val res = LocalContext.current.resources
+    val localTheme = LocalTheme.current
+
+    val theme = when(localTheme) {
+        ThemeEntity.DARK -> ThemeEntity.LIGHT
+        ThemeEntity.LIGHT -> ThemeEntity.DARK
+        ThemeEntity.NULL -> ThemeEntity.LIGHT
+    }
+
+    SwitchThemeButton(themeEntity = theme) {
+        IconButton(onClick = {
+            Log.d("theme", theme.name)
+
+            it(theme)
+        }) {
+            Icon(
+                painterResource(Theme.icons.theme),
+                contentDescription = res.getString(R.string.change_theme),
+                tint = Theme.colors.text6,
+            )
+        }
     }
 }

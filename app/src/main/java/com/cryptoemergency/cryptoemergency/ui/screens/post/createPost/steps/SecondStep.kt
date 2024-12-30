@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
+import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.CommonSwitch
@@ -139,13 +141,15 @@ private fun Settings(
 private fun Bottom(
     viewModel: CreatePostViewModel
 ) {
+    val isLoading = viewModel.uiState.collectAsState().value is BaseUiState.Loading
+
     Column(
         Modifier
             .padding(horizontal = Theme.dimens.horizontalPadding)
             .padding(bottom = 35.dp)
     ) {
         CommonButton(
-            isLoading = viewModel.awaitServer.value,
+            isLoading = isLoading,
             onClick = {
                 viewModel.createPost()
             },

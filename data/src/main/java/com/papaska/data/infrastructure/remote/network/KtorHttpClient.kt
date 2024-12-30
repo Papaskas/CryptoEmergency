@@ -44,21 +44,18 @@ internal class KtorHttpClient(
      *  - Установку заголовков, включая токен авторизации
      *  - Логирование запросов и ответов
      *
-     * @param path [String] Путь к запрашиваемой конечной точке API.
-     * @param method [DomainHttpMethod] HTTP-метод, который будет использоваться для запроса. Значение
-     * по умолчанию - [DomainHttpMethod.Get].
-     * @param protocol [URLProtocol] Протокол, который будет использоваться для подключения по URL.
-     * По умолчанию берется из [BuildConfig.PROTOCOL].*
-     * @param host [String] Хост сервера API. Значение по умолчанию получено из [BuildConfig.HOST].
-     * @param port [Int] Номер порта, который будет использоваться для подключения по URL.
-     * По умолчанию берется из [BuildConfig.PORT]. Если нужно использовать обычный [URLProtocol.HTTP] или
-     * [URLProtocol.HTTPS], то порт ставить 80 443 соответсвенно
-     * @param params [StringValues] Определяет параметры, которые будут добавлены к URL-адресу. Значением по
+     * @param path Путь к запрашиваемой конечной точке API.
+     * @param method HTTP-метод, который будет использоваться для запроса
+     * @param protocol Протокол, который будет использоваться для подключения по URL
+     * @param host Хост сервера API
+     * @param port Номер порта, который будет использоваться для подключения по URL.
+     * Если нужно использовать обычный HTTP или HTTPS, то порт ставить 80 443 соответственно
+     * @param params Определяет параметры, которые будут добавлены к URL-адресу. Значением по
      * умолчанию является пустая строка значений.
      * @param body Тело запроса в формате JSON. Принимаемый тип - @Serializable data class.
      * Значение по умолчанию - null.
      *
-     * @return [ApiResponse.Success] или [ApiResponse.Error] в завсисимости от статуса запроса.
+     * @return [ApiResponse.Success] или [ApiResponse.Error] в зависимости от статуса запроса.
      * Ответ [ApiResponse] содержит статус HTTP, заголовки и обработанные данные ответа
      *
      * @throws SerializationException В случае ошибки сериализации/десериализации данных.

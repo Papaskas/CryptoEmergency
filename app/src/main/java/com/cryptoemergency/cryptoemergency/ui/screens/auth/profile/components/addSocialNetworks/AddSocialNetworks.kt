@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.lib.Listener
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.BottomSheet
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.CommonButton
@@ -48,8 +47,6 @@ fun AddSocialNetworks(
 ) {
     val res = LocalContext.current.resources
     val showBottomSheet = remember { mutableStateOf(false) }
-
-    Listener(message = viewModel.message)
 
     Column {
         TitleSection(title = res.getQuantityString(R.plurals.social_network, 3))

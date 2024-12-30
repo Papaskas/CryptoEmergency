@@ -3,12 +3,18 @@ package com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalColors
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalIcons
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.IconsEntity
 import com.papaska.core.entity.local.ThemeEntity
+import okhttp3.internal.wait
 
 /**
  * Компонент для переключения темы приложения.
@@ -22,23 +28,22 @@ import com.papaska.core.entity.local.ThemeEntity
  **/
 @Composable
 fun SwitchThemeButton(
+    themeEntity: ThemeEntity,
     vm: SwitchThemeViewModel = hiltViewModel(),
     content: @Composable (setTheme: (themeEntity: ThemeEntity) -> Unit) -> Unit,
 ) {
-    val localTheme = LocalTheme.current
-    val localColors = LocalColors.current
-    val localIcons = LocalIcons.current
-
-    vm.theme.value = localTheme
-    vm.colors.value = localColors
-    vm.icons.value = localIcons
+    vm.init(
+        theme = LocalTheme.current,
+        colors = LocalColors.current,
+        icons = LocalIcons.current,
+    )
 
     CompositionLocalProvider(
-        LocalTheme provides vm.theme.value!!,
+        LocalTheme provides themeEntity,
         LocalColors provides vm.colors.value!!,
         LocalIcons provides vm.icons.value!!,
     ) {
-        content { vm.setTheme(localTheme) }
+        content { vm.setTheme(themeEntity) }
     }
 }
 
@@ -46,16 +51,16 @@ fun SwitchThemeButton(
 private fun Sample() {
     val localTheme = LocalTheme.current
 
-    SwitchThemeButton { setTheme ->
-        Button({
-            val theme = when(localTheme) {
-                ThemeEntity.DARK -> ThemeEntity.LIGHT
-                ThemeEntity.LIGHT -> ThemeEntity.DARK
-                ThemeEntity.NULL -> ThemeEntity.LIGHT
-            }
+    val theme = when(localTheme) {
+        ThemeEntity.DARK -> ThemeEntity.LIGHT
+        ThemeEntity.LIGHT -> ThemeEntity.DARK
+        ThemeEntity.NULL -> ThemeEntity.LIGHT
+    }
 
-            setTheme(theme)
-        }) {
+    SwitchThemeButton(
+        themeEntity = theme
+    ) {
+        Button({ it(theme) }) {
             Text("Sample")
         }
     }

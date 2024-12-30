@@ -32,8 +32,8 @@ object ValidatorSamples {
         val context = LocalContext.current
 
         val errorMessage: String? = ValidatorPatterns.isEquals(
-            "С чем сравнить",
-            R.string.error_validation__is_equals
+            toText = "С чем сравнить",
+            errorMessage = R.string.error_validation__is_equals
         ).execute("Что сравнить", context)
     }
 
@@ -45,9 +45,9 @@ object ValidatorSamples {
         val context = LocalContext.current
 
         val errorMessage: String? = ValidatorPatterns.inRange(
-            0,
-            10,
-            R.string.error_validation__in_range
+            min = 0,
+            max = 10,
+            errorMessage = R.string.error_validation__in_range
         ).execute("Что сравнить", context)
     }
 }
