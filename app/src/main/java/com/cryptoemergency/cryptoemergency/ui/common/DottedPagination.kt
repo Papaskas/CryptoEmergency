@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
  * Компонент горизонтальной пагинации в виде точек. Не работает если countDot <= 1

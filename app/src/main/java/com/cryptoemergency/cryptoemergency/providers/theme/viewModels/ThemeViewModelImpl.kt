@@ -11,7 +11,7 @@ class ThemeViewModelImpl @Inject constructor(
     private val getThemeUseCase: GetThemeUseCase,
 ) : ViewModel(), ThemeViewModel {
     /**
-     * Инициализация установленной темы. Если есть установленное в хранилише, то взять его, иначе
+     * Инициализация установленной темы. Если есть установленное в хранилище, то взять его, иначе
      * загрузить как на устройстве
      * */
     override suspend fun initTheme(
@@ -19,7 +19,7 @@ class ThemeViewModelImpl @Inject constructor(
     ): ThemeEntity {
         val themeInStorage = getThemeFromStorage()
 
-        return if (themeInStorage == ThemeEntity.NULL) {
+        return if (themeInStorage == ThemeEntity.AUTO) {
             when (isSystemInDarkTheme) {
                 true -> ThemeEntity.DARK
                 else -> ThemeEntity.LIGHT

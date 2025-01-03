@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.validatorInput.ValidatorInput
 
 /**

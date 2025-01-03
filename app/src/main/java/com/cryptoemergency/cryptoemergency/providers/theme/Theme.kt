@@ -1,6 +1,7 @@
-package com.cryptoemergency.cryptoemergency.providers.theme.provides
+package com.cryptoemergency.cryptoemergency.providers.theme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.ReadOnlyComposable
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalColors
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalDimens
@@ -16,7 +17,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.Typog
 import com.papaska.core.entity.local.ThemeEntity
 
 object Theme {
-    val theme: ThemeEntity
+    val theme: MutableState<ThemeEntity>
         @Composable
         @ReadOnlyComposable
         get() = LocalTheme.current

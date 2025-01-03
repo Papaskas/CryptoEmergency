@@ -9,8 +9,9 @@ import kotlinx.serialization.Serializable
 enum class ThemeEntity {
     DARK,
     LIGHT,
+
     /**
-     * Тема не установленна вручную
+     * Тема не установлена вручную
      * */
-    NULL,
+    AUTO,
 }

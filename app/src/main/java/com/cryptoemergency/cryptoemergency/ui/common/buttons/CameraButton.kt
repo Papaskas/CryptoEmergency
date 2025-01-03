@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.cryptoemergency.cryptoemergency.R
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

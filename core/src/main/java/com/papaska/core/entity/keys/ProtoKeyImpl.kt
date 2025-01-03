@@ -35,7 +35,7 @@ sealed class ProtoKeyImpl<T>(
 
     data object THEME : ProtoKeyImpl<ThemeEntity>(
         name = "THEME",
-        value = ThemeEntity.NULL,
+        value = ThemeEntity.AUTO,
         serializer = serializer<ThemeEntity>(),
     )
 }

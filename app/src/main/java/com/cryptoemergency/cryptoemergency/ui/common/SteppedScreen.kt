@@ -12,7 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 
 /**
  * Множество экранов появляющихся по этапно

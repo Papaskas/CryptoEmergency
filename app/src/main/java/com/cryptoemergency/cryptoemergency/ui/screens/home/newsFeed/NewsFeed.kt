@@ -16,14 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.common.BaseUiState
-import com.cryptoemergency.cryptoemergency.navigation.Destination
-import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackBar
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.FullScreen
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostList
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostsHeader
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.UiState
 import com.papaska.core.entity.remote.post.PostViewEntity
 
 @Composable

@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackBar
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.bottomBar.BottomBar
 import com.cryptoemergency.cryptoemergency.ui.common.topBar.MainTopBar
 

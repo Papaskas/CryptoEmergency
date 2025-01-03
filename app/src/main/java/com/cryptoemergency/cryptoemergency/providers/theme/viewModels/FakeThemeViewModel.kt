@@ -15,5 +15,5 @@ class FakeThemeViewModel : ViewModel(), ThemeViewModel {
     /**
      * Получение темы из хранилища
      * */
-    override suspend fun getThemeFromStorage() = ThemeEntity.NULL
+    override suspend fun getThemeFromStorage() = ThemeEntity.AUTO
 }

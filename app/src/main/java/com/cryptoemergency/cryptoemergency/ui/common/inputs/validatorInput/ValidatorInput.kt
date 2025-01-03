@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.lib.validation.Validator
 import com.cryptoemergency.cryptoemergency.lib.validation.ValidatorPatterns
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.Input
 import com.cryptoemergency.cryptoemergency.ui.common.inputs.InputSamples
 

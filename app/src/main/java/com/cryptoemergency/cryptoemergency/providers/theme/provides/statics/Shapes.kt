@@ -1,4 +1,4 @@
-package com.cryptoemergency.cryptoemergency.providers.theme.provides
+package com.cryptoemergency.cryptoemergency.providers.theme.provides.statics
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

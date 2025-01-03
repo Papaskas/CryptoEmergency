@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.lib.Convert.imageToBitmap
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.ImageCropper
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.CreatePostViewModel
 

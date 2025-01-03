@@ -9,13 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme.SwitchThemeButton
 import com.papaska.core.entity.local.ThemeEntity
@@ -78,18 +80,15 @@ fun ProfileTopBar() {
 private fun ActionSwitchTheme() {
     val res = LocalContext.current.resources
     val localTheme = LocalTheme.current
+    val theme = remember { mutableStateOf(localTheme.value) }
 
-    val theme = when(localTheme) {
-        ThemeEntity.DARK -> ThemeEntity.LIGHT
-        ThemeEntity.LIGHT -> ThemeEntity.DARK
-        ThemeEntity.NULL -> ThemeEntity.LIGHT
-    }
-
-    SwitchThemeButton(themeEntity = theme) {
+    SwitchThemeButton(newTheme = theme) {
         IconButton(onClick = {
-            Log.d("theme", theme.name)
-
-            it(theme)
+            theme.value = when(localTheme.value) {
+                ThemeEntity.DARK -> ThemeEntity.LIGHT
+                ThemeEntity.LIGHT -> ThemeEntity.DARK
+                ThemeEntity.AUTO -> ThemeEntity.AUTO
+            }
         }) {
             Icon(
                 painterResource(Theme.icons.theme),
@@ -97,5 +96,13 @@ private fun ActionSwitchTheme() {
                 tint = Theme.colors.text6,
             )
         }
+    }
+}
+
+@Composable
+fun a (fruitSize: Int) {
+    val resources = LocalContext.current.resources
+    val fruitText = remember(resources, fruitSize) {
+        resources.getQuantityString(R.plurals.news, fruitSize)
     }
 }

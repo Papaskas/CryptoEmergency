@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.papaska.core.entity.local.ThemeEntity
 
 @Composable
@@ -19,7 +19,7 @@ fun Modifier.commonBorder(
     when {
         isError -> Modifier.border(1.dp, Theme.colors.error, shape)
         isFocused -> Modifier.border(1.dp, Theme.colors.accent, shape)
-        LocalTheme.current == ThemeEntity.DARK -> Modifier.border(1.dp, Theme.colors.stroke, shape)
+        LocalTheme.current.value == ThemeEntity.DARK -> Modifier.border(1.dp, Theme.colors.stroke, shape)
         else -> Modifier
     }
 )

@@ -18,7 +18,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.DestinationUtils.getCurrentDestination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 
 @Composable
