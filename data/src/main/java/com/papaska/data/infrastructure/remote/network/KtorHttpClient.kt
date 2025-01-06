@@ -7,7 +7,12 @@ import com.papaska.core.http.DomainHttpParams
 import com.papaska.core.http.DomainHttpStatusCode
 import com.papaska.core.http.DomainUrlProtocol
 import com.papaska.core.http.isSuccess
-import com.papaska.core.repositories.local.TokenRepository
+import com.papaska.core.repositories.local.storage.TokenRepository
+import com.papaska.data.mappers.HttpMapper.toDomainHttpHeaders
+import com.papaska.data.mappers.HttpMapper.toDomainHttpStatus
+import com.papaska.data.mappers.HttpMapper.toKtorHttpMethod
+import com.papaska.data.mappers.HttpMapper.toKtorStringValues
+import com.papaska.data.mappers.HttpMapper.toKtorUrlProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.onDownload
@@ -17,18 +22,12 @@ import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
-import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.http.path
-import io.ktor.util.StringValues
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import java.io.IOException
 import java.net.UnknownHostException
-import io.ktor.http.Headers as KtorHeaders
-import io.ktor.http.HttpMethod as KtorHttpMethod
-import io.ktor.http.HttpStatusCode as KtorHttpStatusCode
-import io.ktor.http.URLProtocol as KtorUrlProtocol
 
 internal class KtorHttpClient(
     private val client: HttpClient,
@@ -148,60 +147,5 @@ internal class KtorHttpClient(
         )
     } finally {
         client.close()
-    }
-
-    /**
-     * Преобразует [DomainHttpMethod] из доменного слоя в [KtorHttpMethod].
-     */
-    private fun DomainHttpMethod.toKtorHttpMethod(): KtorHttpMethod {
-        return when (this) {
-            DomainHttpMethod.GET -> KtorHttpMethod.Get
-            DomainHttpMethod.POST -> KtorHttpMethod.Post
-            DomainHttpMethod.PUT -> KtorHttpMethod.Put
-            DomainHttpMethod.DELETE -> KtorHttpMethod.Delete
-            DomainHttpMethod.PATCH -> KtorHttpMethod.Patch
-            DomainHttpMethod.HEAD -> KtorHttpMethod.Head
-            DomainHttpMethod.OPTIONS -> KtorHttpMethod.Options
-        }
-    }
-
-    /**
-     * Преобразует из [KtorHttpStatusCode] в [DomainHttpStatusCode].
-     */
-    private fun KtorHttpStatusCode.toDomainHttpStatus(): DomainHttpStatusCode {
-        return DomainHttpStatusCode(
-            value = value,
-            description = description,
-        )
-    }
-
-    /**
-     * Преобразует [KtorHeaders] в [DomainHttpHeaders].
-     */
-    private fun KtorHeaders.toDomainHttpHeaders(): DomainHttpHeaders {
-        return this.entries().associate { (key, values) ->
-            key to values
-        }
-    }
-
-    /**
-     * Преобразует [DomainUrlProtocol] из доменного слоя в [KtorUrlProtocol].
-     */
-    private fun DomainUrlProtocol.toKtorUrlProtocol(): KtorUrlProtocol {
-        return when (this) {
-            DomainUrlProtocol.HTTP -> URLProtocol.HTTP
-            DomainUrlProtocol.HTTPS -> URLProtocol.HTTPS
-        }
-    }
-
-    /**
-     * Преобразует [DomainHttpParams] из доменного слоя в [StringValues].
-     */
-    private fun DomainHttpParams.toKtorStringValues(): StringValues {
-        return StringValues.build {
-            this@toKtorStringValues.entries.forEach { (key, value) ->
-                append(key, value)
-            }
-        }
     }
 }

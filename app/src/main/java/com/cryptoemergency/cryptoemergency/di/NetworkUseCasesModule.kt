@@ -16,7 +16,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class NetworkModule {
+class NetworkUseCasesModule {
 
     @Provides
     @ViewModelScoped

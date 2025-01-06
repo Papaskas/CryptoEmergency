@@ -1,4 +1,4 @@
-package com.papaska.core.repositories.local
+package com.papaska.core.repositories.local.storage
 
 import com.papaska.core.entity.local.ThemeEntity
 

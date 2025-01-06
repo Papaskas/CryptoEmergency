@@ -84,7 +84,7 @@ fun AddSocialNetworks(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SocialNetworksSelector(
-    selectedOption: MutableState<SocialNetworkIconType>,
+    selectedOption: MutableState<SocialNetworkIcon>,
 ) {
     FlowRow {
         socialNetworksIcons.forEach {
@@ -98,8 +98,8 @@ private fun SocialNetworksSelector(
 
 @Composable
 private fun SelectableItem(
-    socialNetwork: SocialNetworkIconType,
-    selectedOption: MutableState<SocialNetworkIconType>,
+    socialNetwork: SocialNetworkIcon,
+    selectedOption: MutableState<SocialNetworkIcon>,
 ) {
     val selected = selectedOption.value == socialNetwork
 
@@ -131,7 +131,7 @@ private fun SelectableItem(
 @Composable
 private fun AddSocialNetwork(
     viewModel: SocialNetworksViewModel,
-    selectedOption: MutableState<SocialNetworkIconType>
+    selectedOption: MutableState<SocialNetworkIcon>
 ) {
     val res = LocalContext.current.resources
     val socialNetworks = viewModel.socialNetworks.collectAsState()

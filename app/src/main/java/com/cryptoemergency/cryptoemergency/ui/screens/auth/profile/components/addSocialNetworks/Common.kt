@@ -4,73 +4,70 @@ import androidx.annotation.DrawableRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.text.input.TextFieldValue
 import com.cryptoemergency.cryptoemergency.R
-
-enum class NetworkName {
-    TELEGRAM, VK, INSTAGRAM, TWITTER, FACEBOOK, DISCORD, TWITCH, TIKTOK, LINKEDIN, GITHUB,
-}
+import com.papaska.core.entity.db.SocialNetworkName
 
 data class SocialNetworkType(
-    val networkName: NetworkName,
+    val networkName: SocialNetworkName,
     val urlPrefix: MutableState<TextFieldValue>,
     val url: MutableState<TextFieldValue>,
     val description: MutableState<TextFieldValue>,
 )
 
-data class SocialNetworkIconType(
+data class SocialNetworkIcon(
     @DrawableRes val icon: Int,
     @DrawableRes val activeIcon: Int,
-    val networkName: NetworkName,
+    val networkName: SocialNetworkName,
 )
 
 val socialNetworksIcons = listOf(
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.telegram,
         R.drawable.telegram__active,
-        NetworkName.TELEGRAM,
+        SocialNetworkName.TELEGRAM,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.vk,
         R.drawable.vk__active,
-        NetworkName.VK,
+        SocialNetworkName.VK,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.instagram,
         R.drawable.instagram__active,
-        NetworkName.INSTAGRAM,
+        SocialNetworkName.INSTAGRAM,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.twitter,
         R.drawable.twitter__active,
-        NetworkName.TWITTER,
+        SocialNetworkName.TWITTER,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.facebook,
         R.drawable.facebook__active,
-        NetworkName.FACEBOOK,
+        SocialNetworkName.FACEBOOK,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.discord,
         R.drawable.discord__active,
-        NetworkName.DISCORD,
+        SocialNetworkName.DISCORD,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.twitch,
         R.drawable.twitch__active,
-        NetworkName.TWITCH,
+        SocialNetworkName.TWITCH,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.tiktok,
         R.drawable.tiktok__active,
-        NetworkName.TIKTOK,
+        SocialNetworkName.TIKTOK,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.linkedin,
         R.drawable.linkedin__active,
-        NetworkName.LINKEDIN,
+        SocialNetworkName.LINKEDIN,
     ),
-    SocialNetworkIconType(
+    SocialNetworkIcon(
         R.drawable.github,
         R.drawable.github__active,
-        NetworkName.GITHUB,
+        SocialNetworkName.GITHUB,
     ),
 )

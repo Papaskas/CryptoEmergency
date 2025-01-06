@@ -37,15 +37,14 @@ android {
 dependencies {
     implementation(project(":core"))
 
+    implementation(libs.kotlinx.serialization)
+
     ksp(libs.androidx.room.compiler)
-    annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.proto.datastore)
-
-    implementation(libs.kotlinx.serialization)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.json)

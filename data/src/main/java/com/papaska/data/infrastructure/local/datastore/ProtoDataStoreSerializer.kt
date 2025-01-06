@@ -17,7 +17,7 @@ import java.io.OutputStream
  *
  * @param T Тип данных, для которого используется сериализатор.
  */
-class ProtoDataStoreSerializer<T>(
+internal class ProtoDataStoreSerializer<T>(
     private val serializer: KSerializer<T>,
     override val defaultValue: T,
 ) : Serializer<T> {

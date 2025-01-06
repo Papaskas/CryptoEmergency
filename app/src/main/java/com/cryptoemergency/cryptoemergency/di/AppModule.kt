@@ -1,7 +1,10 @@
 package com.cryptoemergency.cryptoemergency.di
 
-import com.papaska.data.repositories.remote.NetworkRepositoryImpl
-import com.papaska.core.repositories.local.TokenRepository
+import com.cryptoemergency.cryptoemergency.BuildConfig
+import com.papaska.core.entity.config.ServerConfiguration
+import com.papaska.core.http.DomainUrlProtocol
+import com.papaska.data.repositories.network.NetworkRepositoryImpl
+import com.papaska.core.repositories.local.storage.TokenRepository
 import com.papaska.core.repositories.remote.NetworkRepository
 import dagger.Module
 import dagger.Provides
@@ -13,9 +16,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
+
+
     @Provides
     @Singleton
-    fun provideNetworkRepository(
-        tokenRepository: TokenRepository
-    ): NetworkRepository = NetworkRepositoryImpl(tokenRepository = tokenRepository)
+    fun provideConfig(): ServerConfiguration {
+        return ServerConfiguration(
+            port = BuildConfig.PORT,
+            host = BuildConfig.HOST,
+            protocol = DomainUrlProtocol.valueOf(BuildConfig.PROTOCOL),
+        )
+    }
 }

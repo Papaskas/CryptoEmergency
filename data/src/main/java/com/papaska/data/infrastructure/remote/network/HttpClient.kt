@@ -1,5 +1,11 @@
 package com.papaska.data.infrastructure.remote.network
 
+import com.papaska.core.constants.HttpConstants.CONNECT_TIMEOUT_MILLIS
+import com.papaska.core.constants.HttpConstants.JSON_IGNORE_UNKNOWN_KEYS
+import com.papaska.core.constants.HttpConstants.JSON_IS_LENIENT
+import com.papaska.core.constants.HttpConstants.MAX_RETRIES_TO_SERVER
+import com.papaska.core.constants.HttpConstants.REQUEST_TIMEOUT_MILLIS
+import com.papaska.core.constants.HttpConstants.SOCKET_TIMEOUT_MILLIS
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpRequestRetry
@@ -7,7 +13,6 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.resources.Resources
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -16,10 +21,8 @@ import kotlinx.serialization.json.Json
  */
 internal val httpClient by lazy {
     HttpClient(OkHttp) {
-        install(Resources)
-
         install(HttpRequestRetry) {
-            retryOnServerErrors(maxRetries = 3)
+            retryOnServerErrors(maxRetries = MAX_RETRIES_TO_SERVER)
             exponentialDelay()
 
             modifyRequest { request ->
@@ -40,9 +43,9 @@ internal val httpClient by lazy {
         }
 
         install(HttpTimeout) {
-            connectTimeoutMillis = 10_000L
-            requestTimeoutMillis = 10_000L
-            socketTimeoutMillis = 10_000L
+            connectTimeoutMillis = CONNECT_TIMEOUT_MILLIS
+            requestTimeoutMillis = REQUEST_TIMEOUT_MILLIS
+            socketTimeoutMillis = SOCKET_TIMEOUT_MILLIS
         }
     }
 }
@@ -53,7 +56,7 @@ internal val httpClient by lazy {
  */
 internal val json by lazy {
     Json {
-        isLenient = true
-        ignoreUnknownKeys = true
+        isLenient = JSON_IS_LENIENT
+        ignoreUnknownKeys = JSON_IGNORE_UNKNOWN_KEYS
     }
 }
