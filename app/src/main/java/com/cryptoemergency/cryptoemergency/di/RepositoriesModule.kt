@@ -82,12 +82,6 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideSocialNetworkDao(
-        db: AppDatabase
-    ): SocialNetworkDao = db.socialNetworksDao()
-
-    @Provides
-    @Singleton
     fun provideSocialNetworkRepository(
         socialNetworkDao: SocialNetworkDao
     ): SocialNetworkRepository = SocialNetworkRepositoryImpl(socialNetworkDao)

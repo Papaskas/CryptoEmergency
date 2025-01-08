@@ -2,6 +2,7 @@ package com.cryptoemergency.cryptoemergency.di
 
 import android.content.Context
 import com.papaska.core.constants.StringsConstants.DATABASE_NAME
+import com.papaska.data.dataSources.db.socialNetwork.temp
 import com.papaska.data.infrastructure.local.room.AppDatabase
 import com.papaska.data.infrastructure.local.room.createDatabase
 import dagger.Module
@@ -24,4 +25,10 @@ class DatabaseModule {
         AppDatabase::class.java,
         DATABASE_NAME,
     )
+
+    @Provides
+    @Singleton
+    fun provideSocialNetworkDao(
+        appDatabase: AppDatabase
+    ): temp = appDatabase.socialNetworksDao()
 }

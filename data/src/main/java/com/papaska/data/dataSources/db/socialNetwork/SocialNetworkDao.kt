@@ -11,20 +11,32 @@ import com.papaska.data.models.db.SocialNetworkModel
 import com.papaska.data.models.db.SocialNetworkItemModel
 import kotlinx.coroutines.flow.Flow
 
-@Dao
-interface SocialNetworkDao {
-    @Query("SELECT * FROM social_networks")
+interface temp {
     fun getAll(): Flow<List<SocialNetworkModel>>
 
-    @Query("SELECT * FROM social_networks where name = :socialNetworkName")
     fun getAllBySocialName(socialNetworkName: SocialNetworkName): Flow<List<SocialNetworkModel>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItem(vararg socialNetworkItem: SocialNetworkItemModel): Boolean
 
-    @Update(SocialNetworkItemModel::class)
     suspend fun updateItemById(id: Int, url: String, description: String): Boolean
 
-    @Delete(SocialNetworkItemModel::class)
     suspend fun deleteItem(id: Int): Boolean
+}
+
+@Dao
+interface SocialNetworkDao : temp {
+    @Query("SELECT * FROM social_networks")
+    override fun getAll(): Flow<List<SocialNetworkModel>>
+
+    @Query("SELECT * FROM social_networks where name = :socialNetworkName")
+    override fun getAllBySocialName(socialNetworkName: SocialNetworkName): Flow<List<SocialNetworkModel>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    override suspend fun insertItem(vararg socialNetworkItem: SocialNetworkItemModel): Boolean
+
+    @Update(SocialNetworkItemModel::class)
+    override suspend fun updateItemById(id: Int, url: String, description: String): Boolean
+
+    @Delete(SocialNetworkItemModel::class)
+    override suspend fun deleteItem(id: Int): Boolean
 }
