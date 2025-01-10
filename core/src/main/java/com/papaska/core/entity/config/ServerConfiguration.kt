@@ -1,6 +1,6 @@
 package com.papaska.core.entity.config
 
-import com.papaska.core.http.DomainUrlProtocol
+import com.papaska.core.entity.http.DomainUrlProtocol
 
 /**
  * Представляет конфигурацию сервера, необходимую для выполнения сетевых запросов.

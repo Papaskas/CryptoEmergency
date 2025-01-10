@@ -6,6 +6,6 @@ import com.papaska.core.repositories.local.db.SocialNetworkRepository
 class InsertSocialNetworkItemUseCase(
     private val socialNetworkRepository: SocialNetworkRepository
 ) {
-    suspend operator fun invoke(vararg socialNetworkItem: SocialNetworkItemEntity) =
-        socialNetworkRepository.insertItem(*socialNetworkItem)
+    suspend operator fun invoke(socialNetworkItem: SocialNetworkItemEntity) =
+        socialNetworkRepository.insertItem(socialNetworkItem)
 }

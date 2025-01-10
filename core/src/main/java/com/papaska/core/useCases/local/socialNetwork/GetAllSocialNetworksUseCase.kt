@@ -5,5 +5,5 @@ import com.papaska.core.repositories.local.db.SocialNetworkRepository
 class GetAllSocialNetworksUseCase(
     private val socialNetworkRepository: SocialNetworkRepository
 ) {
-    operator fun invoke() = socialNetworkRepository.getAll()
+    suspend operator fun invoke() = socialNetworkRepository.getAll()
 }

@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.dagger.hilt)
+
+    kotlin("kapt")
 }
 
 android {
@@ -42,6 +45,9 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+
+    kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
+    implementation(libs.hilt.android)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.proto.datastore)

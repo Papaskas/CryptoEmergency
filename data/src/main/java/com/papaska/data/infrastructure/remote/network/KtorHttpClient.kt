@@ -1,12 +1,12 @@
 package com.papaska.data.infrastructure.remote.network
 
 import com.papaska.core.http.ApiResponse
-import com.papaska.core.http.DomainHttpHeaders
-import com.papaska.core.http.DomainHttpMethod
-import com.papaska.core.http.DomainHttpParams
-import com.papaska.core.http.DomainHttpStatusCode
-import com.papaska.core.http.DomainUrlProtocol
-import com.papaska.core.http.isSuccess
+import com.papaska.core.entity.http.DomainHttpHeaders
+import com.papaska.core.entity.http.DomainHttpMethod
+import com.papaska.core.entity.http.DomainHttpParams
+import com.papaska.core.entity.http.DomainHttpStatusCode
+import com.papaska.core.entity.http.DomainUrlProtocol
+import com.papaska.core.entity.http.isSuccess
 import com.papaska.core.repositories.local.storage.TokenRepository
 import com.papaska.data.mappers.HttpMapper.toDomainHttpHeaders
 import com.papaska.data.mappers.HttpMapper.toDomainHttpStatus

@@ -2,7 +2,7 @@ package com.papaska.core.useCases.remote.post
 
 import com.papaska.core.entity.config.ServerConfiguration
 import com.papaska.core.entity.remote.post.PostsEntity
-import com.papaska.core.http.DomainHttpMethod
+import com.papaska.core.entity.http.DomainHttpMethod
 import com.papaska.core.repositories.remote.NetworkRepository
 import kotlinx.serialization.Serializable
 

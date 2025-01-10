@@ -1,3 +1,3 @@
-package com.papaska.core.http
+package com.papaska.core.entity.http
 
 typealias DomainHttpHeaders = Map<String, Any?>

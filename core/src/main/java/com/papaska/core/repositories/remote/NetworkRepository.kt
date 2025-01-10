@@ -2,10 +2,10 @@ package com.papaska.core.repositories.remote
 
 import com.papaska.core.entity.config.ServerConfiguration
 import com.papaska.core.http.ApiResponse
-import com.papaska.core.http.DomainHttpHeaders
-import com.papaska.core.http.DomainHttpMethod
-import com.papaska.core.http.DomainHttpParams
-import com.papaska.core.http.DomainUrlProtocol
+import com.papaska.core.entity.http.DomainHttpHeaders
+import com.papaska.core.entity.http.DomainHttpMethod
+import com.papaska.core.entity.http.DomainHttpParams
+import com.papaska.core.entity.http.DomainUrlProtocol
 import kotlinx.serialization.KSerializer
 
 /**

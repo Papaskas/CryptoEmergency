@@ -9,10 +9,9 @@ import com.papaska.core.repositories.local.storage.ThemeRepository
 import com.papaska.core.repositories.local.storage.TokenRepository
 import com.papaska.core.repositories.local.storage.UserRepository
 import com.papaska.core.repositories.remote.NetworkRepository
-import com.papaska.data.dataSources.db.socialNetwork.SocialNetworkDao
+import com.papaska.data.dao.SocialNetworkDao
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSourceImpl
 import com.papaska.data.dataSources.localStorage.ProtoLocalStorageDataSourceImpl
-import com.papaska.data.infrastructure.local.room.AppDatabase
 import com.papaska.data.repositories.db.SocialNetworkRepositoryImpl
 import com.papaska.data.repositories.local.PinCodeRepositoryImpl
 import com.papaska.data.repositories.local.ThemeRepositoryImpl
@@ -29,12 +28,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RepositoriesModule {
-
-    @Provides
-    @Singleton
-    fun provideNetworkRepository(
-        tokenRepository: TokenRepository
-    ): NetworkRepository = NetworkRepositoryImpl(tokenRepository = tokenRepository)
 
     @Provides
     @Singleton
@@ -79,6 +72,12 @@ class RepositoriesModule {
             context = context
         )
     )
+
+    @Provides
+    @Singleton
+    fun provideNetworkRepository(
+        tokenRepository: TokenRepository
+    ): NetworkRepository = NetworkRepositoryImpl(tokenRepository = tokenRepository)
 
     @Provides
     @Singleton

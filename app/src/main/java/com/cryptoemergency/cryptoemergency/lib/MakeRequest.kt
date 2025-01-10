@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.papaska.core.http.ApiResponse
-import com.papaska.core.http.DomainHttpStatusCode
+import com.papaska.core.entity.http.DomainHttpStatusCode
 import com.papaska.core.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -38,9 +38,7 @@ suspend fun <Success, Error> makeRequest(
     onError: (ApiResponse.Error<Error>, String) -> Unit,
     onRequest: suspend () -> ApiResponse<out Success, out Error>,
 ) = withContext(Dispatchers.IO) {
-    val res = onRequest()
-
-    when (res) {
+    when (val res = onRequest()) {
         is ApiResponse.Success -> {
             withContext(Dispatchers.Main) {
                 onSuccess(res as ApiResponse.Success<Success>)

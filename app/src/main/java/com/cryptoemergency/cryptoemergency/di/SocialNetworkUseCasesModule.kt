@@ -5,7 +5,6 @@ import com.papaska.core.useCases.local.socialNetwork.DeleteSocialNetworkItemById
 import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
 import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
 import com.papaska.core.useCases.local.socialNetwork.InsertSocialNetworkItemUseCase
-import com.papaska.core.useCases.local.socialNetwork.UpdateSocialNetworkItemById
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +13,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class SocialNetworkModule {
+class SocialNetworkUseCasesModule {
 
     @Provides
     @ViewModelScoped
@@ -39,10 +38,4 @@ class SocialNetworkModule {
     fun provideInsertSocialNetworkItemUseCase(
         socialNetworkRepository: SocialNetworkRepository,
     ) = InsertSocialNetworkItemUseCase(socialNetworkRepository)
-
-    @Provides
-    @ViewModelScoped
-    fun provideUpdateSocialNetworkItemById(
-        socialNetworkRepository: SocialNetworkRepository,
-    ) = UpdateSocialNetworkItemById(socialNetworkRepository)
 }

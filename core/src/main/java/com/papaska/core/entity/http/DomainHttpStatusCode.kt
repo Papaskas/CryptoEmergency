@@ -1,4 +1,4 @@
-package com.papaska.core.http
+package com.papaska.core.entity.http
 
 /**
  * Представляет HTTP-статус ответа.

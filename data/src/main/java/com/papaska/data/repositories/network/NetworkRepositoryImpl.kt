@@ -4,10 +4,10 @@ import com.papaska.data.infrastructure.remote.network.KtorHttpClient
 import com.papaska.data.infrastructure.remote.network.httpClient
 import com.papaska.core.entity.config.ServerConfiguration
 import com.papaska.core.http.ApiResponse
-import com.papaska.core.http.DomainHttpHeaders
-import com.papaska.core.http.DomainHttpMethod
-import com.papaska.core.http.DomainHttpParams
-import com.papaska.core.http.DomainUrlProtocol
+import com.papaska.core.entity.http.DomainHttpHeaders
+import com.papaska.core.entity.http.DomainHttpMethod
+import com.papaska.core.entity.http.DomainHttpParams
+import com.papaska.core.entity.http.DomainUrlProtocol
 import com.papaska.core.repositories.local.storage.TokenRepository
 import com.papaska.core.repositories.remote.NetworkRepository
 import kotlinx.serialization.KSerializer

@@ -2,7 +2,7 @@ package com.papaska.data.infrastructure.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.papaska.data.dataSources.db.socialNetwork.SocialNetworkDao
+import com.papaska.data.dao.SocialNetworkDao
 import com.papaska.data.models.db.SocialNetworkModel
 import com.papaska.data.models.db.SocialNetworkItemModel
 

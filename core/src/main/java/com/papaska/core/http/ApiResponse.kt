@@ -1,5 +1,8 @@
 package com.papaska.core.http
 
+import com.papaska.core.entity.http.DomainHttpHeaders
+import com.papaska.core.entity.http.DomainHttpStatusCode
+
 /**
  * Представляет результат HTTP-запроса.
  *

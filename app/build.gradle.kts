@@ -2,7 +2,6 @@ import java.util.Base64
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -47,7 +46,7 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
-                "proguard-rules-without-logs.pro",
+                "proguard-delete-logs.pro",
             )
 
             ndk { debugSymbolLevel = null }
@@ -179,8 +178,6 @@ dependencies {
 
     implementation(libs.cloudy) // Blur для <= 31 API
 
-    detektPlugins(libs.detekt.formatting)
-
     androidTestImplementation(libs.androidx.ui.test.android)
     androidTestImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.api)
@@ -194,22 +191,6 @@ junitPlatform {
 kapt {
     correctErrorTypes = true
     useBuildCache = true
-}
-
-detekt {
-    toolVersion = "1.23.3"
-    config.setFrom(file("config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-}
-
-tasks.detekt {
-    reports {
-        html.required.set(true)
-        md.required.set(true)
-        xml.required.set(false)
-        txt.required.set(false)
-        sarif.required.set(false)
-    }
 }
 
 //private fun getKeystoreFile(envName: String): File {

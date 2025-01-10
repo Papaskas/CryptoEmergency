@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.common
 
 /**
  * Base sealed class for UI states in the application.
- * Defines common states like [Idle], [Success], and [Error].
+ * Defines common states like [Idle], [Loading], [Success], and [Error].
  */
 sealed class BaseUiState {
 
