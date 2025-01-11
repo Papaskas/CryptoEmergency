@@ -1,6 +1,9 @@
 package com.papaska.core.entity.db
 
-class SocialNetworkEntity(
+data class SocialNetworkEntity(
     val id: Int,
-    val name: SocialNetworkName,
+    val socialNetworkName: SocialNetworkName,
+    val urlPrefix: String,
+    val url: String,
+    val description: String?,
 )

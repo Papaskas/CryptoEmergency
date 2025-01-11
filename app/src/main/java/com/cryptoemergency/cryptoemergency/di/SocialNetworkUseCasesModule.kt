@@ -4,7 +4,7 @@ import com.papaska.core.repositories.local.db.SocialNetworkRepository
 import com.papaska.core.useCases.local.socialNetwork.DeleteSocialNetworkItemById
 import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
 import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
-import com.papaska.core.useCases.local.socialNetwork.InsertSocialNetworkItemUseCase
+import com.papaska.core.useCases.local.socialNetwork.InsertSocialNetworkUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +37,5 @@ class SocialNetworkUseCasesModule {
     @ViewModelScoped
     fun provideInsertSocialNetworkItemUseCase(
         socialNetworkRepository: SocialNetworkRepository,
-    ) = InsertSocialNetworkItemUseCase(socialNetworkRepository)
+    ) = InsertSocialNetworkUseCase(socialNetworkRepository)
 }

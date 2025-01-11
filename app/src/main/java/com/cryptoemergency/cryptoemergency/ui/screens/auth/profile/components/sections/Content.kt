@@ -12,7 +12,7 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonTabs
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.ProfileViewModel
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworks.AddSocialNetworks
+import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.addSocialNetworksSection.AddSocialNetworksSection
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.newsFeed.NewsFeed
 
 /**
@@ -55,7 +55,7 @@ private fun Tabs() {
         { NewsFeed() },
         { NewsFeed() },
         { NewsFeed() },
-        { AddSocialNetworks() },
+        { AddSocialNetworksSection() },
         { NewsFeed() },
     )
 

@@ -1,44 +1,50 @@
 package com.papaska.data.mappers
 
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_DISCORD
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_FACEBOOK
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_GITHUB
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_INSTAGRAM
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_LINKEDIN
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_TELEGRAM
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_TIKTOK
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_TWITCH
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_TWITTER
+import com.papaska.core.constants.StringsConstants.URL_PREFIX_VK
 import com.papaska.core.entity.db.SocialNetworkEntity
-import com.papaska.core.entity.db.SocialNetworkItemEntity
-import com.papaska.core.entity.db.SocialNetworksEntity
+import com.papaska.core.entity.db.SocialNetworkName
 import com.papaska.data.models.db.SocialNetworkModel
-import com.papaska.data.models.db.SocialNetworkItemModel
-import com.papaska.data.models.db.relations.SocialNetworksModel
 
 internal object SocialNetworkMapper {
-    internal fun SocialNetworkModel.toDomain() = SocialNetworkEntity(
-        id = this.id,
-        name = this.socialNetworkName,
-    )
-
-    internal fun SocialNetworkItemModel.toDomain() = SocialNetworkItemEntity(
-        id = this.id,
-        name = this.socialNetworkName,
-        url = this.url,
-        description = this.description,
-    )
-
     internal fun SocialNetworkEntity.toData() = SocialNetworkModel(
-        id = this.id,
-        socialNetworkName = this.name,
+        id = id,
+        socialNetworkName = socialNetworkName,
+        url = url,
+        description = description,
     )
 
-    internal fun SocialNetworkItemEntity.toData() = SocialNetworkItemModel(
-        id = this.id,
-        socialNetworkName = this.name,
-        url = this.url,
-        description = this.description,
+    internal fun SocialNetworkModel.toDomain() = SocialNetworkEntity(
+        id = id,
+        socialNetworkName = socialNetworkName,
+        url = url,
+        description = description,
+        urlPrefix = findUrlPrefix(socialNetworkName)
     )
 
-    internal fun SocialNetworksModel.toDomain() = SocialNetworksEntity(
-        socialNetwork = this.socialNetwork.toDomain(),
-        items = this.socialNetworks.map { it.toDomain() },
-    )
+    private fun findUrlPrefix(socialNetworkName: SocialNetworkName): String {
+        require(socialNetworkName != SocialNetworkName.NONE) { "SocialNetworkName cannot be NONE" }
 
-    internal fun SocialNetworksEntity.toData() = SocialNetworksModel(
-        socialNetwork = this.socialNetwork.toData(),
-        socialNetworks = this.items.map { it.toData() }
-    )
+        return when(socialNetworkName) {
+            SocialNetworkName.TELEGRAM -> URL_PREFIX_TELEGRAM
+            SocialNetworkName.VK -> URL_PREFIX_VK
+            SocialNetworkName.INSTAGRAM -> URL_PREFIX_INSTAGRAM
+            SocialNetworkName.TWITTER -> URL_PREFIX_TWITTER
+            SocialNetworkName.FACEBOOK -> URL_PREFIX_FACEBOOK
+            SocialNetworkName.DISCORD -> URL_PREFIX_DISCORD
+            SocialNetworkName.TWITCH -> URL_PREFIX_TWITCH
+            SocialNetworkName.TIKTOK -> URL_PREFIX_TIKTOK
+            SocialNetworkName.LINKEDIN -> URL_PREFIX_LINKEDIN
+            SocialNetworkName.GITHUB -> URL_PREFIX_GITHUB
+            SocialNetworkName.NONE -> error("SocialNetworkName cannot be NONE")
+        }
+    }
 }

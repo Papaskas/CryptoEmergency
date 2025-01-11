@@ -7,5 +7,5 @@ class GetAllSocialNetworksByNameUseCase(
     private val socialNetworkRepository: SocialNetworkRepository
 ) {
     suspend operator fun invoke(socialNetworkName: SocialNetworkName) =
-        socialNetworkRepository.getAllByName(socialNetworkName)
+        socialNetworkRepository.getAllBySocialNetworkName(socialNetworkName)
 }

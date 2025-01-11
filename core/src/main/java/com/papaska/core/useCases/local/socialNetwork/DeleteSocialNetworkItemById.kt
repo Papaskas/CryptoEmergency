@@ -6,5 +6,5 @@ class DeleteSocialNetworkItemById(
     private val socialNetworkRepository: SocialNetworkRepository
 ) {
     suspend operator fun invoke(id: Int) =
-        socialNetworkRepository.deleteItem(id)
+        socialNetworkRepository.delete(id)
 }
