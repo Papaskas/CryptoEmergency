@@ -1,7 +1,6 @@
 package com.cryptoemergency.cryptoemergency.providers.theme.provides
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
@@ -9,7 +8,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.Dimen
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.IconsEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ShapeEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.TypographyEntity
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 object CompositionLocals {
     val LocalTheme = compositionLocalOf<MutableState<ThemeEntity>> {

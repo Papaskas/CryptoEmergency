@@ -1,8 +1,8 @@
 package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.papaska.core.entity.local.ThemeEntity
-import com.papaska.core.useCases.local.theme.GetThemeUseCase
+import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.domain.useCases.local.theme.GetThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -15,10 +15,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
-import com.papaska.core.http.ApiResponse
-import com.papaska.core.useCases.local.token.GetTokenUseCase
-import com.papaska.core.useCases.local.token.SaveTokenUseCase
-import com.papaska.core.useCases.remote.token.InitTokenUseCase
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.useCases.local.token.GetTokenUseCase
+import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.remote.token.InitTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

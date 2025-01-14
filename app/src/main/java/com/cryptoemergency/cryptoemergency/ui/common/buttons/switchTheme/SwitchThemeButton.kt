@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 /**
  * Компонент для переключения темы приложения.

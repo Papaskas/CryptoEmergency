@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.db
 
-import com.papaska.core.entity.db.SocialNetworkEntity
-import com.papaska.core.entity.db.SocialNetworkName
-import com.papaska.core.repositories.local.db.SocialNetworkRepository
+import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
+import com.papaska.domain.entity.socialNetwork.SocialNetworkName
+import com.papaska.domain.repositories.local.db.SocialNetworkRepository
 import com.papaska.data.dao.SocialNetworkDao
 import com.papaska.data.mappers.SocialNetworkMapper.toData
 import com.papaska.data.mappers.SocialNetworkMapper.toDomain

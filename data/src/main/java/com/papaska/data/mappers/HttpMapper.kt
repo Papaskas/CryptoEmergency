@@ -1,10 +1,10 @@
 package com.papaska.data.mappers
 
-import com.papaska.core.entity.http.DomainHttpHeaders
-import com.papaska.core.entity.http.DomainHttpMethod
-import com.papaska.core.entity.http.DomainHttpParams
-import com.papaska.core.entity.http.DomainHttpStatusCode
-import com.papaska.core.entity.http.DomainUrlProtocol
+import com.papaska.domain.entity.http.DomainHttpHeaders
+import com.papaska.domain.entity.http.DomainHttpMethod
+import com.papaska.domain.entity.http.DomainHttpParams
+import com.papaska.domain.entity.http.DomainHttpStatusCode
+import com.papaska.domain.entity.http.DomainUrlProtocol
 import io.ktor.http.Headers as KtorHttpHeaders
 import io.ktor.http.HttpMethod as KtorHttpMethod
 import io.ktor.http.HttpStatusCode as KtorHttpStatusCode

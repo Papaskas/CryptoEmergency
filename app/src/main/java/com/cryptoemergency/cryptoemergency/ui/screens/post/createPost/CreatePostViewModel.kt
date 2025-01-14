@@ -11,13 +11,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.cryptoemergency.cryptoemergency.lib.Convert.toBase64
-import com.cryptoemergency.cryptoemergency.lib.Http
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.cryptoemergency.cryptoemergency.lib.vibrate
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.UiState
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.common.PhotoFormat
-import com.papaska.core.http.ApiResponse
-import com.papaska.core.useCases.remote.post.CreatePostUseCase
+import com.papaska.domain.useCases.remote.post.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -2,14 +2,14 @@ package com.papaska.data.repositories.network
 
 import com.papaska.data.infrastructure.remote.network.KtorHttpClient
 import com.papaska.data.infrastructure.remote.network.httpClient
-import com.papaska.core.entity.config.ServerConfiguration
-import com.papaska.core.http.ApiResponse
-import com.papaska.core.entity.http.DomainHttpHeaders
-import com.papaska.core.entity.http.DomainHttpMethod
-import com.papaska.core.entity.http.DomainHttpParams
-import com.papaska.core.entity.http.DomainUrlProtocol
-import com.papaska.core.repositories.local.storage.TokenRepository
-import com.papaska.core.repositories.remote.NetworkRepository
+import com.papaska.domain.entity.config.ServerConfiguration
+import com.papaska.domain.http.ApiResponse
+import com.papaska.domain.entity.http.DomainHttpHeaders
+import com.papaska.domain.entity.http.DomainHttpMethod
+import com.papaska.domain.entity.http.DomainHttpParams
+import com.papaska.domain.entity.http.DomainUrlProtocol
+import com.papaska.domain.repositories.local.storage.TokenRepository
+import com.papaska.domain.repositories.remote.NetworkRepository
 import kotlinx.serialization.KSerializer
 
 class NetworkRepositoryImpl(

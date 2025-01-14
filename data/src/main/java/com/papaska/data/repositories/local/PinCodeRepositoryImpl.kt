@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.local
 
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
-import com.papaska.core.entity.local.PinCodeEntity
-import com.papaska.core.repositories.local.storage.PinCodeRepository
+import com.papaska.domain.entity.local.PinCodeEntity
+import com.papaska.domain.repositories.local.storage.PinCodeRepository
 
 class PinCodeRepositoryImpl(
     private val pinCodeDataSource: LocalStorageDataSource<PinCodeEntity>

@@ -21,7 +21,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.FullScreen
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostList
 import com.cryptoemergency.cryptoemergency.ui.common.posts.PostsHeader
-import com.papaska.core.entity.remote.post.PostViewEntity
+import com.papaska.domain.entity.remote.post.PostViewEntity
 
 @Composable
 fun NewsFeedScreen(

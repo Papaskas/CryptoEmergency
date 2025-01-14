@@ -14,7 +14,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.Dimen
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.IconsEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ShapeEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.TypographyEntity
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 object Theme {
     val theme: MutableState<ThemeEntity>

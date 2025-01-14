@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.local
 
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
-import com.papaska.core.entity.local.ThemeEntity
-import com.papaska.core.repositories.local.storage.ThemeRepository
+import com.papaska.domain.entity.local.ThemeEntity
+import com.papaska.domain.repositories.local.storage.ThemeRepository
 
 class ThemeRepositoryImpl(
     private val themeDataSource: LocalStorageDataSource<ThemeEntity>

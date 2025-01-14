@@ -1,11 +1,11 @@
 package com.papaska.data.infrastructure.remote.network
 
-import com.papaska.core.constants.HttpConstants.CONNECT_TIMEOUT_MILLIS
-import com.papaska.core.constants.HttpConstants.JSON_IGNORE_UNKNOWN_KEYS
-import com.papaska.core.constants.HttpConstants.JSON_IS_LENIENT
-import com.papaska.core.constants.HttpConstants.MAX_RETRIES_TO_SERVER
-import com.papaska.core.constants.HttpConstants.REQUEST_TIMEOUT_MILLIS
-import com.papaska.core.constants.HttpConstants.SOCKET_TIMEOUT_MILLIS
+import com.papaska.domain.constants.HttpConstants.CONNECT_TIMEOUT_MILLIS
+import com.papaska.domain.constants.HttpConstants.JSON_IGNORE_UNKNOWN_KEYS
+import com.papaska.domain.constants.HttpConstants.JSON_IS_LENIENT
+import com.papaska.domain.constants.HttpConstants.MAX_RETRIES_TO_SERVER
+import com.papaska.domain.constants.HttpConstants.REQUEST_TIMEOUT_MILLIS
+import com.papaska.domain.constants.HttpConstants.SOCKET_TIMEOUT_MILLIS
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpRequestRetry

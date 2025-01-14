@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.androidx.junit) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.google.ksp) apply false
-    alias(libs.plugins.google.dagger.hilt) apply false
+    alias(libs.plugins.google.dagger.hilt.android) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
 }

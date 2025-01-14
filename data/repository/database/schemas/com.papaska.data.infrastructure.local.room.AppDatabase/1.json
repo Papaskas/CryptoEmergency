@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4a0263363d824f9ac9b674e010999741",
+    "identityHash": "8955793a70aae0f88c85c97edcbad815",
     "entities": [
       {
         "tableName": "social_networks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `socialNetworkName` TEXT NOT NULL, `url` TEXT NOT NULL, `description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `socialNetworkName` TEXT NOT NULL, `url` TEXT NOT NULL, `description` TEXT, `type` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -31,6 +31,12 @@
             "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -56,7 +62,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a0263363d824f9ac9b674e010999741')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8955793a70aae0f88c85c97edcbad815')"
     ]
   }
 }

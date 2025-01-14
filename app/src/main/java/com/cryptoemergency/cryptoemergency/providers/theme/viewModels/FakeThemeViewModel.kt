@@ -1,7 +1,7 @@
 package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 class FakeThemeViewModel : ViewModel(), ThemeViewModel {
 

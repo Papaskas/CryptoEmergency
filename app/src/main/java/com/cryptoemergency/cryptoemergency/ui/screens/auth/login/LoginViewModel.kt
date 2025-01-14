@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
-import com.papaska.core.entity.local.TokenEntity
-import com.papaska.core.useCases.local.token.SaveTokenUseCase
-import com.papaska.core.useCases.remote.auth.LoginUseCase
+import com.papaska.domain.entity.local.TokenEntity
+import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

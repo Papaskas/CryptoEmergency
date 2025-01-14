@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.entity
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.text.input.TextFieldValue
-import com.papaska.core.entity.db.SocialNetworkName
+import com.papaska.domain.entity.socialNetwork.SocialNetworkName
 
 data class SocialNetworkData(
     val id: Int,

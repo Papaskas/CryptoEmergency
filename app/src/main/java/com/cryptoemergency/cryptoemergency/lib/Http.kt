@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.cryptoemergency.cryptoemergency.BuildConfig
 import com.cryptoemergency.cryptoemergency.R
-import com.papaska.core.entity.http.DomainHttpStatusCode
+import com.papaska.domain.entity.http.DomainHttpStatusCode
 
 object Http {
     fun getDefaultMessages(context: Context, statusCode: DomainHttpStatusCode): String {

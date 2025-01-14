@@ -28,7 +28,7 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.lig
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.shapes
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.typography
 import com.cryptoemergency.cryptoemergency.providers.theme.viewModels.ThemeViewModel
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 /**
  * Provides theme-related data [Theme] to descendant composables.

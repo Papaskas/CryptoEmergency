@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.google.ksp)
-    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.google.dagger.hilt.android)
 
     kotlin("kapt")
 }
@@ -22,9 +22,44 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
+            )
+
+            buildConfigField(
+                "String",
+                "PROTOCOL",
+                "\"${project.properties["prod.server.protocol"]}\""
+            )
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["prod.server.host"]}\""
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["prod.server.port"].toString()
+            )
+        }
+
+        debug {
+            buildConfigField(
+                "String",
+                "PROTOCOL",
+                "\"${project.properties["dev.server.protocol"]}\"",
+            )
+            buildConfigField(
+                "String",
+                "HOST",
+                "\"${project.properties["dev.server.host"]}\"",
+            )
+            buildConfigField(
+                "int",
+                "PORT",
+                project.properties["dev.server.port"].toString(),
             )
         }
     }
@@ -35,11 +70,19 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        buildConfig = true
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {
-    implementation(project(":core"))
 
+    implementation(project(":domain"))
     implementation(libs.kotlinx.serialization)
 
     ksp(libs.androidx.room.compiler)
@@ -48,6 +91,8 @@ dependencies {
 
     kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
     implementation(libs.hilt.android)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.proto.datastore)
@@ -64,8 +109,10 @@ dependencies {
     implementation(libs.slf4j.api)
     implementation(libs.logback.classic)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 ksp {

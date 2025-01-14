@@ -2,15 +2,14 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.a
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.entity.SocialNetworkData
-import com.papaska.core.entity.db.SocialNetworkEntity
-import com.papaska.core.entity.db.SocialNetworkName
-import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
-import com.papaska.core.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
-import com.papaska.core.useCases.local.socialNetwork.InsertSocialNetworkUseCase
+import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
+import com.papaska.domain.entity.socialNetwork.SocialNetworkName
+import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
+import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
+import com.papaska.domain.useCases.local.socialNetwork.InsertSocialNetworkUseCase
+import com.papaska.data.models.db.SocialNetworkModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +22,7 @@ class SocialNetworksViewModel @Inject constructor(
     private val getAllSocialNetworksByNameUseCase: GetAllSocialNetworksByNameUseCase,
     private val insertSocialNetworkUseCase: InsertSocialNetworkUseCase,
 ) : ViewModel() {
-    private val _socialNetworks = MutableStateFlow<List<SocialNetworkData>>(emptyList())
+    private val _socialNetworks = MutableStateFlow<List<SocialNetworkModel>>(emptyList())
     val socialNetworks = _socialNetworks.asStateFlow()
 
     private val _selectedNetwork = mutableStateOf(SocialNetworkName.entries[0])
@@ -34,26 +33,47 @@ class SocialNetworksViewModel @Inject constructor(
             val res = getAllSocialNetworksUseCase()
 
             res?.let { entities ->
-                _socialNetworks.value = entities.map { entity ->
-                    SocialNetworkData(
-                        id = entity.id,
-                        networkName = entity.socialNetworkName,
-                        urlPrefix = entity.urlPrefix,
-                        url = mutableStateOf(TextFieldValue(text = entity.url)),
-                        description = entity.description?.let {
-                            mutableStateOf(TextFieldValue(text = it))
-                        }
-                    )
-                }
+//                _socialNetworks.value = entities.map { entity ->
+////                    SocialNetworkModel(
+////                        id = entity.id,
+////                        sonetworkName = entity.socialNetworkName,
+////                        urlPrefix = entity.urlPrefix,
+////                        url = mutableStateOf(TextFieldValue(text = entity.url)),
+////                        description = entity.description?.let {
+////                            mutableStateOf(TextFieldValue(text = it))
+////                        }
+////                    )
+//                }
             }
         }
     }
 
-    /**
-     * Кнопка `Add more`
-     * */
-    fun addNetworkSection() {
+    fun onValueChange(
+        textFieldId: Int,
+        model: SocialNetworkModel
+    ) {
+        val updatedList = socialNetworks.value.toMutableList()
 
+        val index = updatedList.indexOfFirst {
+            it.id == textFieldId
+        }
+
+        if(index != -1) {
+            updatedList[index] = model
+        }
+        else {
+            updatedList.add(model)
+        }
+
+        _socialNetworks.value = updatedList
+    }
+
+    fun addNewNetworkSection() {
+
+    }
+
+    fun removeAdditionalSocialNetwork() {
+        viewModelScope.launch {  }
     }
 
     suspend fun getSocialNetworksByName(name: SocialNetworkName) =

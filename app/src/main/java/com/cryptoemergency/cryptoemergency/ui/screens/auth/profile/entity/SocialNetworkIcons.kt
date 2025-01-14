@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.entity
 
 import androidx.annotation.DrawableRes
 import com.cryptoemergency.cryptoemergency.R
-import com.papaska.core.entity.db.SocialNetworkName
+import com.papaska.domain.entity.socialNetwork.SocialNetworkName
 
 /**
  * Представляет иконки для различных социальных сетей.

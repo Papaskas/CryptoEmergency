@@ -39,9 +39,9 @@ import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.modifiers.roundedHexagonShape
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
 import com.cryptoemergency.cryptoemergency.ui.common.DottedPagination
-import com.papaska.core.entity.remote.post.PostEntity
-import com.papaska.core.entity.remote.post.PostMediaEntity
-import com.papaska.core.entity.remote.post.PostViewEntity
+import com.papaska.domain.entity.remote.post.PostEntity
+import com.papaska.domain.entity.remote.post.PostMediaEntity
+import com.papaska.domain.entity.remote.post.PostViewEntity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

@@ -1,6 +1,6 @@
 package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
-import com.papaska.core.entity.local.ThemeEntity
+import com.papaska.domain.entity.local.ThemeEntity
 
 interface ThemeViewModel {
     /**

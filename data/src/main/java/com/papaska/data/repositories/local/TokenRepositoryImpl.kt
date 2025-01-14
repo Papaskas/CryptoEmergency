@@ -1,8 +1,8 @@
 package com.papaska.data.repositories.local
 
 import com.papaska.data.dataSources.localStorage.LocalStorageDataSource
-import com.papaska.core.entity.local.TokenEntity
-import com.papaska.core.repositories.local.storage.TokenRepository
+import com.papaska.domain.entity.local.TokenEntity
+import com.papaska.domain.repositories.local.storage.TokenRepository
 
 class TokenRepositoryImpl(
     private val tokenDataSource: LocalStorageDataSource<TokenEntity>

@@ -1,12 +1,10 @@
-import java.util.Base64
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.androidx.junit)
-    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.google.dagger.hilt.android)
 
     kotlin("kapt")
 }
@@ -50,22 +48,6 @@ android {
             )
 
             ndk { debugSymbolLevel = null }
-
-            buildConfigField(
-                "String",
-                "PROTOCOL",
-                "\"${project.properties["prod.server.protocol"]}\""
-            )
-            buildConfigField(
-                "String",
-                "HOST",
-                "\"${project.properties["prod.server.host"]}\""
-            )
-            buildConfigField(
-                "int",
-                "PORT",
-                project.properties["prod.server.port"].toString()
-            )
         }
 
         debug {
@@ -73,43 +55,6 @@ android {
             isJniDebuggable = true
 
             ndk { debugSymbolLevel = "FULL" }
-
-            buildConfigField(
-                "String",
-                "PROTOCOL",
-                "\"${project.properties["dev.server.protocol"]}\"",
-            )
-            buildConfigField(
-                "String",
-                "HOST",
-                "\"${project.properties["dev.server.host"]}\"",
-            )
-            buildConfigField(
-                "int",
-                "PORT",
-                project.properties["dev.server.port"].toString(),
-            )
-        }
-
-        create("releaseWithLogs") {
-            signingConfig = signingConfigs.getByName("release")
-            isDebuggable = true
-
-            buildConfigField(
-                "String",
-                "PROTOCOL",
-                "\"${project.properties["prod.server.protocol"]}\"",
-            )
-            buildConfigField(
-                "String",
-                "HOST",
-                "\"${project.properties["prod.server.host"]}\"",
-            )
-            buildConfigField(
-                "int",
-                "PORT",
-                project.properties["prod.server.port"].toString(),
-            )
         }
     }
     compileOptions {
@@ -134,7 +79,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core"))
+    implementation(project(":domain"))
     implementation(project(":data"))
 
     implementation(libs.android.image.cropper)

@@ -2,7 +2,7 @@ package com.papaska.data.dataSources.localStorage
 
 import android.content.Context
 import com.papaska.data.infrastructure.local.datastore.ProtoDataStore
-import com.papaska.core.entity.keys.ProtoKeyImpl
+import com.papaska.domain.entity.keys.ProtoKeyImpl
 
 class ProtoLocalStorageDataSourceImpl<T>(
     private val key: ProtoKeyImpl<T>,
