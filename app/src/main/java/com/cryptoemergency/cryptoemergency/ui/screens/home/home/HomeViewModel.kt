@@ -16,8 +16,8 @@ import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
 import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.useCases.local.token.GetTokenUseCase
-import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.storage.token.GetTokenUseCase
+import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
 import com.papaska.domain.useCases.remote.token.InitTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

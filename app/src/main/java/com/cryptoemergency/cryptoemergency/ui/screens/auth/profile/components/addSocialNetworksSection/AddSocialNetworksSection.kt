@@ -251,13 +251,13 @@ private fun InputTemplate(
         label = res.getString(R.string.url),
         value = urlValue,
         onValueChange = {
-            vm.onValueChange(SocialNetworkModel(
-                id = 0,
-                socialNetworkName = vm.selectedNetwork.value,
-                url = urlValue.value.text,
-                description = descriptionValue.value.text,
-                type = networkType
-            ))
+//            vm.onValueChange(SocialNetworkModel(
+//                id = 0,
+//                socialNetworkName = vm.selectedNetwork.value,
+//                url = urlValue.value.text,
+//                description = descriptionValue.value.text,
+//                type = networkType
+//            ))
 
             urlValue.value = it
         },
@@ -270,13 +270,13 @@ private fun InputTemplate(
         onValueChange = {
             descriptionValue.value = it
 
-            vm.onValueChange(SocialNetworkModel(
-                id = 0,
-                socialNetworkName = vm.selectedNetwork.value,
-                url = urlValue.value.text,
-                description = descriptionValue.value.text,
-                type = networkType
-            ))
+//            vm.onValueChange(SocialNetworkModel(
+//                id = 0,
+//                socialNetworkName = vm.selectedNetwork.value,
+//                url = urlValue.value.text,
+//                description = descriptionValue.value.text,
+//                type = networkType
+//            ))
         },
         label = res.getString(R.string.description),
         hasError = remember { mutableStateOf(false) },

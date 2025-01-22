@@ -1,4 +1,4 @@
-package com.papaska.domain.useCases.local.pinCode
+package com.papaska.domain.useCases.storage.pinCode
 
 import com.papaska.domain.entity.local.PinCodeEntity
 import com.papaska.domain.repositories.local.storage.PinCodeRepository

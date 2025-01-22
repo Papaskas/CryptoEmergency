@@ -15,7 +15,8 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -75,7 +76,19 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/INDEX.LIST"
+            excludes += "/META-INF/{LICENSE.md,INDEX.LIST,LICENSE-notice.md}"
+        }
+    }
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            all {
+                it.useJUnitPlatform()
+                it.maxHeapSize = "1G"
+                it.testLogging {
+                    events("passed")
+                }
+            }
         }
     }
 }
@@ -92,7 +105,6 @@ dependencies {
     kapt(libs.hilt.compiler) // 09.2024 - Hilt не поддерживает ksp
     implementation(libs.hilt.android)
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.proto.datastore)
@@ -109,10 +121,11 @@ dependencies {
     implementation(libs.slf4j.api)
     implementation(libs.logback.classic)
 
-    androidTestImplementation(libs.androidx.runner)
-    androidTestImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.api)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 ksp {

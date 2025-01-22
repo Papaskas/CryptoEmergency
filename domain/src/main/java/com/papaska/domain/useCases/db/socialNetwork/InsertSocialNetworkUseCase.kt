@@ -1,4 +1,4 @@
-package com.papaska.domain.useCases.local.socialNetwork
+package com.papaska.domain.useCases.db.socialNetwork
 
 import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
 import com.papaska.domain.entity.socialNetwork.SocialNetworkName

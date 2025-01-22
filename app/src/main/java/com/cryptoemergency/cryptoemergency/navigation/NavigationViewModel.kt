@@ -3,7 +3,7 @@ package com.cryptoemergency.cryptoemergency.navigation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.papaska.domain.entity.local.TokenEntity
-import com.papaska.domain.useCases.local.token.GetTokenUseCase
+import com.papaska.domain.useCases.storage.token.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

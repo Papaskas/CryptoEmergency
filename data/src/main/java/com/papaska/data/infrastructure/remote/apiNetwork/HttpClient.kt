@@ -1,8 +1,7 @@
-package com.papaska.data.infrastructure.remote.network
+package com.papaska.data.infrastructure.remote.apiNetwork
 
+import com.papaska.data.BuildConfig
 import com.papaska.domain.constants.HttpConstants.CONNECT_TIMEOUT_MILLIS
-import com.papaska.domain.constants.HttpConstants.JSON_IGNORE_UNKNOWN_KEYS
-import com.papaska.domain.constants.HttpConstants.JSON_IS_LENIENT
 import com.papaska.domain.constants.HttpConstants.MAX_RETRIES_TO_SERVER
 import com.papaska.domain.constants.HttpConstants.REQUEST_TIMEOUT_MILLIS
 import com.papaska.domain.constants.HttpConstants.SOCKET_TIMEOUT_MILLIS
@@ -14,7 +13,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
 
 /**
  * Клиент HTTP, настроенный для работы с JSON, логированием и таймаутами.
@@ -31,15 +29,14 @@ internal val httpClient by lazy {
         }
 
         install(ContentNegotiation) {
-            json(json)
+            json(jsonConfig)
         }
 
         install(Logging) {
-//            level = if(BuildConfig.DEBUG) {
-            LogLevel.ALL
-//            } else {
-//                LogLevel.NONE
-//            }
+            level = if(BuildConfig.DEBUG)
+                LogLevel.ALL
+            else
+                LogLevel.NONE
         }
 
         install(HttpTimeout) {
@@ -47,16 +44,5 @@ internal val httpClient by lazy {
             requestTimeoutMillis = REQUEST_TIMEOUT_MILLIS
             socketTimeoutMillis = SOCKET_TIMEOUT_MILLIS
         }
-    }
-}
-
-/**
- * Сериализатор/десериализатор JSON с гибкой конфигурацией.
- * Позволяет игнорировать неизвестные ключи и использовать нестрогую проверку JSON.
- */
-internal val json by lazy {
-    Json {
-        isLenient = JSON_IS_LENIENT
-        ignoreUnknownKeys = JSON_IGNORE_UNKNOWN_KEYS
     }
 }

@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
 import com.papaska.domain.entity.socialNetwork.SocialNetworkName
-import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
-import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
-import com.papaska.domain.useCases.local.socialNetwork.InsertSocialNetworkUseCase
+import com.papaska.domain.useCases.db.socialNetwork.GetAllSocialNetworksByNameUseCase
+import com.papaska.domain.useCases.db.socialNetwork.GetAllSocialNetworksUseCase
+import com.papaska.domain.useCases.db.socialNetwork.InsertSocialNetworkUseCase
 import com.papaska.data.models.db.SocialNetworkModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

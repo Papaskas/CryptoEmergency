@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.papaska.domain.entity.local.ThemeEntity
-import com.papaska.domain.useCases.local.theme.SaveThemeUseCase
+import com.papaska.domain.useCases.storage.theme.SaveThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

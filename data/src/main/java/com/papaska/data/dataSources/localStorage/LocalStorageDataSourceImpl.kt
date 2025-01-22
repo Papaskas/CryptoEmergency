@@ -4,6 +4,7 @@ import android.content.Context
 import com.papaska.data.infrastructure.local.datastore.DataStore
 import com.papaska.domain.entity.keys.KeyImpl
 
+
 class LocalStorageDataSourceImpl<T>(
     private val key: KeyImpl<T>,
     private val context: Context,
@@ -13,7 +14,6 @@ class LocalStorageDataSourceImpl<T>(
     /**
      * Асинхронный метод чтения из локального хранилища
      * */
-
     override suspend fun read(): T = store.read()
 
     /**

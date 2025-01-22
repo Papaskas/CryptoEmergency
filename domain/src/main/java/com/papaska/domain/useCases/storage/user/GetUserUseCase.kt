@@ -1,4 +1,4 @@
-package com.papaska.domain.useCases.local.user
+package com.papaska.domain.useCases.storage.user
 
 import com.papaska.domain.entity.local.UserEntity
 import com.papaska.domain.repositories.local.storage.UserRepository

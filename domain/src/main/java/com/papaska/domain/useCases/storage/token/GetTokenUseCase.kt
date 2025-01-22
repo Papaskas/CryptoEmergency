@@ -1,4 +1,4 @@
-package com.papaska.domain.useCases.local.token
+package com.papaska.domain.useCases.storage.token
 
 import com.papaska.domain.repositories.local.storage.TokenRepository
 

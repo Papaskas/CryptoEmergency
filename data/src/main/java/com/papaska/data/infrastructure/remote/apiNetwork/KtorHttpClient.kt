@@ -1,4 +1,4 @@
-package com.papaska.data.infrastructure.remote.network
+package com.papaska.data.infrastructure.remote.apiNetwork
 
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.entity.http.DomainHttpHeaders
@@ -96,9 +96,7 @@ internal class KtorHttpClient(
                 header(it.key, it.value)
             }
 
-            body?.let {
-                setBody(body)
-            }
+            body?.let { setBody(body) }
 
             onDownload { bytesSentTotal, contentLength -> onDownload(bytesSentTotal, contentLength) }
             onUpload { bytesSentTotal, contentLength -> onUpload(bytesSentTotal, contentLength) }
@@ -110,7 +108,7 @@ internal class KtorHttpClient(
 
         if (domainStatus.isSuccess()) {
 
-            val res = json.decodeFromString(successResponse, resBody)
+            val res = jsonConfig.decodeFromString(successResponse, resBody)
             ApiResponse.Success(
                 status = domainStatus,
                 headers = domainHeaders,
@@ -118,7 +116,7 @@ internal class KtorHttpClient(
             )
         } else {
 
-            val res = json.decodeFromString(errorResponse, resBody)
+            val res = jsonConfig.decodeFromString(errorResponse, resBody)
             ApiResponse.Error(
                 status = domainStatus,
                 headers = domainHeaders,

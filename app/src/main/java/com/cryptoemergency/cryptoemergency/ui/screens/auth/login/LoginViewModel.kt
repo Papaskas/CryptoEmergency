@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
 import com.papaska.domain.entity.local.TokenEntity
-import com.papaska.domain.useCases.local.token.SaveTokenUseCase
+import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
 import com.papaska.domain.useCases.remote.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

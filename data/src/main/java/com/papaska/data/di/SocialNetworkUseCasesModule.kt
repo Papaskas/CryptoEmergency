@@ -1,10 +1,10 @@
 package com.papaska.data.di
 
 import com.papaska.domain.repositories.local.db.SocialNetworkRepository
-import com.papaska.domain.useCases.local.socialNetwork.DeleteSocialNetworkItemById
-import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksByNameUseCase
-import com.papaska.domain.useCases.local.socialNetwork.GetAllSocialNetworksUseCase
-import com.papaska.domain.useCases.local.socialNetwork.InsertSocialNetworkUseCase
+import com.papaska.domain.useCases.db.socialNetwork.DeleteSocialNetworkItemById
+import com.papaska.domain.useCases.db.socialNetwork.GetAllSocialNetworksByNameUseCase
+import com.papaska.domain.useCases.db.socialNetwork.GetAllSocialNetworksUseCase
+import com.papaska.domain.useCases.db.socialNetwork.InsertSocialNetworkUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

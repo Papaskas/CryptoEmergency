@@ -22,7 +22,8 @@ interface NetworkRepository {
      * @param successResponse [SuccessResponse] Serializer for the success response type.
      * @param method [DomainHttpMethod] HTTP method for the request (GET, POST, PUT, etc.).
      * @param path [String] Path of the API endpoint.
-     * @param protocol [DomainUrlProtocol] (Optional) Protocol for the request (defaults to serverConfiguration.protocol).
+     * @param protocol [DomainUrlProtocol] (Optional) Protocol for the request
+     * (defaults to serverConfiguration.protocol).
      * @param host [String] (Optional) Host of the server (defaults to serverConfiguration.host).
      * @param port [Int] (Optional) Port of the server (defaults to serverConfiguration.port).
      * @param body (Optional) Request body object.

@@ -2,7 +2,7 @@ package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.papaska.domain.entity.local.ThemeEntity
-import com.papaska.domain.useCases.local.theme.GetThemeUseCase
+import com.papaska.domain.useCases.storage.theme.GetThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
