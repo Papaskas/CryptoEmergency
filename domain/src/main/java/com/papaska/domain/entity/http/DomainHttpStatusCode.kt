@@ -121,7 +121,7 @@ data class DomainHttpStatusCode(val value: Int, val description: String) : Compa
     }
 }
 
-internal fun allStatusCodes(): List<DomainHttpStatusCode> = listOf(
+private fun allStatusCodes(): List<DomainHttpStatusCode> = listOf(
     DomainHttpStatusCode.Continue,
     DomainHttpStatusCode.SwitchingProtocols,
     DomainHttpStatusCode.Processing,

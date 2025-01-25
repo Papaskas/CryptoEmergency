@@ -46,7 +46,7 @@ interface NetworkRepository {
         port: Int = serverConfiguration.port,
         body: Any? = null,
         params: DomainHttpParams = emptyMap(),
-        headers: DomainHttpHeaders = emptyMap(),
+        headers: Map<DomainHttpHeaders, List<String>> = emptyMap(),
         onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _, _ -> },
         onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _, _ -> },
     ): ApiResponse<out SuccessResponse, out ErrorResponse>

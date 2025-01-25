@@ -17,6 +17,7 @@ import io.ktor.serialization.kotlinx.json.json
 /**
  * Клиент HTTP, настроенный для работы с JSON, логированием и таймаутами.
  */
+
 internal val httpClient by lazy {
     HttpClient(OkHttp) {
         install(HttpRequestRetry) {

@@ -40,9 +40,9 @@ internal object HttpMapper {
     /**
      * Преобразует [KtorHttpHeaders] в [DomainHttpHeaders].
      */
-    internal fun KtorHttpHeaders.toDomainHttpHeaders(): DomainHttpHeaders {
+    internal fun KtorHttpHeaders.toDomainHttpHeaders(): Map<DomainHttpHeaders, List<String>> {
         return this.entries().associate { (key, values) ->
-            key to values
+            DomainHttpHeaders.valueOf(key.uppercase().replace('-', '_')) to values
         }
     }
 

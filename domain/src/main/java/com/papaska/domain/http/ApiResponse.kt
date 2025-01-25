@@ -23,7 +23,7 @@ sealed interface ApiResponse<Success, Error> {
     data class Success<Success>(
         val status: DomainHttpStatusCode,
         val body: Success,
-        val headers: DomainHttpHeaders,
+        val headers: Map<DomainHttpHeaders, List<String>>,
     ) : ApiResponse<Success, Nothing>
 
     /**
@@ -36,6 +36,6 @@ sealed interface ApiResponse<Success, Error> {
     data class Error<Error>(
         val status: DomainHttpStatusCode,
         val body: Error? = null,
-        val headers: DomainHttpHeaders? = null,
+        val headers: Map<DomainHttpHeaders, List<String>>? = null,
     ) : ApiResponse<Nothing, Error>
 }

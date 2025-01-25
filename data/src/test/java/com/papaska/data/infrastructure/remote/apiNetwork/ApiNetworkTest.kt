@@ -7,73 +7,32 @@ import com.papaska.domain.entity.http.DomainHttpStatusCode
 import com.papaska.domain.entity.http.DomainUrlProtocol
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.repositories.local.storage.TokenRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
 class ApiNetworkTest {
     private val tokenRepository = mock<TokenRepository>()
-
-    private suspend fun<ErrorResponse, SuccessResponse> request(
-        errorResponse: KSerializer<ErrorResponse>,
-        successResponse: KSerializer<SuccessResponse>,
-        protocol: DomainUrlProtocol = DomainUrlProtocol.HTTPS,
-        method: DomainHttpMethod,
-        host: String = "postman-echo.com",
-        path: String,
-        port: Int = 443,
-        body: Any? = null,
-        params: DomainHttpParams = emptyMap(),
-        headers: DomainHttpHeaders = emptyMap(),
-        onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _: Long, _: Long? -> },
-        onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _: Long, _: Long? -> },
-    ) = KtorHttpClient(
-        client = httpClient,
-        tokenRepository = tokenRepository
-    ).invoke(
-        errorResponse = errorResponse,
-        successResponse = successResponse,
-        host = host,
-        path = path,
-        port = port,
-        method = method,
-        protocol = protocol,
-        body = body,
-        params = params,
-        headers = headers,
-        onDownload = onDownload,
-        onUpload = onUpload,
-    )
-
+    
     @Test
     fun `Ktor framework it's working`() = runTest {
-        val job = Job()
+        val res = request(
+            errorResponse = HttpResponseEntity.ErrorPlaceholder.serializer(),
+            successResponse = HttpResponseEntity.SuccessResponseGet.serializer(),
+            method = DomainHttpMethod.GET,
+            path = "get",
+        )
 
-        withContext(Dispatchers.IO + job) {
-            val res = request(
-                errorResponse = HttpResponseEntity.ErrorPlaceholder.serializer(),
-                successResponse = HttpResponseEntity.SuccessResponseGet.serializer(),
-                method = DomainHttpMethod.GET,
-                path = "get",
-            )
+        assertTrue(res is ApiResponse.Success)
 
-            assertTrue(res is ApiResponse.Success)
-
-            if (res is ApiResponse.Success) {
-                assertEquals(res.status, DomainHttpStatusCode.OK)
-                assertEquals(res.body.url, "https://postman-echo.com/get")
-            }
+        if (res is ApiResponse.Success) {
+            assertEquals(res.status, DomainHttpStatusCode.OK)
+            assertEquals(res.body.url, "https://postman-echo.com/get")
         }
-
-        job.cancel()
     }
 
     @Test
@@ -84,31 +43,26 @@ class ApiNetworkTest {
             val surname: String,
         )
 
-        val job = Job()
-
-        withContext(Dispatchers.IO + job) {
-            val res = request(
-                errorResponse = HttpResponseEntity.ErrorPlaceholder.serializer(),
-                successResponse = HttpResponseEntity.SuccessResponsePost.serializer(),
-                method = DomainHttpMethod.POST,
-                path = "post",
-                body = Request(
-                    name = "NAME",
-                    surname = "SURNAME"
-                )
+        val res = request(
+            errorResponse = HttpResponseEntity.ErrorPlaceholder.serializer(),
+            successResponse = HttpResponseEntity.SuccessResponsePost.serializer(),
+            method = DomainHttpMethod.POST,
+            path = "post",
+            body = Request(
+                name = "NAME",
+                surname = "SURNAME"
             )
+        )
 
-            assertTrue(res is ApiResponse.Success)
+        assertTrue(res is ApiResponse.Success)
 
-            if (res is ApiResponse.Success) {
-                assertEquals(res.status, DomainHttpStatusCode.OK)
+        if (res is ApiResponse.Success) {
+            assertEquals(res.status, DomainHttpStatusCode.OK)
 
-                assertEquals(res.body.data["name"], "NAME")
-                assertEquals(res.body.data["surname"], "SURNAME")
-            }
+            assertEquals(res.body.data["name"], "NAME")
+            assertEquals(res.body.data["surname"], "SURNAME")
         }
 
-        job.cancel()
     }
 
 //    @Test
@@ -311,34 +265,34 @@ class ApiNetworkTest {
 ////        }
 //    }
 
-//    private suspend fun <Success, Error>request(
-//        success: KSerializer<Success>,
-//        error: KSerializer<Error>,
-//        method: DomainHttpMethod,
-//        path: String,
-//        protocol: DomainUrlProtocol,
-//        host: String,
-//        port: Int,
-//        body: Any? = null,
-//        params: DomainHttpParams = emptyMap(),
-//        headers: DomainHttpHeaders = emptyMap(),
-//        onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _, _ -> },
-//        onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _, _ -> },
-//    ) = TestRequestUseCase(
-//        networkRepository = networkRepository,
-//        serverConfiguration = serverConfiguration,
-//    ).invoke(
-//        success = success,
-//        error = error,
-//        method = method,
-//        path = path,
-//        protocol = protocol,
-//        host = host,
-//        port = port,
-//        body = body,
-//        params = params,
-//        headers = headers,
-//        onDownload = onDownload,
-//        onUpload = onUpload,
-//    )
+    private suspend fun<ErrorResponse, SuccessResponse> request(
+        errorResponse: KSerializer<ErrorResponse>,
+        successResponse: KSerializer<SuccessResponse>,
+        protocol: DomainUrlProtocol = DomainUrlProtocol.HTTPS,
+        method: DomainHttpMethod,
+        host: String = "postman-echo.com",
+        path: String,
+        port: Int = 443,
+        body: Any? = null,
+        params: DomainHttpParams = emptyMap(),
+        headers: Map<DomainHttpHeaders, List<String>> = emptyMap(),
+        onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _: Long, _: Long? -> },
+        onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit = { _: Long, _: Long? -> },
+    ) = KtorHttpClient(
+        client = httpClient,
+        tokenRepository = tokenRepository
+    ).invoke(
+        errorResponse = errorResponse,
+        successResponse = successResponse,
+        host = host,
+        path = path,
+        port = port,
+        method = method,
+        protocol = protocol,
+        body = body,
+        params = params,
+        headers = headers,
+        onDownload = onDownload,
+        onUpload = onUpload,
+    )
 }

@@ -50,7 +50,7 @@ class NetworkRepositoryImpl(
         port: Int,
         body: Any?,
         params: DomainHttpParams,
-        headers: DomainHttpHeaders,
+        headers: Map<DomainHttpHeaders, List<String>>,
         onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit,
         onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit
     ): ApiResponse<out SuccessResponse, out ErrorResponse> {

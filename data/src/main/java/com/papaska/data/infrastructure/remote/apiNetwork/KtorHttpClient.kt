@@ -22,6 +22,7 @@ import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.path
 import kotlinx.serialization.KSerializer
@@ -72,7 +73,7 @@ internal class KtorHttpClient(
         protocol: DomainUrlProtocol,
         body: Any?,
         params: DomainHttpParams,
-        headers: DomainHttpHeaders,
+        headers: Map<DomainHttpHeaders, List<String>>,
         onDownload: (bytesSentTotal: Long, contentLength: Long?) -> Unit,
         onUpload: (bytesSentTotal: Long, contentLength: Long?) -> Unit,
     ): ApiResponse<out SuccessResponse, out ErrorResponse> = try {
@@ -88,12 +89,12 @@ internal class KtorHttpClient(
             }
             contentType(ContentType.Application.Json)
 
-            if (headers.containsKey("Authorization").not()) {
+            if (headers.containsKey(DomainHttpHeaders.AUTHORIZATION).not()) {
                 header("Authorization", tokenRepository.get())
             }
 
             headers.entries.forEach {
-                header(it.key, it.value)
+                header(it.key.headerName, it.value)
             }
 
             body?.let { setBody(body) }

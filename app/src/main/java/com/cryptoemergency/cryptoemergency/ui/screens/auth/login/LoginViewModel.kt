@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
+import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
 import com.papaska.domain.useCases.remote.auth.LoginUseCase
@@ -44,11 +45,11 @@ class LoginViewModel @Inject constructor(
                 onSuccess = {
                     viewModelScope.launch {
                         try {
-                            val token = (
-                                it.headers["authorization"] ?:
+                            val token =
+                                it.headers[DomainHttpHeaders.AUTHORIZATION] ?:
                                 error(context.resources.getString(R.string.error__internal_server))
-                            ) as TokenEntity
-                            saveTokenUseCase(token)
+
+                            saveTokenUseCase(token.toString())
 
                             _uiState.value = UiState.ContinueAsGuestSuccess
                         } catch (e: IllegalStateException) {

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
+import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.useCases.storage.token.GetTokenUseCase
 import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
@@ -41,9 +42,9 @@ class HomeViewModel @Inject constructor(
             val res = initTokenUseCase()
 
             if (res is ApiResponse.Success) {
-                val token = res.headers["authorization"]!!
+                val token = res.headers[DomainHttpHeaders.AUTHORIZATION]!!.toString()
 
-                saveTokenUseCase(token as String)
+                saveTokenUseCase(token)
             }
         }
     }
