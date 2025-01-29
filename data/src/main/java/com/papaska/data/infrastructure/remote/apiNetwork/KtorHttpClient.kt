@@ -1,18 +1,18 @@
 package com.papaska.data.infrastructure.remote.apiNetwork
 
-import com.papaska.domain.http.ApiResponse
+import com.papaska.data.mappers.HttpMapper.toDomainHttpHeaders
+import com.papaska.data.mappers.HttpMapper.toDomainHttpStatus
+import com.papaska.data.mappers.HttpMapper.toKtorHttpMethod
+import com.papaska.data.mappers.HttpMapper.toKtorStringValues
+import com.papaska.data.mappers.HttpMapper.toKtorUrlProtocol
 import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.http.DomainHttpMethod
 import com.papaska.domain.entity.http.DomainHttpParams
 import com.papaska.domain.entity.http.DomainHttpStatusCode
 import com.papaska.domain.entity.http.DomainUrlProtocol
 import com.papaska.domain.entity.http.isSuccess
+import com.papaska.domain.http.ApiResponse
 import com.papaska.domain.repositories.local.storage.TokenRepository
-import com.papaska.data.mappers.HttpMapper.toDomainHttpHeaders
-import com.papaska.data.mappers.HttpMapper.toDomainHttpStatus
-import com.papaska.data.mappers.HttpMapper.toKtorHttpMethod
-import com.papaska.data.mappers.HttpMapper.toKtorStringValues
-import com.papaska.data.mappers.HttpMapper.toKtorUrlProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.onDownload
@@ -22,7 +22,6 @@ import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.path
 import kotlinx.serialization.KSerializer

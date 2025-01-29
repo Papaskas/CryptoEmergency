@@ -13,12 +13,12 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.runBlocking
 
 /**
  * Клиент HTTP, настроенный для работы с JSON, логированием и таймаутами.
  */
-
-internal val httpClient by lazy {
+internal val httpClient: HttpClient by lazy {
     HttpClient(OkHttp) {
         install(HttpRequestRetry) {
             retryOnServerErrors(maxRetries = MAX_RETRIES_TO_SERVER)

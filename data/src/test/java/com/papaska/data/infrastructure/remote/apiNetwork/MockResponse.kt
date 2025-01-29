@@ -9,14 +9,7 @@ private typealias Form = HashMap<String, String>
 private typealias Files = HashMap<String, String>
 private typealias Json = HashMap<String, String>?
 
-internal object HttpResponseEntity {
-
-    @Serializable
-    data class SuccessResponseGet(
-        val args: Args,
-        val headers: Headers,
-        val url: String,
-    )
+internal object MockResponse {
 
     @Serializable
     data class SuccessResponsePost(
