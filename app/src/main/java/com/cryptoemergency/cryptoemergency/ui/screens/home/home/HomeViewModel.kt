@@ -15,11 +15,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
+import com.papaska.data.qualifiers.TokenStorage
 import com.papaska.domain.entity.http.DomainHttpHeaders
+import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.useCases.storage.token.GetTokenUseCase
-import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
 import com.papaska.domain.useCases.remote.token.InitTokenUseCase
+import com.papaska.domain.useCases.storage.LocalStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,8 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val initTokenUseCase: InitTokenUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase,
-    private val getTokenUseCase: GetTokenUseCase,
+    @TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
 ) : ViewModel() {
     private val ethereum = "ethereum"
     private val cemCoin = "cemCoin"
@@ -37,14 +37,14 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (getTokenUseCase().isNotEmpty()) return@launch
+            if (tokenStorage.get().isNotEmpty()) return@launch
 
             val res = initTokenUseCase()
 
             if (res is ApiResponse.Success) {
                 val token = res.headers[DomainHttpHeaders.AUTHORIZATION]!!.toString()
 
-                saveTokenUseCase(token)
+                tokenStorage.put(token)
             }
         }
     }

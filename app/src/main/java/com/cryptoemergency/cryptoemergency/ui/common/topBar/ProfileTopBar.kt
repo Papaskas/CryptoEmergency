@@ -97,11 +97,3 @@ private fun ActionSwitchTheme() {
         }
     }
 }
-
-@Composable
-fun a (fruitSize: Int) {
-    val resources = LocalContext.current.resources
-    val fruitText = remember(resources, fruitSize) {
-        resources.getQuantityString(R.plurals.news, fruitSize)
-    }
-}

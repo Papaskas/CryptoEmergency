@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
+
+
 class ApiNetworkTest {
     private val tokenRepository = mock<TokenRepository>()
 
@@ -41,6 +43,8 @@ class ApiNetworkTest {
                 "foo2" to "bar3",
             ),
         )
+
+
 
         assertTrue(res is ApiResponse.Success)
 

@@ -22,7 +22,7 @@ import com.cryptoemergency.cryptoemergency.ui.common.pinCode.viewModels.PinCodeV
  * [PinCodeEnterViewModel], если нужна логика ввода пин-кода. [PinCodeCreateViewModel],
  * если нужна логика создания пин-кода.
  * @param modifier [Modifier] Применяемый к разметке
- * @param maxItemsInEachRow [Int] Колличество цифр в строке
+ * @param maxItemsInEachRow [Int] количество цифр в строке
  * @param pinCodeLength [Int] Длина пин-кода
  * @param items [List] Порядок расстановки цифр. Последний размещается все слева от [leftSpecialButton]
  * и справа от [rightSpecialButton], даже если они не заданы

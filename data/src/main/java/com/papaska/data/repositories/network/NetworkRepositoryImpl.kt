@@ -8,12 +8,13 @@ import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.http.DomainHttpMethod
 import com.papaska.domain.entity.http.DomainHttpParams
 import com.papaska.domain.entity.http.DomainUrlProtocol
-import com.papaska.domain.repositories.local.storage.TokenRepository
+import com.papaska.domain.entity.local.TokenEntity
+import com.papaska.domain.repositories.local.storage.LocalStorageRepository
 import com.papaska.domain.repositories.remote.NetworkRepository
 import kotlinx.serialization.KSerializer
 
 class NetworkRepositoryImpl(
-    private val tokenRepository: TokenRepository,
+    private val tokenRepository: LocalStorageRepository<TokenEntity>,
 ) : NetworkRepository {
 
     /**

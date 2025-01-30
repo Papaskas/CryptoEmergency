@@ -8,10 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
+import com.papaska.data.qualifiers.TokenStorage
 import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.local.TokenEntity
-import com.papaska.domain.useCases.storage.token.SaveTokenUseCase
 import com.papaska.domain.useCases.remote.auth.LoginUseCase
+import com.papaska.domain.useCases.storage.LocalStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val saveTokenUseCase: SaveTokenUseCase,
+    @TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
@@ -49,7 +50,7 @@ class LoginViewModel @Inject constructor(
                                 it.headers[DomainHttpHeaders.AUTHORIZATION] ?:
                                 error(context.resources.getString(R.string.error__internal_server))
 
-                            saveTokenUseCase(token.toString())
+                            tokenStorage.put(token.toString())
 
                             _uiState.value = UiState.ContinueAsGuestSuccess
                         } catch (e: IllegalStateException) {

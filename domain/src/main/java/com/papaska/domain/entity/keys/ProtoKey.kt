@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 interface ProtoKey<T> {
     /**
-     * Имя в хранилише, должно быть уникальным
+     * Имя в хранилище, должно быть уникальным
      * */
     val name: String
 

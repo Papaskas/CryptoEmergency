@@ -2,13 +2,13 @@ package com.cryptoemergency.cryptoemergency.providers.theme.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.papaska.domain.entity.local.ThemeEntity
-import com.papaska.domain.useCases.storage.theme.GetThemeUseCase
+import com.papaska.domain.useCases.storage.LocalStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ThemeViewModelImpl @Inject constructor(
-    private val getThemeUseCase: GetThemeUseCase,
+    private val themeStorage: LocalStorageUseCase<ThemeEntity>,
 ) : ViewModel(), ThemeViewModel {
     /**
      * Инициализация установленной темы. Если есть установленное в хранилище, то взять его, иначе
@@ -30,6 +30,6 @@ class ThemeViewModelImpl @Inject constructor(
     /**
      * Получение темы из хранилища
      * */
-    override suspend fun getThemeFromStorage() = getThemeUseCase()
+    override suspend fun getThemeFromStorage() = themeStorage.get()
 }
 

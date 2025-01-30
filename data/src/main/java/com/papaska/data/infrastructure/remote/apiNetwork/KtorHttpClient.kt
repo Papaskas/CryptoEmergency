@@ -11,8 +11,9 @@ import com.papaska.domain.entity.http.DomainHttpParams
 import com.papaska.domain.entity.http.DomainHttpStatusCode
 import com.papaska.domain.entity.http.DomainUrlProtocol
 import com.papaska.domain.entity.http.isSuccess
+import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.repositories.local.storage.TokenRepository
+import com.papaska.domain.repositories.local.storage.LocalStorageRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.onDownload
@@ -31,7 +32,7 @@ import java.net.UnknownHostException
 
 internal class KtorHttpClient(
     private val client: HttpClient,
-    private val tokenRepository: TokenRepository,
+    private val tokenRepository: LocalStorageRepository<TokenEntity>,
 ) {
 
     /**

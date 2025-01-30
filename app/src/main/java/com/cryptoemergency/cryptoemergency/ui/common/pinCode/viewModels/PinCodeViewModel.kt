@@ -27,7 +27,7 @@ abstract class PinCodeViewModel : ViewModel() {
     }
 
     /**
-     * Коллбэк ошибки отсутсвия первого элемента при его удалении в пин-коде
+     * Коллбэк ошибки отсутствия первого элемента при его удалении в пин-коде
      * */
     fun setOnEmptyListener(listener: () -> Unit) {
         onEmptyListener = listener
@@ -85,7 +85,7 @@ abstract class PinCodeViewModel : ViewModel() {
     abstract fun onCrowded()
 
     /**
-     * Слушатель отсутсвия первого элемента при его удалении в пин-коде
+     * Слушатель отсутствия первого элемента при его удалении в пин-коде
      * */
     abstract fun onEmpty()
 }
