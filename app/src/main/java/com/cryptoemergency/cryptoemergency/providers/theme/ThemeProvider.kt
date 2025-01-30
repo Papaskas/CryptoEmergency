@@ -20,11 +20,11 @@ import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionL
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTypography
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.IconsEntity
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.dimens
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.darkIcons
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.icons.lightIcons
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.darkPalette
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.palettes.lightPalette
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.dimens
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.shapes
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.statics.typography
 import com.cryptoemergency.cryptoemergency.providers.theme.viewModels.ThemeViewModel

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
@@ -12,7 +11,6 @@ import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackBar
 import com.cryptoemergency.cryptoemergency.ui.common.SteppedScreen
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.steps.FirstStep
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.steps.SecondStep
-import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {

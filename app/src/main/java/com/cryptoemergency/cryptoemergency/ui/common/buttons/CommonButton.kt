@@ -27,8 +27,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cryptoemergency.cryptoemergency.modifiers.linearGradientBackground
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.papaska.domain.entity.local.ThemeEntity
 import kotlinx.coroutines.launch
 

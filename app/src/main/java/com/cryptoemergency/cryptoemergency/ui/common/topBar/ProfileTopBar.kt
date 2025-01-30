@@ -15,8 +15,8 @@ import androidx.compose.ui.res.painterResource
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.navigation.Destination
 import com.cryptoemergency.cryptoemergency.providers.localNavController.LocalNavController
-import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.cryptoemergency.cryptoemergency.providers.theme.Theme
+import com.cryptoemergency.cryptoemergency.providers.theme.provides.CompositionLocals.LocalTheme
 import com.cryptoemergency.cryptoemergency.ui.common.CommonHorizontalDivider
 import com.cryptoemergency.cryptoemergency.ui.common.buttons.switchTheme.SwitchThemeButton
 import com.papaska.domain.entity.local.ThemeEntity

@@ -46,11 +46,11 @@ import com.cryptoemergency.cryptoemergency.ui.common.inputs.MultiLineInput
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.EmptyProfilePage
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.components.common.TitleSection
 import com.cryptoemergency.cryptoemergency.ui.screens.auth.profile.entity.SocialNetworkIcons
+import com.papaska.data.models.db.SocialNetworkModel
 import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
 import com.papaska.domain.entity.socialNetwork.SocialNetworkName
 import com.papaska.domain.entity.socialNetwork.SocialNetworkType
 import com.papaska.domain.utility.findUrlPrefix
-import com.papaska.data.models.db.SocialNetworkModel
 
 /**
  * Блок в секции content - Социальные сети

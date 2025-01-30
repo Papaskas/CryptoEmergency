@@ -8,7 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cryptoemergency.cryptoemergency.common.BaseUiState
 import com.cryptoemergency.cryptoemergency.providers.localSnackBar.LocalSnackBar
 import com.cryptoemergency.cryptoemergency.ui.common.SteppedScreen
-import com.cryptoemergency.cryptoemergency.ui.screens.auth.login.UiState
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.steps.FirstStep
 import com.cryptoemergency.cryptoemergency.ui.screens.post.createPost.steps.SecondStep
 
