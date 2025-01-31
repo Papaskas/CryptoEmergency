@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.lib.makeRequest
-import com.papaska.data.qualifiers.TokenStorage
+import com.papaska.data.qualifiers.StorageQualifiers
 import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.useCases.remote.auth.LoginUseCase
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    @TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
+    @StorageQualifiers.TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)

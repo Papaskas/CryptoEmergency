@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cryptoemergency.cryptoemergency.R
 import com.cryptoemergency.cryptoemergency.providers.theme.provides.entity.ColorsEntity
-import com.papaska.data.qualifiers.TokenStorage
+import com.papaska.data.qualifiers.StorageQualifiers
 import com.papaska.domain.entity.http.DomainHttpHeaders
 import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.http.ApiResponse
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val initTokenUseCase: InitTokenUseCase,
-    @TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
+    @StorageQualifiers.TokenStorage private val tokenStorage: LocalStorageUseCase<TokenEntity>,
 ) : ViewModel() {
     private val ethereum = "ethereum"
     private val cemCoin = "cemCoin"

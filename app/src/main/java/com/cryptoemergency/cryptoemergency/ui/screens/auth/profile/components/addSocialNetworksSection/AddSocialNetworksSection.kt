@@ -50,7 +50,7 @@ import com.papaska.data.models.db.SocialNetworkModel
 import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
 import com.papaska.domain.entity.socialNetwork.SocialNetworkName
 import com.papaska.domain.entity.socialNetwork.SocialNetworkType
-import com.papaska.domain.utility.findUrlPrefix
+import com.papaska.domain.utility.findSocialNetworkUrlPrefix
 
 /**
  * Блок в секции content - Социальные сети
@@ -246,7 +246,7 @@ private fun InputTemplate(
     }
 
     Input(
-        prefix = { Text(text = findUrlPrefix(vm.selectedNetwork.value)) },
+        prefix = { Text(text = findSocialNetworkUrlPrefix(vm.selectedNetwork.value)) },
         isRequired = true,
         label = res.getString(R.string.url),
         value = urlValue,

@@ -1,7 +1,7 @@
 package com.papaska.data.mappers
 
 import com.papaska.domain.entity.socialNetwork.SocialNetworkEntity
-import com.papaska.domain.utility.findUrlPrefix
+import com.papaska.domain.utility.findSocialNetworkUrlPrefix
 import com.papaska.data.models.db.SocialNetworkModel
 
 internal object SocialNetworkMapper {
@@ -18,7 +18,7 @@ internal object SocialNetworkMapper {
         socialNetworkName = this.socialNetworkName,
         url = this.url,
         description = this.description,
-        urlPrefix = findUrlPrefix(this.socialNetworkName),
+        urlPrefix = findSocialNetworkUrlPrefix(this.socialNetworkName),
         type = this.type
     )
 }

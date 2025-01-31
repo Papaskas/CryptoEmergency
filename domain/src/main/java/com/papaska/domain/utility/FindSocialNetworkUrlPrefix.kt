@@ -14,7 +14,7 @@ import com.papaska.domain.entity.socialNetwork.SocialNetworkName
 import kotlin.jvm.Throws
 
 @Throws(IllegalStateException::class)
-fun findUrlPrefix(socialNetworkName: SocialNetworkName): String {
+fun findSocialNetworkUrlPrefix(socialNetworkName: SocialNetworkName): String {
     return when(socialNetworkName) {
         SocialNetworkName.TELEGRAM -> URL_PREFIX_TELEGRAM
         SocialNetworkName.VK -> URL_PREFIX_VK
