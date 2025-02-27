@@ -1,12 +1,12 @@
 package com.papaska.data.network
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
 class AndroidExampleTest {
 
     @Test
-    fun additionIsCorrect() {
+    fun Junit4IsWork() {
         assertEquals(4, 2 + 2)
     }
 }

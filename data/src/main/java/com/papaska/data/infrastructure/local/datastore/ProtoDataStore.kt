@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.first
  * Класс для хранения и извлечения данных с использованием хранилища данных
  *
  * @param key [ProtoKeyImpl] Ключ для идентификации данных в хранилище данных
- * @param context [Context] Контекст для доступу к хранилишу
+ * @param context [Context] Контекст для доступу к хранилищу
  *
- * @constructor Создает новый экземпляр хранилища
+ * @constructor Создаёт новый экземпляр хранилища
  */
 internal class ProtoDataStore<T>(
     private val key: ProtoKey<T>,
@@ -29,14 +29,14 @@ internal class ProtoDataStore<T>(
     )
 
     /**
-    * Экземляр базы
+    * Экземпляр базы
     */
     private val dataStore: DataStore<T> = context.dataStore
 
     /**
-     * Извлекает сохраненные данные, связанные с данным ключом
+     * Извлекает сохранённые данные, связанные с данным ключом
      *
-     * @return Возвращает сохраненные данные типа T.
+     * @return Возвращает сохранённые данные типа T.
      */
     suspend fun read(): T = dataStore.data.first()
 
@@ -47,5 +47,9 @@ internal class ProtoDataStore<T>(
      */
     suspend fun createOrUpdate(entity: T) {
         dataStore.updateData { entity }
+    }
+
+    suspend fun clear() {
+        dataStore.updateData { key.value }
     }
 }

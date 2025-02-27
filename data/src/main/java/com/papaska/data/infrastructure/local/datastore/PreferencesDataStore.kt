@@ -16,8 +16,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.papaska.domain.entity.keys.Key
 import com.papaska.domain.entity.keys.KeyImpl
 import com.papaska.domain.entity.keys.KeyType
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 /**
  * Класс для хранения и извлечения данных с использованием хранилища данных.
@@ -25,11 +27,11 @@ import kotlinx.coroutines.flow.map
  * Работает только с [KeyType] типами данных
  *
  * @param key [Key] Ключ для идентификации данных в хранилище данных
- * @param context [Context] Контекст для доступу к хранилишу
+ * @param context [Context] Контекст для доступу к хранилищу
  *
- * @constructor Создает новый экземпляр хранилища
+ * @constructor Создаёт новый экземпляр хранилища
  */
-internal class DataStore<T>(
+internal class PreferencesDataStore<T>(
     private val key: Key<T>,
     private val context: Context,
 ) {
@@ -37,7 +39,7 @@ internal class DataStore<T>(
 
     init {
         keyImpl = Pair(
-            getPreferencesKey(key.keyType, key.name),
+            getPreferencesKey(key.keyType, key.name) as Preferences.Key<T>,
             key.defaultValue
         )
     }
@@ -51,7 +53,7 @@ internal class DataStore<T>(
     private val Context.dataStore by preferencesDataStore(name = keyImpl.first.name)
 
     /**
-     * Экземляр базы
+     * Экземпляр базы
      */
     private val dataStore = context.dataStore
 
@@ -63,10 +65,23 @@ internal class DataStore<T>(
      */
     suspend fun read(): T {
 
-        return dataStore.data
-            .map { preferences ->
-                preferences[keyImpl.first] ?: key.defaultValue
-            }.first()
+        return withContext(Dispatchers.IO) {
+            dataStore.data
+                .map { preferences ->
+                    preferences[keyImpl.first] ?: key.defaultValue
+                }.first()
+        }
+    }
+
+    /**
+     * Restores the value to the default value
+     * */
+    suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            dataStore.edit { preferences ->
+                preferences[keyImpl.first] = key.defaultValue
+            }
+        }
     }
 
     /**
@@ -76,22 +91,24 @@ internal class DataStore<T>(
      */
     suspend fun createOrUpdate(entity: T) {
 
-        dataStore.edit { preferences ->
-            preferences[keyImpl.first] = entity
+        withContext(Dispatchers.IO) {
+            dataStore.edit { preferences ->
+                preferences[keyImpl.first] = entity
+            }
         }
     }
 
-    private fun<T> getPreferencesKey(
+    private fun getPreferencesKey(
         keyType: KeyType,
         name: String,
-    ): Preferences.Key<T> = when(keyType) {
-        KeyType.Int -> intPreferencesKey(name) as Preferences.Key<T>
-        KeyType.Long -> longPreferencesKey(name) as Preferences.Key<T>
-        KeyType.Float -> floatPreferencesKey(name) as Preferences.Key<T>
-        KeyType.Double -> doublePreferencesKey(name) as Preferences.Key<T>
-        KeyType.String -> stringPreferencesKey(name) as Preferences.Key<T>
-        KeyType.StringSet -> stringSetPreferencesKey(name) as Preferences.Key<T>
-        KeyType.Boolean -> booleanPreferencesKey(name) as Preferences.Key<T>
-        KeyType.ByteArray -> byteArrayPreferencesKey(name) as Preferences.Key<T>
+    ): Preferences.Key<out Any> = when(keyType) {
+        KeyType.Int -> intPreferencesKey(name)
+        KeyType.Long -> longPreferencesKey(name)
+        KeyType.Float -> floatPreferencesKey(name)
+        KeyType.Double -> doublePreferencesKey(name)
+        KeyType.String -> stringPreferencesKey(name)
+        KeyType.StringSet -> stringSetPreferencesKey(name)
+        KeyType.Boolean -> booleanPreferencesKey(name)
+        KeyType.ByteArray -> byteArrayPreferencesKey(name)
     }
 }

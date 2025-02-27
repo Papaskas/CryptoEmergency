@@ -5,8 +5,9 @@ import com.papaska.domain.entity.http.DomainHttpMethod
 import com.papaska.domain.entity.http.DomainHttpParams
 import com.papaska.domain.entity.http.DomainHttpStatusCode
 import com.papaska.domain.entity.http.DomainUrlProtocol
+import com.papaska.domain.entity.local.TokenEntity
 import com.papaska.domain.http.ApiResponse
-import com.papaska.domain.repositories.local.storage.TokenRepository
+import com.papaska.domain.repositories.local.storage.LocalStorageRepository
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -15,13 +16,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
-
-
 class ApiNetworkTest {
-    private val tokenRepository = mock<TokenRepository>()
+    private val tokenRepository = mock<LocalStorageRepository<TokenEntity>>()
 
     @Test
-    fun `Test the serialization capability`() = runTest {
+    fun `ApiNetwork health test`() = runTest {
         @Serializable
         data class RequestBody(
             val name: String,
@@ -43,8 +42,6 @@ class ApiNetworkTest {
                 "foo2" to "bar3",
             ),
         )
-
-
 
         assertTrue(res is ApiResponse.Success)
 

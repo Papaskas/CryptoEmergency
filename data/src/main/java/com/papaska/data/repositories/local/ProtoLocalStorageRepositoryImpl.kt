@@ -20,4 +20,6 @@ class ProtoLocalStorageRepositoryImpl<T>(
      * Асинхронный метод создания или обновления значения в локальном хранилище
      * */
     override suspend fun put(entity: T) = store.createOrUpdate(entity)
+
+    override suspend fun clear() = store.clear()
 }

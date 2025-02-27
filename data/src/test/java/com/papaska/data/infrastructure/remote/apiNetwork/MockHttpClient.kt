@@ -17,8 +17,6 @@ import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
 
-private val responseHeaders = headersOf("Content-Type" to listOf(ContentType.Application.Json.toString()))
-
 val mockHttpClient = HttpClient(MockEngine) {
     install(ContentNegotiation) {
         json()
@@ -41,7 +39,7 @@ val mockHttpClient = HttpClient(MockEngine) {
                     respond(
                         content = ByteReadChannel("""{"message":"success serialize"}"""),
                         status = HttpStatusCode.OK,
-                        headers = responseHeaders,
+                        headers = headersOf("Content-Type" to listOf(ContentType.Application.Json.toString())),
                     )
                 }
                 "/echo" -> {

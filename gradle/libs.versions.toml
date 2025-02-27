@@ -30,7 +30,7 @@ navigationCompose = "2.8.5"
 lifecycleViewmodelKtx = "2.8.7"
 appcompat = "1.7.0"
 room = "2.6.1"
-runner = "1.6.2"
+androidXTest = "1.6.1"
 slf4j-api="2.0.16"
 coreKtxVersion = "1.6.1"
 detekt = "1.23.3"
@@ -58,7 +58,8 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "androidXTest" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "androidXTest" }
 androidx-ui-test-android = { module = "androidx.compose.ui:ui-test-android", version.ref = "uiTestAndroid" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
 cloudy = { module = "com.github.skydoves:cloudy", version.ref = "cloudy" }
@@ -97,7 +98,6 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
-platform-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j-api" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackClassic" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }

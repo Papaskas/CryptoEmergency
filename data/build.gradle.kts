@@ -15,14 +15,14 @@ android {
     defaultConfig {
         minSdk = 24
 
-        //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -47,6 +47,8 @@ android {
         }
 
         debug {
+            isMinifyEnabled = false
+
             buildConfigField(
                 "String",
                 "PROTOCOL",
@@ -82,6 +84,7 @@ android {
     testOptions {
         unitTests {
             isReturnDefaultValues = true
+
             all {
                 it.useJUnitPlatform()
                 it.maxHeapSize = "1G"
@@ -126,6 +129,15 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 ksp {
